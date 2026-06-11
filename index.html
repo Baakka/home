@@ -30,20 +30,6 @@ body {
   overflow-x: hidden;
 }
 
-/* eyes adjusting — the whole page surfaces from black */
-.veil {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 100;
-  pointer-events: none;
-  animation: adjust 3.2s ease-out forwards;
-}
-@keyframes adjust {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 /* grain */
 body::after {
   content: "";
@@ -123,7 +109,7 @@ body::after {
   letter-spacing: 0.34em;
   color: var(--ash);
   opacity: 0;
-  animation: surface 2.4s ease 1.2s forwards;
+  animation: surface 1s ease 0.05s forwards;
   z-index: 3;
 }
 .mark b {
@@ -136,7 +122,7 @@ body::after {
   width: clamp(150px, 22vw, 220px);
   margin-bottom: clamp(2.5rem, 6vh, 4rem);
   opacity: 0;
-  animation: surface 3s ease 1.6s forwards;
+  animation: surface 1.2s ease 0.1s forwards;
 }
 .ear svg { width: 100%; overflow: visible; display: block; }
 .ring {
@@ -171,7 +157,7 @@ h1 {
   color: var(--moth);
   max-width: 16ch;
   opacity: 0;
-  animation: surface 2.8s ease 2s forwards;
+  animation: surface 1.2s ease 0.2s forwards;
 }
 h1 em {
   font-style: italic;
@@ -187,14 +173,14 @@ h1 em {
   color: var(--ash);
   max-width: 46ch;
   opacity: 0;
-  animation: surface 2.8s ease 2.5s forwards;
+  animation: surface 1.2s ease 0.35s forwards;
 }
 
 /* ---- the one door ---- */
 .paths {
   margin-top: clamp(2.8rem, 7vh, 4.5rem);
   opacity: 0;
-  animation: surface 2.8s ease 3s forwards;
+  animation: surface 1.2s ease 0.5s forwards;
 }
 .paths .label {
   font-size: 0.62rem;
@@ -251,6 +237,12 @@ h1 em {
   transition: color 0.5s ease;
 }
 .door:hover .what { color: var(--moth); }
+.door + .door { border-top: none; }
+.door.dim { cursor: default; }
+.door.dim .name { color: var(--ash); }
+.door.dim:hover .name { color: var(--ash); letter-spacing: 0.02em; }
+.door.dim::after { content: none; }
+.door.dim .what { max-width: 34ch; text-align: right; line-height: 1.8; }
 
 /* tiny waveform that stirs on hover */
 .door .stir {
@@ -287,7 +279,7 @@ footer {
   letter-spacing: 0.28em;
   color: #2e353a;
   opacity: 0;
-  animation: surface 3s ease 3.6s forwards;
+  animation: surface 1.2s ease 0.65s forwards;
 }
 
 @keyframes surface {
@@ -311,7 +303,6 @@ footer {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .veil { display: none; }
   .mark, .ear, h1, .whisper, .paths, footer { opacity: 1; }
   .ring { opacity: 0.25; transform: scale(0.7); }
   .mote, .firefly { display: none; }
@@ -319,8 +310,6 @@ footer {
 </style>
 </head>
 <body>
-
-<div class="veil" aria-hidden="true"></div>
 
 <div class="motes" aria-hidden="true">
   <span class="mote" style="left:12%; top:78%; --t:26s; --d:0s;   --o:0.3;  --x:40px;  --x2:-30px;"></span>
@@ -348,11 +337,11 @@ footer {
     </svg>
   </div>
 
-  <h1>The loud places emptied.<br/>Everything real<br/>learned to be <em>quiet</em>.</h1>
+  <h1>A sudden drop<br/>in <em>volume</em>.</h1>
 
-  <p class="whisper">This is a clearing, not a stage. A few instruments
-  kept here listen more than they speak. Stay as long as you like —
-  nothing here is measuring you.</p>
+  <p class="whisper">The algorithmic web was left outside. You are not
+  a metric here. This space asks nothing of you, and it measures nothing
+  you do. It is simply a clearing where tools and structures are kept.</p>
 
   <nav class="paths">
     <p class="label">kept here</p>
@@ -360,8 +349,14 @@ footer {
       <span class="num">01</span>
       <span class="name">Sonoscope</span>
       <span class="stir" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-      <span class="what">an instrument for listening</span>
+      <span class="what">an instrument for listening and tuning</span>
     </a>
+    <div class="door dim">
+      <span class="num">02</span>
+      <span class="name">Sheaf&#8209;RSP</span>
+      <span class="what">a mathematical object — human&#8211;agent collectives
+      emerging as low&#8209;energy attractors</span>
+    </div>
   </nav>
 
   <footer>
