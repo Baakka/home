@@ -1,64 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4st.space</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #0a0a0a;
-      color: #e0e0e0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-    }
-    h1 {
-      font-size: 1.1rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      color: #555;
-      text-transform: uppercase;
-    }
-    .links {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-size: 1.4rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      padding: 0.4rem 0;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
-    .desc {
-      font-size: 0.8rem;
-      color: #444;
-      margin-top: 0.2rem;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4st.space</title>
+<meta name="description" content="4st.space — a small constellation of instruments." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0b0d10;
+  --ink-2: #11141a;
+  --line: #232830;
+  --fog: #8b93a1;
+  --paper: #e8e6e1;
+  --signal: #e8a33d;
+  --signal-dim: rgba(232, 163, 61, 0.14);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---- grain ---- */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  animation: grain 9s steps(10) infinite;
+  z-index: 50;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(-3%,2%); }
+  40% { transform: translate(2%,-3%); }
+  60% { transform: translate(-2%,-2%); }
+  80% { transform: translate(3%,3%); }
+}
+
+/* ---- starfield ---- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.sky svg { width: 100%; height: 100%; }
+.star { fill: var(--paper); opacity: 0; animation: twinkle var(--d, 5s) ease-in-out infinite var(--o, 0s); }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: var(--max, 0.6); }
+}
+
+/* ---- layout ---- */
+.frame {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fog);
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+}
+header .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  margin-right: 0.6em;
+  vertical-align: 1px;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 var(--signal-dim); }
+  50% { box-shadow: 0 0 0 7px transparent; }
+}
+
+/* ---- hero ---- */
+.hero {
+  padding: clamp(4rem, 12vh, 8rem) 0 clamp(3rem, 8vh, 5rem);
+  position: relative;
+}
+.hero .index {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--signal);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+}
+h1 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin-top: 1.2rem;
+  max-width: 14ch;
+  opacity: 0;
+  animation: rise 1.1s cubic-bezier(0.22,1,0.36,1) 0.45s forwards;
+}
+h1 em {
+  font-style: italic;
+  color: var(--signal);
+}
+.hero p.sub {
+  margin-top: 1.8rem;
+  max-width: 44ch;
+  font-size: 0.85rem;
+  line-height: 1.9;
+  color: var(--fog);
+  opacity: 0;
+  animation: rise 1.1s cubic-bezier(0.22,1,0.36,1) 0.6s forwards;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- orbital figure ---- */
+.figure {
+  position: absolute;
+  top: clamp(2rem, 8vh, 5rem);
+  right: clamp(-4rem, -2vw, 0rem);
+  width: clamp(260px, 38vw, 460px);
+  aspect-ratio: 1;
+  opacity: 0;
+  animation: fadein 1.6s ease 0.8s forwards;
+  pointer-events: none;
+}
+@keyframes fadein { to { opacity: 1; } }
+.figure svg { width: 100%; height: 100%; overflow: visible; }
+.orbit { fill: none; stroke: var(--line); stroke-width: 1; }
+.orbit-accent {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 1;
+  stroke-dasharray: 4 220;
+  stroke-linecap: round;
+  animation: trace 7s linear infinite;
+}
+@keyframes trace { to { stroke-dashoffset: -224; } }
+.ring-group { transform-origin: 100px 100px; animation: spin 60s linear infinite; }
+.ring-group.fast { animation-duration: 38s; animation-direction: reverse; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.planet { fill: var(--signal); }
+.moon { fill: var(--fog); }
+
+/* ---- waveform divider ---- */
+.wave-strip {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.9rem 0;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadein 1.2s ease 0.9s forwards;
+}
+.wave-strip svg { display: block; width: 100%; height: 34px; }
+.wave-path {
+  fill: none;
+  stroke: var(--fog);
+  stroke-width: 1;
+  opacity: 0.55;
+  stroke-dasharray: 1300;
+  stroke-dashoffset: 1300;
+  animation: draw 2.4s ease 1.1s forwards;
+}
+.wave-path.hot {
+  stroke: var(--signal);
+  opacity: 0.9;
+  animation: draw 2.4s ease 1.35s forwards, drift 6s ease-in-out 3.8s infinite alternate;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-28px); }
+}
+
+/* ---- instruments ---- */
+.instruments {
+  padding: clamp(3rem, 8vh, 5rem) 0;
+  flex: 1;
+}
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-bottom: 2.2rem;
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 1.2s forwards;
+}
+.card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: center;
+  padding: 2.2rem 0;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 1.35s forwards;
+  transition: padding-left 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+.card:last-of-type { border-bottom: 1px solid var(--line); }
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: -1px;
+  height: 1px;
+  width: 0;
+  background: var(--signal);
+  transition: width 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.card:hover::before { width: 100%; }
+.card:hover { padding-left: 0.8rem; }
+.card .num {
+  font-size: 0.72rem;
+  color: var(--fog);
+  letter-spacing: 0.2em;
+}
+.card h2 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  letter-spacing: 0.01em;
+  transition: color 0.3s ease;
+}
+.card:hover h2 { color: var(--signal); }
+.card .meta {
+  font-size: 0.75rem;
+  color: var(--fog);
+  margin-top: 0.45rem;
+  line-height: 1.7;
+  max-width: 52ch;
+}
+.card .arrow {
+  width: 38px; height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+.card:hover .arrow {
+  border-color: var(--signal);
+  background: var(--signal-dim);
+  transform: rotate(45deg);
+}
+.card .arrow svg { stroke: var(--paper); transition: stroke 0.3s ease; }
+.card:hover .arrow svg { stroke: var(--signal); }
+
+/* mini equalizer in card */
+.eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+  margin-top: 0.9rem;
+}
+.eq span {
+  width: 3px;
+  background: var(--line);
+  height: 30%;
+  transform-origin: bottom;
+  transition: background 0.3s ease;
+}
+.card:hover .eq span {
+  background: var(--signal);
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+.eq span:nth-child(1) { animation-delay: 0s; }
+.eq span:nth-child(2) { animation-delay: 0.12s; height: 60%; }
+.eq span:nth-child(3) { animation-delay: 0.24s; height: 95%; }
+.eq span:nth-child(4) { animation-delay: 0.06s; height: 45%; }
+.eq span:nth-child(5) { animation-delay: 0.3s; height: 75%; }
+.eq span:nth-child(6) { animation-delay: 0.18s; height: 35%; }
+.eq span:nth-child(7) { animation-delay: 0.36s; height: 55%; }
+@keyframes eq {
+  from { transform: scaleY(0.4); }
+  to { transform: scaleY(1.15); }
+}
+
+/* ---- footer ---- */
+footer {
+  padding: 2rem 0 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fog);
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  animation: fadein 1.2s ease 1.6s forwards;
+}
+footer .coords { color: #3a4150; }
+
+@media (max-width: 720px) {
+  .figure { position: relative; top: 0; right: 0; margin: 2rem auto 0; width: 70vw; opacity: 0.85; }
+  .card { grid-template-columns: 1fr auto; }
+  .card .num { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  header, h1, .hero .index, .hero p.sub, .figure, .wave-strip, .section-label, .card, footer { opacity: 1; }
+  .wave-path { stroke-dashoffset: 0; }
+}
+</style>
 </head>
 <body>
-  <h1>4st.space</h1>
-  <div class="links">
-    <div>
-      <a href="https://sonoscope.4st.space">Sonoscope</a>
-      <p class="desc">sound analyser</p>
+
+<div class="sky" aria-hidden="true">
+  <svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 800">
+    <circle class="star" cx="80"  cy="120" r="1"   style="--d:4.2s; --o:0.3s; --max:0.7"/>
+    <circle class="star" cx="240" cy="60"  r="0.8" style="--d:6.1s; --o:1.2s; --max:0.5"/>
+    <circle class="star" cx="410" cy="180" r="1.2" style="--d:5.4s; --o:0.7s; --max:0.8"/>
+    <circle class="star" cx="560" cy="90"  r="0.7" style="--d:7.2s; --o:2.1s; --max:0.4"/>
+    <circle class="star" cx="700" cy="240" r="1"   style="--d:4.8s; --o:0.2s; --max:0.6"/>
+    <circle class="star" cx="860" cy="70"  r="0.9" style="--d:5.9s; --o:1.6s; --max:0.7"/>
+    <circle class="star" cx="990" cy="190" r="1.1" style="--d:6.6s; --o:0.9s; --max:0.5"/>
+    <circle class="star" cx="1120" cy="110" r="0.8" style="--d:4.5s; --o:2.4s; --max:0.6"/>
+    <circle class="star" cx="150" cy="380" r="0.9" style="--d:5.2s; --o:1.1s; --max:0.5"/>
+    <circle class="star" cx="330" cy="460" r="1"   style="--d:6.8s; --o:0.4s; --max:0.6"/>
+    <circle class="star" cx="520" cy="540" r="0.7" style="--d:4.9s; --o:1.9s; --max:0.4"/>
+    <circle class="star" cx="690" cy="430" r="1.2" style="--d:5.7s; --o:0.6s; --max:0.7"/>
+    <circle class="star" cx="900" cy="520" r="0.8" style="--d:6.3s; --o:2.7s; --max:0.5"/>
+    <circle class="star" cx="1080" cy="400" r="1"  style="--d:4.4s; --o:1.4s; --max:0.6"/>
+    <circle class="star" cx="100" cy="650" r="1.1" style="--d:5.5s; --o:0.8s; --max:0.6"/>
+    <circle class="star" cx="290" cy="720" r="0.8" style="--d:6.9s; --o:2.2s; --max:0.4"/>
+    <circle class="star" cx="480" cy="680" r="0.9" style="--d:4.7s; --o:0.5s; --max:0.5"/>
+    <circle class="star" cx="640" cy="760" r="1"   style="--d:5.8s; --o:1.7s; --max:0.6"/>
+    <circle class="star" cx="820" cy="700" r="0.7" style="--d:6.4s; --o:0.1s; --max:0.4"/>
+    <circle class="star" cx="1010" cy="740" r="1.2" style="--d:5.1s; --o:2.5s; --max:0.7"/>
+    <circle class="star" cx="1150" cy="620" r="0.9" style="--d:4.6s; --o:1.3s; --max:0.5"/>
+  </svg>
+</div>
+
+<div class="frame">
+
+  <header>
+    <span><span class="dot"></span>4st.space</span>
+    <span>est. on a quiet orbit</span>
+  </header>
+
+  <section class="hero">
+    <p class="index">No. 01 — Field Station</p>
+    <h1>Small instruments,<br/>pointed at the <em>noise</em>.</h1>
+    <p class="sub">A personal constellation of tools and experiments.
+    Each one built to listen carefully to something — a string, a room, a signal —
+    and report back what it hears.</p>
+
+    <div class="figure" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <g class="ring-group">
+          <ellipse class="orbit" cx="100" cy="100" rx="92" ry="34" transform="rotate(-18 100 100)"/>
+          <ellipse class="orbit-accent" cx="100" cy="100" rx="92" ry="34" transform="rotate(-18 100 100)"/>
+        </g>
+        <g class="ring-group fast">
+          <ellipse class="orbit" cx="100" cy="100" rx="66" ry="58" transform="rotate(24 100 100)"/>
+          <circle class="moon" cx="100" cy="42" r="2.2" transform="rotate(24 100 100)"/>
+        </g>
+        <circle class="orbit" cx="100" cy="100" r="20"/>
+        <circle class="planet" cx="100" cy="100" r="5"/>
+      </svg>
     </div>
+  </section>
+
+  <div class="wave-strip" aria-hidden="true">
+    <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+      <path class="wave-path" d="M0,17 Q30,17 60,17 T120,17 Q135,17 150,8 T180,26 Q195,2 210,17 T270,17 Q300,17 330,17 T390,17 Q405,17 420,11 T450,23 Q465,5 480,17 T540,17 Q570,17 600,17 T660,17 Q675,17 690,7 T720,27 Q735,3 750,17 T810,17 Q840,17 870,17 T930,17 Q945,17 960,10 T990,24 Q1005,4 1020,17 T1080,17 Q1110,17 1140,17 T1200,17"/>
+      <path class="wave-path hot" d="M0,17 Q40,17 80,17 T160,17 Q180,17 200,4 T240,30 Q260,1 280,17 T360,17 Q400,17 440,17 T520,17 Q540,17 560,6 T600,28 Q620,2 640,17 T720,17 Q760,17 800,17 T880,17 Q900,17 920,5 T960,29 Q980,3 1000,17 T1080,17 Q1120,17 1160,17 T1240,17"/>
+    </svg>
   </div>
+
+  <section class="instruments">
+    <p class="section-label">Instruments — 01</p>
+
+    <a class="card" href="https://sonoscope.4st.space">
+      <span class="num">01</span>
+      <div>
+        <h2>Sonoscope</h2>
+        <p class="meta">A sound analyser. Sub-cent tuner, live spectrum,
+        constant-Q spectrogram, chroma &amp; chord tracking — runs entirely
+        in the browser.</p>
+        <div class="eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <span class="arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke-width="1.2">
+          <path d="M2 12 L12 2 M4 2 H12 V10"/>
+        </svg>
+      </span>
+    </a>
+  </section>
+
+  <footer>
+    <span>4st.space</span>
+    <span class="coords">RA 00h 00m — listening</span>
+  </footer>
+
+</div>
+
 </body>
 </html>
