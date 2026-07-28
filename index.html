@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>4st.space</title>
-<meta name="description" content="4st.space — a quiet place." />
+<meta name="description" content="4st.space — a quiet place for tools, systems, and public notes." />
 <meta name="robots" content="index, follow" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -213,6 +213,10 @@ h1 em {
   opacity: 0.6;
 }
 .door:hover::after { transform: translateX(0); }
+.door:focus-visible {
+  outline: 1px solid var(--glow);
+  outline-offset: 7px;
+}
 .door .num {
   font-size: 0.62rem;
   letter-spacing: 0.3em;
@@ -223,6 +227,7 @@ h1 em {
   font-weight: 400;
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   letter-spacing: 0.02em;
+  white-space: nowrap;
   transition: color 0.5s ease, letter-spacing 0.5s ease;
 }
 .door:hover .name {
@@ -244,7 +249,7 @@ h1 em {
 .door.dim::after { content: none; }
 .door.dim .what { max-width: 34ch; text-align: right; line-height: 1.8; }
 
-/* tiny waveform that stirs on hover */
+/* small signals that stir on hover */
 .door .stir {
   display: flex;
   align-items: center;
@@ -293,6 +298,7 @@ footer {
 
 @media (max-width: 640px) {
   .door { flex-wrap: wrap; gap: 0.6rem 1rem; }
+  .door .name { white-space: normal; }
   .door .what { margin-left: 0; width: 100%; order: 4; }
   .firefly { display: none; }
 }
@@ -343,7 +349,7 @@ footer {
   a metric here. This space asks nothing of you, and it measures nothing
   you do. It is simply a clearing where tools and structures are kept.</p>
 
-  <nav class="paths">
+  <nav class="paths" aria-label="Projects and notes">
     <p class="label">kept here</p>
     <a class="door" href="https://sonoscope.4st.space">
       <span class="num">01</span>
@@ -351,8 +357,14 @@ footer {
       <span class="stir" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       <span class="what">an instrument for listening and tuning</span>
     </a>
-    <div class="door dim">
+    <a class="door" href="/hard-problems/">
       <span class="num">02</span>
+      <span class="name">Hard Problems</span>
+      <span class="stir" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="what">an open draft on navigating adaptive systems</span>
+    </a>
+    <div class="door dim">
+      <span class="num">03</span>
       <span class="name">&AElig;ON</span>
       <span class="what">code as topology, not text — a proof&#8209;gated
       commons for the swarm era &middot; not yet surfaced</span>
