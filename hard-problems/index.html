@@ -3,256 +3,153 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hard Problems</title>
-<meta name="description" content="Hard Problems: Compositional Navigation in Open, Partially Observable, Adaptive Systems. Draft edition.">
+<title>Hard Problems: Compositional Navigation in Open, Partially Observable, Adaptive Systems</title>
+<meta name="description" content="Hard Problems: compositional navigation in open, partially observable, adaptive systems. Draft edition.">
 <meta name="color-scheme" content="light dark">
 <style>
 :root{
-  --paper:#fbf8f2;
-  --paper-edge:#f4efe4;
-  --ink:#26231e;
-  --ink-soft:#5f584d;
-  --ink-faint:#8b8377;
-  --rule:#dcd3c3;
-  --rule-strong:#c4b9a5;
-  --stripe:#f4efe4;
-  --accent:#8a4830;
-  --nav-bg:#f6f1e7;
-  --quote-bg:#f5f0e5;
+  --paper:#fbf8f2; --paper-raise:#f5f1e8;
+  --ink:#231f1a; --ink-soft:#5d564c; --ink-faint:#8b8377;
+  --rule:#ded5c4; --rule-firm:#b9ae99;
+  --accent:#7c3a2b; --stripe:rgba(35,31,26,.032);
+  --measure:68ch; --sidebar:17.5rem;
 }
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme:dark){
   :root{
-    --paper:#1a1917;
-    --paper-edge:#141311;
-    --ink:#e3ddd1;
-    --ink-soft:#aaa294;
-    --ink-faint:#867e70;
-    --rule:#3b3833;
-    --rule-strong:#4f4a41;
-    --stripe:#211f1c;
-    --accent:#d99a74;
-    --nav-bg:#161513;
-    --quote-bg:#211f1c;
+    --paper:#17181a; --paper-raise:#1d1f21;
+    --ink:#dcd7cd; --ink-soft:#a29b8f; --ink-faint:#7d766b;
+    --rule:#34363a; --rule-firm:#4b4e53;
+    --accent:#d79b83; --stripe:rgba(255,255,255,.035);
   }
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{font-size:18px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
+  margin:0;background:var(--paper);color:var(--ink);
   font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-  font-size:18px;
-  line-height:1.65;
-  font-kerning:normal;
-  font-variant-ligatures:common-ligatures;
-  text-rendering:optimizeLegibility;
+  font-size:1rem;line-height:1.65;font-kerning:normal;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
 }
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+a:hover{border-bottom-color:var(--accent);color:var(--accent)}
 .skip{position:absolute;left:-9999px;top:0}
-.skip:focus{left:0.75rem;top:0.75rem;background:var(--nav-bg);color:var(--ink);padding:0.5rem 0.75rem;z-index:20}
-.sans{font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif}
+.skip:focus{left:.5rem;top:.5rem;background:var(--paper-raise);padding:.5rem .8rem;
+  border:1px solid var(--rule-firm);z-index:50}
 
-/* ---------- navigation ---------- */
-#toc{
-  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  background:var(--nav-bg);
-  border-bottom:1px solid var(--rule);
+/* title page ------------------------------------------------------------- */
+header.titlepage{
+  max-width:var(--measure);margin:0 auto;padding:5.5rem 1.6rem 3.2rem;
 }
-#toc summary{
-  cursor:pointer;
-  padding:0.85rem 1.25rem;
-  font-size:0.76rem;
-  font-weight:600;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--ink-soft);
-}
-#toc .toc-head{display:none}
-#toc ol{list-style:none;margin:0;padding:0}
-#toc .toc-list{padding:0 1.25rem 1.4rem;max-height:62vh;overflow-y:auto}
-#toc a{
-  display:flex;
-  gap:0.55rem;
-  text-decoration:none;
-  color:var(--ink-soft);
-  font-size:0.83rem;
-  line-height:1.35;
-  padding:0.3rem 0 0.3rem 0.65rem;
-  border-left:2px solid transparent;
-}
-#toc a:hover{color:var(--accent)}
-#toc a.active{color:var(--accent);border-left-color:var(--accent)}
-#toc .toc-num{
-  flex:0 0 1.5em;
-  color:var(--ink-faint);
-  font-variant-numeric:tabular-nums;
-  font-size:0.76rem;
-  padding-top:0.1em;
-}
-#toc .toc-sub a{font-size:0.78rem;padding-left:2.15rem;color:var(--ink-faint)}
-#toc .toc-sub a.active{color:var(--accent)}
-
-/* ---------- page frame ---------- */
-.page{padding:0 1.25rem}
-main{max-width:68ch;margin:0 auto}
-header.titlepage{max-width:68ch;margin:0 auto;padding:4rem 0 3.25rem}
-header.titlepage h1{
-  margin:0;
-  font-size:clamp(2.35rem,7vw,3.5rem);
-  font-weight:600;
-  line-height:1.08;
-  letter-spacing:-0.012em;
-}
-header.titlepage .subtitle{
-  margin:1.1rem 0 0;
-  font-size:1.1rem;
-  font-style:italic;
-  color:var(--ink-soft);
-  line-height:1.45;
-  max-width:36ch;
-}
-header.titlepage .rule{width:5rem;height:1px;background:var(--rule-strong);margin:2rem 0 1.35rem}
-header.titlepage .edition{
-  margin:0;
-  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  font-size:0.7rem;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--ink-faint);
+.booktitle{margin:0 0 .7rem;font-size:2.85rem;line-height:1.06;font-weight:600;letter-spacing:-.005em}
+.booksub{margin:0 0 2rem;font-size:1.2rem;line-height:1.4;font-style:italic;color:var(--ink-soft);max-width:34ch}
+.edition{margin:0;font-size:.82rem;font-variant-caps:all-small-caps;letter-spacing:.18em;color:var(--ink-faint)}
+header.titlepage::after{
+  content:"";display:block;width:6rem;height:1px;background:var(--rule-firm);margin:2.6rem 0 0;
 }
 
-/* ---------- chapters ---------- */
-section.chapter{padding:0 0 3.5rem}
-section.chapter+section.chapter{border-top:1px solid var(--rule);padding-top:3.25rem}
-h2{margin:0 0 1.9rem;font-weight:600}
-h2 .chap-label{
-  display:block;
-  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  font-size:0.7rem;
-  font-weight:600;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:0.75rem;
+/* table of contents ------------------------------------------------------ */
+nav#toc{max-width:var(--measure);margin:0 auto 2.5rem;padding:0 1.6rem;font-size:.86rem;line-height:1.45}
+nav#toc details{border:1px solid var(--rule);background:var(--paper-raise);padding:.3rem 1rem .6rem}
+nav#toc summary{cursor:pointer;padding:.45rem 0;list-style-position:inside}
+.toc-heading{font-variant-caps:all-small-caps;letter-spacing:.16em;font-size:.9rem;color:var(--ink-soft)}
+ol.toc-list,ol.toc-sub{list-style:none;margin:0;padding:0}
+ol.toc-list>li{margin:.42em 0}
+ol.toc-sub{margin:.3em 0 .55em 1.6rem}
+ol.toc-sub>li{margin:.22em 0}
+nav#toc a{display:flex;gap:.15rem;border:0;padding:.08rem 0 .08rem .45rem;
+  border-left:2px solid transparent;color:var(--ink-soft)}
+nav#toc a:hover{color:var(--accent)}
+nav#toc a[aria-current="true"]{color:var(--ink);border-left-color:var(--accent);font-weight:600}
+.toc-num{flex:0 0 2.1em;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.toc-text{flex:1 1 auto}
+ol.toc-sub .toc-num{flex-basis:2.6em}
+nav#toc a[aria-current="true"] .toc-num{color:var(--accent)}
+
+@media (min-width:1180px){
+  body{padding-left:var(--sidebar)}
+  nav#toc{
+    position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);max-width:none;
+    overflow-y:auto;overscroll-behavior:contain;margin:0;
+    padding:3.2rem 1.2rem 3rem 1.7rem;border-right:1px solid var(--rule);background:var(--paper);
+  }
+  nav#toc details{border:0;background:none;padding:0}
+  nav#toc summary{list-style:none;pointer-events:none;padding:0 0 1rem}
+  nav#toc summary::-webkit-details-marker{display:none}
+  nav#toc summary::marker{content:""}
 }
-h2 .chap-title{
-  display:block;
-  font-size:clamp(1.5rem,3.6vw,1.95rem);
-  line-height:1.22;
-  letter-spacing:-0.005em;
-}
-h3{margin:2.4rem 0 0.85rem;font-size:1.06rem;font-weight:600;line-height:1.35}
-p{margin:0 0 1.05em}
-p.run-on{margin-top:-0.4em}
+
+/* body ------------------------------------------------------------------- */
+main{max-width:var(--measure);margin:0 auto;padding:0 1.6rem 6rem}
+section.chapter{padding-top:1rem;scroll-margin-top:1rem}
+section.chapter+section.chapter{margin-top:4.2rem;border-top:1px solid var(--rule);padding-top:3.6rem}
+h2{margin:0 0 1.9rem;font-size:1.8rem;line-height:1.18;font-weight:600;letter-spacing:-.003em}
+.chaplabel{display:block;margin-bottom:.55rem;font-size:.8rem;font-weight:400;
+  font-variant-caps:all-small-caps;letter-spacing:.2em;color:var(--accent)}
+h3{margin:2.6rem 0 .9rem;font-size:1.1rem;font-weight:600;line-height:1.35;scroll-margin-top:1rem}
+.subnum{color:var(--ink-faint);font-weight:400;margin-right:.15em}
+p{margin:0 0 1.05em;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+main ul,main ol{margin:0 0 1.3em;padding-left:1.7rem}
+main li{margin-bottom:.5em;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+main ul{list-style:none;padding-left:1.3rem}
+main ul>li{position:relative}
+main ul>li::before{content:"";position:absolute;left:-.95rem;top:.72em;width:.3rem;height:1px;background:var(--rule-firm)}
 strong{font-weight:600}
-ul,ol{margin:0 0 1.15em;padding-left:1.55rem}
-li{margin:0 0 0.45em}
-ul.bib-list{list-style:none;padding-left:0;font-size:0.94rem}
-ul.bib-list li{padding-left:1.7rem;text-indent:-1.7rem;margin-bottom:0.62em;color:var(--ink-soft)}
+em{font-style:italic}
 
-/* ---------- epigraphs ---------- */
 blockquote{
-  margin:1.9rem 0;
-  padding:1.15rem 1.5rem;
-  background:var(--quote-bg);
-  border-left:2px solid var(--accent);
-  font-style:italic;
-  font-size:1.06rem;
-  line-height:1.55;
+  margin:2.1rem 0;padding:.2rem 0 .2rem 1.5rem;border-left:2px solid var(--accent);
+  font-size:1.06rem;font-style:italic;color:var(--ink);
 }
-blockquote p{margin:0}
+blockquote p{margin:0;text-align:left;hyphens:none}
 
-/* ---------- math ---------- */
-.math-display{margin:1.35rem 0;overflow-x:auto;overflow-y:hidden;padding:0.15rem 0}
-mjx-container[display="true"]{margin:0 !important}
+.mathblock{margin:1.5rem 0;overflow-x:auto;overflow-y:hidden;padding:.15rem 0}
 
-/* ---------- tables ---------- */
-.table-wrap{
-  margin:1.7rem 0 1.9rem;
-  overflow-x:auto;
-  border-top:1px solid var(--rule-strong);
-  border-bottom:1px solid var(--rule-strong);
-}
-table{border-collapse:collapse;width:100%;font-size:0.9rem;line-height:1.45}
-th,td{text-align:left;vertical-align:top;padding:0.62rem 0.9rem;border-bottom:1px solid var(--rule)}
-thead th{
-  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  font-size:0.67rem;
-  font-weight:600;
-  letter-spacing:0.13em;
-  text-transform:uppercase;
-  color:var(--ink-soft);
-  border-bottom:1px solid var(--rule-strong);
-  white-space:nowrap;
-}
-tbody tr:nth-child(even){background:var(--stripe)}
-tbody tr:last-child td{border-bottom:none}
+/* tables ----------------------------------------------------------------- */
+.table-wrap{margin:1.9rem 0 2.1rem;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  border-top:1px solid var(--rule-firm);border-bottom:1px solid var(--rule-firm)}
+table{border-collapse:collapse;width:100%;min-width:26rem;font-size:.88rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.6rem .85rem;border-bottom:1px solid var(--rule);
+  hyphens:auto;-webkit-hyphens:auto}
+thead th{border-bottom:1px solid var(--rule-firm);font-weight:600;font-size:.94rem;
+  font-variant-caps:all-small-caps;letter-spacing:.07em;color:var(--ink-soft)}
+tbody tr:nth-child(odd){background:var(--stripe)}
+tbody tr:last-child td{border-bottom:0}
 
-/* ---------- footer ---------- */
-footer{
-  max-width:68ch;
-  margin:0 auto;
-  padding:2.5rem 0 4rem;
-  border-top:1px solid var(--rule);
-  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  font-size:0.78rem;
-  color:var(--ink-faint);
-  line-height:1.6;
-}
-footer .foot-title{font-weight:600;color:var(--ink-soft);margin:0 0 0.2rem}
-footer p{margin:0}
+/* bibliography ----------------------------------------------------------- */
+main ul.bib{list-style:none;padding-left:0;margin-top:.4rem}
+main ul.bib>li{padding-left:1.5rem;text-indent:-1.5rem;margin-bottom:.72em;
+  font-size:.95rem;text-align:left;hyphens:none}
+main ul.bib>li::before{display:none}
 
-/* ---------- wide screens: fixed sidebar ---------- */
-@media (min-width:60rem){
-  #toc{
-    position:fixed;
-    top:0;left:0;bottom:0;
-    width:19rem;
-    overflow-y:auto;
-    border-bottom:none;
-    border-right:1px solid var(--rule);
-    background:var(--paper-edge);
-    padding:2.5rem 0;
-  }
-  #toc summary{display:none}
-  #toc .toc-head{
-    display:block;
-    padding:0 1.5rem 0.85rem;
-    margin:0 0 0.85rem;
-    border-bottom:1px solid var(--rule);
-    font-size:0.7rem;
-    font-weight:600;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-  }
-  #toc .toc-list{padding:0 1.5rem;max-height:none;overflow:visible}
-  .page{margin-left:19rem;padding:0 3rem}
-  header.titlepage{padding:6rem 0 4rem}
-}
-@media (min-width:100rem){
-  .page{padding:0 4rem}
+/* footer ----------------------------------------------------------------- */
+footer{max-width:var(--measure);margin:0 auto;padding:2.2rem 1.6rem 4rem;
+  border-top:1px solid var(--rule);color:var(--ink-faint);font-size:.85rem}
+footer p{margin:0 0 .35em;text-align:left;hyphens:none}
+footer .ftitle{font-variant-caps:all-small-caps;letter-spacing:.16em;color:var(--ink-soft)}
+
+@media (max-width:40rem){
+  html{font-size:17px}
+  p,main li{text-align:left;hyphens:none}
+  .booktitle{font-size:2.2rem}
+  h2{font-size:1.55rem}
 }
 
-/* ---------- print ---------- */
+/* print ------------------------------------------------------------------ */
 @media print{
-  :root{
-    --paper:#fff;--paper-edge:#fff;--ink:#000;--ink-soft:#1c1c1c;--ink-faint:#3c3c3c;
-    --rule:#b6b6b6;--rule-strong:#6f6f6f;--stripe:#f2f2f2;--accent:#000;--quote-bg:#f4f4f4;
-  }
-  body{background:#fff;color:#000;font-size:11pt;line-height:1.5}
-  #toc,.skip{display:none !important}
-  .page{margin:0;padding:0}
-  main,header.titlepage,footer{max-width:none}
-  header.titlepage{padding:0 0 2rem}
-  section.chapter{break-before:page;border-top:none;padding:0 0 1.5rem}
-  section.chapter:first-of-type{break-before:avoid}
-  h2,h3{break-after:avoid}
-  p,li,blockquote{orphans:2;widows:2}
-  .table-wrap,table,tr,td,th,blockquote,.math-display{break-inside:avoid}
+  :root{--paper:#fff;--ink:#000;--ink-soft:#222;--ink-faint:#444;
+        --rule:#999;--rule-firm:#000;--accent:#000;--stripe:transparent}
+  html{font-size:11pt}
+  body{padding:0;background:#fff;color:#000}
+  nav#toc,.skip{display:none!important}
+  main,header.titlepage,footer{max-width:none;padding-left:0;padding-right:0}
+  header.titlepage{padding-top:2rem;break-after:page;page-break-after:always}
+  section.chapter+section.chapter{break-before:page;page-break-before:always;
+    border-top:0;margin-top:0;padding-top:0}
+  h2,h3{break-after:avoid;page-break-after:avoid}
+  .table-wrap,table,tr,td,th,blockquote,.mathblock,figure{break-inside:avoid;page-break-inside:avoid}
   .table-wrap{overflow:visible}
-  footer{break-before:page}
-  a{color:#000;text-decoration:none}
+  tbody tr:nth-child(odd){background:transparent}
+  a{border-bottom:0}
 }
 </style>
 <script>
@@ -260,14 +157,20 @@ window.MathJax = {
   tex: {
     inlineMath: [['\\(', '\\)']],
     displayMath: [['\\[', '\\]']],
-    processEscapes: false,
-    processEnvironments: false
+    processEnvironments: true,
+    macros: {
+      llbracket: '[\\![',
+      rrbracket: ']\\!]'
+    }
   },
-  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
-  chtml: { displayAlign: 'left', displayIndent: '0' }
+  options: {
+    skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+    ignoreHtmlClass: 'no-mathjax'
+  },
+  chtml: { displayAlign: 'center', scale: 1.0 }
 };
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
 <style id="lean-layer-css">
 details.lean{margin:.6rem 0 1.15rem;border-left:3px solid rgba(160,90,60,.55);background:rgba(127,127,127,.07);border-radius:0 6px 6px 0;font-size:.85em}
 details.lean>summary{cursor:pointer;padding:.45rem .85rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;opacity:.78;list-style:none}
@@ -280,61 +183,59 @@ details.lean code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospa
 </style>
 </head>
 <body>
-<a class="skip" href="#ch0">Skip to the text</a>
-<nav id="toc" aria-label="Table of contents">
-<details id="toc-details" open>
-<summary>Contents</summary>
-<p class="toc-head">Hard Problems</p>
-<ol class="toc-list">
-<li><a href="#ch0"><span class="toc-num">0</span><span class="toc-text">Scope, conventions, and the central claim</span></a>
-</li>
-<li><a href="#ch1"><span class="toc-num">1</span><span class="toc-text">The problem object</span></a>
-<ol class="toc-sub">
-<li><a href="#ch1-1-1-hardness-is-a-profile-not-a-scalar"><span class="toc-num">1.1</span><span class="toc-text">Hardness is a profile, not a scalar</span></a></li>
-</ol>
-</li>
-<li><a href="#ch2"><span class="toc-num">2</span><span class="toc-text">Formulation: objectives, constraints, and governance</span></a>
-</li>
-<li><a href="#ch3"><span class="toc-num">3</span><span class="toc-text">Observability: state estimation under model error</span></a>
-</li>
-<li><a href="#ch4"><span class="toc-num">4</span><span class="toc-text">Agency: constrained reachability and authority</span></a>
-</li>
-<li><a href="#ch5"><span class="toc-num">5</span><span class="toc-text">Latency: delay, gain, and the cost of fast revision</span></a>
-</li>
-<li><a href="#ch6"><span class="toc-num">6</span><span class="toc-text">Ruggedness: barriers in policy space</span></a>
-</li>
-<li><a href="#ch7"><span class="toc-num">7</span><span class="toc-text">Categorical re-description: composition, interfaces, and semantic preservation</span></a>
-<ol class="toc-sub">
-<li><a href="#ch7-7-1-open-systems-and-structured-cospans"><span class="toc-num">7.1</span><span class="toc-text">Open systems and structured cospans</span></a></li>
-<li><a href="#ch7-7-2-functorial-semantics"><span class="toc-num">7.2</span><span class="toc-text">Functorial semantics</span></a></li>
-<li><a href="#ch7-7-3-refinement-and-2-cells"><span class="toc-num">7.3</span><span class="toc-text">Refinement and 2-cells</span></a></li>
-<li><a href="#ch7-7-4-ontological-revision-when-abstraction-is-not-enough"><span class="toc-num">7.4</span><span class="toc-text">Ontological revision: when abstraction is not enough</span></a></li>
-<li><a href="#ch7-7-5-the-lowest-dimensional-rule"><span class="toc-num">7.5</span><span class="toc-text">The lowest-dimensional rule</span></a></li>
-</ol>
-</li>
-<li><a href="#ch8"><span class="toc-num">8</span><span class="toc-text">Reflexivity: when control becomes a game</span></a>
-</li>
-<li><a href="#ch9"><span class="toc-num">9</span><span class="toc-text">Probes: constrained system identification</span></a>
-</li>
-<li><a href="#ch10"><span class="toc-num">10</span><span class="toc-text">The navigation contract and stopping rule</span></a>
-</li>
-<li><a href="#ch11"><span class="toc-num">11</span><span class="toc-text">A worked case: the reliability metric</span></a>
-</li>
-<li><a href="#bib"><span class="toc-num"></span><span class="toc-text">Bibliographic anchors for the next draft</span></a>
-</li>
-</ol>
-</details>
-</nav>
-<div class="page">
+<a class="skip" href="#main">Skip to the text</a>
+
 <header class="titlepage">
-<h1>Hard Problems</h1>
-<p class="subtitle">Compositional Navigation in Open, Partially Observable, Adaptive Systems</p>
-<div class="rule"></div>
+<h1 class="booktitle">Hard Problems</h1>
+<p class="booksub">Compositional Navigation in Open, Partially Observable, Adaptive Systems</p>
 <p class="edition">Draft edition</p>
 </header>
-<main>
-<section id="ch0" class="chapter" aria-labelledby="ch0-h">
-<h2 id="ch0-h"><span class="chap-label">Chapter 0</span><span class="chap-title">Scope, conventions, and the central claim</span></h2>
+
+<nav id="toc" aria-label="Table of contents">
+<details id="toc-details" open>
+<summary><span class="toc-heading">Contents</span></summary>
+<ol class="toc-list">
+<li><a href="#ch0" data-target="ch0"><span class="toc-num">0</span><span class="toc-text">Scope, conventions, and the central claim</span></a>
+</li>
+<li><a href="#ch1" data-target="ch1"><span class="toc-num">1</span><span class="toc-text">The problem object</span></a>
+<ol class="toc-sub">
+<li><a href="#sec-1-1" data-target="sec-1-1"><span class="toc-num">1.1</span><span class="toc-text">Hardness is a profile, not a scalar</span></a></li>
+</ol>
+</li>
+<li><a href="#ch2" data-target="ch2"><span class="toc-num">2</span><span class="toc-text">Formulation: objectives, constraints, and governance</span></a>
+</li>
+<li><a href="#ch3" data-target="ch3"><span class="toc-num">3</span><span class="toc-text">Observability: state estimation under model error</span></a>
+</li>
+<li><a href="#ch4" data-target="ch4"><span class="toc-num">4</span><span class="toc-text">Agency: constrained reachability and authority</span></a>
+</li>
+<li><a href="#ch5" data-target="ch5"><span class="toc-num">5</span><span class="toc-text">Latency: delay, gain, and the cost of fast revision</span></a>
+</li>
+<li><a href="#ch6" data-target="ch6"><span class="toc-num">6</span><span class="toc-text">Ruggedness: barriers in policy space</span></a>
+</li>
+<li><a href="#ch7" data-target="ch7"><span class="toc-num">7</span><span class="toc-text">Categorical re-description: composition, interfaces, and semantic preservation</span></a>
+<ol class="toc-sub">
+<li><a href="#sec-7-1" data-target="sec-7-1"><span class="toc-num">7.1</span><span class="toc-text">Open systems and structured cospans</span></a></li>
+<li><a href="#sec-7-2" data-target="sec-7-2"><span class="toc-num">7.2</span><span class="toc-text">Functorial semantics</span></a></li>
+<li><a href="#sec-7-3" data-target="sec-7-3"><span class="toc-num">7.3</span><span class="toc-text">Refinement and 2-cells</span></a></li>
+<li><a href="#sec-7-4" data-target="sec-7-4"><span class="toc-num">7.4</span><span class="toc-text">Ontological revision: when abstraction is not enough</span></a></li>
+<li><a href="#sec-7-5" data-target="sec-7-5"><span class="toc-num">7.5</span><span class="toc-text">The lowest-dimensional rule</span></a></li>
+</ol>
+</li>
+<li><a href="#ch8" data-target="ch8"><span class="toc-num">8</span><span class="toc-text">Reflexivity: when control becomes a game</span></a>
+</li>
+<li><a href="#ch9" data-target="ch9"><span class="toc-num">9</span><span class="toc-text">Probes: constrained system identification</span></a>
+</li>
+<li><a href="#ch10" data-target="ch10"><span class="toc-num">10</span><span class="toc-text">The navigation contract and stopping rule</span></a>
+</li>
+<li><a href="#ch11" data-target="ch11"><span class="toc-num">11</span><span class="toc-text">A worked case: the reliability metric</span></a>
+</li>
+<li><a href="#bib" data-target="bib"><span class="toc-text">Bibliographic anchors for the next draft</span></a>
+</li>
+</ol></details></nav>
+
+<main id="main">
+<section class="chapter" id="ch0" aria-labelledby="ch0-h">
+<h2 id="ch0-h"><span class="chaplabel">Chapter 0</span>Scope, conventions, and the central claim</h2>
 <p>This book studies a family of decision problems in which an intervention cannot be selected, evaluated, or safely composed from the representation presently available to the decision-maker.</p>
 <p>It does <strong>not</strong> claim that a company, a city, a software service, and an intimate relationship instantiate the same mathematical object. They do not. It claims something narrower: each may instantiate one or more failure modes familiar from partially observed control, constrained reachability, multi-objective optimization, compositional systems theory, and dynamic games. A mathematical model is useful only if it identifies a discriminating observation, an admissible intervention, a constraint, or a compositional invariant that informal reasoning concealed.</p>
 <p>Reasoning by analogy across such systems is itself an evidence-bearing act: transfer succeeds when the structural mapping is made explicit and fails when the resemblance is ornamental. Gick and Holyoak showed that in the laboratory; this book takes it as its brief.</p>
@@ -344,94 +245,41 @@ details.lean code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospa
 <p>All state spaces may be finite, continuous, or hybrid. Equations are written in finite-dimensional notation for readability; the intended objects are measurable spaces and stochastic kernels when that distinction matters. Throughout, \(H\) denotes a planning or evaluation horizon; \(T\) is reserved for the transition kernel. Any application to people requires additional constraints that do not follow from the mathematics: consent, legitimacy, duty of care, rights, and the distribution of harm.</p>
 <p>The companion formalization covers the load-bearing definitions of chapters 1 through 10, in Lean 4 over mathlib. It is not an ornament; every place where it forced a choice that the prose had left open is now stated explicitly in the text. Chapter 11 runs the entire apparatus on one ordinary case, so the reader can see what each instrument reads when it is actually applied.</p>
 </section>
-<section id="ch1" class="chapter" aria-labelledby="ch1-h">
-<h2 id="ch1-h"><span class="chap-label">Chapter 1</span><span class="chap-title">The problem object</span></h2>
+<section class="chapter" id="ch1" aria-labelledby="ch1-h">
+<h2 id="ch1-h"><span class="chaplabel">Chapter 1</span>The problem object</h2>
 <p>The chapters that follow all reason about one formal object, defined once here and reused without restatement.</p>
 <p>Let the focal agent be indexed by \(0\), with other agents indexed by \(i \in N \setminus \{0\}\). Write \(a_{-0} = (a_i)_{i \neq 0}\) for a joint action of the non-focal agents and \(\Pi_{-0} = \prod_{i\neq 0}\Pi_i\) for their joint policy class; this notation is used throughout. A hard-problem instance is represented as</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \mathcal{P}
 =
 (S, \{A_i\}_{i\in N}, \{O_i,Z_{i,\theta}\}_{i\in N}, T_\theta, \{G_i\}_{i\in N}, C, \{\Pi_i\}_{i\in N}, \Theta).
 \]</div>
 <p>The terms are:</p>
-<ul>
-<li>\(S\): state space;</li>
-<li>\(A_i(s)\): admissible actions for agent \(i\) at state \(s\);</li>
-<li>\(O_i\): observation space for agent \(i\);</li>
-<li>\(Z_{i,\theta}(o_i\mid s)\): observation kernel;</li>
-<li>\(T_\theta(s'\mid s,(a_i)_{i\in N})\): transition kernel, parameterized by \(\theta\in\Theta\);</li>
-<li>\(G_i\): agent \(i\)'s objective; \(G_0\), written \(G\) when no confusion arises, is the focal objective of chapter 2, and the non-focal \(G_i\) supply the realized payoffs that drive adaptation in chapter 8. Nothing requires the \(G_i\) to be known to the focal agent; chapter 8's counter-moves are hard to anticipate precisely because they are not;</li>
-<li>\(C\subseteq S\): a safe or feasible set, possibly supplemented by path constraints;</li>
-<li>\(\Pi_i\): the policy class available to agent \(i\);</li>
-<li>\(\Theta\): the current model class, encoding uncertainty about the transition and observation kernels.</li>
-</ul>
+<ul><li>\(S\): state space;</li><li>\(A_i(s)\): admissible actions for agent \(i\) at state \(s\);</li><li>\(O_i\): observation space for agent \(i\);</li><li>\(Z_{i,\theta}(o_i\mid s)\): observation kernel;</li><li>\(T_\theta(s'\mid s,(a_i)_{i\in N})\): transition kernel, parameterized by \(\theta\in\Theta\);</li><li>\(G_i\): agent \(i\)'s objective; \(G_0\), written \(G\) when no confusion arises, is the focal objective of chapter 2, and the non-focal \(G_i\) supply the realized payoffs that drive adaptation in chapter 8. Nothing requires the \(G_i\) to be known to the focal agent; chapter 8's counter-moves are hard to anticipate precisely because they are not;</li><li>\(C\subseteq S\): a safe or feasible set, possibly supplemented by path constraints;</li><li>\(\Pi_i\): the policy class available to agent \(i\);</li><li>\(\Theta\): the current model class, encoding uncertainty about the transition and observation kernels.</li></ul>
 <p>At time \(t\), the system evolves as</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 s_{t+1}\sim T_{\theta}(\,\cdot\mid s_t,a_{0,t},a_{-0,t}),
 \qquad
 o_{i,t+1}\sim Z_{i,\theta}(\,\cdot\mid s_{t+1}),
 \]</div>
-<p class="run-on">where \(\theta\in\Theta\) is fixed but unknown. The focal agent acts on an information history</p>
-<div class="math-display">\[
+<p>where \(\theta\in\Theta\) is fixed but unknown. The focal agent acts on an information history</p>
+<div class="mathblock">\[
 h_t^0=(o_{0,0},a_{0,0},\ldots,o_{0,t}),
 \]</div>
-<p class="run-on">not on the unobserved state. A policy is a map \(\pi_0:h_t^0\mapsto \Delta(A_0)\).</p>
+<p>not on the unobserved state. A policy is a map \(\pi_0:h_t^0\mapsto \Delta(A_0)\).</p>
 <p><strong>Uncertainty is not drift.</strong> \(\Theta\) encodes epistemic uncertainty: a fixed \(\theta\) the agent does not know but can in principle learn. Non-stationarity is a different phenomenon: a parameter \(\theta_t\) that changes while you study it. Conflating the two corrupts both probing (chapter 9 assumes the target of identification holds still) and belief updating (chapter 3 conditions on a fixed law). When drift is real, model it explicitly, in one of two ways: as dynamics on the parameter, \(\theta_{t+1}=\varphi(\theta_t,\xi_t)\) with \(\varphi\) itself in the model class, or as reflexivity (chapter 8), where the apparent drift is other agents' adaptation and can be re-encoded as state. In this book \(\theta\) is fixed unless a chapter says otherwise.</p>
 <p><strong>Admissibility must be checkable.</strong> The admissible set \(A_0(s)\) depends on the state, which the focal agent cannot see; a history-typed policy cannot verify its own admissibility against it. The problem statement must therefore satisfy one of three conditions: (a) \(A_0\) is constant; (b) \(A_0\) is measurable with respect to the observation history, so the agent can always tell which actions are open; or (c) admissibility is defined on beliefs, \(A_0(b)\). Otherwise the policy class \(\Pi_0\) is ill-typed. The practical reading matters: "what am I permitted to try, given what I can see" is itself an observability question, and chapter 4 treats the gap between apparent and actual action sets as a first-class diagnosis.</p>
 <p>This is deliberately broader than a POMDP. If \(a_{-0,t}\) follows a fixed exogenous law, the model can reduce to a POMDP. If other agents optimize, learn, bargain, or resist, it is closer to a partially observable stochastic game. If the objective is contested, the unresolved issue is prior to either formulation.</p>
 <p>The problem object descends from Simon's ill-structured problem, and its partially observed skeleton follows the POMDP synthesis of Kaelbling, Littman, and Cassandra. Chapter 3 and chapter 10 return to each in turn.</p>
-<h3 id="ch1-1-1-hardness-is-a-profile-not-a-scalar">1.1 Hardness is a profile, not a scalar</h3>
+<h3 id="sec-1-1"><span class="subnum">1.1</span> Hardness is a profile, not a scalar</h3>
 <p>There is no universal scalar \(H(\mathcal{P})\) that measures how hard a human problem is. The relevant output is a hardness profile:</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \mathsf{H}(\mathcal{P})
 =
 (\mathsf{F},\mathsf{O},\mathsf{A},\mathsf{L},\mathsf{Ru},\mathsf{Re},\mathsf{X}),
 \]</div>
-<p class="run-on">where the terms denote formulation, observability, agency, latency, ruggedness, reversibility, and reflexivity. Each term is a diagnostic claim, supported by evidence, not a personality label or a score out of ten.</p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Dimension</th>
-<th scope="col">Formal locus</th>
-<th scope="col">Question</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Formulation \(\mathsf{F}\)</td>
-<td>\(G,C\)</td>
-<td>Is the objective coherent, feasible, and legitimately chosen?</td>
-</tr>
-<tr>
-<td>Observability \(\mathsf{O}\)</td>
-<td>\(Z,\Theta\)</td>
-<td>Can observations distinguish states requiring different actions?</td>
-</tr>
-<tr>
-<td>Agency \(\mathsf{A}\)</td>
-<td>\(A_0,T,C\)</td>
-<td>Is the desired set reachable by admissible action?</td>
-</tr>
-<tr>
-<td>Latency \(\mathsf{L}\)</td>
-<td>\(T,Z\)</td>
-<td>When does an intervention become observable and evaluable?</td>
-</tr>
-<tr>
-<td>Ruggedness \(\mathsf{Ru}\)</td>
-<td>\(E,J\)</td>
-<td>Do all admissible routes to better configurations pass through worse ones first?</td>
-</tr>
-<tr>
-<td>Reversibility \(\mathsf{Re}\)</td>
-<td>\(A_0,T,C\)</td>
-<td>What is the cost of returning to an acceptable region after error?</td>
-</tr>
-<tr>
-<td>Reflexivity \(\mathsf{X}\)</td>
-<td>\(T,\Pi_{-0},\Theta\)</td>
-<td>How do other agents alter the system in response?</td>
-</tr>
-</tbody></table></div>
+<p>where the terms denote formulation, observability, agency, latency, ruggedness, reversibility, and reflexivity. Each term is a diagnostic claim, supported by evidence, not a personality label or a score out of ten.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Dimension</th><th scope="col">Formal locus</th><th scope="col">Question</th></tr></thead><tbody><tr><td>Formulation \(\mathsf{F}\)</td><td>\(G,C\)</td><td>Is the objective coherent, feasible, and legitimately chosen?</td></tr><tr><td>Observability \(\mathsf{O}\)</td><td>\(Z,\Theta\)</td><td>Can observations distinguish states requiring different actions?</td></tr><tr><td>Agency \(\mathsf{A}\)</td><td>\(A_0,T,C\)</td><td>Is the desired set reachable by admissible action?</td></tr><tr><td>Latency \(\mathsf{L}\)</td><td>\(T,Z\)</td><td>When does an intervention become observable and evaluable?</td></tr><tr><td>Ruggedness \(\mathsf{Ru}\)</td><td>\(E,J\)</td><td>Do all admissible routes to better configurations pass through worse ones first?</td></tr><tr><td>Reversibility \(\mathsf{Re}\)</td><td>\(A_0,T,C\)</td><td>What is the cost of returning to an acceptable region after error?</td></tr><tr><td>Reflexivity \(\mathsf{X}\)</td><td>\(T,\Pi_{-0},\Theta\)</td><td>How do other agents alter the system in response?</td></tr></tbody></table></div>
 <p>The coordinates are developed in turn: formulation in chapter 2, observability in chapter 3, agency in chapter 4, latency in chapter 5, ruggedness in chapter 6, reflexivity in chapter 8. Reversibility is treated inside chapter 4 (recovery is reachability of the acceptable region, asked backwards) and carries its own weight in the worked case of chapter 11.</p>
 <p>The tuple's arity is presentation, not commitment. The coordinates are not seven primitive things. Agency, reversibility, and ruggedness are one diagnostic, constrained reachability, evaluated at three re-descriptions of the same problem: the state system forward, the state system from the states an error would leave you in, and the configuration graph, where the barrier sits below a depth exactly when the target is reachable through the corresponding superlevel region (machine-checked). Latency is observability with a clock: an infinite observability lag against a comparison is precisely an observability failure for that pair (machine-checked). Reflexivity is observability and agency on the augmented system of chapter 8. Formulation alone resists absorption, correctly: it is governance, prior to the system. The profile is therefore an indexed family of diagnostic claims, and extending it means adding an index point, not renegotiating an arity. No higher-dimensional structure is needed for this bookkeeping; by chapter 7's own lowest-dimension rule, a family indexed by re-descriptions is one-dimensional. The genuinely higher question, whether the diagnosis of a composite restricts to the diagnoses of its parts, is chapter 7's, and its answer is no for exactly the properties one would most like it for.</p>
 <details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_lt_iff_superlevel</summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
@@ -471,16 +319,16 @@ theorem obsLag_ne_top_iff {dist : Ω → Ω → ℝ≥0∞} {obs : A → ℕ →
 <p>Taxonomies of hardness embed into the profile rather than compete with it. Rittel and Webber's wicked problems concentrate on \(\mathsf{F}\) and \(\mathsf{X}\) with the stopping rule left open, which chapter 10 answers by engineering one. The "super wicked" refinement of Levin, Cashore, Bernstein, and Auld adds four traits, and each is a coordinate read under pressure: a hard deadline on a solution is \(\mathsf{L}\), the absence of a central authority is \(\mathsf{A}\), solvers who are also causing the problem are \(\mathsf{X}\), and present policies that impede future progress are \(\mathsf{Re}\) read forward. What the profile adds to such lists is that its readings come with diagnostics, and, where the companion reaches, theorems.</p>
 <p>The first practical deliverable of the book is a <strong>model ledger</strong>. For every important term, record: the current assumption, evidence for it, competing models, the damage if wrong, and the next observation that would update it. Unwritten assumptions are not absent; they are merely unauditable.</p>
 </section>
-<section id="ch2" class="chapter" aria-labelledby="ch2-h">
-<h2 id="ch2-h"><span class="chap-label">Chapter 2</span><span class="chap-title">Formulation: objectives, constraints, and governance</span></h2>
+<section class="chapter" id="ch2" aria-labelledby="ch2-h">
+<h2 id="ch2-h"><span class="chaplabel">Chapter 2</span>Formulation: objectives, constraints, and governance</h2>
 <p>Optimization begins only after an objective has been specified. Hard problems often begin before that point.</p>
 <p>Let</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 G:S\rightarrow\mathbb{R}^k
 \]</div>
-<p class="run-on">be a vector-valued objective. For a housing system, its coordinates may include availability, affordability, location, emissions, fiscal sustainability, and displacement risk. For an organization, they may include revenue, retention, safety, reliability, learning, and equity.</p>
+<p>be a vector-valued objective. For a housing system, its coordinates may include availability, affordability, location, emissions, fiscal sustainability, and displacement risk. For an organization, they may include revenue, retention, safety, reliability, learning, and equity.</p>
 <p>For a fixed model \(\theta\), a policy \(\pi\) is evaluated by its expected return vector</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 J^\pi_\theta(s_0)
 =
 \mathbb{E}_{\theta,\pi}
@@ -490,11 +338,7 @@ J^\pi_\theta(s_0)
 \right].
 \]</div>
 <p><strong>Aggregating over the model class.</strong> A bare set \(\Theta\) supports no expectation. Three readings of "the value of \(\pi\) under model uncertainty" carry this book, and each chapter names the one it uses:</p>
-<ol>
-<li><strong>per-model</strong>: report the family \(\{J^\pi_\theta\}_{\theta\in\Theta}\) and reason about it directly;</li>
-<li><strong>robust</strong>: order policies by their worst case over \(\Theta\) (or over a credal set of priors);</li>
-<li><strong>Bayesian</strong>: fix a prior \(\mu\) on \(\Theta\) and integrate, \(J^\pi = \mathbb{E}_{\theta\sim\mu}\,J^\pi_\theta\).</li>
-</ol>
+<ol><li><strong>per-model</strong>: report the family \(\{J^\pi_\theta\}_{\theta\in\Theta}\) and reason about it directly;</li><li><strong>robust</strong>: order policies by their worst case over \(\Theta\) (or over a credal set of priors);</li><li><strong>Bayesian</strong>: fix a prior \(\mu\) on \(\Theta\) and integrate, \(J^\pi = \mathbb{E}_{\theta\sim\mu}\,J^\pi_\theta\).</li></ol>
 <p>The list is a working set, not a taxonomy, and it is not exhaustive. Ordering by the worst case over a credal set of priors is Gilboa and Schmeidler's maxmin expected utility; working per-model across a scenario ensemble is Robust Decision Making (Lempert, Popper, and Bankes), which then layers a regret criterion on top, itself a further way to aggregate and not one of the three; info-gap robustness (Ben-Haim), which reports the largest uncertainty horizon over which a satisficing outcome is still guaranteed, is yet another; and a survey of the field counts roughly a dozen robustness metrics that rank the same policies differently (McPhail et al.). The obligation this chapter imposes is declaring which reading is in force, not choosing from this particular menu.</p>
 <p>The choice is consequential: chapter 4's chance constraint quantifies differently under each, and chapter 9's expected information gain is only defined under the Bayesian reading. The choice is also normative, because it decides whose scenarios count and how much pessimism is owed to the people bearing the risk; it belongs in the ledger.</p>
 <p>The discount factor \(\gamma\) and horizon \(H\) are commitments of the same kind. A discount rate is a statement about intertemporal trade-offs: who bears costs, and when. It does not become innocent by being conventional. Record both in the formulation ledger next to the weights below.</p>
@@ -536,22 +380,12 @@ theorem scalarize_lt_scalarize {w u v : ReturnVec k}
   exact Finset.sum_lt_sum
     (fun i _ =&gt; mul_le_mul_of_nonneg_left (hle i) (hw i).le)
     ⟨i₀, Finset.mem_univ _, mul_lt_mul_of_pos_left hlt (hw i₀)⟩</code></pre></details>
-<h3 id="ch2-diagnostic-formulation-failure">Diagnostic: formulation failure</h3>
+<h3 id="sec-2-diagnostic-formulation-failure">Diagnostic: formulation failure</h3>
 <p>Fix a set \(W\) of weight vectors defensible to the affected parties (the "plausible" weights; naming \(W\) explicitly is part of the formulation). A formulation is inadequate when any of the following holds:</p>
-<ol>
-<li>There exist viable policies \(\pi,\pi'\) that reverse their ranking under weights in \(W\), for the declared reading of the return.</li>
-<li>The target set is empty under the known constraints: \(G^{-1}(\text{acceptable})\cap C=\varnothing\).</li>
-<li>Different stakeholders have non-nested feasible sets or constraints.</li>
-<li>The act of intervention changes the goal itself, such as when a city's definition of "success" shifts after displacement becomes observable.</li>
-</ol>
+<ol><li>There exist viable policies \(\pi,\pi'\) that reverse their ranking under weights in \(W\), for the declared reading of the return.</li><li>The target set is empty under the known constraints: \(G^{-1}(\text{acceptable})\cap C=\varnothing\).</li><li>Different stakeholders have non-nested feasible sets or constraints.</li><li>The act of intervention changes the goal itself, such as when a city's definition of "success" shifts after displacement becomes observable.</li></ol>
 <p>Checkland insisted that a problem situation be formulated only after its competing Weltanschauungen are on the table, and that formulation close on accommodation rather than consensus. (The word "mess," often attached to his method, is Ackoff's.) Operations research walked the same route under the name problem structuring methods: when no single uncontested formulation exists, model the situation with the stakeholders rather than for them, and let the model host a negotiation about what needs to change (Rosenhead and Mingers). Ostrom's design principles name what makes shared systems governable without central control: explicit boundaries, collective-choice arrangements, cheap conflict resolution, nested authority. Steps 2 and 3 below are their procedural shadow.</p>
-<h3 id="ch2-procedure-move-from-optimization-to-governance">Procedure: move from optimization to governance</h3>
-<ol>
-<li>State the objective vector and the hard constraints separately.</li>
-<li>Identify the decision rule: weighted aggregation, lexicographic priority, minimax regret, Pareto selection, or negotiated settlement.</li>
-<li>Name who has standing to choose the rule, the discount, and the horizon, and who bears the costs of their errors.</li>
-<li>Record unresolved conflict as conflict. Do not hide it inside a coefficient.</li>
-</ol>
+<h3 id="sec-2-procedure-move-from-optimization-to-governance">Procedure: move from optimization to governance</h3>
+<ol><li>State the objective vector and the hard constraints separately.</li><li>Identify the decision rule: weighted aggregation, lexicographic priority, minimax regret, Pareto selection, or negotiated settlement.</li><li>Name who has standing to choose the rule, the discount, and the horizon, and who bears the costs of their errors.</li><li>Record unresolved conflict as conflict. Do not hide it inside a coefficient.</li></ol>
 <p>A careful reader will object that "governance" functions here as an exogenous oracle: a black box outside the state space that resolves incomparabilities on demand. The objection conflates two things. Governance as <em>dynamics</em> is endogenous: the weights and rule in force are state, they drift and are contested, and the augmentation of chapter 8 internalizes them exactly as it internalizes other agents' policies (machine-checked, the same marginal theorem). Chapter 11's case does this in miniature: the bonus rule is a state coordinate the analysis changed. Governance as <em>justification</em> is exogenous by design: no augmentation turns "legitimate" into a theorem, and a formalism that claimed to compute legitimacy would be an instrument of the very laundering this chapter warns against. The oracle is not a gap in the model; it is the model declining to overclaim. (Governance-as-dynamics has its own ancestor: Beer's viable system model treats the rule-choosing function as one more subsystem to be designed, monitored, and starved of none of its variety.)</p>
 <details class="lean"><summary>Lean proof (Dynamics.lean): governedStep_fst</summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Governance as dynamics: reading the policy coordinate `P` of
@@ -564,16 +398,16 @@ theorem governedStep_fst (T : S → A → P → PMF S) (U : P → A → P)
     (sp : S × P) (a : A) :
     (extendStep T U sp a).map Prod.fst = T sp.1 a sp.2 :=
   extendStep_fst T U sp a</code></pre></details>
-<h3 id="ch2-failure-condition">Failure condition</h3>
+<h3 id="sec-2-failure-condition">Failure condition</h3>
 <p>An objective function can be internally consistent and still be politically or ethically illegitimate. Formal precision is not consent.</p>
 </section>
-<section id="ch3" class="chapter" aria-labelledby="ch3-h">
-<h2 id="ch3-h"><span class="chap-label">Chapter 3</span><span class="chap-title">Observability: state estimation under model error</span></h2>
+<section class="chapter" id="ch3" aria-labelledby="ch3-h">
+<h2 id="ch3-h"><span class="chaplabel">Chapter 3</span>Observability: state estimation under model error</h2>
 <p>Two states may look identical to an agent while requiring different actions. This is the operational core of an observability problem.</p>
 <p>That a decision-maker must maintain a model at all is the cybernetic inheritance: Conant and Ashby's good-regulator theorem, that every good regulator of a system must be a model of that system, is the ancestor of this chapter's discipline of countermodels. The citation owes its reader a caveat: as proved in 1970 the theorem delivers only extensional equivalence to a model, under perfect state information, a reading weak enough to be nearly vacuous, and the repairs are recent and pull in opposite directions. Wentworth's information-bottleneck reformulation recovers conditions under which a good regulator must genuinely encode a posterior; Virgo, Biehl, Baltieri, and Capucci generalize the other way, making the model observer-relative, imposed on the regulator from outside rather than found inside it. Rosen's anticipatory systems carry the point further: a system that acts on a model of its future is steered by that model's errors. The belief-state formulation below follows Kaelbling, Littman, and Cassandra's synthesis; the sufficiency of the belief state for the history is Åström's result.</p>
 <p>A maintained model is a pair \(M=(\theta,\pi_{-0})\). <strong>Standing assumption:</strong> the non-focal policies in \(M\) are Markov, functions of the current state. This is what licenses folding them into the kernels below. When other agents are adaptive, their policies are history-dependent and their internal states become latent variables; the belief machinery of this chapter is then unsound until those internal states are added to the state space. Chapter 8 gives the augmentation, and the two chapters should be read as a loop: reflexivity is exactly what breaks the naive belief update. That an agent modeling a system it sits inside faces exactly this regress is the embedded-agency problem (Demski and Garrabrant), and the loop is this book's finite-depth answer to it.</p>
 <p>Define observational equivalence for the focal agent by</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 s \equiv_{0,M} s'
 \quad\Longleftrightarrow\quad
 \mathbb{P}_{\theta,\pi_0,\pi_{-0}}
@@ -582,7 +416,7 @@ s \equiv_{0,M} s'
 \mathbb{P}_{\theta,\pi_0,\pi_{-0}}
 (o_{0,0:t}\mid s')
 \]</div>
-<p class="run-on">for every admissible probing policy \(\pi_0\) and every finite horizon \(t\). This is an equivalence relation (machine-checked). Under model uncertainty, the analyst can require the relation to hold for every live \(M\), or reason with posterior-predictive distinguishability instead. Either way it is deliberately stronger than "the dashboard values match."</p>
+<p>for every admissible probing policy \(\pi_0\) and every finite horizon \(t\). This is an equivalence relation (machine-checked). Under model uncertainty, the analyst can require the relation to hold for every live \(M\), or reason with posterior-predictive distinguishability instead. Either way it is deliberately stronger than "the dashboard values match."</p>
 <details class="lean"><summary>Lean proof (Observability.lean): ObsEquiv, obsEquiv_equivalence</summary><pre><code>-- LeanTest/HardProblems/Observability.lean
 /-- Chapter 3&#x27;s observational equivalence `s ≡_{0,M} s&#x27;`: no admissible
 probing policy can distinguish the two states at any finite horizon. -/
@@ -598,7 +432,7 @@ theorem obsEquiv_equivalence (M : POSystem S A O) : Equivalence (ObsEquiv M) whe
   trans h₁ h₂ := fun π n =&gt; (h₁ π n).trans (h₂ π n)</code></pre></details>
 <p>The relation has a control-theoretic ancestor that deserves its name: it is Hermann and Krener's indistinguishability, two states that no admissible input separates through the outputs, with observability defined as that relation's failure. For smooth systems their rank condition makes this chapter's resolution principle concrete: the observation space, everything obtainable from the outputs and their repeated derivatives along the dynamics, either spans enough directions at a state to pin it down or it does not, and no quantity computed downstream of the outputs enlarges the span. Kalman posed the linear case and its duality with control. The stochastic setting used here trades the rank of a derivative span for distinguishability of observation laws, and inherits the same moral.</p>
 <p>Now let \(A_M^*(s)\) be the set of actions that are optimal or acceptable in state \(s\) under \(M\). The problem has <strong>decision-critical ambiguity</strong> if</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 s\equiv_{0,M}s'
 \quad\text{and}\quad
 A_M^*(s)\cap A_M^*(s')=\varnothing.
@@ -737,9 +571,9 @@ theorem rival_hypotheses_persist {h₁ h₂ : L.Sentence}
       (T ∪ Set.range obs ∪ {h₂}).IsSatisfiable :=
   ⟨satisfiable_of_finite_observations fun s =&gt; (hfin s).1,
     satisfiable_of_finite_observations fun s =&gt; (hfin s).2⟩</code></pre></details>
-<h3 id="ch3-belief-state-update">Belief-state update</h3>
+<h3 id="sec-3-belief-state-update">Belief-state update</h3>
 <p>Given a maintained model \(M\) satisfying the standing assumption, let \(T_{\theta,\pi_{-0}}\) denote the transition kernel after marginalizing over the other agents' (Markov) policies. The canonical belief update is</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 b_{t+1}(s')
 \propto
 Z_{0,\theta}(o_{0,t+1}\mid s')
@@ -826,26 +660,20 @@ theorem bayesEvidence_mixture_pos (Zobs ζ : S → PMF O) {ε : ℝ≥0∞}
 
 end</code></pre></details>
 <p>In real applications, the difficulty is not writing Bayes' rule. It is that \(T_\theta\), \(Z_{0,\theta}\), and sometimes \(a_{-0,t}\) are uncertain. The book's standard is therefore weaker and more useful: every state estimate must specify its observation sources, its countermodels, and what observation would change the recommended action.</p>
-<h3 id="ch3-proxy-failure">Proxy failure</h3>
+<h3 id="sec-3-proxy-failure">Proxy failure</h3>
 <p>A metric \(m:S\to\mathbb{R}\) is not a valid target merely because it correlates with a desired outcome in historical data. It must remain informative under intervention. If selecting policy on \(m\) changes the relationship between \(m\) and the outcome, the proxy is not intervention-stable.</p>
 <p>The Cardiac Arrhythmia Suppression Trial illustrates the distinction. Suppressing ventricular premature depolarizations did not imply lower mortality; the trial was halted after excess mortality and cardiac arrests in treatment arms receiving encainide or flecainide (CAST Investigators 1989; Echt et al. 1991). The visible indicator was real. It was insufficient for the decision.</p>
-<h3 id="ch3-procedure">Procedure</h3>
+<h3 id="sec-3-procedure">Procedure</h3>
 <p>For every primary metric, document:</p>
-<ul>
-<li>latent condition purportedly measured;</li>
-<li>distinct states capable of producing the same value;</li>
-<li>interventions that may decouple it from the target;</li>
-<li>a second signal that would catch high-cost proxy failure;</li>
-<li>the observation delay and the population excluded from the measure.</li>
-</ul>
-<h3 id="ch3-failure-condition">Failure condition</h3>
+<ul><li>latent condition purportedly measured;</li><li>distinct states capable of producing the same value;</li><li>interventions that may decouple it from the target;</li><li>a second signal that would catch high-cost proxy failure;</li><li>the observation delay and the population excluded from the measure.</li></ul>
+<h3 id="sec-3-failure-condition">Failure condition</h3>
 <p>Triangulation does not guarantee identifiability. If live models remain observationally equivalent at affordable scale, use robust policy or a bounded probe that makes them diverge. More reporting is not automatically more information.</p>
 </section>
-<section id="ch4" class="chapter" aria-labelledby="ch4-h">
-<h2 id="ch4-h"><span class="chap-label">Chapter 4</span><span class="chap-title">Agency: constrained reachability and authority</span></h2>
+<section class="chapter" id="ch4" aria-labelledby="ch4-h">
+<h2 id="ch4-h"><span class="chaplabel">Chapter 4</span>Agency: constrained reachability and authority</h2>
 <p>Observability asked whether the state can be seen. Agency asks whether the state you want can be reached at all.</p>
 <p>Let \(\mathcal{R}_{H}^{\pi_0}(s_0)\) be the set of states reachable from \(s_0\) by time \(H\) under focal policy \(\pi_0\). For a target set \(G_\star\), chance constraint \(\alpha\), and a maintained model \(M=(\theta,\pi_{-0})\) in the sense of chapter 3 (reachability is never independent of what the other agents do), define constrained reachability by the existence of a policy satisfying</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \mathbb{P}^{\pi_0,\pi_{-0}}_{\theta}
 \left(
 s_H\in G_\star
@@ -889,9 +717,9 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
       rw [h2, ← h1]
   rw [Finset.card_product] at key
   simpa using key</code></pre></details>
-<h3 id="ch4-the-authority-map">The authority map</h3>
+<h3 id="sec-4-the-authority-map">The authority map</h3>
 <p>Partition the candidate levers and system drivers that appear in the plan into:</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 A_{\mathrm{direct}},
 \qquad
 A_{\mathrm{induce}},
@@ -901,22 +729,22 @@ A_{\mathrm{induce}},
 <p>The first set is under direct focal control. The second consists of other agents' actions, inducible only through bargaining, incentives, coalition formation, persuasion, or escalation. The third is not an action at all: exogenous environment parameters and disturbances that enter the transition law as inputs nobody at the table chooses. Keeping the third cell separate matters precisely because plans routinely smuggle drivers in as if they were levers; a driver misfiled as a lever is a step nobody can execute. The three cells partition the plan's candidate entries: every entry receives a classification, and the cells are mutually exclusive. (In the companion's typed form of the map, where classification is a single function into lever, inducible, or driver, both coverage and exclusivity are theorems rather than assumptions, and a driver misfiled as a lever is a type error; machine-checked.)</p>
 <p>A manager may control meeting structure, induce a compensation-policy review, and have no control over another person's willingness to disclose harm. A city may control zoning, induce development under specified incentives, and not control interest rates. The distinction changes the problem.</p>
 <p>The taxonomy of intervention points, from parameters up through rules, self-organization, and goals, is Meadows's, and this chapter inherits her ordering by leverage. What her taxonomy does not supply, and the authority map adds, is which of those points a given actor is permitted to touch: leverage and permission are different axes, and conflating them is how plans acquire steps nobody can execute.</p>
-<h3 id="ch4-procedure">Procedure</h3>
+<h3 id="sec-4-procedure">Procedure</h3>
 <p>Identify the first unreachable prerequisite. If a culture change requires the ability to alter promotions, but the leadership team cannot do so, the immediate problem is governance or authority, not culture. If an individual needs safety before exploration is possible, the immediate task is protection, not self-optimization.</p>
-<h3 id="ch4-failure-condition">Failure condition</h3>
+<h3 id="sec-4-failure-condition">Failure condition</h3>
 <p>Reachability analysis becomes a moral failure when it treats people as controllable state variables. Consent and agency are constraints on admissible policy, not inconvenient noise.</p>
 </section>
-<section id="ch5" class="chapter" aria-labelledby="ch5-h">
-<h2 id="ch5-h"><span class="chap-label">Chapter 5</span><span class="chap-title">Latency: delay, gain, and the cost of fast revision</span></h2>
+<section class="chapter" id="ch5" aria-labelledby="ch5-h">
+<h2 id="ch5-h"><span class="chaplabel">Chapter 5</span>Latency: delay, gain, and the cost of fast revision</h2>
 <p>A state can be correctly estimated and still arrive too late to act on.</p>
 <p>A delayed observation model has the form</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 o_t\sim Z_0(\,\cdot\mid s_{t-d}),
 \qquad d&gt;0.
 \]</div>
 <p>In practice \(d\) is rarely known and may be state-dependent; an unknown delay is itself a coordinate of \(\Theta\), and the lag forecasts below are then forecasts under each live delay model.</p>
 <p>More generally, fix a comparison action \(a'\) (by default the status quo or null action; the choice is part of the analysis and must be stated). The <strong>observability lag</strong> of \(a\) against \(a'\) at resolution \(\delta\) is</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \tau_\delta(a,a')
 =
 \inf\left\{
@@ -928,7 +756,7 @@ P(o_{t+\tau}\mid \operatorname{do}(a'))
 \geq\delta
 \right\},
 \]</div>
-<p class="run-on">where \(D\) is an appropriate distributional distance. If the threshold is never reached, take \(\tau_\delta(a,a')=\infty\): the intervention is unobservable against that alternative at that resolution, which is itself a diagnosis, not a missing value. When a whole set of alternatives matters, the conservative planning quantity is the worst case \(\sup_{a'}\tau_\delta(a,a')\). The quantity is model-dependent; its purpose is to force a forecast of when action becomes distinguishable from non-action. Demanding a stronger signal never shortens the wait: \(\tau_\delta\) is monotone in \(\delta\) (machine-checked).</p>
+<p>where \(D\) is an appropriate distributional distance. If the threshold is never reached, take \(\tau_\delta(a,a')=\infty\): the intervention is unobservable against that alternative at that resolution, which is itself a diagnosis, not a missing value. When a whole set of alternatives matters, the conservative planning quantity is the worst case \(\sup_{a'}\tau_\delta(a,a')\). The quantity is model-dependent; its purpose is to force a forecast of when action becomes distinguishable from non-action. Demanding a stronger signal never shortens the wait: \(\tau_\delta\) is monotone in \(\delta\) (machine-checked).</p>
 <details class="lean"><summary>Lean proof (Dynamics.lean): obsLag_mono_resolution</summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Demanding a stronger signal never shortens the wait: the observability
 lag is monotone in the resolution `δ`. (Also proved independently by
@@ -955,38 +783,32 @@ theorem no_signal_before_lag {dist : Ω → Ω → ℝ≥0∞} {obs : A → ℕ 
   have hmem : (Δ : ℕ∞) ∈ {τ : ℕ∞ | ∃ n : ℕ, τ = n ∧ δ ≤ dist (obs a n) (obs a&#x27; n)} :=
     ⟨Δ, rfl, hc⟩
   exact absurd (sInf_le hmem) (not_le.mpr h)</code></pre></details>
-<h3 id="ch5-procedure-specify-a-forecast-before-intervention">Procedure: specify a forecast before intervention</h3>
+<h3 id="sec-5-procedure-specify-a-forecast-before-intervention">Procedure: specify a forecast before intervention</h3>
 <p>A valid intervention plan contains:</p>
-<ol>
-<li>the causal pathway from action to state;</li>
-<li>earliest leading indicator, expected direction, and expected lag;</li>
-<li>earliest terminal outcome and expected lag;</li>
-<li>a review cadence appropriate to those lags;</li>
-<li>a guardrail that triggers earlier action.</li>
-</ol>
+<ol><li>the causal pathway from action to state;</li><li>earliest leading indicator, expected direction, and expected lag;</li><li>earliest terminal outcome and expected lag;</li><li>a review cadence appropriate to those lags;</li><li>a guardrail that triggers earlier action.</li></ol>
 <p>If a predictive model is adequate, a state observer estimates current state from delayed outputs. A Smith-predictor-style structure is appropriate only where the delay model is sufficiently known and is recalibrated when delayed measurements arrive. Neither method licenses confidence in an unvalidated model.</p>
-<h3 id="ch5-failure-condition">Failure condition</h3>
+<h3 id="sec-5-failure-condition">Failure condition</h3>
 <p>Do not call waiting "respecting the time constant" when the mechanism is unsupported or people are accumulating harm. Delay changes the evidence schedule; it does not suspend constraints. In particular, absence of evidence from an early review is not evidence that waiting is safe.</p>
 </section>
-<section id="ch6" class="chapter" aria-labelledby="ch6-h">
-<h2 id="ch6-h"><span class="chap-label">Chapter 6</span><span class="chap-title">Ruggedness: barriers in policy space</span></h2>
+<section class="chapter" id="ch6" aria-labelledby="ch6-h">
+<h2 id="ch6-h"><span class="chaplabel">Chapter 6</span>Ruggedness: barriers in policy space</h2>
 <p>The landscape metaphor is valid only after the policy space and evaluation relation have been declared.</p>
 <p>Let \(X\) be a graph of feasible policy configurations, with edges \(E\subseteq X\times X\) representing one admissible local change. Let \(J:X\to\mathbb{R}\) be a scalar objective, to be maximized. A configuration \(x\) is a (weak) local maximum when</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 J(x)\geq J(x')
 \qquad
 \forall x'\in N(x),
 \]</div>
-<p class="run-on">where \(N(x)=\{x':(x,x')\in E\}\). Weakness is deliberate: plateaus count, and much organizational life is spent on plateaus.</p>
+<p>where \(N(x)=\{x':(x,x')\in E\}\). Weakness is deliberate: plateaus count, and much organizational life is spent on plateaus.</p>
 <p>For a target \(y\) with \(J(y)&gt;J(x)\), the barrier height from \(x\) to \(y\) is</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 B(x,y)
 =
 \inf_{\gamma:x\leadsto y}
 \max_{z\in\gamma}
 \left[J(x)-J(z)\right],
 \]</div>
-<p class="run-on">with three conventions stated rather than assumed. Paths include their endpoints, so \(B(x,y)\geq 0\). If no admissible path from \(x\) to \(y\) exists, \(B(x,y)=\infty\): unreachability is an agency finding (chapter 4) and must stay distinguishable from "reachable but expensive," which is the ruggedness finding. And \(B\) is relative to the declared edge set; adding an admissible move can only lower it, which is why "what counts as one change" belongs in the ledger. One class of additions is exactly neutral: a shortcut backed by an admissible path that never dips below the lower of its two endpoints changes neither reachability nor any barrier height (machine-checked), and the depth clause is essential rather than decorative, since a shortcut dropped over a two-hop dip lowers the barrier the moment it is admitted (machine-checked, by that countermodel). This is the certificate that lets route planners compress a map without lying about it, and chapter 7 meets the same clause again under the name reflection.</p>
+<p>with three conventions stated rather than assumed. Paths include their endpoints, so \(B(x,y)\geq 0\). If no admissible path from \(x\) to \(y\) exists, \(B(x,y)=\infty\): unreachability is an agency finding (chapter 4) and must stay distinguishable from "reachable but expensive," which is the ruggedness finding. And \(B\) is relative to the declared edge set; adding an admissible move can only lower it, which is why "what counts as one change" belongs in the ledger. One class of additions is exactly neutral: a shortcut backed by an admissible path that never dips below the lower of its two endpoints changes neither reachability nor any barrier height (machine-checked), and the depth clause is essential rather than decorative, since a shortcut dropped over a two-hop dip lowers the barrier the moment it is admitted (machine-checked, by that countermodel). This is the certificate that lets route planners compress a map without lying about it, and chapter 7 meets the same clause again under the name reflection.</p>
 <details class="lean"><summary>Lean proof (Ruggedness.lean): pathBetween_shortcut_nonempty_iff, barrier_shortcut_eq</summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- Reachability form: shortcuts backed by mere admissible paths do not
 change what is reachable. -/
@@ -1124,70 +946,32 @@ theorem exists_unilaterally_stable_not_joint_max :
     have h2 := h (fun _ =&gt; true) fun hEq =&gt; by simpa using congrFun hEq 0
     norm_num at h2</code></pre></details>
 <p>Human systems usually have a vector objective. The immediate metric \(p(x)\), such as quarterly revenue, may decline along a route that improves a broader evaluation \(G(x)\). The phrase "crossing the valley" is justified only if the transition mechanism, the cost bound, and the leading indicators are specified. Otherwise it is a story that excuses harm.</p>
-<h3 id="ch6-traverse-contract">Traverse contract</h3>
+<h3 id="sec-6-traverse-contract">Traverse contract</h3>
 <p>For every planned descent in a proximate metric, specify:</p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Parameter</th>
-<th scope="col">Formal role</th>
-<th scope="col">Question</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Mechanism</td>
-<td>model of \(T\)</td>
-<td>Why should the descent alter future reachability?</td>
-</tr>
-<tr>
-<td>Depth</td>
-<td>lower bound on \(p\)</td>
-<td>How much proximate loss is tolerable?</td>
-</tr>
-<tr>
-<td>Duration</td>
-<td>time bound</td>
-<td>How long before reassessment?</td>
-</tr>
-<tr>
-<td>Signal</td>
-<td>discriminating observation</td>
-<td>What changes first if the model is correct?</td>
-</tr>
-<tr>
-<td>Guardrail</td>
-<td>constraint \(C\)</td>
-<td>What terminates the traverse?</td>
-</tr>
-<tr>
-<td>Distribution</td>
-<td>policy constraint</td>
-<td>Who bears the loss and who authorizes it?</td>
-</tr>
-</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Parameter</th><th scope="col">Formal role</th><th scope="col">Question</th></tr></thead><tbody><tr><td>Mechanism</td><td>model of \(T\)</td><td>Why should the descent alter future reachability?</td></tr><tr><td>Depth</td><td>lower bound on \(p\)</td><td>How much proximate loss is tolerable?</td></tr><tr><td>Duration</td><td>time bound</td><td>How long before reassessment?</td></tr><tr><td>Signal</td><td>discriminating observation</td><td>What changes first if the model is correct?</td></tr><tr><td>Guardrail</td><td>constraint \(C\)</td><td>What terminates the traverse?</td></tr><tr><td>Distribution</td><td>policy constraint</td><td>Who bears the loss and who authorizes it?</td></tr></tbody></table></div>
 <p>The career probe is a small exploration budget, not a leap of faith. The purpose of shadowing or doing ordinary work in a candidate field is to update the model class: what the work consists of, what entry constraints exist, and whether apparent meaning survives contact with routine. The stopping condition is not "I felt no certainty." It is a condition on evidence, financial constraints, wellbeing, and the value of the next experiment.</p>
-<h3 id="ch6-failure-condition">Failure condition</h3>
+<h3 id="sec-6-failure-condition">Failure condition</h3>
 <p>A locally stable arrangement may be a refuge rather than an inferior optimum. Never infer that discomfort is progress. Never ask another population to pay an unbounded transition cost because a planner claims to see a better basin.</p>
 </section>
-<section id="ch7" class="chapter" aria-labelledby="ch7-h">
-<h2 id="ch7-h"><span class="chap-label">Chapter 7</span><span class="chap-title">Categorical re-description: composition, interfaces, and semantic preservation</span></h2>
+<section class="chapter" id="ch7" aria-labelledby="ch7-h">
+<h2 id="ch7-h"><span class="chaplabel">Chapter 7</span>Categorical re-description: composition, interfaces, and semantic preservation</h2>
 <p>Category theory belongs in this book only when it gives a stronger account of composition than a generic call to "zoom out."</p>
-<h3 id="ch7-7-1-open-systems-and-structured-cospans">7.1 Open systems and structured cospans</h3>
+<h3 id="sec-7-1"><span class="subnum">7.1</span> Open systems and structured cospans</h3>
 <p>Let \(\mathsf{A}\) be a category of interfaces, \(\mathsf{X}\) a category of internal systems, and</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 L:\mathsf{A}\rightarrow\mathsf{X}
 \]</div>
-<p class="run-on">a functor embedding interface structure into system structure. A structured cospan is a diagram</p>
-<div class="math-display">\[
+<p>a functor embedding interface structure into system structure. A structured cospan is a diagram</p>
+<div class="mathblock">\[
 L(a)\longrightarrow x\longleftarrow L(b).
 \]</div>
 <p>It represents an open system \(x\) with input interface \(a\) and output interface \(b\). When \(\mathsf{X}\) has pushouts, two systems</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 L(a)\rightarrow x\leftarrow L(b),
 \qquad
 L(b)\rightarrow y\leftarrow L(c)
 \]</div>
-<p class="run-on">compose by pushout along their shared boundary, yielding a system from \(a\) to \(c\). Under the standard hypotheses (\(\mathsf{X}\) with finite colimits, \(\mathsf{A}\) with finite coproducts, and \(L\) preserving finite coproducts; the original construction assumes \(L\) a left adjoint), Baez and Courser's structured cospans support a symmetric monoidal double category of open systems; the comparison with Fong's earlier decorated cospans is due to Baez, Courser, and Vasilakopoulou.</p>
+<p>compose by pushout along their shared boundary, yielding a system from \(a\) to \(c\). Under the standard hypotheses (\(\mathsf{X}\) with finite colimits, \(\mathsf{A}\) with finite coproducts, and \(L\) preserving finite coproducts; the original construction assumes \(L\) a left adjoint), Baez and Courser's structured cospans support a symmetric monoidal double category of open systems; the comparison with Fong's earlier decorated cospans is due to Baez, Courser, and Vasilakopoulou.</p>
 <p>One caveat carries operational weight. Composition of open systems is associative and unital only up to coherent isomorphism, because a pushout is defined only up to isomorphism; that is exactly why the ambient structure is a double category rather than a category (the associator is constructed, not assumed; machine-checked). An architecture diagram that silently treats regrouped compositions as equal is assuming those isomorphisms are identities, and the assumption should be written down, because it fails precisely when boundary identifications carry information.</p>
 <p>Composition also decides which safety properties survive it. Invariance-style properties compose: if each component maps the safe set into itself, so does the composite (machine-checked). Margin-style properties do not: two components each moving the state by at most one unit can jointly move it by two (machine-checked). Interfaces can carry guarantees of the first kind; guarantees of the second kind must be re-established at the level of the whole. That the hazard lives in the composition rather than in the components is Leveson's reading of accidents, and chapters 9 and 10 build their guardrails on it. The question of which properties survive composition has an ancestor in Simon's near-decomposability, which asked in 1962 when a system's parts can be analyzed as if independent; the machinery here inherits the question rather than discovers it.</p>
 <details class="lean"><summary>Lean proof (SystemsTheory.lean): invariance_comp</summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
@@ -1212,13 +996,13 @@ theorem increment_bound_not_compositional :
   norm_num [Function.comp]</code></pre></details>
 <p>The engineering benefit is precise: an internal model can be replaced, refined, or composed without erasing its declared boundary behavior. This is useful for circuits, Petri nets, Markov processes, reaction networks, and other open systems whose interfaces are explicit.</p>
 <p>Human organizations can sometimes be partially represented this way. Their handoffs, data schemas, authorization rules, and commitments have interfaces. Their motivations, dignity, and private interpretation do not reduce to ports. The formalism should therefore be used to expose a specific compositional failure, not to assert that the organization has been fully modeled.</p>
-<h3 id="ch7-7-2-functorial-semantics">7.2 Functorial semantics</h3>
+<h3 id="sec-7-2"><span class="subnum">7.2</span> Functorial semantics</h3>
 <p>Suppose a syntactic category or operad \(\mathsf{W}\) describes admissible wiring diagrams and \(\mathsf{B}\) is a category of behaviors. A semantics functor</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \llbracket-\rrbracket:\mathsf{W}\rightarrow\mathsf{B}
 \]</div>
-<p class="run-on">is useful because it satisfies</p>
-<div class="math-display">\[
+<p>is useful because it satisfies</p>
+<div class="mathblock">\[
 \llbracket g\circ f\rrbracket
 =
 \llbracket g\rrbracket\circ\llbracket f\rrbracket,
@@ -1251,19 +1035,14 @@ theorem contract_check_time_indexed :
   · simp
   · simp</code></pre></details>
 <p>Every semantics functor also forgets information. A black-boxing map may preserve external behavior while forgetting internal causality. A Petri-net-to-dynamical-system semantics may preserve one class of behavior while discarding information needed for a discrete intervention. The author must state both what is preserved and what is forgotten.</p>
-<h3 id="ch7-7-3-refinement-and-2-cells">7.3 Refinement and 2-cells</h3>
+<h3 id="sec-7-3"><span class="subnum">7.3</span> Refinement and 2-cells</h3>
 <p>A category is inadequate when the application needs to distinguish composition of systems from transformation of their interfaces. A double category can represent:</p>
-<ul>
-<li>objects: interface types;</li>
-<li>horizontal 1-cells: open systems;</li>
-<li>vertical 1-cells: interface maps, refinements, or rewiring maps;</li>
-<li>2-cells: squares witnessing compatibility between horizontal and vertical structure.</li>
-</ul>
+<ul><li>objects: interface types;</li><li>horizontal 1-cells: open systems;</li><li>vertical 1-cells: interface maps, refinements, or rewiring maps;</li><li>2-cells: squares witnessing compatibility between horizontal and vertical structure.</li></ul>
 <p>A 2-cell is not a loose "relationship between relationships." It is a specified commutative square or coherent cell showing that two transformation paths agree. In a systems-engineering application, it can witness that a subsystem refinement preserves the interface contract needed by the larger architecture.</p>
 <p>The diagnostic is simple: if a redesign changes both components and their wiring, then it is unsafe to call the redesign local until the compatibility condition has been checked.</p>
-<h3 id="ch7-7-4-ontological-revision-when-abstraction-is-not-enough">7.4 Ontological revision: when abstraction is not enough</h3>
+<h3 id="sec-7-4"><span class="subnum">7.4</span> Ontological revision: when abstraction is not enough</h3>
 <p>When the navigation contract returns its fourth verdict, the target unreachable under the present action set and no probe able to gather separating evidence, the correct response is not to search deeper. It is to abandon the representation. Chapter 10's exit is an exit from a state space, not from a problem.</p>
-<p>This is the operational purpose of this chapter's functors, and it is where they stop being bookkeeping. A re-description that respects admissible moves transfers reachability forward, so emptiness in the image refutes an entire technique class at the source (machine-checked); this is the logical schema of the barrier theorems in chapter 11's second profile. And re-description genuinely moves barriers: the same start, target, and evaluation can carry an infinite barrier in one representation and none in another (machine-checked), so unreachability is a property of the representation, not of the problem. The soundness condition is <em>reflection</em>: an escape hatch counts only if success in the new category implies success in the old, and a functor that does not reflect the goal proves nothing, however friendly its codomain. The condition is not new. It is the soundness relation of Cousot and Cousot's abstract interpretation, stated there between a concrete and an abstract domain and given its Galois-connection form in 1979; what this section adds is only its statement across a change of category rather than within one abstract domain. It is recorded as a definition in the companion because practitioners outside program analysis, who inherit the maneuver without its proof obligation, routinely omit it.</p>
+<p>This is the operational purpose of this chapter's functors, and it is where they stop being bookkeeping. A re-description that respects admissible moves transfers reachability forward, so emptiness in the image refutes an entire technique class at the source (machine-checked); this is the logical schema of the barrier theorems in chapter 11's second profile. And re-description genuinely moves barriers: the same start, target, and evaluation can carry an infinite barrier in one representation and none in another (machine-checked), so unreachability is a property of the representation, not of the problem. The soundness condition is <em>reflection</em>: an escape hatch counts only if success in the new category implies success in the old, and a functor that does not reflect the goal proves nothing, however friendly its codomain. The condition is not new. It is the soundness relation of Cousot and Cousot's abstract interpretation, stated there between a concrete and an abstract domain and given its Galois-connection form in 1979; and the statement across a change of category has its own precedent, since Garrabrant, working with an induced functor between categories of Cartesian frames over a refined and a coarse world model, proves that ensurability and controllability transfer in both directions under exact correspondence while observability transfers in one direction only. What this section adds is the specialization of the condition to a fixed goal predicate and an admissible-move structure, which is what lets emptiness in the image refute a technique class at the source. It is recorded as a definition in the companion because practitioners outside program analysis, who inherit the maneuver without its proof obligation, routinely omit it.</p>
 <details class="lean"><summary>Lean proof (Ruggedness.lean): PathBetween.map, isEmpty_of_map_isEmpty</summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A re-description that respects admissibility maps paths to paths. -/
 def PathBetween.map {X X&#x27; : Type*} {Adj : X → X → Prop}
@@ -1316,7 +1095,7 @@ reflection, solving the re-described problem proves nothing about the
 original. -/
 def Reflects {X X&#x27; : Type*} (φ : X → X&#x27;) (P : X → Prop) (P&#x27; : X&#x27; → Prop) : Prop :=
   ∀ x, P&#x27; (φ x) → P x</code></pre></details>
-<p>The problem being solved has owners too. An agent whose objective is defined over an old ontology and whose world-model upgrades underneath it faces what de Blanc named an ontological crisis, and the fracturing of concepts across a model refinement is Armstrong's model splintering. de Blanc's criterion is value-preservation and Armstrong's concern is which concepts survive the refinement at all, where this section's is reachability-preservation, and the narrowness is deliberate: a category of models can acquire an ill-posed morphism structure easily (Rogers's reading of Armstrong's construction is one worked case), so the demand here is stated relative to a fixed goal predicate and the admissible-move structure, not to transport of whole belief states.</p>
+<p>The problem being solved has owners too. An agent whose objective is defined over an old ontology and whose world-model upgrades underneath it faces what de Blanc named an ontological crisis, and the fracturing of concepts across a model refinement is Armstrong's model splintering. de Blanc's target is preservation of the utility function, though the map he transports it along is selected by a structural test, bisimulation combined with divergence between predicted observation laws, which makes his construction a precedent for this section's move rather than a foil to it; Armstrong asks which refactoring of a reward function counts as natural once the features it was defined over splinter one to many; this section's demand is reachability-preservation, and the narrowness is deliberate. A category of models easily leaves its morphism structure underdetermined (Rogers's reading of Armstrong's construction is one worked case: the arrows are not pinned down by the objects, so the intended notion of update has no canonical carrier), so the demand here is stated relative to a fixed goal predicate and the admissible-move structure, not to transport of whole belief states.</p>
 <p>Model theory gives the maneuver its established home. A representation is a signature, the stock of predicates a description is permitted to use; abstraction is passage to a reduct, and ontological revision is expansion by new symbols (Hodges). Expansion is exactly the move that changes expressive power: one new predicate separating two previously indistinguishable states makes a target expressible that provably no rule over the old vocabulary decides (machine-checked), which is chapter 3's resolution principle read as an instruction rather than a limit. Reflection, in turn, is the one-predicate shadow of what model theorists require of elementary embeddings, maps that preserve and reflect every formula of the language at once.</p>
 <details class="lean"><summary>Lean proof (Definability.lean): expansion_gain</summary><pre><code>-- LeanTest/HardProblems/Definability.lean
 /-- **Ontological escape hatch, definability form.** A single new predicate
@@ -1402,39 +1181,31 @@ theorem halting_void (n : ℕ) :
   ComputablePred.halting_problem n</code></pre></details>
 <p>Mathematics supplies the canonical examples, read as reconstructions rather than theorems about history. Fermat's Last Theorem resisted every technique whose variety classical number theory could supply; the Frey curve and Ribet's theorem re-described the problem into the geometry of elliptic curves, where modularity, an invariant invisible in the old representation, became observable, and the Taylor-Wiles method walked an edge set that had not previously existed (Wiles). Grothendieck's response to the Weil conjectures was not longer proofs but scheme theory: a replacement of the state space under which the desired cohomological moves became admissible. In chapter 3's terms, inventing a branch of mathematics is minting a strictly finer concept lattice: new attributes, not new derived metrics. In chapter 4's, it is raising the action set's variety past Ashby's bound. And it is the shape abduction takes after a refutation: the successor model class is rarely found by enlarging \(\Theta\) pointwise; it is found by re-describing the objects \(\Theta\) ranges over.</p>
 <p>Modifying the state space is the highest-leverage action an agent possesses, and the most dangerous: every re-description forgets something (7.2), and what it forgets is unrecoverable downstream. The traverse contract applies to ontological revision more than to anything else in this book.</p>
-<h3 id="ch7-7-5-the-lowest-dimensional-rule">7.5 The lowest-dimensional rule</h3>
+<h3 id="sec-7-5"><span class="subnum">7.5</span> The lowest-dimensional rule</h3>
 <p>Use an \(n\)- or \(\infty\)-categorical model only when the system's intended equivalences and compositions require higher coherence data. For example, if transformations commute only up to an explicitly relevant equivalence and those equivalences must themselves compose coherently, higher categorical structure may be necessary.</p>
 <p>Otherwise, adding dimensions is intellectual theater.</p>
 <blockquote><p>Choose the lowest-dimensional formalism that captures the interfaces, compositions, refinements, and equivalences the intervention must respect.</p></blockquote>
-<h3 id="ch7-categorical-procedure">Categorical procedure</h3>
-<ol>
-<li>State the applied category, operad, or double category.</li>
-<li>Give the interpretation of objects, arrows, composition, and equivalence.</li>
-<li>State the semantics or behavior map.</li>
-<li>Name the invariant required by the intervention.</li>
-<li>Prove, test, or explicitly assume that the map preserves it.</li>
-<li>List the information that has been discarded.</li>
-<li>Return to the original system with an intervention that depends on the preserved structure.</li>
-</ol>
+<h3 id="sec-7-categorical-procedure">Categorical procedure</h3>
+<ol><li>State the applied category, operad, or double category.</li><li>Give the interpretation of objects, arrows, composition, and equivalence.</li><li>State the semantics or behavior map.</li><li>Name the invariant required by the intervention.</li><li>Prove, test, or explicitly assume that the map preserves it.</li><li>List the information that has been discarded.</li><li>Return to the original system with an intervention that depends on the preserved structure.</li></ol>
 <p>This is not a generic abstraction ladder. It is a contract of semantic accountability.</p>
 </section>
-<section id="ch8" class="chapter" aria-labelledby="ch8-h">
-<h2 id="ch8-h"><span class="chap-label">Chapter 8</span><span class="chap-title">Reflexivity: when control becomes a game</span></h2>
+<section class="chapter" id="ch8" aria-labelledby="ch8-h">
+<h2 id="ch8-h"><span class="chaplabel">Chapter 8</span>Reflexivity: when control becomes a game</h2>
 <p>The focal action may change the policies of other agents. Let</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \pi_{i,t+1}
 =
 U_i(\pi_{i,t},a_t,o_{i,t},r_{i,t},\xi_{i,t}),
 \]</div>
-<p class="run-on">where \(U_i\) is an adaptation or learning operator and \(r_{i,t}\) is agent \(i\)'s realized payoff, derived from its objective \(G_i\) in the problem tuple. Then the transition law is itself policy-dependent:</p>
-<div class="math-display">\[
+<p>where \(U_i\) is an adaptation or learning operator and \(r_{i,t}\) is agent \(i\)'s realized payoff, derived from its objective \(G_i\) in the problem tuple. Then the transition law is itself policy-dependent:</p>
+<div class="mathblock">\[
 s_{t+1}
 \sim
 T_{\theta}(s_t,a_{0,t},a_{-0,t}),
 \qquad
 a_{i,t}\sim\pi_{i,t}(h_t^i).
 \]</div>
-<p><strong>Reflexivity relocates the state; it does not break the formalism.</strong> Define the extended state \(\tilde{s}_t=(s_t,\pi_{-0,t})\). The pair evolves as an ordinary Markov process under an extended kernel, and its \(S\)-marginal recovers the original transition (machine-checked). The check covers adaptation operators driven by the focal action, deterministic or stochastic; dependence on observations and payoffs folds into the policy coordinate the same way. What augmentation costs is observability: the new coordinates, the other agents' policies, are unobserved, and the problem returns to chapter 3 with a larger hidden state. This is the loop announced there: adaptive counterparts are why beliefs over \(S\) alone stop being sufficient, and the drift discussion of chapter 1 lands here as well, because what looks like a drifting \(\theta_t\) is often an adapting \(\pi_{-0,t}\) that the model failed to represent. One reflexive channel stays outside even the augmented formalism: the extended state carries the other agents' policies, and the ladder below adds the focal agent's own model-revision rule, but no coordinate holds a focal policy that is itself an optimizer pursuing objectives diverging from the declared \(G_0\). That case, mesa-optimization (Hubinger, van Merwijk, Mikulik, Skalse, and Garrabrant), is flagged here rather than modeled.</p>
+<p><strong>Reflexivity relocates the state; it does not break the formalism.</strong> Define the extended state \(\tilde{s}_t=(s_t,\pi_{-0,t})\). The pair evolves as an ordinary Markov process under an extended kernel, and its \(S\)-marginal recovers the original transition (machine-checked). The check covers adaptation operators driven by the focal action, deterministic or stochastic; dependence on observations and payoffs folds into the policy coordinate the same way. What augmentation costs is observability: the new coordinates, the other agents' policies, are unobserved, and the problem returns to chapter 3 with a larger hidden state. This is the loop announced there: adaptive counterparts are why beliefs over \(S\) alone stop being sufficient, and the drift discussion of chapter 1 lands here as well, because what looks like a drifting \(\theta_t\) is often an adapting \(\pi_{-0,t}\) that the model failed to represent. One reflexive channel stays outside even the augmented formalism: the extended state carries the other agents' policies, and the ladder below adds the focal agent's own model-revision rule, but no coordinate holds a focal policy that is itself an optimizer pursuing objectives diverging from the declared \(G_0\). That case is mesa-optimization, an inner optimizer emerging inside the learned policy (Hubinger, van Merwijk, Mikulik, Skalse, and Garrabrant), with the divergence from \(G_0\) its inner alignment failure rather than its definition, and it is flagged here rather than modeled. The flagged case is not formally empty: Turner, Smith, Shah, Critch, and Tadepalli prove that stated environmental symmetries suffice for optimal policies under most reward functions to favor states retaining more reachable options, which is chapter 4's reachability coordinate read as a prediction about the coordinate this formalism declines to carry.</p>
 <details class="lean"><summary>Lean proof (Dynamics.lean): extendStep, extendStep_fst, extendStepRand_fst</summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- One step of a reflexive system: the transition depends on the other
 agents&#x27; current policy configuration `p : P`, and that configuration adapts
@@ -1526,21 +1297,15 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
   obtain ⟨a, ha⟩ := (α (m s)).support_nonempty
   have ha&#x27; : a ∈ (α (m s&#x27;)).support := by rw [← hm]; exact ha
   exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha&#x27;)</code></pre></details>
-<h3 id="ch8-procedure-adversarial-and-participatory-pre-mortem">Procedure: adversarial and participatory pre-mortem</h3>
+<h3 id="sec-8-procedure-adversarial-and-participatory-pre-mortem">Procedure: adversarial and participatory pre-mortem</h3>
 <p>For each intervention, ask:</p>
-<ol>
-<li>Which agents gain, lose, or gain exposure?</li>
-<li>What is the cheapest way to satisfy the observable rule while defeating its purpose?</li>
-<li>To which unmeasured population, subsystem, or time horizon can the cost be displaced?</li>
-<li>Which people possess local knowledge about workarounds, harms, or dependencies that the model omits?</li>
-<li>What observation distinguishes legitimate resistance from strategic evasion?</li>
-</ol>
+<ol><li>Which agents gain, lose, or gain exposure?</li><li>What is the cheapest way to satisfy the observable rule while defeating its purpose?</li><li>To which unmeasured population, subsystem, or time horizon can the cost be displaced?</li><li>Which people possess local knowledge about workarounds, harms, or dependencies that the model omits?</li><li>What observation distinguishes legitimate resistance from strategic evasion?</li></ol>
 <p>Use multiple measures, protected reporting channels, and recurring model review. Involving affected people is not merely ethical; it improves the specification of \(\Pi_i\), \(C\), and the observation model. That monitors be accountable to the monitored is Ostrom's fourth design principle, and it is the institutional answer to metric corruption.</p>
-<h3 id="ch8-failure-condition">Failure condition</h3>
+<h3 id="sec-8-failure-condition">Failure condition</h3>
 <p>Do not call all disagreement adversarial. A counter-move can be evidence that the policy is unjust, impossible, or based on an invalid model.</p>
 </section>
-<section id="ch9" class="chapter" aria-labelledby="ch9-h">
-<h2 id="ch9-h"><span class="chap-label">Chapter 9</span><span class="chap-title">Probes: constrained system identification</span></h2>
+<section class="chapter" id="ch9" aria-labelledby="ch9-h">
+<h2 id="ch9-h"><span class="chaplabel">Chapter 9</span>Probes: constrained system identification</h2>
 <p>When \(T\), \(Z\), or \(\Pi\) is uncertain, a large intervention is often a bad first measurement. A probe should be selected for <strong>decision-relevant information gain</strong> under explicit risk constraints.</p>
 <p>The prescription that the complex be met by probe-sense-respond rather than by analysis is Snowden's, as is the safe-to-fail probe itself. The boundary he draws between the complicated and the complex is not rhetoric; it can be stated in this book's terms. Call two live models <em>passively distinguishable</em> when watching alone eventually separates their observation laws, and <em>probe distinguishable</em> when some policy does. Watching is a special case of acting, and there exist model pairs that no amount of passive observation separates while a single intervention does (machine-checked, by an explicit two-state example). The complicated is what analysis can settle from the armchair; the complex is what only probes can settle, and the boundary between them is a property of the model class, not of the analyst's diligence.</p>
 <details class="lean"><summary>Lean proof (SystemsTheory.lean): flipModel, inertModel, exists_probe_only_distinguishable</summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
@@ -1580,12 +1345,12 @@ theorem exists_probe_only_distinguishable :
     have := congrArg (fun p =&gt; p [false, true]) hcontra
     simp [PMF.pure_apply] at this</code></pre></details>
 <p>Let \(\Theta\) be a live model class and let \(e\) denote a candidate experiment. One idealized criterion is</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \operatorname{EIG}(e)
 =
 I\!\left(\Theta;O_{t:t+H}\mid e,h_t^0\right),
 \]</div>
-<p class="run-on">the mutual information between the model class and future observations, conditional on the experiment and current history. Treating \(\Theta\) as a random variable presupposes the Bayesian reading of chapter 2: a prior over models must exist for the criterion to be defined. Where only a credal set is defensible, replace EIG by a robust criterion, such as choosing the probe that maximizes the worst-case distinguishability between the live models.</p>
+<p>the mutual information between the model class and future observations, conditional on the experiment and current history. Treating \(\Theta\) as a random variable presupposes the Bayesian reading of chapter 2: a prior over models must exist for the criterion to be defined. Where only a credal set is defensible, replace EIG by a robust criterion, such as choosing the probe that maximizes the worst-case distinguishability between the live models.</p>
 <p>Raiffa and Schlaifer built the preposterior machinery behind experiment valuation; Lindley proposed mutual information as the value of an experiment; Howard put the practical rule below most sharply: information unable to change an action is worthless. That observation can never lower attainable expected utility is older than all three: it is Blackwell's comparison of experiments. Treating the model class as a random variable is one step short of Duff's Bayes-adaptive construction, which folds it into the planning state outright and was extended to partial observation by Ross, Chaib-draa, and Pineau; and the tension the probe manages, acting to learn against acting to perform, is Feldbaum's dual control.</p>
 <p>In practice, use a simpler version: select an experiment only if its possible outcomes would cause different subsequent actions. This is a theorem, not a heuristic: observing before acting never lowers achievable expected utility, and the value of observation is zero exactly when a single action is optimal under every possible outcome (machine-checked, for finite outcome and action spaces). The practical rule is the contrapositive. So is the bookkeeping version: a probe is decision-irrelevant exactly when its recommendation is constant across possible outcomes (machine-checked). The same criterion runs physical searches: infotaxis (Vergassola, Villermaux, and Shraiman) steers by expected information gain when gradients are useless, which is chapter 9 with wind for a state space.</p>
 <details class="lean"><summary>Lean proof (SystemsTheory.lean): value_of_information_nonneg, value_of_information_eq_zero_iff</summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
@@ -1670,58 +1435,23 @@ theorem not_decisionRelevant_iff {Act : Type*} (e : Probe O Act) :
   push Not
   rfl</code></pre></details>
 <p>The probe must satisfy a safety constraint such as</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \mathbb{P}^{e}
 \left(
 \exists t\leq H:s_t\notin C
 \right)
 \leq \alpha,
 \]</div>
-<p class="run-on">alongside nonmathematical constraints of consent, fairness, and reversibility. Guardrails are control constraints to be enforced, not components to be perfected; on Leveson's reading, an accident is an unenforced constraint, not a broken part.</p>
-<h3 id="ch9-probe-specification">Probe specification</h3>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Field</th>
-<th scope="col">Required content</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Competing models</td>
-<td>Which hypotheses does the probe distinguish?</td>
-</tr>
-<tr>
-<td>Intervention</td>
-<td>What changes, for whom, and for how long?</td>
-</tr>
-<tr>
-<td>Signal</td>
-<td>What observation differs under the hypotheses?</td>
-</tr>
-<tr>
-<td>Risk</td>
-<td>What harms are bounded, and who bears residual risk?</td>
-</tr>
-<tr>
-<td>Review</td>
-<td>Who interprets the signal and when?</td>
-</tr>
-<tr>
-<td>Update</td>
-<td>Which result selects, rejects, or reweights which model?</td>
-</tr>
-<tr>
-<td>Branch</td>
-<td>What action follows from success, null result, or harm?</td>
-</tr>
-</tbody></table></div>
+<p>The constraint has an owner: it is the formal shape of what Amodei, Olah, Steinhardt, Christiano, Schulman, and Mané named safe exploration, one of five concrete safety problems, where an agent must act before the consequences of acting are known and must do so under a bound on the damage it can do while the information is being gathered. It sits alongside nonmathematical constraints of consent, fairness, and reversibility. Guardrails are control constraints to be enforced, not components to be perfected; on Leveson's reading, an accident is an unenforced constraint, not a broken part.</p>
+<h3 id="sec-9-probe-specification">Probe specification</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">Field</th><th scope="col">Required content</th></tr></thead><tbody><tr><td>Competing models</td><td>Which hypotheses does the probe distinguish?</td></tr><tr><td>Intervention</td><td>What changes, for whom, and for how long?</td></tr><tr><td>Signal</td><td>What observation differs under the hypotheses?</td></tr><tr><td>Risk</td><td>What harms are bounded, and who bears residual risk?</td></tr><tr><td>Review</td><td>Who interprets the signal and when?</td></tr><tr><td>Update</td><td>Which result selects, rejects, or reweights which model?</td></tr><tr><td>Branch</td><td>What action follows from success, null result, or harm?</td></tr></tbody></table></div>
 <p>Safe-to-fail is a design property, not an adjective. A pilot that transfers unconsented risk to a less powerful group is not safe merely because it is small.</p>
 </section>
-<section id="ch10" class="chapter" aria-labelledby="ch10-h">
-<h2 id="ch10-h"><span class="chap-label">Chapter 10</span><span class="chap-title">The navigation contract and stopping rule</span></h2>
+<section class="chapter" id="ch10" aria-labelledby="ch10-h">
+<h2 id="ch10-h"><span class="chaplabel">Chapter 10</span>The navigation contract and stopping rule</h2>
 <p>A framework earns its place only if it changes the next action in a falsifiable way.</p>
 <p>The output of analysis is a <strong>navigation contract</strong>:</p>
-<div class="math-display">\[
+<div class="mathblock">\[
 \mathcal{N}
 =
 (\widehat{G},\widehat{b}_t,\widehat{A},
@@ -1729,24 +1459,10 @@ theorem not_decisionRelevant_iff {Act : Type*} (e : Probe O Act) :
 \widehat{\Pi},e,\sigma).
 \]</div>
 <p>The terms are:</p>
-<ul>
-<li>\(\widehat{G}\): the current objective specification and unresolved trade-offs;</li>
-<li>\(\widehat{b}_t\): the current state estimate and known blind spots;</li>
-<li>\(\widehat{A}\): admissible actions and their owners;</li>
-<li>\(\widehat{\tau}\): forecast feedback lags and review cadence;</li>
-<li>\(\widehat{C}\): guardrails, irreversibilities, and risk distribution;</li>
-<li>\(\widehat{\Pi}\): anticipated adaptations and counter-moves;</li>
-<li>\(e\): the next decision-relevant intervention or probe;</li>
-<li>\(\sigma\): a stopping, escalation, reformulation, or exit condition.</li>
-</ul>
+<ul><li>\(\widehat{G}\): the current objective specification and unresolved trade-offs;</li><li>\(\widehat{b}_t\): the current state estimate and known blind spots;</li><li>\(\widehat{A}\): admissible actions and their owners;</li><li>\(\widehat{\tau}\): forecast feedback lags and review cadence;</li><li>\(\widehat{C}\): guardrails, irreversibilities, and risk distribution;</li><li>\(\widehat{\Pi}\): anticipated adaptations and counter-moves;</li><li>\(e\): the next decision-relevant intervention or probe;</li><li>\(\sigma\): a stopping, escalation, reformulation, or exit condition.</li></ul>
 <p>A contract is a finite description, and descriptions have a resolution. By the Löwenheim-Skolem theorem, a first-order specification with one infinite model has models of every infinite cardinality, all satisfying the same sentences and none isomorphic to another (Hodges); even a perfect contract pins the system down only up to what its vocabulary can express. That is not a defect to be engineered away. It is the reason the contract carries \(e\) and \(\sigma\), the probe and the exit, rather than a claim of identity between model and world.</p>
 <p>Analysis stops when one of four conditions is established:</p>
-<ol>
-<li><strong>Execute:</strong> a policy is feasible and robust enough under the stated model class.</li>
-<li><strong>Probe:</strong> uncertainty is decision-critical but can be reduced within the constraints.</li>
-<li><strong>Escalate or negotiate:</strong> the required action or objective choice belongs to a different authority.</li>
-<li><strong>Exit or declare infeasibility:</strong> no acceptable path exists under the present action set and constraints.</li>
-</ol>
+<ol><li><strong>Execute:</strong> a policy is feasible and robust enough under the stated model class.</li><li><strong>Probe:</strong> uncertainty is decision-critical but can be reduced within the constraints.</li><li><strong>Escalate or negotiate:</strong> the required action or objective choice belongs to a different authority.</li><li><strong>Exit or declare infeasibility:</strong> no acceptable path exists under the present action set and constraints.</li></ol>
 <p>The fourth verdict is narrower than it sounds: infeasibility is declared relative to the present representation, and section 7.4 names the move that remains after it, exit from the state space rather than from the problem. The four conditions are findings, and findings can co-occur: a policy can be feasible for the focal agent while the authority to choose the objective sits elsewhere. As a checklist the list above is complete; as a <em>rule</em> it becomes deterministic only under a declared priority order, and the order is itself a governance choice. A legitimacy-first ordering puts escalation above execution (do not execute what you lack standing to choose, even feasibly); an emergency ordering may invert that. Whichever order is chosen, it belongs in the navigation contract as part of \(\sigma\), and in the ledger next to chapter 2's reading and weights. Under any declared order, infeasibility is residual: it is declared only when all three positive findings fail, never while a live option remains (machine-checked under the encoded order). The companion formalization encodes one such order, execute before probe before escalate; a legitimacy-first deployment swaps the first and third tests.</p>
 <details class="lean"><summary>Lean proof (Core.lean): Assessment.verdict_infeasible_iff, verdictOfList_eq_residual_iff</summary><pre><code>-- LeanTest/HardProblems/Core.lean
 /-- Infeasibility is exactly the failure of all three positive findings:
@@ -1782,231 +1498,33 @@ theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
   diagonal_escape (stage i)</code></pre></details>
 <p>Rigor matters because loose metaphor can authorize bad intervention. The formalism's job is not to turn people into plants or policies into proofs. Its job is to show exactly where the representation ends, what must be learned next, and when the responsible move is not optimization but governance, protection, or refusal.</p>
 </section>
-<section id="ch11" class="chapter" aria-labelledby="ch11-h">
-<h2 id="ch11-h"><span class="chap-label">Chapter 11</span><span class="chap-title">A worked case: the reliability metric</span></h2>
+<section class="chapter" id="ch11" aria-labelledby="ch11-h">
+<h2 id="ch11-h"><span class="chaplabel">Chapter 11</span>A worked case: the reliability metric</h2>
 <p>Everything above is machinery. This chapter runs it, end to end, on one case, chosen because it is ordinary: a mid-sized product company whose on-call rotation is burning out while executives push a new reliability target. Names and numbers are illustrative; the discipline is the point.</p>
 <p><strong>The presenting problem.</strong> After two visible outages, the executive team mandates a company objective: 99.9% availability and a 40% reduction in monthly incident count, tied to engineering bonuses. Six months later the incident count is down 45%, availability is flat, mean time to recovery has doubled, and two senior on-call engineers have resigned. Leadership asks for "a root-cause analysis of engineering culture." The analyst's first move is not an answer; it is the ledger.</p>
 <p><strong>Declared conventions, before anything else.</strong> The analyst sets terms first. The reading of chapter 2 is robust while the model class below remains unresolved, switching to Bayesian once the probe yields a posterior. The plausible weight set is named: \(W = \{w_{\text{care}}, w_{\text{ship}}\}\), a recovery-and-wellbeing weighting and a velocity weighting, both defensible to the council. The horizon is six quarters, with no further discounting inside it. One admissible change, in the sense of chapter 6, is one service migrated per sprint. The stopping order of chapter 10 is legitimacy-first, stated in full: escalate over probe over execute, with infeasibility residual (the companion's default order is execute over probe over escalate; this case overrides it, declared rather than inherited). Each of these is a ledger row, not a footnote.</p>
 <p><strong>Model ledger (excerpt).</strong></p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Assumption</th>
-<th scope="col">Evidence</th>
-<th scope="col">Countermodels</th>
-<th scope="col">Damage if wrong</th>
-<th scope="col">Next observation</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Incident count tracks system health</td>
-<td>Historical correlation, pre-target</td>
-<td>Underreporting; severity downgrading</td>
-<td>Bonuses reward concealment</td>
-<td>Sev-mix audit vs ticket-verified incident rate</td>
-</tr>
-<tr>
-<td>Availability is measured where users are</td>
-<td>Synthetic probes, single region</td>
-<td>Edge failures invisible to probes</td>
-<td>"Green" dashboard during user pain</td>
-<td>Support-ticket vs dashboard correlation, per region</td>
-</tr>
-<tr>
-<td>On-call load is sustainable</td>
-<td>No formal signal</td>
-<td>Exit interviews say otherwise</td>
-<td>Attrition of exactly the people who hold tacit system knowledge</td>
-<td>Paging hours per person per week</td>
-</tr>
-<tr>
-<td>Teams can prioritize reliability work</td>
-<td>Roadmap says 20%</td>
-<td>Product deadlines override in practice</td>
-<td>Traverse never happens</td>
-<td>Sprint-level allocation audit</td>
-</tr>
-<tr>
-<td>The queue migration is the fix</td>
-<td>Architecture review</td>
-<td>Alert miscalibration, not architecture, drives incidents</td>
-<td>A year spent on the wrong valley</td>
-<td>The chapter 9 probe below</td>
-</tr>
-<tr>
-<td>Reading: robust now, Bayesian after probe</td>
-<td>Mechanism models have no defensible prior between them yet</td>
-<td>A prior is defensible after all</td>
-<td>Premature averaging hides the worse world</td>
-<td>Probe posterior</td>
-</tr>
-<tr>
-<td>Weights \(W\) and the lexicographic rule</td>
-<td>Council resolution naming both weightings</td>
-<td>A stakeholder outside the council weights differently</td>
-<td>Reversals decided by whoever shouts</td>
-<td>Annual re-ratification</td>
-</tr>
-<tr>
-<td>Horizon six quarters, no inner discount</td>
-<td>Sponsor commitment in writing</td>
-<td>Quarter-end pressure reintroduces discounting silently</td>
-<td>Traverse abandoned mid-dip</td>
-<td>Allocation audit at quarter boundaries</td>
-</tr>
-<tr>
-<td>Edge set: one service per sprint</td>
-<td>Platform team estimate</td>
-<td>Coupled services cannot move alone</td>
-<td>Barrier estimates wrong for both routes</td>
-<td>First migration slice, if funded</td>
-</tr>
-<tr>
-<td>Stopping order: legitimacy-first</td>
-<td>Council resolution</td>
-<td>Emergency inverts it</td>
-<td>Verdicts flip silently under pressure</td>
-<td>Recorded in every contract review</td>
-</tr>
-</tbody></table></div>
-<p><strong>Formulation (chapter 2).</strong> The objective is a vector: availability, recovery time, delivery velocity, on-call wellbeing, cost. The mandated bonus scalar fails diagnostic 1's precondition before any reversal is tested: it weights raw incident count, which is not a coordinate of the declared vector but a proxy for two of them, so it is a formulation failure of the crudest kind, an objective built on an indicator. Within the declared vector, two viable roadmaps (incremental migration versus the feature roadmap) have Pareto-incomparable return vectors, and two defensible weightings in \(W\) rank them oppositely: a recovery-and- wellbeing weighting favors migration, a velocity weighting favors features. By chapter 2 that reversal certifies genuine multi-objective conflict, so the decision is returned to governance: the engineering council and the executive sponsor adopt a lexicographic rule (a floor on recovery time and paging load first, then velocity), record who chose it, and record the horizon and discount conventions in the ledger. The bonus coupling is severed; that is a chapter 8 decision made in chapter 2.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Assumption</th><th scope="col">Evidence</th><th scope="col">Countermodels</th><th scope="col">Damage if wrong</th><th scope="col">Next observation</th></tr></thead><tbody><tr><td>Incident count tracks system health</td><td>Historical correlation, pre-target</td><td>Underreporting; severity downgrading</td><td>Bonuses reward concealment</td><td>Sev-mix audit vs ticket-verified incident rate</td></tr><tr><td>Availability is measured where users are</td><td>Synthetic probes, single region</td><td>Edge failures invisible to probes</td><td>"Green" dashboard during user pain</td><td>Support-ticket vs dashboard correlation, per region</td></tr><tr><td>On-call load is sustainable</td><td>No formal signal</td><td>Exit interviews say otherwise</td><td>Attrition of exactly the people who hold tacit system knowledge</td><td>Paging hours per person per week</td></tr><tr><td>Teams can prioritize reliability work</td><td>Roadmap says 20%</td><td>Product deadlines override in practice</td><td>Traverse never happens</td><td>Sprint-level allocation audit</td></tr><tr><td>The queue migration is the fix</td><td>Architecture review</td><td>Alert miscalibration, not architecture, drives incidents</td><td>A year spent on the wrong valley</td><td>The chapter 9 probe below</td></tr><tr><td>Reading: robust now, Bayesian after probe</td><td>Mechanism models have no defensible prior between them yet</td><td>A prior is defensible after all</td><td>Premature averaging hides the worse world</td><td>Probe posterior</td></tr><tr><td>Weights \(W\) and the lexicographic rule</td><td>Council resolution naming both weightings</td><td>A stakeholder outside the council weights differently</td><td>Reversals decided by whoever shouts</td><td>Annual re-ratification</td></tr><tr><td>Horizon six quarters, no inner discount</td><td>Sponsor commitment in writing</td><td>Quarter-end pressure reintroduces discounting silently</td><td>Traverse abandoned mid-dip</td><td>Allocation audit at quarter boundaries</td></tr><tr><td>Edge set: one service per sprint</td><td>Platform team estimate</td><td>Coupled services cannot move alone</td><td>Barrier estimates wrong for both routes</td><td>First migration slice, if funded</td></tr><tr><td>Stopping order: legitimacy-first</td><td>Council resolution</td><td>Emergency inverts it</td><td>Verdicts flip silently under pressure</td><td>Recorded in every contract review</td></tr></tbody></table></div>
+<p><strong>Formulation (chapter 2).</strong> The objective is a vector: availability, recovery time, delivery velocity, on-call wellbeing, cost. The mandated bonus scalar fails diagnostic 1's precondition before any reversal is tested: it weights raw incident count, which is not a coordinate of the declared vector but a proxy for two of them, so it is a formulation failure of the crudest kind, an objective built on an indicator. Within the declared vector, two viable roadmaps (incremental migration versus the feature roadmap) have Pareto-incomparable return vectors, and two defensible weightings in \(W\) rank them oppositely: a recovery-and-wellbeing weighting favors migration, a velocity weighting favors features. By chapter 2 that reversal certifies genuine multi-objective conflict, so the decision is returned to governance: the engineering council and the executive sponsor adopt a lexicographic rule (a floor on recovery time and paging load first, then velocity), record who chose it, and record the horizon and discount conventions in the ledger. The bonus coupling is severed; that is a chapter 8 decision made in chapter 2.</p>
 <p><strong>Observability (chapter 3).</strong> The dashboard state (count down, uptime flat) is consistent with three live models on two axes. The <em>reporting axis</em>: declared counts are honest (the system genuinely stabilized), or declared counts are suppressed (downgraded severities, off-ticket fixes). The <em>mechanism axis</em>, which concerns whatever incident load is real: instability is architectural (cascading retries), or it is fed by alert fatigue (a miscalibrated paging floor floods on-call, and exhausted responders let recoverable blips become real incidents). The dashboard summary takes the same value in all three worlds, so the statistic-blindness theorem applies to any rule driven by the dashboard alone, deterministic or randomized. The two axes then part company, and they illustrate chapter 9's boundary exactly. The reporting axis is <em>passively</em> distinguishable once the right second signals exist: a ticket-verified incident rate (support tickets reconciled against declared incidents) and a quarterly postmortem-quality audit separate honest from suppressed reporting by watching alone; that is the complicated cell, and chapter 8 records what the watching found. The mechanism axis is not: no signal in the case's channel set separates architecture from fatigue without intervening on the paging system itself, which is the complex cell, and the chapter 9 probe exists for it. One debt is recorded immediately: the suppression model is an adaptive counter-move, so chapter 3's Markov standing assumption fails for it, and once suppression is confirmed live the belief analysis must be rerun on the augmented state of chapter 8 (system state paired with reporting behavior). A zero-evidence event is pre-registered: a sev-1 outage with no preceding pages refutes the observation model itself and triggers ledger revision, not blame.</p>
 <p><strong>Agency (chapter 4).</strong> The migration needs two platform engineers who do not exist, and hiring is not something the team controls. The authority map makes the gap precise: <em>direct</em> control covers SLO policy, deploy gates, paging configuration, postmortem format; <em>inducible</em> via the sponsor: headcount for the platform team, roadmap trade-offs, bonus-structure changes; <em>exogenous drivers</em>, entries in the plan that are not actions at all: cloud-provider incidents, the acquisition-driven traffic spike, the market deadline. The first unreachable prerequisite is exactly the headcount. Requisite variety gives the diagnosis teeth, and its hypothesis is checked rather than assumed. The postmortem corpus distinguishes fourteen root-cause classes, audited as producing pairwise distinct outcomes under each fixed response; that audit is the theorem's injectivity premise, not a convenience. The rotation deploys three responses (restart, roll back, escalate) and tolerates four outcomes. Three times four is twelve, and twelve is less than fourteen: the bound is violated, and no rotation of this variety can keep outcomes tolerable across the disturbance inventory. The gap is equipment, not diligence. The verdict for this sub-problem, under the declared legitimacy-first order, is escalation, with the arithmetic attached.</p>
 <p><strong>Latency (chapter 5).</strong> With hiring escalated, the team still has to decide when to look. Lags are forecast per signal, against a declared comparison action: the rival feature roadmap, not a null action, since doing nothing is not on the table. The probe below shows its leading signal in about six weeks. For the migration, two signals carry different lags: the first slice's change-failure rate is a leading indicator with a one-quarter lag, and the fleet-wide verified incident rate is the terminal signal, invisible for about two quarters (backlog burn-down, then decay of legacy failure modes). Cadences are matched signal by signal: the probe is read at quarter end, the slice indicator at one quarter after funding, the fleet-wide rate at the two-quarter mark and not before. The theorem is quoted to the sponsor who wants weekly readouts of the fleet-wide rate: strictly before that signal's lag, a review of it cannot contain evidence discriminating the migration from the rival roadmap at the declared resolution (one fewer sev-2 per month). What an early review would do is a judgment the theorem does not make. One guardrail triggers earlier regardless of every lag: more than eight paging hours per person per week, measured weekly on every team including the probe teams, pauses feature work. Waiting is not licensed while people absorb harm, whatever the lag structure says.</p>
 <p><strong>Reversibility (the R coordinate).</strong> Recovery is analyzed before any traverse is authorized. Technical reversal is cheap: each migration slice rolls back in one sprint, and the rollback has been rehearsed. The irreversible axis is human: a departed senior on-call engineer does not roll back, and the two resignations already on the books are the case's only unrecoverable losses to date. The paging cap is therefore the R guardrail as much as the L one, and the hardness profile records R against attrition risk rather than system state. Which makes the choice of route, and not just its depth, the next question.</p>
 <p><strong>Ruggedness (chapter 6).</strong> Two routes are on the table: migrate everything at once, or migrate one service per sprint. The declared edge set does the first cut by itself: under one service per sprint, the big-bang route is not a path at all, since its single step, all services in flight at once, is not an admissible move, and the council declines to coarsen the edge set to admit it. Even offered arguendo under that coarser edge set, its forecast dip (velocity loss around 20% for two quarters, overlapping rollback windows) exceeds the tolerable depth the council sets at 10%. So the big-bang route is rejected twice over: inadmissible as declared, and too deep even if admitted. The strangler-pattern route is a genuine path in the declared edge set, dipping shallower and longer: about 10% for up to three quarters, one slice in flight at a time. Neither route is dip-free, so the decision rests on admissibility and the depth bound. (Had a dip-free route existed, chapter 6's converse theorem would have dissolved the valley talk entirely; here it merely bounds it.)</p>
 <p><strong>Traverse contract for the adopted incremental route.</strong></p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Parameter</th>
-<th scope="col">Value</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Mechanism</td>
-<td>Legacy queue causes cascading retries; managed queue removes the failure-mode class, slice by slice</td>
-</tr>
-<tr>
-<td>Depth</td>
-<td>Velocity may drop up to 10% for at most three quarters</td>
-</tr>
-<tr>
-<td>Duration</td>
-<td>One quarter after funding to the leading indicator (first slice), four to terminal, inside the declared six-quarter horizon</td>
-</tr>
-<tr>
-<td>Signal</td>
-<td>Change-failure rate on the first migrated slice falls first</td>
-</tr>
-<tr>
-<td>Guardrail</td>
-<td>Rollback per slice rehearsed; the eight-hour paging cap binds throughout</td>
-</tr>
-<tr>
-<td>Distribution</td>
-<td>Platform team bears the load, contingent on the headcount escalation being granted and on the guild's agreement to the comp adjustment; sponsor authorizes</td>
-</tr>
-</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead><tbody><tr><td>Mechanism</td><td>Legacy queue causes cascading retries; managed queue removes the failure-mode class, slice by slice</td></tr><tr><td>Depth</td><td>Velocity may drop up to 10% for at most three quarters</td></tr><tr><td>Duration</td><td>One quarter after funding to the leading indicator (first slice), four to terminal, inside the declared six-quarter horizon</td></tr><tr><td>Signal</td><td>Change-failure rate on the first migrated slice falls first</td></tr><tr><td>Guardrail</td><td>Rollback per slice rehearsed; the eight-hour paging cap binds throughout</td></tr><tr><td>Distribution</td><td>Platform team bears the load, contingent on the headcount escalation being granted and on the guild's agreement to the comp adjustment; sponsor authorizes</td></tr></tbody></table></div>
 <p>The contingency in the last row is not decoration: chapter 4 found the platform team two engineers short, and a traverse charged to a team that does not yet exist would be the chapter 6 failure condition, a population asked to pay a transition cost it never accepted. No escalation grant, no traverse.</p>
 <p><strong>Compositionality (chapter 7).</strong> If the migration branch is taken, each slice changes a component and its wiring at once: the payments service swaps its queue client while the fraud service still consumes its events. Before any slice moves, the interface contract (event schema, ordering guarantee, replay semantics) is written down for the first time, and writing it down is itself the first probe: drafting the consumer-driven contract tests surfaces an ordering assumption the fraud service had been relying on that no document had ever declared. The compatibility square gets checked only for what the contract states; the discipline of saying what the semantics forgets earns its keep here, because the forgotten part is where the incident would have lived. Separately, the old cascade mechanism is a margin lesson: "each service within its own error budget" is margin-style reasoning, and margins provably do not compose, while interface invariants do; the error-budget argument is retired from postmortems on those grounds.</p>
 <p><strong>Reflexivity (chapter 8).</strong> The suppression model turns out to be partially true: two teams had been downgrading severities to protect bonuses. Once that is confirmed, the fix is structural rather than disciplinary, because the metric design invited the move in the first place. The bonus coupling is already severed. Severity definitions move to a cross-team rubric. And the on-call guild, the monitored, now reviews every change to the metric design: monitors accountable to the monitored, not a rule invoked for the occasion. Legitimate resistance is distinguished from gaming by a pre-agreed observation: gaming moves the declared count away from the ticket-verified incident rate; legitimate improvement moves both together. The verified rate is the anchor because no single team controls the support-ticket stream, and sanctioned recalibration windows (announced to the guild in advance, as in the probe below) are excluded from the test so that an authorized alerting fix is never misread as gaming. As pre-registered in chapter 3's section, confirming suppression re-opens the belief analysis on the augmented state, and the ledger row is updated accordingly.</p>
 <p><strong>Probe (chapter 9).</strong> Before funding any migration, a safe-to-fail probe separates the mechanism axis: architectural instability versus fatigue-fed incidents. It is a sanctioned recalibration window in the sense of chapter 8, announced to the guild in advance.</p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Field</th>
-<th scope="col">Content</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Competing models</td>
-<td>Real incident load is architectural / is fed by alert fatigue</td>
-</tr>
-<tr>
-<td>Intervention</td>
-<td>Two volunteer teams adopt SLO-based paging for one quarter; two matched teams continue as controls</td>
-</tr>
-<tr>
-<td>Signal</td>
-<td>The ticket-verified incident rate on probe teams, against controls. If fatigue feeds incidents: the verified rate on probe teams falls once responders are no longer flooded. If instability is architectural: the verified rate persists, cascades being indifferent to who is paged. Pages fall under both models, by construction, and carry no evidential weight</td>
-</tr>
-<tr>
-<td>Risk</td>
-<td>Bounded, with the chapter's α made explicit against a channel the ledger trusts: probability of a missed sev-1 on probe teams held under 5%, established from the ticket-verified detection channel and a page-response SLA, not from the synthetic-probe channel the ledger declares blind at the edge; rollback in one sprint; no comp changes; volunteer teams only</td>
-</tr>
-<tr>
-<td>Review</td>
-<td>On-call guild plus sponsor, at quarter end</td>
-</tr>
-<tr>
-<td>Update</td>
-<td>Fatigue confirmed reweights the ledger toward alerting work and installs the posterior that switches the declared reading to Bayesian</td>
-</tr>
-<tr>
-<td>Branch</td>
-<td>Fatigue: recalibrate alerts fleet-wide, defer migration, re-run the ledger. Architecture: fund the incremental route under the traverse contract above, contingent on the escalation. Harm: revert, escalate</td>
-</tr>
-</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Field</th><th scope="col">Content</th></tr></thead><tbody><tr><td>Competing models</td><td>Real incident load is architectural / is fed by alert fatigue</td></tr><tr><td>Intervention</td><td>Two volunteer teams adopt SLO-based paging for one quarter; two matched teams continue as controls</td></tr><tr><td>Signal</td><td>The ticket-verified incident rate on probe teams, against controls. If fatigue feeds incidents: the verified rate on probe teams falls once responders are no longer flooded. If instability is architectural: the verified rate persists, cascades being indifferent to who is paged. Pages fall under both models, by construction, and carry no evidential weight</td></tr><tr><td>Risk</td><td>Bounded, with the chapter's α made explicit against a channel the ledger trusts: probability of a missed sev-1 on probe teams held under 5%, established from the ticket-verified detection channel and a page-response SLA, not from the synthetic-probe channel the ledger declares blind at the edge; rollback in one sprint; no comp changes; volunteer teams only</td></tr><tr><td>Review</td><td>On-call guild plus sponsor, at quarter end</td></tr><tr><td>Update</td><td>Fatigue confirmed reweights the ledger toward alerting work and installs the posterior that switches the declared reading to Bayesian</td></tr><tr><td>Branch</td><td>Fatigue: recalibrate alerts fleet-wide, defer migration, re-run the ledger. Architecture: fund the incremental route under the traverse contract above, contingent on the escalation. Harm: revert, escalate</td></tr></tbody></table></div>
 <p>The paging cap binds on probe teams exactly as everywhere else, measured weekly; a wellbeing guardrail is not confounded by an intervention that reduces pager harm, since fewer pages is the protected quantity itself. What the recalibration could mask is <em>unpaged</em> harm, so probe teams carry two additional guards the cap cannot provide: a zero-tolerance review of any missed sev-1, and a fortnightly welfare check with the guild. The probe is justified ex ante on prior-free grounds, as chapter 9 requires under the robust reading: its two outcomes select different roadmaps, so it is decision-relevant in the machine-checked sense, and under either live model it produces a signal that separates the pair, which is the worst-case distinguishability criterion. The value-of-information characterization is cited only for the shape of the argument; its strictly-positive-weights hypothesis becomes checkable, and is checked, only after the probe installs a posterior. What no theorem says is whether the information is worth two team-quarters of cost; that comparison is a recorded ledger judgment, and it was judged worth it against a migration-sized commitment.</p>
 <p><strong>The hardness profile, one line per coordinate.</strong> \(\mathsf{F}\): objective was ungoverned, now governed by the lexicographic rule. \(\mathsf{O}\): three live models on two axes; the reporting axis settled by audit, the mechanism axis awaiting the probe. \(\mathsf{A}\): variety gap established by counting; escalation filed. \(\mathsf{L}\): six-week probe lag, two-quarter migration lag, cadences matched to each. \(\mathsf{Ru}\): the big-bang route inadmissible under the declared edge set and too deep besides; the strangler route within the depth bound. \(\mathsf{Re}\): technical reversal cheap, attrition irreversible; the cap is the Re guardrail. \(\mathsf{X}\): suppression confirmed live; structural counter installed.</p>
 <p><strong>The navigation contract, instantiated.</strong></p>
-<ul>
-<li>\(\widehat{G}\): lexicographic rule above, robust reading until the probe posterior arrives; unresolved: the cost weighting, and whether 99.9% availability is the right target at all, both flagged for the year-end governance review;</li>
-<li>\(\widehat{b}_t\): reporting axis settled by audit (suppression confirmed on two teams); mechanism axis open, probe assigned; known blind spot: edge availability, owned by the support lead, next observation the per-region ticket-versus-dashboard reconciliation;</li>
-<li>\(\widehat{A}\): direct set as mapped; hiring escalated to sponsor with the variety arithmetic attached;</li>
-<li>\(\widehat{\tau}\): six-week probe lag read at quarter end; slice change-failure indicator at one quarter after funding; fleet-wide verified rate at the two-quarter mark; weekly readouts of the fleet-wide rate explicitly declined;</li>
-<li>\(\widehat{C}\): eight-hour paging cap (binding, checked weekly, on every team including probe teams); missed-sev-1 zero-tolerance and welfare checks on probe teams; rollback rehearsal per slice; no unconsented comp changes;</li>
-<li>\(\widehat{\Pi}\): severity-downgrade pressure anticipated to reappear wherever a count is targeted; rubric plus guild review as standing counter;</li>
-<li>\(e\): the SLO-paging probe;</li>
-<li>\(\sigma\): legitimacy-first order declared in full (escalate over probe over execute, infeasibility residual); probe verdict at quarter end; exit condition: two consecutive weekly cap breaches trigger reformulation regardless of every other signal.</li>
-</ul>
+<ul><li>\(\widehat{G}\): lexicographic rule above, robust reading until the probe posterior arrives; unresolved: the cost weighting, and whether 99.9% availability is the right target at all, both flagged for the year-end governance review;</li><li>\(\widehat{b}_t\): reporting axis settled by audit (suppression confirmed on two teams); mechanism axis open, probe assigned; known blind spot: edge availability, owned by the support lead, next observation the per-region ticket-versus-dashboard reconciliation;</li><li>\(\widehat{A}\): direct set as mapped; hiring escalated to sponsor with the variety arithmetic attached;</li><li>\(\widehat{\tau}\): six-week probe lag read at quarter end; slice change-failure indicator at one quarter after funding; fleet-wide verified rate at the two-quarter mark; weekly readouts of the fleet-wide rate explicitly declined;</li><li>\(\widehat{C}\): eight-hour paging cap (binding, checked weekly, on every team including probe teams); missed-sev-1 zero-tolerance and welfare checks on probe teams; rollback rehearsal per slice; no unconsented comp changes;</li><li>\(\widehat{\Pi}\): severity-downgrade pressure anticipated to reappear wherever a count is targeted; rubric plus guild review as standing counter;</li><li>\(e\): the SLO-paging probe;</li><li>\(\sigma\): legitimacy-first order declared in full (escalate over probe over execute, infeasibility residual); probe verdict at quarter end; exit condition: two consecutive weekly cap breaches trigger reformulation regardless of every other signal.</li></ul>
 <p><strong>What the machinery bought.</strong> Three decisions changed, each on stated grounds. The bonus scalar was rejected twice over: it weighted an indicator that is not a coordinate of the declared objective, and within the declared vector a witnessed ranking reversal under defensible weights certified real conflict, sending the choice to governance instead of a spreadsheet. (Pricing the one indicator that can be counted while what cannot be counted goes unpriced is a multitask distortion in Holmström and Milgrom's sense.) The big-bang migration was rejected by its own traverse parameter: under the declared edge set its depth exceeded the tolerated bound. The culture inquiry was reclassified: half an observability problem (the dashboard cannot see suppression), half an authority problem (the variety arithmetic), neither a virtue problem. Two honest limits close the case. The contract does not decide whether the company should want 99.9% availability at all; that remained a governance question the analyst surfaced and declined to answer. And the population that actually bears the cost of an availability error, the users behind the edge-visibility blind spot, has evidence flowing into the ledger but no seat at the rule-choosing table; naming that gap is chapter 2's step 3 applied to the case itself, and it is recorded as unresolved rather than dressed as solved.</p>
 <p><strong>A second profile, sketched: the P versus NP meta-problem.</strong> The reliability case is hard the way organizations are hard. For contrast, run the profile on a problem hard the opposite way. The framework cannot analyze P versus NP <em>as a statement</em>; a conjecture has no dynamics, no observation channel, no counterparty. What it can analyze is the meta-problem: the complexity theorist as focal agent, the state as the current reach of mathematical knowledge, actions as investments in proof techniques, and \(\Theta\) as uncertainty about the proof landscape itself.</p>
-<div class="table-wrap" tabindex="0" role="group">
-<table>
-<thead><tr>
-<th scope="col">Dimension</th>
-<th scope="col">Locus</th>
-<th scope="col">Finding</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>\(\mathsf{F}\)</td>
-<td>goal, framework choice</td>
-<td>The goal is clean and uncontested, a luxury no organization has. The residual F-risk is independence from the axioms: the target set may be empty, which is the infeasibility verdict, and reverse mathematics is the probe for it</td>
-</tr>
-<tr>
-<td>\(\mathsf{O}\)</td>
-<td>what evidence can separate</td>
-<td>Severe. Numerical and oracle-based evidence is consistent with worlds demanding opposite conclusions; see the barriers below</td>
-</tr>
-<tr>
-<td>\(\mathsf{A}\)</td>
-<td>admissible technique classes</td>
-<td>A requisite-variety gap: the classical moves provably lack the variety to constrain arbitrary polynomial-time computation</td>
-</tr>
-<tr>
-<td>\(\mathsf{L}\)</td>
-<td>technique-to-evidence lag</td>
-<td>Decades; reviews run on leading indicators (restricted-class lower bounds), not the terminal question</td>
-</tr>
-<tr>
-<td>\(\mathsf{Ru}\)</td>
-<td>proof landscape</td>
-<td>Extreme, per edge set: within a barred technique class the target is unreachable outright, our inadmissibility finding rather than a deep-but-finite barrier</td>
-</tr>
-<tr>
-<td>\(\mathsf{Re}\)</td>
-<td>cost of error</td>
-<td>Epistemic reversal is nearly free; the irreversible axes are careers and a community absorbing a false proof</td>
-</tr>
-<tr>
-<td>\(\mathsf{X}\)</td>
-<td>adaptation</td>
-<td>Near zero, and the profile should say so honestly. Worst-case instances are adversarial in the quantifier sense, not the strategic sense: nothing adapts to the prover's policy, and probing is safe. The one footnote is natural proofs, a logical self-reference rather than a counter-move</td>
-</tr>
-</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Dimension</th><th scope="col">Locus</th><th scope="col">Finding</th></tr></thead><tbody><tr><td>\(\mathsf{F}\)</td><td>goal, framework choice</td><td>The goal is clean and uncontested, a luxury no organization has. The residual F-risk is independence from the axioms: the target set may be empty, which is the infeasibility verdict, and reverse mathematics is the probe for it</td></tr><tr><td>\(\mathsf{O}\)</td><td>what evidence can separate</td><td>Severe. Numerical and oracle-based evidence is consistent with worlds demanding opposite conclusions; see the barriers below</td></tr><tr><td>\(\mathsf{A}\)</td><td>admissible technique classes</td><td>A requisite-variety gap: the classical moves provably lack the variety to constrain arbitrary polynomial-time computation</td></tr><tr><td>\(\mathsf{L}\)</td><td>technique-to-evidence lag</td><td>Decades; reviews run on leading indicators (restricted-class lower bounds), not the terminal question</td></tr><tr><td>\(\mathsf{Ru}\)</td><td>proof landscape</td><td>Extreme, per edge set: within a barred technique class the target is unreachable outright, our inadmissibility finding rather than a deep-but-finite barrier</td></tr><tr><td>\(\mathsf{Re}\)</td><td>cost of error</td><td>Epistemic reversal is nearly free; the irreversible axes are careers and a community absorbing a false proof</td></tr><tr><td>\(\mathsf{X}\)</td><td>adaptation</td><td>Near zero, and the profile should say so honestly. Worst-case instances are adversarial in the quantifier sense, not the strategic sense: nothing adapts to the prover's policy, and probing is safe. The one footnote is natural proofs, a logical self-reference rather than a counter-move</td></tr></tbody></table></div>
 <p>The three classical barriers are, in this vocabulary, framework diagnoses rather than curiosities. <em>Relativization</em> (Baker, Gill, Solovay): there are oracle worlds on either side of the question, and any technique whose verdict is insensitive to which world it inhabits takes the same value in both; since the correct conclusions in the two worlds are disjoint, no such technique decides the question. That is the statistic-blindness theorem verbatim, with the technique as the statistic and the oracle worlds as the conflated states (machine-checked in the general form). <em>Natural proofs</em> (Razborov, Rudich): the naturalness of a lower-bound property is a proxy for hardness that self-defeats; if strong pseudorandomness exists, a usable natural property would break it, so targeting the proxy collapses the proxy. This is chapter 3's proxy failure with a twist of self-reference, and honesty requires saying it is not chapter 8: nothing adapted. <em>Algebrization</em> (Aaronson, Wigderson): the algebraic extension of the admissible move set still lacks the variety to reach the target, an agency finding.</p>
 <details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails&#x27;</summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- The statistic-blindness theorem with an arbitrary statistic codomain:
@@ -2027,156 +1545,54 @@ theorem statistic_based_rule_fails&#x27; {Y : Type*} {m : S → Y} (Astar : S �
 <p>The community's actual strategy reads as chapter 9 executed over decades: probes on restricted models, each cheap relative to the terminal question, each reweighting the ledger. Monotone circuits (Razborov) established that non-monotonicity is decision-relevant structure. Bounded-depth circuits established the same for counting. The ACC⁰ lower bound (Williams) was a probe that deliberately routed around the natural proofs barrier, and its methodological payload (algorithm design as a route to lower bounds) mattered more than the specific class. The stopping discipline is the declared order in miniature: a candidate approach shown to relativize or naturalize is exited <em>immediately</em> for that branch, no sunk-cost appeal, because the barrier theorems are machine-grade refutations of the branch's model class.</p>
 <p>The contrast is the payoff. The reliability case is moderate on every coordinate; this one is extreme on \(\mathsf{O}\), \(\mathsf{A}\), \(\mathsf{L}\), \(\mathsf{Ru}\) and nearly zero on \(\mathsf{F}\) and \(\mathsf{X}\). The profile does not just measure hardness, it classifies kinds of it, and the corner where only the epistemic coordinates are live is the corner where centuries of mathematical methodology already exist. Mathematics is what navigation looks like when the system does not fight back and nobody disputes the goal; organizations are what it looks like when both luxuries are revoked at once.</p>
 </section>
-<section id="bib" class="chapter" aria-labelledby="bib-h">
-<h2 id="bib-h"><span class="chap-label">Bibliography</span><span class="chap-title">Bibliographic anchors for the next draft</span></h2>
-<ul class="bib-list">
-<li>Abate, A., Prandini, M., Lygeros, J., and Sastry, S. "Probabilistic Reachability and Safety for Controlled Discrete Time Stochastic Hybrid Systems." <em>Automatica</em>, 2008.</li>
-<li>Ackoff, R. L. <em>Redesigning the Future: A Systems Approach to Societal Problems</em>. 1974.</li>
-<li>Aaronson, S., and Wigderson, A. "Algebrization: A New Barrier in Complexity Theory." <em>ACM Transactions on Computation Theory</em>, 2009.</li>
-<li>Argyris, C., and Schön, D. A. <em>Organizational Learning: A Theory of Action Perspective</em>. 1978.</li>
-<li>Armstrong, S. "Model Splintering: Moving from One Imperfect Model to Another." AI Alignment Forum, 2020.</li>
-<li>Ashby, W. R. <em>An Introduction to Cybernetics</em>. 1956.</li>
-<li>Aubin, J.-P., Bayen, A. M., and Saint-Pierre, P. <em>Viability Theory: New Directions</em>. 2011.</li>
-<li>Baker, T., Gill, J., and Solovay, R. "Relativizations of the P =? NP Question." <em>SIAM Journal on Computing</em>, 1975.</li>
-<li>Bateson, G. "Social Planning and the Concept of Deutero-Learning." 1942; reprinted in <em>Steps to an Ecology of Mind</em>, 1972.</li>
-<li>Beer, S. <em>Brain of the Firm</em>. 1972.</li>
-<li>Ben-Haim, Y. <em>Info-Gap Decision Theory: Decisions under Severe Uncertainty</em>. 2006.</li>
-<li>Bertsekas, D. P., and Rhodes, I. B. "On the Minimax Reachability of Target Sets and Target Tubes." <em>Automatica</em>, 1971.</li>
-<li>Åström, K. J. "Optimal Control of Markov Processes with Incomplete State Information." <em>Journal of Mathematical Analysis and Applications</em>, 1965.</li>
-<li>Baez, J. C., and Courser, K. "Structured Cospans." <em>Theory and Applications of Categories</em>, 2020.</li>
-<li>Berger, J. O., and Berliner, L. M. "Robust Bayes and Empirical Bayes Analysis with ε-Contaminated Priors." <em>Annals of Statistics</em>, 1986.</li>
-<li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em>, 1953.</li>
-<li>Baez, J. C., Courser, K., and Vasilakopoulou, C. "Structured versus Decorated Cospans." <em>Compositionality</em>, 2022.</li>
-<li>Campbell, D. T. "Assessing the Impact of Planned Social Change." <em>Evaluation and Program Planning</em>, 1979.</li>
-<li>CAST Investigators. "Preliminary Report: Effect of Encainide and Flecainide on Mortality in a Randomized Trial of Arrhythmia Suppression after Myocardial Infarction." <em>New England Journal of Medicine</em>, 1989.</li>
-<li>Churchman, C. W. "Wicked Problems." Guest editorial, <em>Management Science</em>, 1967.</li>
-<li>Checkland, P. <em>Systems Thinking, Systems Practice</em>. 1981.</li>
-<li>Conant, R. C., and Ashby, W. R. "Every Good Regulator of a System Must Be a Model of That System." <em>International Journal of Systems Science</em>, 1970.</li>
-<li>Cousot, P., and Cousot, R. "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints." <em>POPL</em>, 1977.</li>
-<li>Cousot, P., and Cousot, R. "Systematic Design of Program Analysis Frameworks." <em>POPL</em>, 1979.</li>
-<li>de Blanc, P. "Ontological Crises in Artificial Agents' Value Systems." arXiv:1105.3821, 2011.</li>
-<li>Demski, A., and Garrabrant, S. "Embedded Agency." arXiv:1902.09469, 2019.</li>
-<li>Dörner, D. <em>The Logic of Failure: Recognizing and Avoiding Error in Complex Situations</em>. 1996.</li>
-<li>Duff, M. O. <em>Optimal Learning: Computational Procedures for Bayes-Adaptive Markov Decision Processes</em>. PhD thesis, University of Massachusetts Amherst, 2002.</li>
-<li>Echt, D. S., et al. "Mortality and Morbidity in Patients Receiving Encainide, Flecainide, or Placebo: The Cardiac Arrhythmia Suppression Trial." <em>New England Journal of Medicine</em>, 1991.</li>
-<li>Feldbaum, A. A. "Dual Control Theory I-IV." <em>Automation and Remote Control</em>, 1961-1962 (Russian original 1960-1961).</li>
-<li>Fong, B. <em>The Algebra of Open and Interconnected Systems</em>. DPhil thesis, University of Oxford, 2016.</li>
-<li>Fong, B., and Spivak, D. I. <em>Seven Sketches in Compositionality: An Invitation to Applied Category Theory</em>. 2019.</li>
-<li>Ganter, B., and Wille, R. <em>Formal Concept Analysis: Mathematical Foundations</em>. 1999.</li>
-<li>Gick, M. L., and Holyoak, K. J. "Analogical Problem Solving." <em>Cognitive Psychology</em>, 1980.</li>
-<li>Gilboa, I., and Schmeidler, D. "Maxmin Expected Utility with Non-Unique Prior." <em>Journal of Mathematical Economics</em>, 1989.</li>
-<li>Goodhart, C. A. E. "Problems of Monetary Management: The U.K. Experience." <em>Papers in Monetary Economics</em>, 1975.</li>
-<li>Hermann, R., and Krener, A. J. "Nonlinear Controllability and Observability." <em>IEEE Transactions on Automatic Control</em>, 1977.</li>
-<li>Hodges, W. <em>Model Theory</em>. Encyclopedia of Mathematics and Its Applications, 1993.</li>
-<li>Holmström, B., and Milgrom, P. "Multitask Principal-Agent Analyses: Incentive Contracts, Asset Ownership, and Job Design." <em>Journal of Law, Economics, and Organization</em>, 1991.</li>
-<li>Howard, R. A. "Information Value Theory." <em>IEEE Transactions on Systems Science and Cybernetics</em>, 1966.</li>
-<li>Huber, P. J. <em>Robust Statistics</em>. 1981.</li>
-<li>Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., and Garrabrant, S. "Risks from Learned Optimization in Advanced Machine Learning Systems." arXiv:1906.01820, 2019.</li>
-<li>Iordache, O. <em>Self-Evolvable Systems: Machine Learning in Social Media</em>. 2012.</li>
-<li>Kaelbling, L. P., Littman, M. L., and Cassandra, A. R. "Planning and Acting in Partially Observable Stochastic Domains." <em>Artificial Intelligence</em>, 1998.</li>
-<li>Kalman, R. E. "On the General Theory of Control Systems." <em>Proceedings of the First IFAC Congress</em>, 1960.</li>
-<li>Kauffman, S. A. <em>The Origins of Order: Self-Organization and Selection in Evolution</em>. 1993.</li>
-<li>Kephart, J. O., and Chess, D. M. "The Vision of Autonomic Computing." <em>IEEE Computer</em>, 2003.</li>
-<li>Lawvere, F. W. <em>Functorial Semantics of Algebraic Theories</em>. PhD thesis, Columbia University, 1963.</li>
-<li>Lempert, R. J., Popper, S. W., and Bankes, S. C. <em>Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis</em>. 2003.</li>
-<li>Leveson, N. G. <em>Engineering a Safer World: Systems Thinking Applied to Safety</em>. 2011.</li>
-<li>Levin, K., Cashore, B., Bernstein, S., and Auld, G. "Overcoming the Tragedy of Super Wicked Problems: Constraining Our Future Selves to Ameliorate Global Climate Change." <em>Policy Sciences</em>, 2012.</li>
-<li>Levinthal, D. A. "Adaptation on Rugged Landscapes." <em>Management Science</em>, 1997.</li>
-<li>Lindley, D. V. "On a Measure of the Information Provided by an Experiment." <em>Annals of Mathematical Statistics</em>, 1956.</li>
-<li>Madani, O., Hanks, S., and Condon, A. "On the Undecidability of Probabilistic Planning and Related Stochastic Optimization Problems." <em>Artificial Intelligence</em>, 2003.</li>
-<li>Manheim, D., and Garrabrant, S. "Categorizing Variants of Goodhart's Law." arXiv:1803.04585, 2018.</li>
-<li>McPhail, C., Maier, H. R., Kwakkel, J. H., Giuliani, M., Castelletti, A., and Westra, S. "Robustness Metrics: How Are They Calculated, When Should They Be Used and Why Do They Give Different Results?" <em>Earth's Future</em>, 2018.</li>
-<li>Meadows, D. H. "Leverage Points: Places to Intervene in a System." 1999.</li>
-<li>Ostrom, E. <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. 1990.</li>
-<li>Papadimitriou, C. H., and Tsitsiklis, J. N. "The Complexity of Markov Decision Processes." <em>Mathematics of Operations Research</em>, 1987.</li>
-<li>Pattee, H. H. "The Physics of Symbols: Bridging the Epistemic Cut." <em>BioSystems</em>, 2001.</li>
-<li>Post, E. L. "Recursively Enumerable Sets of Positive Integers and Their Decision Problems." <em>Bulletin of the American Mathematical Society</em>, 1944.</li>
-<li>Razborov, A. A., and Rudich, S. "Natural Proofs." <em>Journal of Computer and System Sciences</em>, 1997.</li>
-<li>Raiffa, H. <em>Decision Analysis: Introductory Lectures on Choices under Uncertainty</em>. 1968.</li>
-<li>Raiffa, H., and Schlaifer, R. <em>Applied Statistical Decision Theory</em>. 1961.</li>
-<li>Rittel, H. W. J., and Webber, M. M. "Dilemmas in a General Theory of Planning." <em>Policy Sciences</em>, 1973.</li>
-<li>Rivkin, J. W., and Siggelkow, N. "Organizational Sticking Points on NK Landscapes." <em>Complexity</em>, 2002.</li>
-<li>Rogers, M. "Examining Armstrong's Category of Generalized Models." LessWrong, 2022.</li>
-<li>Rosen, R. <em>Anticipatory Systems: Philosophical, Mathematical, and Methodological Foundations</em>. 1985.</li>
-<li>Rosenhead, J., and Mingers, J., eds. <em>Rational Analysis for a Problematic World Revisited: Problem Structuring Methods for Complexity, Uncertainty and Conflict</em>. 2001.</li>
-<li>Ross, S., Chaib-draa, B., and Pineau, J. "Bayes-Adaptive POMDPs." <em>Advances in Neural Information Processing Systems</em>, 2007.</li>
-<li>Simon, H. A. "A Behavioral Model of Rational Choice." <em>Quarterly Journal of Economics</em>, 1955.</li>
-<li>Simon, H. A. "The Architecture of Complexity." <em>Proceedings of the American Philosophical Society</em>, 1962.</li>
-<li>Simon, H. A. "The Structure of Ill-Structured Problems." <em>Artificial Intelligence</em>, 1973.</li>
-<li>Skalse, J., Howe, N. H. R., Krasheninnikov, D., and Krueger, D. "Defining and Characterizing Reward Hacking." <em>Advances in Neural Information Processing Systems</em>, 2022.</li>
-<li>Snowden, D. J., and Boone, M. E. "A Leader's Framework for Decision Making." <em>Harvard Business Review</em>, 2007.</li>
-<li>Soros, G. <em>The Alchemy of Finance: Reading the Mind of the Market</em>. 1987.</li>
-<li>Spivak, D. I. "The Operad of Wiring Diagrams: Formalizing a Graphical Language for Databases, Recursion, and Plug-and-Play Circuits." Preprint, 2013.</li>
-<li>Sterman, J. D. "Modeling Managerial Behavior: Misperceptions of Feedback in a Dynamic Decision Making Experiment." <em>Management Science</em>, 1989.</li>
-<li>Sterman, J. D. <em>Business Dynamics: Systems Thinking and Modeling for a Complex World</em>. 2000.</li>
-<li>Strathern, M. "'Improving Ratings': Audit in the British University System." <em>European Review</em>, 1997.</li>
-<li>Summers, S., and Lygeros, J. "Verification of Discrete Time Stochastic Hybrid Systems: A Stochastic Reach-Avoid Decision Problem." <em>Automatica</em>, 2010.</li>
-<li>Tarski, A. "Contributions to the Theory of Models. I." <em>Indagationes Mathematicae</em>, 1954.</li>
-<li>Turing, A. M. "Systems of Logic Based on Ordinals." <em>Proceedings of the London Mathematical Society</em>, 1939.</li>
-<li>Vergassola, M., Villermaux, E., and Shraiman, B. I. "'Infotaxis' as a Strategy for Searching without Gradients." <em>Nature</em>, 2007.</li>
-<li>Virgo, N., Biehl, M., Baltieri, M., and Capucci, M. "A 'Good Regulator Theorem' for Embodied Agents." <em>ALIFE Conference Proceedings</em>, 2025.</li>
-<li>Wentworth, J. "Demons in Imperfect Search." LessWrong, 2020.</li>
-<li>Wentworth, J. "Fixing the Good Regulator Theorem." AI Alignment Forum, 2021.</li>
-<li>Wiles, A. "Modular Elliptic Curves and Fermat's Last Theorem." <em>Annals of Mathematics</em>, 1995.</li>
-<li>Williams, R. "Nonuniform ACC Circuit Lower Bounds." <em>Journal of the ACM</em>, 2014.</li>
-<li>Wolff, K. E. "Temporal Concept Analysis." In <em>ICCS Workshop on Concept Lattices for Knowledge Discovery in Databases</em>, 2001.</li>
-</ul>
+<section class="chapter" id="bib" aria-labelledby="bib-h">
+<h2 id="bib-h"><span class="chaplabel">References</span>Bibliographic anchors for the next draft</h2>
+<ul class="bib"><li>Abate, A., Prandini, M., Lygeros, J., and Sastry, S. "Probabilistic Reachability and Safety for Controlled Discrete Time Stochastic Hybrid Systems." <em>Automatica</em>, 2008.</li><li>Ackoff, R. L. <em>Redesigning the Future: A Systems Approach to Societal Problems</em>. 1974.</li><li>Aaronson, S., and Wigderson, A. "Algebrization: A New Barrier in Complexity Theory." <em>ACM Transactions on Computation Theory</em>, 2009.</li><li>Amodei, D., Olah, C., Steinhardt, J., Christiano, P., Schulman, J., and Mané, D. "Concrete Problems in AI Safety." arXiv:1606.06565, 2016.</li><li>Argyris, C., and Schön, D. A. <em>Organizational Learning: A Theory of Action Perspective</em>. 1978.</li><li>Armstrong, S. "Model Splintering: Moving from One Imperfect Model to Another." AI Alignment Forum, 2020.</li><li>Ashby, W. R. <em>An Introduction to Cybernetics</em>. 1956.</li><li>Aubin, J.-P., Bayen, A. M., and Saint-Pierre, P. <em>Viability Theory: New Directions</em>. 2011.</li><li>Baker, T., Gill, J., and Solovay, R. "Relativizations of the P =? NP Question." <em>SIAM Journal on Computing</em>, 1975.</li><li>Bateson, G. "Social Planning and the Concept of Deutero-Learning." 1942; reprinted in <em>Steps to an Ecology of Mind</em>, 1972.</li><li>Beer, S. <em>Brain of the Firm</em>. 1972.</li><li>Ben-Haim, Y. <em>Info-Gap Decision Theory: Decisions under Severe Uncertainty</em>. 2006.</li><li>Bertsekas, D. P., and Rhodes, I. B. "On the Minimax Reachability of Target Sets and Target Tubes." <em>Automatica</em>, 1971.</li><li>Åström, K. J. "Optimal Control of Markov Processes with Incomplete State Information." <em>Journal of Mathematical Analysis and Applications</em>, 1965.</li><li>Baez, J. C., and Courser, K. "Structured Cospans." <em>Theory and Applications of Categories</em>, 2020.</li><li>Berger, J. O., and Berliner, L. M. "Robust Bayes and Empirical Bayes Analysis with ε-Contaminated Priors." <em>Annals of Statistics</em>, 1986.</li><li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em>, 1953.</li><li>Baez, J. C., Courser, K., and Vasilakopoulou, C. "Structured versus Decorated Cospans." <em>Compositionality</em>, 2022.</li><li>Campbell, D. T. "Assessing the Impact of Planned Social Change." <em>Evaluation and Program Planning</em>, 1979.</li><li>CAST Investigators. "Preliminary Report: Effect of Encainide and Flecainide on Mortality in a Randomized Trial of Arrhythmia Suppression after Myocardial Infarction." <em>New England Journal of Medicine</em>, 1989.</li><li>Churchman, C. W. "Wicked Problems." Guest editorial, <em>Management Science</em>, 1967.</li><li>Checkland, P. <em>Systems Thinking, Systems Practice</em>. 1981.</li><li>Conant, R. C., and Ashby, W. R. "Every Good Regulator of a System Must Be a Model of That System." <em>International Journal of Systems Science</em>, 1970.</li><li>Cousot, P., and Cousot, R. "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints." <em>POPL</em>, 1977.</li><li>Cousot, P., and Cousot, R. "Systematic Design of Program Analysis Frameworks." <em>POPL</em>, 1979.</li><li>de Blanc, P. "Ontological Crises in Artificial Agents' Value Systems." arXiv:1105.3821, 2011.</li><li>Demski, A., and Garrabrant, S. "Embedded Agency." arXiv:1902.09469, 2019.</li><li>Dörner, D. <em>The Logic of Failure: Recognizing and Avoiding Error in Complex Situations</em>. 1996.</li><li>Duff, M. O. <em>Optimal Learning: Computational Procedures for Bayes-Adaptive Markov Decision Processes</em>. PhD thesis, University of Massachusetts Amherst, 2002.</li><li>Echt, D. S., et al. "Mortality and Morbidity in Patients Receiving Encainide, Flecainide, or Placebo: The Cardiac Arrhythmia Suppression Trial." <em>New England Journal of Medicine</em>, 1991.</li><li>Feldbaum, A. A. "Dual Control Theory I-IV." <em>Automation and Remote Control</em>, 1961-1962 (Russian original 1960-1961).</li><li>Fong, B. <em>The Algebra of Open and Interconnected Systems</em>. DPhil thesis, University of Oxford, 2016.</li><li>Fong, B., and Spivak, D. I. <em>Seven Sketches in Compositionality: An Invitation to Applied Category Theory</em>. 2019.</li><li>Ganter, B., and Wille, R. <em>Formal Concept Analysis: Mathematical Foundations</em>. 1999.</li><li>Garrabrant, S. "Functors and Coarse Worlds." AI Alignment Forum, 2020.</li><li>Gick, M. L., and Holyoak, K. J. "Analogical Problem Solving." <em>Cognitive Psychology</em>, 1980.</li><li>Gilboa, I., and Schmeidler, D. "Maxmin Expected Utility with Non-Unique Prior." <em>Journal of Mathematical Economics</em>, 1989.</li><li>Goodhart, C. A. E. "Problems of Monetary Management: The U.K. Experience." <em>Papers in Monetary Economics</em>, 1975.</li><li>Hermann, R., and Krener, A. J. "Nonlinear Controllability and Observability." <em>IEEE Transactions on Automatic Control</em>, 1977.</li><li>Hodges, W. <em>Model Theory</em>. Encyclopedia of Mathematics and Its Applications, 1993.</li><li>Holmström, B., and Milgrom, P. "Multitask Principal-Agent Analyses: Incentive Contracts, Asset Ownership, and Job Design." <em>Journal of Law, Economics, and Organization</em>, 1991.</li><li>Howard, R. A. "Information Value Theory." <em>IEEE Transactions on Systems Science and Cybernetics</em>, 1966.</li><li>Huber, P. J. <em>Robust Statistics</em>. 1981.</li><li>Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., and Garrabrant, S. "Risks from Learned Optimization in Advanced Machine Learning Systems." arXiv:1906.01820, 2019.</li><li>Iordache, O. <em>Self-Evolvable Systems: Machine Learning in Social Media</em>. 2012.</li><li>Kaelbling, L. P., Littman, M. L., and Cassandra, A. R. "Planning and Acting in Partially Observable Stochastic Domains." <em>Artificial Intelligence</em>, 1998.</li><li>Kalman, R. E. "On the General Theory of Control Systems." <em>Proceedings of the First IFAC Congress</em>, 1960.</li><li>Kauffman, S. A. <em>The Origins of Order: Self-Organization and Selection in Evolution</em>. 1993.</li><li>Kephart, J. O., and Chess, D. M. "The Vision of Autonomic Computing." <em>IEEE Computer</em>, 2003.</li><li>Lawvere, F. W. <em>Functorial Semantics of Algebraic Theories</em>. PhD thesis, Columbia University, 1963.</li><li>Lempert, R. J., Popper, S. W., and Bankes, S. C. <em>Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis</em>. 2003.</li><li>Leveson, N. G. <em>Engineering a Safer World: Systems Thinking Applied to Safety</em>. 2011.</li><li>Levin, K., Cashore, B., Bernstein, S., and Auld, G. "Overcoming the Tragedy of Super Wicked Problems: Constraining Our Future Selves to Ameliorate Global Climate Change." <em>Policy Sciences</em>, 2012.</li><li>Levinthal, D. A. "Adaptation on Rugged Landscapes." <em>Management Science</em>, 1997.</li><li>Lindley, D. V. "On a Measure of the Information Provided by an Experiment." <em>Annals of Mathematical Statistics</em>, 1956.</li><li>Madani, O., Hanks, S., and Condon, A. "On the Undecidability of Probabilistic Planning and Related Stochastic Optimization Problems." <em>Artificial Intelligence</em>, 2003.</li><li>Manheim, D., and Garrabrant, S. "Categorizing Variants of Goodhart's Law." arXiv:1803.04585, 2018.</li><li>McPhail, C., Maier, H. R., Kwakkel, J. H., Giuliani, M., Castelletti, A., and Westra, S. "Robustness Metrics: How Are They Calculated, When Should They Be Used and Why Do They Give Different Results?" <em>Earth's Future</em>, 2018.</li><li>Meadows, D. H. "Leverage Points: Places to Intervene in a System." 1999.</li><li>Ostrom, E. <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. 1990.</li><li>Papadimitriou, C. H., and Tsitsiklis, J. N. "The Complexity of Markov Decision Processes." <em>Mathematics of Operations Research</em>, 1987.</li><li>Pattee, H. H. "The Physics of Symbols: Bridging the Epistemic Cut." <em>BioSystems</em>, 2001.</li><li>Post, E. L. "Recursively Enumerable Sets of Positive Integers and Their Decision Problems." <em>Bulletin of the American Mathematical Society</em>, 1944.</li><li>Razborov, A. A., and Rudich, S. "Natural Proofs." <em>Journal of Computer and System Sciences</em>, 1997.</li><li>Raiffa, H. <em>Decision Analysis: Introductory Lectures on Choices under Uncertainty</em>. 1968.</li><li>Raiffa, H., and Schlaifer, R. <em>Applied Statistical Decision Theory</em>. 1961.</li><li>Rittel, H. W. J., and Webber, M. M. "Dilemmas in a General Theory of Planning." <em>Policy Sciences</em>, 1973.</li><li>Rivkin, J. W., and Siggelkow, N. "Organizational Sticking Points on NK Landscapes." <em>Complexity</em>, 2002.</li><li>Rogers, M. "Examining Armstrong's Category of Generalized Models." LessWrong, 2022.</li><li>Rosen, R. <em>Anticipatory Systems: Philosophical, Mathematical, and Methodological Foundations</em>. 1985.</li><li>Rosenhead, J., and Mingers, J., eds. <em>Rational Analysis for a Problematic World Revisited: Problem Structuring Methods for Complexity, Uncertainty and Conflict</em>. 2001.</li><li>Ross, S., Chaib-draa, B., and Pineau, J. "Bayes-Adaptive POMDPs." <em>Advances in Neural Information Processing Systems</em>, 2007.</li><li>Simon, H. A. "A Behavioral Model of Rational Choice." <em>Quarterly Journal of Economics</em>, 1955.</li><li>Simon, H. A. "The Architecture of Complexity." <em>Proceedings of the American Philosophical Society</em>, 1962.</li><li>Simon, H. A. "The Structure of Ill-Structured Problems." <em>Artificial Intelligence</em>, 1973.</li><li>Skalse, J., Howe, N. H. R., Krasheninnikov, D., and Krueger, D. "Defining and Characterizing Reward Hacking." <em>Advances in Neural Information Processing Systems</em>, 2022.</li><li>Snowden, D. J., and Boone, M. E. "A Leader's Framework for Decision Making." <em>Harvard Business Review</em>, 2007.</li><li>Soros, G. <em>The Alchemy of Finance: Reading the Mind of the Market</em>. 1987.</li><li>Spivak, D. I. "The Operad of Wiring Diagrams: Formalizing a Graphical Language for Databases, Recursion, and Plug-and-Play Circuits." Preprint, 2013.</li><li>Sterman, J. D. "Modeling Managerial Behavior: Misperceptions of Feedback in a Dynamic Decision Making Experiment." <em>Management Science</em>, 1989.</li><li>Sterman, J. D. <em>Business Dynamics: Systems Thinking and Modeling for a Complex World</em>. 2000.</li><li>Strathern, M. "'Improving Ratings': Audit in the British University System." <em>European Review</em>, 1997.</li><li>Summers, S., and Lygeros, J. "Verification of Discrete Time Stochastic Hybrid Systems: A Stochastic Reach-Avoid Decision Problem." <em>Automatica</em>, 2010.</li><li>Tarski, A. "Contributions to the Theory of Models. I." <em>Indagationes Mathematicae</em>, 1954.</li><li>Turing, A. M. "Systems of Logic Based on Ordinals." <em>Proceedings of the London Mathematical Society</em>, 1939.</li><li>Turner, A. M., Smith, L., Shah, R., Critch, A., and Tadepalli, P. "Optimal Policies Tend to Seek Power." <em>Advances in Neural Information Processing Systems</em>, 2021.</li><li>Vergassola, M., Villermaux, E., and Shraiman, B. I. "'Infotaxis' as a Strategy for Searching without Gradients." <em>Nature</em>, 2007.</li><li>Virgo, N., Biehl, M., Baltieri, M., and Capucci, M. "A 'Good Regulator Theorem' for Embodied Agents." <em>ALIFE Conference Proceedings</em>, 2025.</li><li>Wentworth, J. "Demons in Imperfect Search." LessWrong, 2020.</li><li>Wentworth, J. "Fixing the Good Regulator Theorem." AI Alignment Forum, 2021.</li><li>Wiles, A. "Modular Elliptic Curves and Fermat's Last Theorem." <em>Annals of Mathematics</em>, 1995.</li><li>Williams, R. "Nonuniform ACC Circuit Lower Bounds." <em>Journal of the ACM</em>, 2014.</li><li>Wolff, K. E. "Temporal Concept Analysis." In <em>ICCS Workshop on Concept Lattices for Knowledge Discovery in Databases</em>, 2001.</li></ul>
 </section>
 </main>
+
 <footer>
-<p class="foot-title">Hard Problems</p>
+<p class="ftitle">Hard Problems</p>
 <p>Machine-checked companion available in the source repository.</p>
 </footer>
-</div>
+
 <script>
 (function(){
-  var details = document.getElementById('toc-details');
-  var wide = window.matchMedia('(min-width: 60rem)');
-  function sync(){ if(details){ details.open = wide.matches; } }
+  var det=document.getElementById('toc-details');
+  var mq=window.matchMedia('(min-width:1180px)');
+  function sync(){ det.open = mq.matches ? true : false; }
   sync();
-  if(wide.addEventListener){ wide.addEventListener('change', sync); }
-  else if(wide.addListener){ wide.addListener(sync); }
-
-  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
-  var targets = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
-  var current = null;
-  function highlight(){
-    var best = -1;
-    for(var i = 0; i < targets.length; i++){
-      var t = targets[i];
-      if(!t){ continue; }
-      if(t.getBoundingClientRect().top <= 140){ best = i; }
-    }
-    if(best < 0){ best = 0; }
-    if(current === links[best]){ return; }
-    if(current){ current.classList.remove('active'); }
-    current = links[best];
-    if(current){ current.classList.add('active'); reveal(current); }
-  }
-  function reveal(el){
-    if(!wide.matches){ return; }
-    var nav = document.getElementById('toc');
-    if(!nav || nav.scrollHeight <= nav.clientHeight){ return; }
-    var r = el.getBoundingClientRect();
-    var n = nav.getBoundingClientRect();
-    if(r.top < n.top + 8){ nav.scrollTop += r.top - n.top - 24; }
-    else if(r.bottom > n.bottom - 8){ nav.scrollTop += r.bottom - n.bottom + 24; }
-  }
-  var queued = false;
-  function onScroll(){
-    if(queued){ return; }
-    queued = true;
-    window.requestAnimationFrame(function(){ queued = false; highlight(); });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  highlight();
-
-  links.forEach(function(a){
-    a.addEventListener('click', function(){
-      if(details && !wide.matches){ details.open = false; }
-    });
+  if(mq.addEventListener){ mq.addEventListener('change',sync); }
+  else if(mq.addListener){ mq.addListener(sync); }
+  det.addEventListener('click',function(e){
+    var t=e.target;
+    while(t&&t!==det&&t.tagName!=='A'){ t=t.parentNode; }
+    if(t&&t.tagName==='A'&&!mq.matches){ det.open=false; }
   });
+  var links=[].slice.call(document.querySelectorAll('#toc a[data-target]'));
+  var targets=links.map(function(a){ return document.getElementById(a.getAttribute('data-target')); });
+  var pending=false,last=-1;
+  function update(){
+    pending=false;
+    var idx=-1;
+    for(var i=0;i<targets.length;i++){
+      if(targets[i]&&targets[i].getBoundingClientRect().top<=140){ idx=i; }
+    }
+    if(idx<0){ idx=0; }
+    if(idx===last){ return; }
+    last=idx;
+    for(var j=0;j<links.length;j++){
+      if(j===idx){ links[j].setAttribute('aria-current','true'); }
+      else{ links[j].removeAttribute('aria-current'); }
+    }
+    if(mq.matches&&links[idx].scrollIntoView){
+      links[idx].scrollIntoView({block:'nearest'});
+    }
+  }
+  function schedule(){ if(!pending){ pending=true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule);
+  update();
 })();
 </script>
 </body>
