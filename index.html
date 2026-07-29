@@ -249,6 +249,22 @@ h1 em {
 .door.dim::after { content: none; }
 .door.dim .what { max-width: 34ch; text-align: right; line-height: 1.8; }
 
+/* translation note, tucked in the band under its door */
+.alt {
+  padding: 0.6rem 0 0.75rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--ash);
+}
+.alt a {
+  color: var(--ash);
+  text-decoration: none;
+  transition: color 0.5s ease;
+}
+.alt a:hover { color: var(--glow); }
+.alt a:focus-visible { outline: 1px solid var(--glow); outline-offset: 5px; }
+.alt + .door { border-top: none; }
+
 /* small signals that stir on hover */
 .door .stir {
   display: flex;
@@ -363,6 +379,8 @@ footer {
       <span class="stir" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       <span class="what">why problems are hard, read as control</span>
     </a>
+    <p class="alt"><a href="/hard-problems/fa/" hreflang="fa"><span lang="fa"
+    dir="rtl">&#1601;&#1575;&#1585;&#1587;&#1740;</span> (fa)</a></p>
     <div class="door dim">
       <span class="num">03</span>
       <span class="name">&AElig;ON</span>

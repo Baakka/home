@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Why Problems Are Hard</title>
 <meta name="description" content="Why some problems stay hard, and what to do about them. The plain-language edition of Hard Problems.">
+<link rel="alternate" hreflang="fa" href="/hard-problems/fa/">
 <style>
 :root{color-scheme:light dark;--paper:#faf8f3;--ink:#24251f;--accent:#7c4426;--muted:#6b675e}
 @media (prefers-color-scheme:dark){:root{--paper:#16171a;--ink:#ded9cf;--accent:#cf9b62;--muted:#8d897f}}
 html{background:var(--paper)}
 body{margin:0;padding:0 1.2rem;color:var(--ink);font:18px/1.65 "Iowan Old Style","Palatino Linotype",Georgia,serif}
 article{max-width:66ch;margin:0 auto;padding:4rem 0 5rem}
-h1{font-size:2.1rem;line-height:1.2;font-weight:600;margin:0 0 2.2rem}
-h2{font-size:1.25rem;margin:2.6rem 0 .9rem;font-weight:600}
+h1{font-size:2.1rem;line-height:1.2;font-weight:600;margin:0 0 .6rem}
+h2{font-size:1.25rem;margin:2.6rem 0 .9rem;font-weight:600;line-height:1.3}
 p{margin:0 0 1.05rem}
 p:first-of-type{color:var(--muted)}
 a{color:var(--accent)}
 strong{font-weight:600}
+.lang{max-width:66ch;margin:0 auto 2.2rem;font-size:.85rem;color:var(--muted)}
 footer{max-width:66ch;margin:0 auto;padding:0 0 4rem;color:var(--muted);font-size:.85rem}
 @media print{body{color:#000;background:#fff}}
 </style>
@@ -25,6 +27,7 @@ footer{max-width:66ch;margin:0 auto;padding:0 0 4rem;color:var(--muted);font-siz
 <body>
 <article>
 <h1>Why Problems Are Hard</h1>
+<div class="lang"><a href="/hard-problems/fa/" hreflang="fa"><span lang="fa" dir="rtl">فارسی</span> <span dir="ltr">(fa)</span></a></div>
 <p><em>A hard problem is a system you are trying to control. The formal companion, in which the load-bearing claims below are stated precisely and machine-checked, is kept with the source rather than here.</em></p>
 <h2>Hardness is not a property of the problem</h2>
 <p>Multiplying two four-digit numbers is hard for a person and trivial for a pocket calculator. Nothing about the problem differs between the two cases. The method is known and taught, every digit is visible, the procedure terminates. What differs is that long multiplication requires holding several partial products and their carries at once, human working memory holds roughly four items, and a calculator's registers hold exactly as many as the task needs.</p>
