@@ -249,44 +249,6 @@ h1 em {
 .door.dim::after { content: none; }
 .door.dim .what { max-width: 34ch; text-align: right; line-height: 1.8; }
 
-/* nested sub-entry beneath a door */
-.door.has-sub { border-bottom: none; }
-.door-sub {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  padding: 0.2rem 0 1rem 3.1rem;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: inherit;
-}
-.door-sub .num {
-  font-size: 0.62rem;
-  color: var(--ash);
-}
-.door-sub .sub-name {
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 400;
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-  letter-spacing: 0.02em;
-  color: var(--moth);
-  transition: color 0.5s ease, letter-spacing 0.5s ease;
-}
-.door-sub:hover .sub-name { color: var(--glow); letter-spacing: 0.05em; }
-.door-sub .what {
-  margin-left: auto;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  color: var(--ash);
-  transition: color 0.5s ease;
-}
-.door-sub:hover .what { color: var(--moth); }
-.door-sub + .door { border-top: none; }
-.door-sub:focus-visible {
-  outline: 1px solid var(--glow);
-  outline-offset: 7px;
-}
-
 /* small signals that stir on hover */
 .door .stir {
   display: flex;
@@ -338,8 +300,6 @@ footer {
   .door { flex-wrap: wrap; gap: 0.6rem 1rem; }
   .door .name { white-space: normal; }
   .door .what { margin-left: 0; width: 100%; order: 4; }
-  .door-sub { flex-wrap: wrap; gap: 0.4rem 1rem; padding-left: 2rem; }
-  .door-sub .what { margin-left: 0; width: 100%; }
   .firefly { display: none; }
 }
 
