@@ -235,6 +235,8 @@ details.lean code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospa
 </li>
 <li><a href="#ch11" data-target="ch11"><span class="toc-num">11</span><span class="toc-text">A worked case: the reliability metric</span></a>
 </li>
+<li><a href="#ch12" data-target="ch12"><span class="toc-num">12</span><span class="toc-text">Agents as bounded machines</span></a>
+</li>
 <li><a href="#bib" data-target="bib"><span class="toc-text">Bibliographic anchors for the next draft</span></a>
 </li>
 </ol></details></nav>
@@ -1551,9 +1553,380 @@ theorem statistic_based_rule_fails&#x27; {Y : Type*} {m : S → Y} (Astar : S �
 <p>The community's actual strategy reads as chapter 9 executed over decades: probes on restricted models, each cheap relative to the terminal question, each reweighting the ledger. Monotone circuits (Razborov) established that non-monotonicity is decision-relevant structure. Bounded-depth circuits established the same for counting. The ACC⁰ lower bound (Williams) was a probe that deliberately routed around the natural proofs barrier, and its methodological payload (algorithm design as a route to lower bounds) mattered more than the specific class. The stopping discipline is the declared order in miniature: a candidate approach shown to relativize or naturalize is exited <em>immediately</em> for that branch, no sunk-cost appeal, because the barrier theorems are machine-grade refutations of the branch's model class.</p>
 <p>The contrast is the payoff. The reliability case is moderate on every coordinate; this one is extreme on \(\mathsf{O}\), \(\mathsf{A}\), \(\mathsf{L}\), \(\mathsf{Ru}\) and nearly zero on \(\mathsf{F}\) and \(\mathsf{X}\). The profile does not just measure hardness, it classifies kinds of it, and the corner where only the epistemic coordinates are live is the corner where centuries of mathematical methodology already exist. Mathematics is what navigation looks like when the system does not fight back and nobody disputes the goal; organizations are what it looks like when both luxuries are revoked at once.</p>
 </section>
+<section class="chapter" id="ch12" aria-labelledby="ch12-h">
+<h2 id="ch12-h"><span class="chaplabel">Chapter 12</span>Agents as bounded machines</h2>
+<p>The agent side of the pairing has been carried as a list of capacities: a maintained model, a running estimate, a policy class, and limits on how much can be held in mind and how fast it can be revised. This chapter fixes one formal model for that list and reads the profile through it. The model is the obvious one. An agent is a machine with an observation tape it does not control, an action alphabet it writes to, a resource envelope, and a program. Optimizing over programs subject to the envelope, rather than over actions subject to nothing, is Russell and Subramanian's bounded optimality, and it is the formal content of the claim made in chapter 1 that difficulty is a predicate on a system together with whoever is attached to it.</p>
+<p>The reading earns its place by collapsing most of the agent scale and refusing to collapse the rest.</p>
+<p><strong>The tuning rungs are one machine.</strong> Represent a machine as a step map \(\sigma:S\times I\to S\) with an output map \(S\to O\). A system that tunes the parameters of its own model looks like a different kind of thing: a parameterized dynamics \(\sigma_\theta\) together with a rule retuning \(\theta\) from experience. It is not a different kind of thing. It is one fixed machine on the product \(S\times\Theta\), and the tuned run is exactly the projection of the fixed machine's run, in the state coordinate and in the parameter coordinate alike (machine-checked). Learning a parameter is indistinguishable, from outside, from carrying it as state. The collapse is not free, and its price is the same currency chapter 4 charges: the fixed machine's state space has product cardinality, so every rung folded into the program is paid for in variety.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tuned, Tuned.fixedStep, Tuned.stateRun_eq_fst, Tuned.paramRun_eq_snd, card_fixed</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A parameterized dynamics with a tuning rule: at each step the
+current parameter drives the state update and is itself retuned from
+experience. -/
+structure Tuned (S Θ I : Type*) where
+  step : Θ → S → I → S
+  tune : Θ → S → I → Θ
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The tuner as one fixed step function on the product space: no
+parameter is being &quot;learned&quot; anywhere the product machine can see; it
+is ordinary state. -/
+def Tuned.fixedStep (M : Tuned S Θ I) : S × Θ → I → S × Θ :=
+  fun q i =&gt; (M.step q.2 q.1 i, M.tune q.2 q.1 i)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The collapse, state coordinate: the tuned run is the first
+projection of the fixed product machine&#x27;s run. -/
+theorem Tuned.stateRun_eq_fst (M : Tuned S Θ I) (s : S) (θ : Θ)
+    (w : List I) :
+    M.stateRun s θ w = (w.foldl M.fixedStep (s, θ)).1 := by
+  induction w generalizing s θ with
+  | nil =&gt; rfl
+  | cons i w ih =&gt;
+    simp only [Tuned.stateRun, List.foldl]
+    exact ih (M.step θ s i) (M.tune θ s i)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The collapse, parameter coordinate: the tuning history is the
+second projection of the same run. -/
+theorem Tuned.paramRun_eq_snd (M : Tuned S Θ I) (s : S) (θ : Θ)
+    (w : List I) :
+    M.paramRun s θ w = (w.foldl M.fixedStep (s, θ)).2 := by
+  induction w generalizing s θ with
+  | nil =&gt; rfl
+  | cons i w ih =&gt;
+    simp only [Tuned.paramRun, List.foldl]
+    exact ih (M.step θ s i) (M.tune θ s i)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The variety bill for the collapse: the fixed machine&#x27;s state space
+has product cardinality. -/
+theorem card_fixed (S Θ : Type*) [Fintype S] [Fintype Θ] :
+    Fintype.card (S × Θ) = Fintype.card S * Fintype.card Θ := by
+  exact Fintype.card_prod S Θ</code></pre></details>
+<p>That settles the lower half of chapter 8's ladder. Maintaining an estimate against a fixed picture, tuning that picture's parameters, and adding variables to it are not three capacities but three programs, and a universal machine runs any of them. What the machine reading leaves standing is a partition into exactly three levels: the <strong>program</strong>, meaning anything computable from the tapes the agent already has; the <strong>interface</strong>, meaning the observation channel and the effectors, which are the physical coupling to the system; and the <strong>objective</strong>, meaning the acceptance condition. Chapter 2 is the third level and is untouched by everything here, which is the machine-theoretic restatement of its exemption in chapter 1.1.</p>
+<p><strong>The action wall is hardware.</strong> Let the effectors be a set \(G\) of state transformations and let reachability be the finite compositions drawn from \(G\). Three facts hold together. Any admissible trajectory stays inside the reachable set, whatever policy generated it, history-dependent or randomized or arbitrary; admitting a programmed macro, meaning an effector whose effect is already reachable from every state, leaves reachability unchanged; and a genuinely new effector can strictly enlarge it (machine-checked). The first says no decision rule escapes the orbit of its own effectors. The second says software cannot widen the orbit by composing what it already has, however cleverly it dispatches. The third says the wall is not a law of nature but a fact about equipment. Chapter 4's finding, that a target outside your reach yields to adding an action and to nothing else, is this triple.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Reach, traj_mem_reach, Programmed, reach_insert_programmed, exists_new_effector_enlarges_reach</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Finite-composition reachability: `y` is reachable from `x` by
+applying effectors drawn from `G`. -/
+inductive Reach (G : Set (X → X)) (x : X) : X → Prop
+  | refl : Reach G x x
+  | tail : ∀ {y z : X} {g : X → X}, Reach G x y → g ∈ G → z = g y → Reach G x z
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Any admissible trajectory stays inside the reachable set: at each
+step some effector in `G` was applied, chosen by an arbitrary policy,
+and no choice rule ever escapes the orbit. -/
+theorem traj_mem_reach (G : Set (X → X)) (σ : ℕ → X)
+    (hstep : ∀ n, ∃ g ∈ G, σ (n + 1) = g (σ n)) (n : ℕ) :
+    Reach G (σ 0) (σ n) := by
+  induction n with
+  | zero =&gt; exact Reach.refl
+  | succ n ih =&gt;
+      obtain ⟨g, hg, heq⟩ := hstep n
+      exact Reach.tail ih hg heq
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A programmed macro over `G`: an effector whose effect is, from every
+state, already reachable with `G`. This is exactly what software over
+the same effectors can implement, including state-dependent dispatch. -/
+def Programmed (G : Set (X → X)) (g : X → X) : Prop :=
+  ∀ y : X, Reach G y (g y)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Admitting a programmed macro as a new primitive changes nothing: the
+reachable set is closed under everything software can add. -/
+theorem reach_insert_programmed (G : Set (X → X)) {g : X → X}
+    (hg : Programmed G g) (x z : X) :
+    Reach (insert g G) x z ↔ Reach G x z := by
+  constructor
+  · intro h
+    induction h with
+    | refl =&gt; exact Reach.refl
+    | @tail y z f hy hmem heq ih =&gt;
+        rcases hmem with (rfl | hmem)
+        · rw [heq]
+          exact Reach.trans ih (hg y)
+        · exact Reach.tail ih hmem heq
+  · intro h
+    induction h with
+    | refl =&gt; exact Reach.refl
+    | tail hy hmem heq ih =&gt;
+        exact Reach.tail ih (Set.mem_insert_of_mem g hmem) heq
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A genuinely new effector can strictly enlarge reach: the wall
+yields to hardware and to nothing else. -/
+theorem exists_new_effector_enlarges_reach :
+    ∃ (G : Set (Bool → Bool)) (g : Bool → Bool) (x z : Bool),
+      Reach (insert g G) x z ∧ ¬ Reach G x z := by
+  refine ⟨∅, Bool.not, false, true, ?_, ?_⟩
+  · exact Reach.tail Reach.refl (Set.mem_insert _ _) rfl
+  · intro h
+    cases h with
+    | tail hy hmem heq =&gt; exact hmem.elim</code></pre></details>
+<p><strong>The observation wall has a degenerate corner, and it is the calculator.</strong> Chapter 3's machinery presumes that observations fail to determine the state. Suppose they do not. When the observation map is injective, observational equivalence collapses to equality, the robust menu at every state is the whole acceptable set, and decision-critical ambiguity cannot occur at all (machine-checked). Every estimator rung of the ladder is then vacuous. A picture of the world is what a machine grows when its input tape stops being the state; when the tape is the state, there is nothing for the picture to do.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): robustMenu, obsEq_iff_eq_of_injective, robustMenu_eq_of_injective, no_ambiguity_of_injective</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The robust menu at `s`: the actions acceptable in every state that
+looks like `s`. -/
+def robustMenu (obs : S → Ω) (Acc : S → Set A) (s : S) : Set A :=
+  ⋂ t ∈ {t | ObsEq obs s t}, Acc t
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Under injective observation, looking alike is being equal. -/
+theorem obsEq_iff_eq_of_injective {obs : S → Ω}
+    (h : Function.Injective obs) (s t : S) :
+    ObsEq obs s t ↔ s = t := by
+  constructor
+  · intro hObs
+    exact h hObs
+  · intro h
+    rw [h]
+    rfl
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Under injective observation, the robust menu is the acceptable set
+itself: no acceptable action is lost to ambiguity. -/
+theorem robustMenu_eq_of_injective {obs : S → Ω}
+    (h : Function.Injective obs) (Acc : S → Set A) (s : S) :
+    robustMenu obs Acc s = Acc s := by
+  simp only [robustMenu]
+  have : {t | ObsEq obs s t} = {s} := by
+    ext t
+    simp [obsEq_iff_eq_of_injective h]
+  simp [this]
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Decision-critical ambiguity cannot occur under injective
+observation: there are no look-alike states with a nonempty acceptable
+set on one side and disjoint acceptable sets between them. -/
+theorem no_ambiguity_of_injective {obs : S → Ω}
+    (h : Function.Injective obs) (Acc : S → Set A) :
+    ¬ ∃ s t : S, ObsEq obs s t ∧ (Acc s).Nonempty ∧
+      Disjoint (Acc s) (Acc t) := by
+  intro ⟨s, t, hObs, hNS, hDisj⟩
+  have hs : s = t := h (by simpa [ObsEq] using hObs)
+  rw [hs] at hDisj
+  rw [Set.disjoint_iff_inter_eq_empty] at hDisj
+  rw [Set.inter_self] at hDisj
+  obtain ⟨x, hx⟩ := hNS
+  rw [hs] at hx
+  rw [hDisj] at hx
+  exact hx</code></pre></details>
+<p>This answers the question chapter 1 opened with and did not close. A pocket calculator beats a person at long multiplication, and the reason is not that it sits higher on any scale. Its problem has trivial observability, since the operands are given; trivial reflexivity, since the operands do not care; and trivial reachability, since its output alphabet covers the answers. Every coordinate of the profile is switched off except the resource envelope. The scale was never a ranking of competence because the scale is indexed by what is hidden, and nothing is hidden from a calculator.</p>
+<p>What separates the person from the calculator is then a space bound and not a class boundary. Both run the same schoolbook algorithm; the person has roughly four reliable registers, and n-digit multiplication does not fit in a constant number of them. The classical form of that claim is that unary multiplication verification is not accepted by any finite-state machine (machine-checked, by a state-collision argument). This is the formal shape of the fourth diagnostic in chapter 1.1's list, the one detected by varying the size of the problem and watching where performance falls off: degradation with scale, from an agent whose registers do not scale, with nothing structurally wrong anywhere. Give the person paper and the bound lifts, which is the pleasant fact that Turing's 1936 machine was introduced as a model of a human computer with pencil and paper. In this reading the calculator is not an anomaly the framework must explain. It is where the framework's model of an agent came from.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): mulLang, IsRegularLang, mulLang_not_regular</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The unary multiplication-verification language over a three-letter
+alphabet: `m` copies of letter 0, then `n` copies of letter 1, then
+`m * n` copies of letter 2. -/
+def mulLang : Language (Fin 3) :=
+  {w | ∃ m n : ℕ,
+    w = List.replicate m (0 : Fin 3) ++ List.replicate n (1 : Fin 3) ++
+        List.replicate (m * n) (2 : Fin 3)}
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A language is regular when some finite-state deterministic automaton
+accepts exactly it. -/
+def IsRegularLang (L : Language (Fin 3)) : Prop :=
+  ∃ (σ : Type) (_ : Fintype σ) (M : DFA (Fin 3) σ), M.accepts = L
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- No finite-state machine verifies unary multiplication: registers
+must grow with the task, which is the calculator&#x27;s whole advantage and
+the unaided person&#x27;s whole deficit. -/
+theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
+  have encoding_unique : ∀ m n p m&#x27; n&#x27; p&#x27; : ℕ,
+      List.replicate m (0 : Fin 3) ++ List.replicate n (1 : Fin 3) ++
+          List.replicate p (2 : Fin 3) =
+        List.replicate m&#x27; (0 : Fin 3) ++ List.replicate n&#x27; (1 : Fin 3) ++
+          List.replicate p&#x27; (2 : Fin 3) →
+      m = m&#x27; ∧ n = n&#x27; ∧ p = p&#x27; := by
+    intro m n p m&#x27; n&#x27; p&#x27; h
+    constructor
+    · have hc := congrArg (List.count (0 : Fin 3)) h
+      simpa [List.count_append, List.count_replicate] using hc
+    constructor
+    · have hc := congrArg (List.count (1 : Fin 3)) h
+      simpa [List.count_append, List.count_replicate] using hc
+    · have hc := congrArg (List.count (2 : Fin 3)) h
+      simpa [List.count_append, List.count_replicate] using hc
+  rintro ⟨σ, inst, M, hM⟩
+  letI : Fintype σ := inst
+  obtain ⟨k, l, hkl, heq⟩ := Finite.exists_ne_map_eq_of_infinite (α := ℕ)
+    (fun n =&gt; M.eval (List.replicate n (0 : Fin 3)))
+  let z := List.replicate 1 (1 : Fin 3) ++ List.replicate k (2 : Fin 3)
+  have hk : List.replicate k (0 : Fin 3) ++ z ∈ M.accepts := by
+    rw [hM]
+    exact ⟨k, 1, by simp [z]⟩
+  have hl : List.replicate l (0 : Fin 3) ++ z ∈ M.accepts := by
+    rw [DFA.mem_accepts, DFA.eval, DFA.evalFrom_of_append] at hk ⊢
+    change M.evalFrom (M.eval (List.replicate l (0 : Fin 3))) z ∈ M.accept
+    rw [← heq]
+    exact hk
+  rw [hM] at hl
+  rcases hl with ⟨m, n, hmn⟩
+  have hu := encoding_unique l 1 k m n (m * n) (by simpa [z, mulLang] using hmn)
+  rcases hu with ⟨rfl, rfl, hu⟩
+  simp at hu
+  exact hkl hu</code></pre></details>
+<p><strong>Maplessness is the online case.</strong> Chapter 6 insists that a barrier is a property of the objective and the declared moves and not of the search running over them, and the informal reading of ruggedness keeps sliding into a claim about the searcher. The machine reading separates the two cleanly, because the same landscape can be presented to an agent that sees only its neighbours and to one holding the whole map. On a five-vertex path with a two-peaked evaluation, every strict-ascent walk from the start stalls at the lesser peak, an admissible route to the global maximum exists in the same graph, and every such route dips below that peak (machine-checked). All three at once. Being stuck is a property of the local rule, reachability is a property of the graph, and the barrier survives both. The distinction dissolves nothing and licenses nothing: holding the map does not remove the valley, it converts the valley into a priced line item, which is what chapter 6 said and what the short edition of this book states as its thesis. Competitive analysis, in the sense of Sleator and Tarjan, is the mature theory of exactly this gap, and it is the natural home for the ruggedness coordinate when the question is what the shortage of information costs rather than what the terrain contains.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): pathAdj, J, Ascent, ascent_from_zero_stalls, route_to_max_exists, every_route_dips</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The path graph on five vertices: adjacent iff the indices differ by
+one. -/
+def pathAdj (i j : Fin 5) : Prop := i.val + 1 = j.val ∨ j.val + 1 = i.val
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A two-peaked evaluation: a local peak at vertex 1, the global
+maximum at vertex 4, and a dip at vertex 2 between them. -/
+def J : Fin 5 → ℤ := ![0, 2, 1, 3, 5]
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- A strict-ascent step: move to an adjacent, strictly better vertex.
+Every greedy local searcher takes only such steps. -/
+def Ascent (u v : Fin 5) : Prop := pathAdj u v ∧ J u &lt; J v
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Every strict-ascent walk from vertex 0 stalls at vertex 1: the
+reflexive-transitive closure of `Ascent` from 0 reaches only 0 and 1,
+and no ascent step leaves 1. Being stuck is a fact about the local
+rule. -/
+theorem ascent_from_zero_stalls :
+    (∀ v, Relation.ReflTransGen Ascent 0 v → v = 0 ∨ v = 1) ∧
+    (∀ v, ¬ Ascent 1 v) := by
+  have h1 : ∀ v, ¬ Ascent 1 v := by
+    intro v hv
+    simp [Ascent, pathAdj] at hv
+    fin_cases v &lt;;&gt; simp [J] at hv
+  constructor
+  · intro v hv
+    induction hv with
+    | refl =&gt; left; rfl
+    | tail ih a ih&#x27; =&gt;
+      rename_i b c
+      rcases ih&#x27; with ih0 | ih1
+      · simp [Ascent, pathAdj] at a
+        fin_cases c &lt;;&gt; simp [ih0] at a ⊢
+      · simp [ih1] at a
+        exact absurd a (h1 c)
+  · exact h1
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The same ground carries an admissible route from 0 to the global
+maximum: unreachability was never the finding. -/
+theorem route_to_max_exists : Relation.ReflTransGen pathAdj 0 4 := by
+  have h01 : pathAdj (0 : Fin 5) (1 : Fin 5) := by simp [pathAdj]
+  have h12 : pathAdj (1 : Fin 5) (2 : Fin 5) := by simp [pathAdj]
+  have h23 : pathAdj (2 : Fin 5) (3 : Fin 5) := by simp [pathAdj]
+  have h34 : pathAdj (3 : Fin 5) (4 : Fin 5) := by simp [pathAdj]
+  exact Relation.ReflTransGen.tail
+    (Relation.ReflTransGen.tail
+      (Relation.ReflTransGen.tail
+        (Relation.ReflTransGen.tail
+          (Relation.ReflTransGen.refl)
+          h01)
+        h12)
+      h23)
+    h34
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Every admissible route from 0 to 4 visits vertex 2, whose value
+dips below the lesser peak: holding the map does not remove the
+valley, it makes the valley a priced line item. -/
+theorem every_route_dips (l : List (Fin 5)) (hchain : l.Chain&#x27; pathAdj)
+    (hhead : l.head? = some 0) (hlast : l.getLast? = some 4) :
+    (2 : Fin 5) ∈ l ∧ J 2 &lt; J 1 := by
+  constructor
+  · exact chain_from_left_visits_two l hchain hhead hlast
+  -- the target used `native_decide`, which adds a compiler-trusting axiom;
+  -- this is a two-value comparison, so evaluate it in the kernel instead
+  · simp [J]</code></pre></details>
+<p><strong>Representation is counted, not judged.</strong> Chapter 8 claims that what decides difficulty in the reflexive case is the difference in representational capacity between the two sides. As machines the claim is a pigeonhole. Say a machine tracks another when some encoding of the tracked machine's states into its own intertwines the dynamics and reproduces the outputs. If the tracked machine is output-separated, meaning distinct states are told apart by outputs along some input word, then every tracking map is injective, a finite tracker needs at least as many states as its target, and mutual tracking between output-separated machines forces equal state counts (machine-checked). Steering something strictly smaller is ordinary work with a complicated object. Steering an equal is a different activity, and the difference is arithmetic rather than temperament.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tracks, Tracks.injective, card_le_of_tracks, card_eq_of_mutual_tracks</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- `f` tracks machine `B` inside machine `A`: the encoding intertwines
+the dynamics and reproduces the outputs. This is what it means for `A`
+to maintain a faithful copy of `B`. -/
+structure Tracks (A : Machine I O S) (B : Machine I O T) (f : T → S) : Prop where
+  step_eq : ∀ t i, f (B.step t i) = A.step (f t) i
+  out_eq : ∀ t, A.out (f t) = B.out t
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Tracking an output-separated machine is injective: the tracker must
+hold distinct internal states for distinct tracked states. -/
+theorem Tracks.injective {A : Machine I O S} {B : Machine I O T} {f : T → S}
+    (h : Tracks A B f) (hB : B.Separated) : Function.Injective f := by
+  intro t₁ t₂ hft
+  apply hB t₁ t₂
+  intro w
+  have eq1 : f (B.run t₁ w) = A.run (f t₁) w := h.run_eq t₁ w
+  have eq2 : f (B.run t₂ w) = A.run (f t₂) w := h.run_eq t₂ w
+  rw [← h.out_eq (B.run t₁ w), ← h.out_eq (B.run t₂ w), eq1, eq2, hft]
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The pigeonhole bound: a finite machine can faithfully track an
+output-separated machine only if it has at least as many states.
+&quot;Something below you on the scale cannot represent you.&quot; -/
+theorem card_le_of_tracks [Fintype S] [Fintype T]
+    {A : Machine I O S} {B : Machine I O T} {f : T → S}
+    (h : Tracks A B f) (hB : B.Separated) :
+    Fintype.card T ≤ Fintype.card S := by
+  exact Fintype.card_le_of_injective _ (Tracks.injective h hB)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Mutual faithful tracking forces representational parity: if each of
+two output-separated finite machines tracks the other, their state
+counts are equal. Steering an equal is a different activity from
+steering something smaller. -/
+theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
+    {A : Machine I O S} {B : Machine I O T} {f : T → S} {g : S → T}
+    (hf : Tracks A B f) (hg : Tracks B A g)
+    (hA : A.Separated) (hB : B.Separated) :
+    Fintype.card S = Fintype.card T := by
+  exact le_antisymm (card_le_of_tracks hg hA) (card_le_of_tracks hf hB)</code></pre></details>
+<p>The augmentation that repairs the reflexive case inherits the same arithmetic. Widening the picture to include the counterpart's picture of you is well defined at every round and never closes: with at least two counterpart actions, each round multiplies the state count by the policies over the current space, so the tower is strictly increasing and unbounded (machine-checked). Chapter 8's "each round adds something you cannot see" is that sequence.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): towerCard, towerCard_strictMono, towerCard_unbounded</summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The state count of the k-th augmentation round: start at `s`
+states; each round pairs the current space with the counterpart&#x27;s
+policies over it (`p` actions). -/
+def towerCard (s p : ℕ) : ℕ → ℕ
+  | 0 =&gt; s
+  | k + 1 =&gt; towerCard s p k * p ^ towerCard s p k
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- With a nonempty base and at least two counterpart actions, every
+augmentation round strictly grows the state count. -/
+theorem towerCard_strictMono {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
+    StrictMono (towerCard s p) := by
+  apply strictMono_nat_of_lt_succ
+  intro k
+  rw [towerCard]
+  have hpos : 0 &lt; towerCard s p k := by
+    induction k with
+    -- ported from the v4.28.0 target: `0 &lt; s` no longer simp-normalizes to
+    -- `1 ≤ s` on this toolchain, so convert explicitly
+    | zero =&gt; simpa [towerCard] using Nat.lt_of_succ_le hs
+    | succ k ih =&gt;
+      simp only [towerCard]
+      positivity
+  have hpow : 1 &lt; p ^ towerCard s p k :=
+    Nat.one_lt_pow (ne_of_gt hpos) hp
+  nlinarith
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The tower is unbounded: no finite augmentation closes the regress. -/
+theorem towerCard_unbounded {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
+    ∀ N : ℕ, ∃ k : ℕ, N &lt; towerCard s p k := by
+  intro N
+  have hmono := towerCard_strictMono hs hp
+  exact
+    ⟨N + 1,
+      lt_of_le_of_lt (hmono.id_le N) (hmono (Nat.lt_succ_self N))⟩</code></pre></details>
+<p><strong>What the reading does not buy.</strong> It supplies no algorithm, and the intractability results of chapter 8 are unaffected: bounded optimality is a criterion, not a construction, and the honest belief space remains what it was. It says nothing about which envelope a given human or institution actually has, which is an empirical question this book does not answer and should not pretend to. And it leaves the third level exactly where chapter 2 put it, because no amount of machinery over the first two levels selects an acceptance condition. The machine reading sharpens the walls and prices the rungs. It does not choose the target, and a formalism that claimed to would be making the error this book has been warning about since its first page.</p>
+</section>
 <section class="chapter" id="bib" aria-labelledby="bib-h">
 <h2 id="bib-h"><span class="chaplabel">References</span>Bibliographic anchors for the next draft</h2>
-<ul class="bib"><li>Abate, A., Prandini, M., Lygeros, J., and Sastry, S. "Probabilistic Reachability and Safety for Controlled Discrete Time Stochastic Hybrid Systems." <em>Automatica</em>, 2008.</li><li>Ackoff, R. L. <em>Redesigning the Future: A Systems Approach to Societal Problems</em>. 1974.</li><li>Aaronson, S., and Wigderson, A. "Algebrization: A New Barrier in Complexity Theory." <em>ACM Transactions on Computation Theory</em>, 2009.</li><li>Amodei, D., Olah, C., Steinhardt, J., Christiano, P., Schulman, J., and Mané, D. "Concrete Problems in AI Safety." arXiv:1606.06565, 2016.</li><li>Argyris, C., and Schön, D. A. <em>Organizational Learning: A Theory of Action Perspective</em>. 1978.</li><li>Armstrong, S. "Model Splintering: Moving from One Imperfect Model to Another." AI Alignment Forum, 2020.</li><li>Ashby, W. R. <em>An Introduction to Cybernetics</em>. 1956.</li><li>Aubin, J.-P., Bayen, A. M., and Saint-Pierre, P. <em>Viability Theory: New Directions</em>. 2011.</li><li>Baker, T., Gill, J., and Solovay, R. "Relativizations of the P =? NP Question." <em>SIAM Journal on Computing</em>, 1975.</li><li>Bateson, G. "Social Planning and the Concept of Deutero-Learning." 1942; reprinted in <em>Steps to an Ecology of Mind</em>, 1972.</li><li>Beer, S. <em>Brain of the Firm</em>. 1972.</li><li>Ben-Haim, Y. <em>Info-Gap Decision Theory: Decisions under Severe Uncertainty</em>. 2006.</li><li>Bertsekas, D. P., and Rhodes, I. B. "On the Minimax Reachability of Target Sets and Target Tubes." <em>Automatica</em>, 1971.</li><li>Åström, K. J. "Optimal Control of Markov Processes with Incomplete State Information." <em>Journal of Mathematical Analysis and Applications</em>, 1965.</li><li>Baez, J. C., and Courser, K. "Structured Cospans." <em>Theory and Applications of Categories</em>, 2020.</li><li>Berger, J. O., and Berliner, L. M. "Robust Bayes and Empirical Bayes Analysis with ε-Contaminated Priors." <em>Annals of Statistics</em>, 1986.</li><li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em>, 1953.</li><li>Baez, J. C., Courser, K., and Vasilakopoulou, C. "Structured versus Decorated Cospans." <em>Compositionality</em>, 2022.</li><li>Campbell, D. T. "Assessing the Impact of Planned Social Change." <em>Evaluation and Program Planning</em>, 1979.</li><li>CAST Investigators. "Preliminary Report: Effect of Encainide and Flecainide on Mortality in a Randomized Trial of Arrhythmia Suppression after Myocardial Infarction." <em>New England Journal of Medicine</em>, 1989.</li><li>Churchman, C. W. "Wicked Problems." Guest editorial, <em>Management Science</em>, 1967.</li><li>Checkland, P. <em>Systems Thinking, Systems Practice</em>. 1981.</li><li>Conant, R. C., and Ashby, W. R. "Every Good Regulator of a System Must Be a Model of That System." <em>International Journal of Systems Science</em>, 1970.</li><li>Cousot, P., and Cousot, R. "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints." <em>POPL</em>, 1977.</li><li>Cousot, P., and Cousot, R. "Systematic Design of Program Analysis Frameworks." <em>POPL</em>, 1979.</li><li>de Blanc, P. "Ontological Crises in Artificial Agents' Value Systems." arXiv:1105.3821, 2011.</li><li>Demski, A., and Garrabrant, S. "Embedded Agency." arXiv:1902.09469, 2019.</li><li>Dörner, D. <em>The Logic of Failure: Recognizing and Avoiding Error in Complex Situations</em>. 1996.</li><li>Duff, M. O. <em>Optimal Learning: Computational Procedures for Bayes-Adaptive Markov Decision Processes</em>. PhD thesis, University of Massachusetts Amherst, 2002.</li><li>Echt, D. S., et al. "Mortality and Morbidity in Patients Receiving Encainide, Flecainide, or Placebo: The Cardiac Arrhythmia Suppression Trial." <em>New England Journal of Medicine</em>, 1991.</li><li>Feldbaum, A. A. "Dual Control Theory I-IV." <em>Automation and Remote Control</em>, 1961-1962 (Russian original 1960-1961).</li><li>Fong, B. <em>The Algebra of Open and Interconnected Systems</em>. DPhil thesis, University of Oxford, 2016.</li><li>Fong, B., and Spivak, D. I. <em>Seven Sketches in Compositionality: An Invitation to Applied Category Theory</em>. 2019.</li><li>Ganter, B., and Wille, R. <em>Formal Concept Analysis: Mathematical Foundations</em>. 1999.</li><li>Garrabrant, S. "Functors and Coarse Worlds." AI Alignment Forum, 2020.</li><li>Gick, M. L., and Holyoak, K. J. "Analogical Problem Solving." <em>Cognitive Psychology</em>, 1980.</li><li>Gilboa, I., and Schmeidler, D. "Maxmin Expected Utility with Non-Unique Prior." <em>Journal of Mathematical Economics</em>, 1989.</li><li>Goodhart, C. A. E. "Problems of Monetary Management: The U.K. Experience." <em>Papers in Monetary Economics</em>, 1975.</li><li>Hermann, R., and Krener, A. J. "Nonlinear Controllability and Observability." <em>IEEE Transactions on Automatic Control</em>, 1977.</li><li>Hodges, W. <em>Model Theory</em>. Encyclopedia of Mathematics and Its Applications, 1993.</li><li>Holmström, B., and Milgrom, P. "Multitask Principal-Agent Analyses: Incentive Contracts, Asset Ownership, and Job Design." <em>Journal of Law, Economics, and Organization</em>, 1991.</li><li>Howard, R. A. "Information Value Theory." <em>IEEE Transactions on Systems Science and Cybernetics</em>, 1966.</li><li>Huber, P. J. <em>Robust Statistics</em>. 1981.</li><li>Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., and Garrabrant, S. "Risks from Learned Optimization in Advanced Machine Learning Systems." arXiv:1906.01820, 2019.</li><li>Iordache, O. <em>Self-Evolvable Systems: Machine Learning in Social Media</em>. 2012.</li><li>Kaelbling, L. P., Littman, M. L., and Cassandra, A. R. "Planning and Acting in Partially Observable Stochastic Domains." <em>Artificial Intelligence</em>, 1998.</li><li>Kalman, R. E. "On the General Theory of Control Systems." <em>Proceedings of the First IFAC Congress</em>, 1960.</li><li>Kauffman, S. A. <em>The Origins of Order: Self-Organization and Selection in Evolution</em>. 1993.</li><li>Kephart, J. O., and Chess, D. M. "The Vision of Autonomic Computing." <em>IEEE Computer</em>, 2003.</li><li>Lawvere, F. W. <em>Functorial Semantics of Algebraic Theories</em>. PhD thesis, Columbia University, 1963.</li><li>Lempert, R. J., Popper, S. W., and Bankes, S. C. <em>Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis</em>. 2003.</li><li>Leveson, N. G. <em>Engineering a Safer World: Systems Thinking Applied to Safety</em>. 2011.</li><li>Levin, K., Cashore, B., Bernstein, S., and Auld, G. "Overcoming the Tragedy of Super Wicked Problems: Constraining Our Future Selves to Ameliorate Global Climate Change." <em>Policy Sciences</em>, 2012.</li><li>Levinthal, D. A. "Adaptation on Rugged Landscapes." <em>Management Science</em>, 1997.</li><li>Lindley, D. V. "On a Measure of the Information Provided by an Experiment." <em>Annals of Mathematical Statistics</em>, 1956.</li><li>Madani, O., Hanks, S., and Condon, A. "On the Undecidability of Probabilistic Planning and Related Stochastic Optimization Problems." <em>Artificial Intelligence</em>, 2003.</li><li>Manheim, D., and Garrabrant, S. "Categorizing Variants of Goodhart's Law." arXiv:1803.04585, 2018.</li><li>McPhail, C., Maier, H. R., Kwakkel, J. H., Giuliani, M., Castelletti, A., and Westra, S. "Robustness Metrics: How Are They Calculated, When Should They Be Used and Why Do They Give Different Results?" <em>Earth's Future</em>, 2018.</li><li>Meadows, D. H. "Leverage Points: Places to Intervene in a System." 1999.</li><li>Ostrom, E. <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. 1990.</li><li>Papadimitriou, C. H., and Tsitsiklis, J. N. "The Complexity of Markov Decision Processes." <em>Mathematics of Operations Research</em>, 1987.</li><li>Pattee, H. H. "The Physics of Symbols: Bridging the Epistemic Cut." <em>BioSystems</em>, 2001.</li><li>Post, E. L. "Recursively Enumerable Sets of Positive Integers and Their Decision Problems." <em>Bulletin of the American Mathematical Society</em>, 1944.</li><li>Razborov, A. A., and Rudich, S. "Natural Proofs." <em>Journal of Computer and System Sciences</em>, 1997.</li><li>Raiffa, H. <em>Decision Analysis: Introductory Lectures on Choices under Uncertainty</em>. 1968.</li><li>Raiffa, H., and Schlaifer, R. <em>Applied Statistical Decision Theory</em>. 1961.</li><li>Rittel, H. W. J., and Webber, M. M. "Dilemmas in a General Theory of Planning." <em>Policy Sciences</em>, 1973.</li><li>Rivkin, J. W., and Siggelkow, N. "Organizational Sticking Points on NK Landscapes." <em>Complexity</em>, 2002.</li><li>Rogers, M. "Examining Armstrong's Category of Generalized Models." LessWrong, 2022.</li><li>Rosen, R. <em>Anticipatory Systems: Philosophical, Mathematical, and Methodological Foundations</em>. 1985.</li><li>Rosenhead, J., and Mingers, J., eds. <em>Rational Analysis for a Problematic World Revisited: Problem Structuring Methods for Complexity, Uncertainty and Conflict</em>. 2001.</li><li>Ross, S., Chaib-draa, B., and Pineau, J. "Bayes-Adaptive POMDPs." <em>Advances in Neural Information Processing Systems</em>, 2007.</li><li>Simon, H. A. "A Behavioral Model of Rational Choice." <em>Quarterly Journal of Economics</em>, 1955.</li><li>Simon, H. A. "The Architecture of Complexity." <em>Proceedings of the American Philosophical Society</em>, 1962.</li><li>Simon, H. A. "The Structure of Ill-Structured Problems." <em>Artificial Intelligence</em>, 1973.</li><li>Skalse, J., Howe, N. H. R., Krasheninnikov, D., and Krueger, D. "Defining and Characterizing Reward Hacking." <em>Advances in Neural Information Processing Systems</em>, 2022.</li><li>Snowden, D. J., and Boone, M. E. "A Leader's Framework for Decision Making." <em>Harvard Business Review</em>, 2007.</li><li>Soros, G. <em>The Alchemy of Finance: Reading the Mind of the Market</em>. 1987.</li><li>Spivak, D. I. "The Operad of Wiring Diagrams: Formalizing a Graphical Language for Databases, Recursion, and Plug-and-Play Circuits." Preprint, 2013.</li><li>Sterman, J. D. "Modeling Managerial Behavior: Misperceptions of Feedback in a Dynamic Decision Making Experiment." <em>Management Science</em>, 1989.</li><li>Sterman, J. D. <em>Business Dynamics: Systems Thinking and Modeling for a Complex World</em>. 2000.</li><li>Strathern, M. "'Improving Ratings': Audit in the British University System." <em>European Review</em>, 1997.</li><li>Summers, S., and Lygeros, J. "Verification of Discrete Time Stochastic Hybrid Systems: A Stochastic Reach-Avoid Decision Problem." <em>Automatica</em>, 2010.</li><li>Tarski, A. "Contributions to the Theory of Models. I." <em>Indagationes Mathematicae</em>, 1954.</li><li>Turing, A. M. "Systems of Logic Based on Ordinals." <em>Proceedings of the London Mathematical Society</em>, 1939.</li><li>Turner, A. M., Smith, L., Shah, R., Critch, A., and Tadepalli, P. "Optimal Policies Tend to Seek Power." <em>Advances in Neural Information Processing Systems</em>, 2021.</li><li>Vergassola, M., Villermaux, E., and Shraiman, B. I. "'Infotaxis' as a Strategy for Searching without Gradients." <em>Nature</em>, 2007.</li><li>Virgo, N., Biehl, M., Baltieri, M., and Capucci, M. "A 'Good Regulator Theorem' for Embodied Agents." <em>ALIFE Conference Proceedings</em>, 2025.</li><li>Wentworth, J. "Demons in Imperfect Search." LessWrong, 2020.</li><li>Wentworth, J. "Fixing the Good Regulator Theorem." AI Alignment Forum, 2021.</li><li>Wiles, A. "Modular Elliptic Curves and Fermat's Last Theorem." <em>Annals of Mathematics</em>, 1995.</li><li>Williams, R. "Nonuniform ACC Circuit Lower Bounds." <em>Journal of the ACM</em>, 2014.</li><li>Wolff, K. E. "Temporal Concept Analysis." In <em>ICCS Workshop on Concept Lattices for Knowledge Discovery in Databases</em>, 2001.</li></ul>
+<ul class="bib"><li>Abate, A., Prandini, M., Lygeros, J., and Sastry, S. "Probabilistic Reachability and Safety for Controlled Discrete Time Stochastic Hybrid Systems." <em>Automatica</em>, 2008.</li><li>Ackoff, R. L. <em>Redesigning the Future: A Systems Approach to Societal Problems</em>. 1974.</li><li>Aaronson, S., and Wigderson, A. "Algebrization: A New Barrier in Complexity Theory." <em>ACM Transactions on Computation Theory</em>, 2009.</li><li>Amodei, D., Olah, C., Steinhardt, J., Christiano, P., Schulman, J., and Mané, D. "Concrete Problems in AI Safety." arXiv:1606.06565, 2016.</li><li>Argyris, C., and Schön, D. A. <em>Organizational Learning: A Theory of Action Perspective</em>. 1978.</li><li>Armstrong, S. "Model Splintering: Moving from One Imperfect Model to Another." AI Alignment Forum, 2020.</li><li>Ashby, W. R. <em>An Introduction to Cybernetics</em>. 1956.</li><li>Aubin, J.-P., Bayen, A. M., and Saint-Pierre, P. <em>Viability Theory: New Directions</em>. 2011.</li><li>Baker, T., Gill, J., and Solovay, R. "Relativizations of the P =? NP Question." <em>SIAM Journal on Computing</em>, 1975.</li><li>Bateson, G. "Social Planning and the Concept of Deutero-Learning." 1942; reprinted in <em>Steps to an Ecology of Mind</em>, 1972.</li><li>Beer, S. <em>Brain of the Firm</em>. 1972.</li><li>Ben-Haim, Y. <em>Info-Gap Decision Theory: Decisions under Severe Uncertainty</em>. 2006.</li><li>Bertsekas, D. P., and Rhodes, I. B. "On the Minimax Reachability of Target Sets and Target Tubes." <em>Automatica</em>, 1971.</li><li>Åström, K. J. "Optimal Control of Markov Processes with Incomplete State Information." <em>Journal of Mathematical Analysis and Applications</em>, 1965.</li><li>Baez, J. C., and Courser, K. "Structured Cospans." <em>Theory and Applications of Categories</em>, 2020.</li><li>Berger, J. O., and Berliner, L. M. "Robust Bayes and Empirical Bayes Analysis with ε-Contaminated Priors." <em>Annals of Statistics</em>, 1986.</li><li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em>, 1953.</li><li>Baez, J. C., Courser, K., and Vasilakopoulou, C. "Structured versus Decorated Cospans." <em>Compositionality</em>, 2022.</li><li>Campbell, D. T. "Assessing the Impact of Planned Social Change." <em>Evaluation and Program Planning</em>, 1979.</li><li>CAST Investigators. "Preliminary Report: Effect of Encainide and Flecainide on Mortality in a Randomized Trial of Arrhythmia Suppression after Myocardial Infarction." <em>New England Journal of Medicine</em>, 1989.</li><li>Churchman, C. W. "Wicked Problems." Guest editorial, <em>Management Science</em>, 1967.</li><li>Checkland, P. <em>Systems Thinking, Systems Practice</em>. 1981.</li><li>Conant, R. C., and Ashby, W. R. "Every Good Regulator of a System Must Be a Model of That System." <em>International Journal of Systems Science</em>, 1970.</li><li>Cousot, P., and Cousot, R. "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints." <em>POPL</em>, 1977.</li><li>Cousot, P., and Cousot, R. "Systematic Design of Program Analysis Frameworks." <em>POPL</em>, 1979.</li><li>de Blanc, P. "Ontological Crises in Artificial Agents' Value Systems." arXiv:1105.3821, 2011.</li><li>Demski, A., and Garrabrant, S. "Embedded Agency." arXiv:1902.09469, 2019.</li><li>Dörner, D. <em>The Logic of Failure: Recognizing and Avoiding Error in Complex Situations</em>. 1996.</li><li>Duff, M. O. <em>Optimal Learning: Computational Procedures for Bayes-Adaptive Markov Decision Processes</em>. PhD thesis, University of Massachusetts Amherst, 2002.</li><li>Echt, D. S., et al. "Mortality and Morbidity in Patients Receiving Encainide, Flecainide, or Placebo: The Cardiac Arrhythmia Suppression Trial." <em>New England Journal of Medicine</em>, 1991.</li><li>Feldbaum, A. A. "Dual Control Theory I-IV." <em>Automation and Remote Control</em>, 1961-1962 (Russian original 1960-1961).</li><li>Fong, B. <em>The Algebra of Open and Interconnected Systems</em>. DPhil thesis, University of Oxford, 2016.</li><li>Fong, B., and Spivak, D. I. <em>Seven Sketches in Compositionality: An Invitation to Applied Category Theory</em>. 2019.</li><li>Ganter, B., and Wille, R. <em>Formal Concept Analysis: Mathematical Foundations</em>. 1999.</li><li>Garrabrant, S. "Functors and Coarse Worlds." AI Alignment Forum, 2020.</li><li>Gick, M. L., and Holyoak, K. J. "Analogical Problem Solving." <em>Cognitive Psychology</em>, 1980.</li><li>Gilboa, I., and Schmeidler, D. "Maxmin Expected Utility with Non-Unique Prior." <em>Journal of Mathematical Economics</em>, 1989.</li><li>Goodhart, C. A. E. "Problems of Monetary Management: The U.K. Experience." <em>Papers in Monetary Economics</em>, 1975.</li><li>Hermann, R., and Krener, A. J. "Nonlinear Controllability and Observability." <em>IEEE Transactions on Automatic Control</em>, 1977.</li><li>Hodges, W. <em>Model Theory</em>. Encyclopedia of Mathematics and Its Applications, 1993.</li><li>Holmström, B., and Milgrom, P. "Multitask Principal-Agent Analyses: Incentive Contracts, Asset Ownership, and Job Design." <em>Journal of Law, Economics, and Organization</em>, 1991.</li><li>Howard, R. A. "Information Value Theory." <em>IEEE Transactions on Systems Science and Cybernetics</em>, 1966.</li><li>Huber, P. J. <em>Robust Statistics</em>. 1981.</li><li>Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., and Garrabrant, S. "Risks from Learned Optimization in Advanced Machine Learning Systems." arXiv:1906.01820, 2019.</li><li>Iordache, O. <em>Self-Evolvable Systems: Machine Learning in Social Media</em>. 2012.</li><li>Kaelbling, L. P., Littman, M. L., and Cassandra, A. R. "Planning and Acting in Partially Observable Stochastic Domains." <em>Artificial Intelligence</em>, 1998.</li><li>Kalman, R. E. "On the General Theory of Control Systems." <em>Proceedings of the First IFAC Congress</em>, 1960.</li><li>Kauffman, S. A. <em>The Origins of Order: Self-Organization and Selection in Evolution</em>. 1993.</li><li>Kephart, J. O., and Chess, D. M. "The Vision of Autonomic Computing." <em>IEEE Computer</em>, 2003.</li><li>Lawvere, F. W. <em>Functorial Semantics of Algebraic Theories</em>. PhD thesis, Columbia University, 1963.</li><li>Lempert, R. J., Popper, S. W., and Bankes, S. C. <em>Shaping the Next One Hundred Years: New Methods for Quantitative, Long-Term Policy Analysis</em>. 2003.</li><li>Leveson, N. G. <em>Engineering a Safer World: Systems Thinking Applied to Safety</em>. 2011.</li><li>Levin, K., Cashore, B., Bernstein, S., and Auld, G. "Overcoming the Tragedy of Super Wicked Problems: Constraining Our Future Selves to Ameliorate Global Climate Change." <em>Policy Sciences</em>, 2012.</li><li>Levinthal, D. A. "Adaptation on Rugged Landscapes." <em>Management Science</em>, 1997.</li><li>Lindley, D. V. "On a Measure of the Information Provided by an Experiment." <em>Annals of Mathematical Statistics</em>, 1956.</li><li>Madani, O., Hanks, S., and Condon, A. "On the Undecidability of Probabilistic Planning and Related Stochastic Optimization Problems." <em>Artificial Intelligence</em>, 2003.</li><li>Manheim, D., and Garrabrant, S. "Categorizing Variants of Goodhart's Law." arXiv:1803.04585, 2018.</li><li>McPhail, C., Maier, H. R., Kwakkel, J. H., Giuliani, M., Castelletti, A., and Westra, S. "Robustness Metrics: How Are They Calculated, When Should They Be Used and Why Do They Give Different Results?" <em>Earth's Future</em>, 2018.</li><li>Meadows, D. H. "Leverage Points: Places to Intervene in a System." 1999.</li><li>Ostrom, E. <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. 1990.</li><li>Papadimitriou, C. H., and Tsitsiklis, J. N. "The Complexity of Markov Decision Processes." <em>Mathematics of Operations Research</em>, 1987.</li><li>Pattee, H. H. "The Physics of Symbols: Bridging the Epistemic Cut." <em>BioSystems</em>, 2001.</li><li>Post, E. L. "Recursively Enumerable Sets of Positive Integers and Their Decision Problems." <em>Bulletin of the American Mathematical Society</em>, 1944.</li><li>Razborov, A. A., and Rudich, S. "Natural Proofs." <em>Journal of Computer and System Sciences</em>, 1997.</li><li>Raiffa, H. <em>Decision Analysis: Introductory Lectures on Choices under Uncertainty</em>. 1968.</li><li>Raiffa, H., and Schlaifer, R. <em>Applied Statistical Decision Theory</em>. 1961.</li><li>Rittel, H. W. J., and Webber, M. M. "Dilemmas in a General Theory of Planning." <em>Policy Sciences</em>, 1973.</li><li>Rivkin, J. W., and Siggelkow, N. "Organizational Sticking Points on NK Landscapes." <em>Complexity</em>, 2002.</li><li>Rogers, M. "Examining Armstrong's Category of Generalized Models." LessWrong, 2022.</li><li>Rosen, R. <em>Anticipatory Systems: Philosophical, Mathematical, and Methodological Foundations</em>. 1985.</li><li>Rosenhead, J., and Mingers, J., eds. <em>Rational Analysis for a Problematic World Revisited: Problem Structuring Methods for Complexity, Uncertainty and Conflict</em>. 2001.</li><li>Ross, S., Chaib-draa, B., and Pineau, J. "Bayes-Adaptive POMDPs." <em>Advances in Neural Information Processing Systems</em>, 2007.</li><li>Russell, S. J., and Subramanian, D. "Provably Bounded-Optimal Agents." <em>Journal of Artificial Intelligence Research</em>, 1995.</li>
+<li>Simon, H. A. "A Behavioral Model of Rational Choice." <em>Quarterly Journal of Economics</em>, 1955.</li><li>Simon, H. A. "The Architecture of Complexity." <em>Proceedings of the American Philosophical Society</em>, 1962.</li><li>Simon, H. A. "The Structure of Ill-Structured Problems." <em>Artificial Intelligence</em>, 1973.</li><li>Skalse, J., Howe, N. H. R., Krasheninnikov, D., and Krueger, D. "Defining and Characterizing Reward Hacking." <em>Advances in Neural Information Processing Systems</em>, 2022.</li><li>Sleator, D. D., and Tarjan, R. E. "Amortized Efficiency of List Update and Paging Rules." <em>Communications of the ACM</em>, 1985.</li>
+<li>Snowden, D. J., and Boone, M. E. "A Leader's Framework for Decision Making." <em>Harvard Business Review</em>, 2007.</li><li>Soros, G. <em>The Alchemy of Finance: Reading the Mind of the Market</em>. 1987.</li><li>Spivak, D. I. "The Operad of Wiring Diagrams: Formalizing a Graphical Language for Databases, Recursion, and Plug-and-Play Circuits." Preprint, 2013.</li><li>Sterman, J. D. "Modeling Managerial Behavior: Misperceptions of Feedback in a Dynamic Decision Making Experiment." <em>Management Science</em>, 1989.</li><li>Sterman, J. D. <em>Business Dynamics: Systems Thinking and Modeling for a Complex World</em>. 2000.</li><li>Strathern, M. "'Improving Ratings': Audit in the British University System." <em>European Review</em>, 1997.</li><li>Summers, S., and Lygeros, J. "Verification of Discrete Time Stochastic Hybrid Systems: A Stochastic Reach-Avoid Decision Problem." <em>Automatica</em>, 2010.</li><li>Tarski, A. "Contributions to the Theory of Models. I." <em>Indagationes Mathematicae</em>, 1954.</li><li>Turing, A. M. "On Computable Numbers, with an Application to the Entscheidungsproblem." <em>Proceedings of the London Mathematical Society</em>, 1936.</li>
+<li>Turing, A. M. "Systems of Logic Based on Ordinals." <em>Proceedings of the London Mathematical Society</em>, 1939.</li><li>Turner, A. M., Smith, L., Shah, R., Critch, A., and Tadepalli, P. "Optimal Policies Tend to Seek Power." <em>Advances in Neural Information Processing Systems</em>, 2021.</li><li>Vergassola, M., Villermaux, E., and Shraiman, B. I. "'Infotaxis' as a Strategy for Searching without Gradients." <em>Nature</em>, 2007.</li><li>Virgo, N., Biehl, M., Baltieri, M., and Capucci, M. "A 'Good Regulator Theorem' for Embodied Agents." <em>ALIFE Conference Proceedings</em>, 2025.</li><li>Wentworth, J. "Demons in Imperfect Search." LessWrong, 2020.</li><li>Wentworth, J. "Fixing the Good Regulator Theorem." AI Alignment Forum, 2021.</li><li>Wiles, A. "Modular Elliptic Curves and Fermat's Last Theorem." <em>Annals of Mathematics</em>, 1995.</li><li>Williams, R. "Nonuniform ACC Circuit Lower Bounds." <em>Journal of the ACM</em>, 2014.</li><li>Wolff, K. E. "Temporal Concept Analysis." In <em>ICCS Workshop on Concept Lattices for Knowledge Discovery in Databases</em>, 2001.</li></ul>
 </section>
 </main>
 
