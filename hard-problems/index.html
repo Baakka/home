@@ -180,6 +180,12 @@ details.lean>summary::-webkit-details-marker{display:none}
 details.lean pre{margin:0;padding:.7rem 1rem 1rem;overflow-x:auto;line-height:1.5}
 details.lean code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
 @media print{details.lean{display:none}}
+</style>
+<style id="glossary-en-css">
+#glossary-en dl.glossary{margin:0 0 1.6rem}
+#glossary-en dl.glossary dt{margin:1.25rem 0 .35rem;font-weight:600}
+#glossary-en dl.glossary dd{margin:0 0 .35rem 1.25rem}
+#glossary-en dl.glossary dd .field{color:var(--ink-faint)}
 .editions{margin:.9rem 0 0;font-size:.78rem;letter-spacing:.02em;color:var(--ink-faint)}
 .editions a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
 .editions a:hover{color:var(--accent);border-bottom-color:var(--accent)}
@@ -239,6 +245,8 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch11" data-target="ch11"><span class="toc-num">11</span><span class="toc-text">A worked case: the reliability metric</span></a>
 </li>
 <li><a href="#ch12" data-target="ch12"><span class="toc-num">12</span><span class="toc-text">Agents as bounded machines</span></a>
+</li>
+<li><a href="#glossary-en" data-target="glossary-en"><span class="toc-text">Glossary</span></a>
 </li>
 <li><a href="#bib" data-target="bib"><span class="toc-text">Bibliographic anchors for the next draft</span></a>
 </li>
@@ -2262,6 +2270,387 @@ theorem towerCard_unbounded {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
     ⟨N + 1,
       lt_of_le_of_lt (hmono.id_le N) (hmono (Nat.lt_succ_self N))⟩</code></pre></details>
 <p><strong>What the reading does not buy.</strong> It supplies no algorithm, and the intractability results of chapter 8 are unaffected: bounded optimality is a criterion, not a construction, and the honest belief space remains what it was. It says nothing about which envelope a given human or institution actually has, which is an empirical question this book does not answer and should not pretend to. And it leaves the third level exactly where chapter 2 put it, because no amount of machinery over the first two levels selects an acceptance condition. The machine reading sharpens the walls and prices the rungs. It does not choose the target, and a formalism that claimed to would be making the error this book has been warning about since its first page.</p>
+</section>
+<section class="chapter" id="glossary-en" aria-labelledby="glossary-en-h">
+<h2 id="glossary-en-h"><span class="chaplabel">Appendix. </span>Glossary</h2>
+<p>The terms this book relies on, with the sense it uses them in. Where a term is standard, the entry gives the standard meaning and then says what the book does with it; where the book coins or narrows a term, the entry gives the book&#x27;s own definition and the chapter that establishes it.</p>
+<p>Ordinary English words appear here only when the book gives them a technical edge, which is where a careful reader is most likely to be misled: *robust*, *complex*, *strictly*, and *margin* all mean something narrower here than in common use.</p>
+<h3>A - B</h3>
+<dl class="glossary">
+<dt>Abduction</dt>
+<dd><span class="field">Meaning:</span> inference to the best available explanation of an observation, as distinct from deduction and induction.</dd>
+<dd><span class="field">In this book:</span> the mode by which competing models enter the ledger. It proposes candidates; it does not settle between them, which is chapter 3&#x27;s problem.</dd>
+<dt>Agency</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking whether the desired set is reachable by admissible action.</dd>
+<dd><span class="field">In this book:</span> one of the seven hardness coordinates, written A, over the action set, transition map and constraints. Distinguished throughout from effort or diligence: an actor short of deployable responses is under-equipped, not underperforming.</dd>
+<dd><span class="field">Chapter:</span> 4</dd>
+<dt>Analogical</dt>
+<dd><span class="field">Meaning:</span> reasoning that transfers structure from a familiar case to an unfamiliar one.</dd>
+<dd><span class="field">In this book:</span> admissible only when the transfer preserves what the argument actually uses, which is what chapter 7&#x27;s functors make checkable rather than rhetorical.</dd>
+<dt>Associative, Unital</dt>
+<dd><span class="field">Meaning:</span> properties of a composition operation. Associative: the order of bracketing does not matter. Unital: an identity element exists that changes nothing.</dd>
+<dd><span class="field">In this book:</span> the laws that make composition of system parts well behaved. Chapter 7&#x27;s point is that they hold only up to coherent isomorphism, not on the nose, which is what forces the double-categorical setting.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Barrier height</dt>
+<dd><span class="field">Meaning:</span> the depth of the worst dip a route must pass through, measured downward from its starting score.</dd>
+<dd><span class="field">In this book:</span> the quantity that makes &quot;you must get worse before you get better&quot; arithmetic instead of metaphor. Zero barrier means a monotone route exists. A shortcut backed by an admissible path that never dips below the lower of its endpoints leaves every barrier unchanged, and the depth clause is essential, not decorative.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+<dt>Bayesian</dt>
+<dd><span class="field">Meaning:</span> of the rule that updates a prior distribution by the likelihood of what was observed.</dd>
+<dd><span class="field">In this book:</span> used with its denominator kept in view. When the evidence term is zero the update is undefined, and that failure is informative: it says the observation was impossible under every model being carried.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Bounded optimality</dt>
+<dd><span class="field">Meaning:</span> doing as well as possible given a fixed budget of computation and memory, rather than as well as possible in principle.</dd>
+<dd><span class="field">In this book:</span> the standard the whole argument holds agents to. Russell and Subramanian&#x27;s notion, and the reason chapter 12 reads an agent as a resource-bounded machine rather than an idealized reasoner.</dd>
+<dd><span class="field">Chapter:</span> 12</dd>
+</dl>
+<h3>C - D</h3>
+<dl class="glossary">
+<dt>Cadence</dt>
+<dd><span class="field">Meaning:</span> how often a decision or a revision is taken.</dd>
+<dd><span class="field">In this book:</span> a quantity that must be matched to the observability lag. Acting faster than the system reveals itself is the mechanism behind overcorrection, and the remedy is cadence, not effort.</dd>
+<dd><span class="field">Chapter:</span> 5</dd>
+<dt>Category, double category</dt>
+<dd><span class="field">Meaning:</span> a category is objects plus composable arrows obeying identity and associativity laws. A double category has two compatible directions of arrow.</dd>
+<dd><span class="field">In this book:</span> the setting for re-description. The second direction carries refinement, which is why one direction will not do.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Causality</dt>
+<dd><span class="field">Meaning:</span> the relation that makes one thing bring another about, as opposed to merely predicting it.</dd>
+<dd><span class="field">In this book:</span> the distinction the metric chapter turns on. A statistic can stay correlated with the goal while ceasing to be a lever on it.</dd>
+<dd><span class="field">Chapter:</span> 8, 11</dd>
+<dt>Chance constraint</dt>
+<dd><span class="field">Meaning:</span> a requirement that a condition hold with at least some stated probability, rather than with certainty.</dd>
+<dd><span class="field">In this book:</span> how constraints are written when the state is not known exactly, so that &quot;safe&quot; has a stated confidence attached.</dd>
+<dd><span class="field">Chapter:</span> 2</dd>
+<dt>Coherent isomorphism</dt>
+<dd><span class="field">Meaning:</span> a structural correspondence that is invertible and respects the surrounding structure.</dd>
+<dd><span class="field">In this book:</span> the exact strength of chapter 7&#x27;s composition laws. Equality does not hold; correspondence up to coherent isomorphism does, and that gap is what lifts the setting to a two-dimensional one.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Compactness</dt>
+<dd><span class="field">Meaning:</span> the logical property that a set of sentences with no model has a finite subset with no model.</dd>
+<dd><span class="field">In this book:</span> the reason ambiguity can persist forever. If every finite stretch of observation is consistent with two rival hypotheses, then so is the whole infinite stream.</dd>
+<dd><span class="field">Chapter:</span> 9</dd>
+<dt>Competitive analysis</dt>
+<dd><span class="field">Meaning:</span> judging an online procedure, which must commit before seeing the whole input, against the best a procedure with the whole input could have done.</dd>
+<dd><span class="field">In this book:</span> the honest yardstick for decisions taken under partial information, and the source of the online-versus-offline gap in chapter 6.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+<dt>Complex</dt>
+<dd><span class="field">Meaning:</span> in Snowden&#x27;s sense, a regime where the relations between cause and effect are knowable only after acting, not by analysis beforehand.</dd>
+<dd><span class="field">In this book:</span> strictly narrower than &quot;complicated&quot;. A complicated system can be separated by watching; a complex one sometimes only by probing. The book makes the boundary precise and shows the complex regime is not empty.</dd>
+<dd><span class="field">Chapter:</span> 9</dd>
+<dt>Concept lattice</dt>
+<dd><span class="field">Meaning:</span> the ordered structure of all pairs of an object set and the attributes shared by exactly those objects.</dd>
+<dd><span class="field">In this book:</span> the vocabulary-side picture of what a set of observations can express, and hence of what no rule phrased in that vocabulary can separate.</dd>
+<dd><span class="field">Chapter:</span> 3, 7</dd>
+<dt>Constrained reachability</dt>
+<dd><span class="field">Meaning:</span> whether a target set can be reached from the current state using only admissible actions.</dd>
+<dd><span class="field">In this book:</span> the formal content of the agency coordinate. Authority is modelled as which actions are admissible, so a reachability failure names a missing permission rather than a missing effort.</dd>
+<dd><span class="field">Chapter:</span> 4</dd>
+<dt>Coordinate, component</dt>
+<dd><span class="field">Meaning:</span> coordinate: one of the seven axes of the hardness profile. Component: one part of a composed system.</dd>
+<dd><span class="field">In this book:</span> kept apart deliberately. Hardness is read coordinate by coordinate; safety is a property of the composition and not of its components.</dd>
+<dt>Countable</dt>
+<dd><span class="field">Meaning:</span> finite, or in one-to-one correspondence with the natural numbers.</dd>
+<dd><span class="field">In this book:</span> the size assumption under which sums over observations behave, and a hypothesis worth noticing when it is not needed.</dd>
+<dt>Credal set</dt>
+<dd><span class="field">Meaning:</span> a set of probability distributions carried together, rather than one distribution.</dd>
+<dd><span class="field">In this book:</span> how the book represents not knowing the prior. Conclusions are required to survive across the set, which is stronger than surviving under a single convenient choice.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Cybernetics</dt>
+<dd><span class="field">Meaning:</span> the study of regulation and communication in systems that act on feedback.</dd>
+<dd><span class="field">In this book:</span> the source of the inheritance formalized in the companion, above all Ashby&#x27;s law of requisite variety.</dd>
+<dt>Decision-critical ambiguity</dt>
+<dd><span class="field">Meaning:</span> uncertainty that matters for what to do, because the states it fails to separate call for actions that cannot both be taken.</dd>
+<dd><span class="field">In this book:</span> the sharp form of the observability problem. Ambiguity that leaves the acceptable action sets overlapping is harmless: their intersection is the robust menu. Ambiguity that leaves them disjoint is not.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Diagonalization</dt>
+<dd><span class="field">Meaning:</span> Cantor&#x27;s construction of an object differing from every entry in a proposed enumeration.</dd>
+<dd><span class="field">In this book:</span> the reason no fixed rule catches everything. Applied to enrichment, it shows every stage of every hierarchy has something it cannot decide.</dd>
+<dd><span class="field">Chapter:</span> 7.4, 12</dd>
+<dt>Discount factor</dt>
+<dd><span class="field">Meaning:</span> the weight by which a future payoff is reduced relative to a present one.</dd>
+<dd><span class="field">In this book:</span> a declared convention rather than a fact, and one that belongs in the ledger, because reversibility judgments depend on it.</dd>
+<dd><span class="field">Chapter:</span> 2</dd>
+</dl>
+<h3>E - G</h3>
+<dl class="glossary">
+<dt>Effector</dt>
+<dd><span class="field">Meaning:</span> the part of an agent that acts on the world, as against the part that senses it.</dd>
+<dd><span class="field">In this book:</span> what determines reach. The companion proves that adding an effector can enlarge what is reachable, so reach is a property of the effectors and not of the deliberation.</dd>
+<dd><span class="field">Chapter:</span> 12</dd>
+<dt>Endogenous, exogenous</dt>
+<dd><span class="field">Meaning:</span> endogenous: arising inside the system being modelled. Exogenous: arising outside it, and taken as given.</dd>
+<dd><span class="field">In this book:</span> the line that decides what counts as an action. Chapter 4&#x27;s authority map separates what is controlled, what is inducible through others, and what is merely a driver to be planned around.</dd>
+<dd><span class="field">Chapter:</span> 4</dd>
+<dt>Epsilon-contamination</dt>
+<dd><span class="field">Meaning:</span> replacing a prior by a mixture of it with an arbitrary distribution, in some small proportion.</dd>
+<dd><span class="field">In this book:</span> the standard perturbation used to ask whether a conclusion survives a slightly wrong prior. The companion shows contamination keeps the evidence term positive, so the Bayes update stays defined.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Equivalence</dt>
+<dd><span class="field">Meaning:</span> a relation that is reflexive, symmetric and transitive, and so partitions its domain into classes.</dd>
+<dd><span class="field">In this book:</span> most often observational equivalence, which groups states that the available observations cannot tell apart. When the observation map is injective, the classes are singletons and the whole estimation problem disappears.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Escalation</dt>
+<dd><span class="field">Meaning:</span> referring a decision to whoever holds the authority it requires.</dd>
+<dd><span class="field">In this book:</span> one of the verdicts the navigation contract permits, and the correct one when a variety gap is established by counting. It is a finding with arithmetic attached, not a concession.</dd>
+<dd><span class="field">Chapter:</span> 4, 10</dd>
+<dt>Expected information gain</dt>
+<dd><span class="field">Meaning:</span> how much a proposed observation is expected to reduce uncertainty.</dd>
+<dd><span class="field">In this book:</span> the criterion for choosing a probe, and the same quantity that steers physical search when gradients are useless.</dd>
+<dd><span class="field">Chapter:</span> 9</dd>
+<dt>Finite colimits, coproducts</dt>
+<dd><span class="field">Meaning:</span> constructions that glue objects together along shared parts. A coproduct is the gluing of two objects along nothing.</dd>
+<dd><span class="field">In this book:</span> the machinery that lets open systems be composed at their interfaces.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Finite, transfinite</dt>
+<dd><span class="field">Meaning:</span> finite: bounded in size. Transfinite: extending past every finite stage, as the ordinals do.</dd>
+<dd><span class="field">In this book:</span> the two scales of hierarchy in chapter 7.4. No finite stage of enrichment is final, and the transfinite continuation does not rescue it.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>Functor</dt>
+<dd><span class="field">Meaning:</span> a map between categories that carries arrows to arrows and preserves composition and identities.</dd>
+<dd><span class="field">In this book:</span> the form a legitimate re-description takes. Preserving composition is exactly the condition under which a re-description transfers reachability, which is why the requirement is not bookkeeping.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Galois connection</dt>
+<dd><span class="field">Meaning:</span> a pair of order-reversing maps between two ordered sets, each determining the other.</dd>
+<dd><span class="field">In this book:</span> the correspondence between sets of objects and the attributes they share, underlying the concept lattice.</dd>
+<dd><span class="field">Chapter:</span> 3, 7</dd>
+</dl>
+<h3>H - L</h3>
+<dl class="glossary">
+<dt>Halting problem</dt>
+<dd><span class="field">Meaning:</span> the undecidable question of whether a given program eventually stops.</dd>
+<dd><span class="field">In this book:</span> the level-zero instance of the general void. It is also the trap that made one formalization attempt vacuous: a decision function asserted merely to exist can be supplied by classical choice even for this problem, so existence claims about deciders must name the procedure.</dd>
+<dd><span class="field">Chapter:</span> 7.4, 12</dd>
+<dt>Hardness profile</dt>
+<dd><span class="field">Meaning:</span> the seven-coordinate reading of what makes a particular problem hard: formulation, observability, agency, latency, ruggedness, reversibility, reflexivity.</dd>
+<dd><span class="field">In this book:</span> the book&#x27;s central instrument, and deliberately a profile rather than a score. Problems are not ranked on one scale; they are hard in different coordinates, and the coordinate says what to do.</dd>
+<dd><span class="field">Chapter:</span> 1.1</dd>
+<dt>Inference</dt>
+<dd><span class="field">Meaning:</span> drawing a conclusion from premises or evidence.</dd>
+<dd><span class="field">In this book:</span> always relative to a declared vocabulary. What can be inferred is limited by what can be expressed, which is chapter 7.4&#x27;s subject.</dd>
+<dt>Invariant, invariance</dt>
+<dd><span class="field">Meaning:</span> an invariant is a property preserved by every admissible move. Invariance is that preservation.</dd>
+<dd><span class="field">In this book:</span> the form of safety that composes. Set-invariance safety carries over to a composition; margin-style safety does not, so safety is a property of the whole.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Latency</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking when an intervention becomes observable and evaluable.</dd>
+<dd><span class="field">In this book:</span> written L. Split into the delay before any signal appears and the lag before it can be evaluated, and it is monotone in the resolution demanded: asking for a finer verdict makes you wait longer.</dd>
+<dd><span class="field">Chapter:</span> 5</dd>
+<dt>Lax, oplax</dt>
+<dd><span class="field">Meaning:</span> of a structure-preserving map that respects composition only up to a comparison arrow in one direction, rather than exactly. Oplax is the opposite direction.</dd>
+<dd><span class="field">In this book:</span> the honest strength of most real re-descriptions. Exact preservation is the exception.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Lexicographic</dt>
+<dd><span class="field">Meaning:</span> ordering by the first coordinate, using the second only to break ties, and so on.</dd>
+<dd><span class="field">In this book:</span> one legitimate way to govern a vector objective, and one that must be declared rather than assumed, since it encodes a priority ranking that someone chose.</dd>
+<dd><span class="field">Chapter:</span> 2</dd>
+<dt>Local maximum</dt>
+<dd><span class="field">Meaning:</span> a configuration no single admissible move improves on.</dd>
+<dd><span class="field">In this book:</span> relative to who owns the moves. A configuration can be stable for one actor and improvable by a coalition, so &quot;stuck&quot; is a statement about authority as much as about landscape.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+</dl>
+<h3>M - P</h3>
+<dl class="glossary">
+<dt>Margin</dt>
+<dd><span class="field">Meaning:</span> the distance between the current state and a limit.</dd>
+<dd><span class="field">In this book:</span> the safety notion that fails to compose, and the reason the book prefers set invariance. Each component keeping its own margin does not make the assembly safe.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Metric, proxy</dt>
+<dd><span class="field">Meaning:</span> a measurable quantity standing in for a goal that cannot be measured directly.</dd>
+<dd><span class="field">In this book:</span> the object of chapter 8&#x27;s failure mode. A proxy can stay statistically associated with the goal while becoming strategically unreliable once it is targeted.</dd>
+<dd><span class="field">Chapter:</span> 8, 11</dd>
+<dt>Model ledger</dt>
+<dd><span class="field">Meaning:</span> a written record, for every important term, of the current assumption, the evidence for it, competing models, the damage if it is wrong, and the next observation that would update it.</dd>
+<dd><span class="field">In this book:</span> the first practical deliverable. Its purpose is auditability: unwritten assumptions are not absent, merely unauditable.</dd>
+<dd><span class="field">Chapter:</span> 1</dd>
+<dt>Navigation contract</dt>
+<dd><span class="field">Meaning:</span> the declared terms under which an analysis proceeds: the conventions, the priority order, the verdicts allowed, and what would end the episode.</dd>
+<dd><span class="field">In this book:</span> what replaces a promise of solution. Paired with the stopping rule, it makes an episode of analysis something that can be concluded and reviewed.</dd>
+<dd><span class="field">Chapter:</span> 10</dd>
+<dt>Observability</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking whether observations can distinguish states that require different actions.</dd>
+<dd><span class="field">In this book:</span> written O. Note the &quot;require different actions&quot; clause: this is not about knowing the state, but about knowing enough to act.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Observer</dt>
+<dd><span class="field">Meaning:</span> a component that estimates the state from observations.</dd>
+<dd><span class="field">In this book:</span> made redundant exactly when the observation map is injective, which is the degenerate corner where the whole estimation apparatus is unnecessary. The calculator sits in that corner.</dd>
+<dd><span class="field">Chapter:</span> 3, 12</dd>
+<dt>Ontological</dt>
+<dd><span class="field">Meaning:</span> concerning what exists and what kinds of thing there are.</dd>
+<dd><span class="field">In this book:</span> contrasted with merely quantitative revision. Changing a number is cheap; changing the inventory of entities is the expensive kind.</dd>
+<dt>Ontological revision</dt>
+<dd><span class="field">Meaning:</span> changing the set of entities or predicates a model is stated in, rather than changing values within a fixed vocabulary.</dd>
+<dd><span class="field">In this book:</span> charged twice, because it invalidates conclusions drawn in the old vocabulary as well as costing the revision itself.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>Operad</dt>
+<dd><span class="field">Meaning:</span> an algebraic structure describing operations with several inputs and one output, together with how they compose.</dd>
+<dd><span class="field">In this book:</span> one of the compositional structures available for wiring systems together.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Overcorrection</dt>
+<dd><span class="field">Meaning:</span> responding so strongly, or so often, that the response itself destabilizes the system.</dd>
+<dd><span class="field">In this book:</span> the predicted consequence of a cadence faster than the observability lag. The fix is timing, not restraint.</dd>
+<dd><span class="field">Chapter:</span> 5</dd>
+<dt>Pager, paging</dt>
+<dd><span class="field">Meaning:</span> the on-call rotation that routes incidents to whoever is responsible at the time.</dd>
+<dd><span class="field">In this book:</span> the concrete setting of chapter 11&#x27;s worked case, where the rotation&#x27;s three responses against fourteen root-cause classes make the variety gap arithmetic.</dd>
+<dd><span class="field">Chapter:</span> 11</dd>
+<dt>Pareto dominance</dt>
+<dd><span class="field">Meaning:</span> one option dominates another when it is at least as good on every objective and strictly better on one.</dd>
+<dd><span class="field">In this book:</span> what survives before any weighting is chosen. The non-dominated set is the honest output of a vector objective; picking one point from it is a governance act.</dd>
+<dd><span class="field">Chapter:</span> 2</dd>
+<dt>Partition</dt>
+<dd><span class="field">Meaning:</span> a division of a set into non-overlapping non-empty parts covering it.</dd>
+<dd><span class="field">In this book:</span> what an equivalence relation induces, and the structure that observational indistinguishability imposes on the state space.</dd>
+<dt>Passive distinguishability, probe distinguishability</dt>
+<dd><span class="field">Meaning:</span> passive: two models can be separated by watching alone. Probe: they can be separated only by acting.</dd>
+<dd><span class="field">In this book:</span> the precise form of the complicated/complex boundary. Watching is a special case of acting, and the strict separation witness shows there are model pairs only probing can separate.</dd>
+<dd><span class="field">Chapter:</span> 9</dd>
+<dt>Payoff</dt>
+<dd><span class="field">Meaning:</span> the value an outcome delivers to an agent.</dd>
+<dd><span class="field">In this book:</span> relevant to the counterparty as well as the analyst, which is what makes chapter 8 a game rather than an estimation problem.</dd>
+<dd><span class="field">Chapter:</span> 8</dd>
+<dt>Pigeonhole principle</dt>
+<dd><span class="field">Meaning:</span> more items than containers forces two items into one container.</dd>
+<dd><span class="field">In this book:</span> the engine of every state-counting bound. A machine with fewer states than distinguishable prefixes must confuse two of them.</dd>
+<dd><span class="field">Chapter:</span> 12</dd>
+<dt>Plateau, dip</dt>
+<dd><span class="field">Meaning:</span> plateau: a stretch where the objective does not change. Dip: a stretch where it gets worse before improving.</dd>
+<dd><span class="field">In this book:</span> the two obstacles a route can meet. A positive barrier forces a dip, and every route to the global maximum in the worked graph passes below the lesser peak.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+<dt>Postmortem</dt>
+<dd><span class="field">Meaning:</span> a review conducted after an incident to establish what happened and why.</dd>
+<dd><span class="field">In this book:</span> the source of the root-cause inventory whose size the variety bound is compared against.</dd>
+<dd><span class="field">Chapter:</span> 11</dd>
+<dt>Predicate</dt>
+<dd><span class="field">Meaning:</span> a symbol standing for a property or relation that objects may have.</dd>
+<dd><span class="field">In this book:</span> the unit of vocabulary. Adding one changes what is expressible, and therefore what is decidable in the vocabulary, which is the formal content of representational revision.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>Pre-mortem</dt>
+<dd><span class="field">Meaning:</span> a review conducted before acting, imagining that the plan has already failed and asking why.</dd>
+<dd><span class="field">In this book:</span> the cheap counterpart to the postmortem, and a way to populate the ledger before the evidence arrives.</dd>
+<dt>Prior, posterior</dt>
+<dd><span class="field">Meaning:</span> prior: the distribution held before observing. Posterior: the distribution after updating on what was observed.</dd>
+<dd><span class="field">In this book:</span> with the constraint that the posterior averages back to the prior prediction, so an experiment cannot be expected to move a belief in a predetermined direction.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Pushout</dt>
+<dd><span class="field">Meaning:</span> the construction that glues two objects along a shared part.</dd>
+<dd><span class="field">In this book:</span> how composed systems are assembled at their interfaces.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+</dl>
+<h3>Q - R</h3>
+<dl class="glossary">
+<dt>Reach-avoid</dt>
+<dd><span class="field">Meaning:</span> the requirement to reach a target set while staying out of a forbidden one.</dd>
+<dd><span class="field">In this book:</span> the shape most real objectives take once safety is included, and harder than reachability alone.</dd>
+<dd><span class="field">Chapter:</span> 4</dd>
+<dt>Reduct</dt>
+<dd><span class="field">Meaning:</span> the structure left after discarding some of a vocabulary&#x27;s symbols.</dd>
+<dd><span class="field">In this book:</span> what a coarser vocabulary sees. Two structures can be indistinguishable in a reduct and distinct in the full signature, which is the mechanism of vocabulary-relative ambiguity.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>Refinement</dt>
+<dd><span class="field">Meaning:</span> replacing a description by a more detailed one that implements it.</dd>
+<dd><span class="field">In this book:</span> the second direction of chapter 7&#x27;s double category, which is why a single direction of arrow will not do.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Reflection</dt>
+<dd><span class="field">Meaning:</span> a system&#x27;s representation of itself, or of another system&#x27;s representation of it.</dd>
+<dd><span class="field">In this book:</span> what makes the reflexive coordinate expensive. Modelling the counterparty&#x27;s model of you is well defined at every round and never closes.</dd>
+<dd><span class="field">Chapter:</span> 8</dd>
+<dt>Reflexivity</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking how other agents alter the system in response to your action.</dd>
+<dd><span class="field">In this book:</span> written X. Its cost is quantified: with at least two counterparty actions, each round of mutual modelling multiplies the state count, so the tower is strictly increasing and unbounded.</dd>
+<dd><span class="field">Chapter:</span> 8</dd>
+<dt>Refutation</dt>
+<dd><span class="field">Meaning:</span> a demonstration that a claim is false, typically by counterexample.</dd>
+<dd><span class="field">In this book:</span> treated as a result rather than a setback. Several claims in this book were narrowed by counterexamples found while formalizing them, and the counterexamples are kept in the companion.</dd>
+<dt>Register</dt>
+<dd><span class="field">Meaning:</span> a unit of working memory holding one value.</dd>
+<dd><span class="field">In this book:</span> the resource whose scarcity separates a person from a calculator. Note the unit: a machine with k states holds only log k bits, so an exponential state bound is a linear memory bound, and quoting the exponential oversells it.</dd>
+<dd><span class="field">Chapter:</span> 12</dd>
+<dt>Relativization, natural proofs, algebrization</dt>
+<dd><span class="field">Meaning:</span> three established barriers, each showing that a class of proof techniques cannot settle certain questions in complexity theory.</dd>
+<dd><span class="field">In this book:</span> instances of statistic blindness. A technique whose verdict factors through relativizing observations takes the same value in two worlds whose correct answers differ, so no such technique is correct in both.</dd>
+<dd><span class="field">Chapter:</span> 7.4, 12</dd>
+<dt>Requisite variety</dt>
+<dd><span class="field">Meaning:</span> Ashby&#x27;s law. In counting form: the number of disturbances a regulator can absorb is at most the number of responses it deploys times the number of outcomes that occur.</dd>
+<dd><span class="field">In this book:</span> the premise is weaker than the textbook statement. It is enough that the regulator separate the disturbances it answers the same way; nothing need be assumed about responses it never issues, or about pairs it already answers differently. The premise cannot be dropped altogether.</dd>
+<dd><span class="field">Chapter:</span> 4</dd>
+<dt>Resolution</dt>
+<dd><span class="field">Meaning:</span> how fine a distinction a verdict is required to make.</dd>
+<dd><span class="field">In this book:</span> the dial that trades certainty against delay. Observability lag is monotone in it.</dd>
+<dd><span class="field">Chapter:</span> 5</dd>
+<dt>Reversibility</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking what it costs to return to an acceptable region after an error.</dd>
+<dd><span class="field">In this book:</span> written Re. Asymmetric in practice: a technical rollback may be cheap while the human consequences of the same decision are not, and the expensive direction sets the guardrail.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+<dt>Robust</dt>
+<dd><span class="field">Meaning:</span> of an action, acceptable in every state the observations leave possible.</dd>
+<dd><span class="field">In this book:</span> strictly narrower than &quot;resilient&quot; or &quot;reliable&quot;. The robust menu is the intersection of the acceptable sets across an observational equivalence class, and it is empty exactly when the ambiguity is decision-critical.</dd>
+<dd><span class="field">Chapter:</span> 3</dd>
+<dt>Ruggedness</dt>
+<dd><span class="field">Meaning:</span> the coordinate asking whether admissible routes to better configurations must pass through worse ones.</dd>
+<dd><span class="field">In this book:</span> written Ru, and measured by barrier height rather than described qualitatively.</dd>
+<dd><span class="field">Chapter:</span> 6</dd>
+</dl>
+<h3>S - Z</h3>
+<dl class="glossary">
+<dt>Safe-to-fail probe</dt>
+<dd><span class="field">Meaning:</span> an intervention designed so that its failure is survivable and informative.</dd>
+<dd><span class="field">In this book:</span> Snowden&#x27;s notion, and the operational answer in the complex regime, where analysis cannot separate the models but acting can.</dd>
+<dd><span class="field">Chapter:</span> 9</dd>
+<dt>Satisficing</dt>
+<dd><span class="field">Meaning:</span> accepting the first option that clears a stated threshold, rather than searching for the best.</dd>
+<dd><span class="field">In this book:</span> often the correct policy under latency, since the search for the optimum can cost more than the difference it finds.</dd>
+<dd><span class="field">Chapter:</span> 2, 5</dd>
+<dt>Scalarization</dt>
+<dd><span class="field">Meaning:</span> collapsing several objectives into one number by weighting them.</dd>
+<dd><span class="field">In this book:</span> legitimate only when the weights are declared, because the weighting is where the value judgment lives and collapsing hides it.</dd>
+<dd><span class="field">Chapter:</span> 2</dd>
+<dt>Signature</dt>
+<dd><span class="field">Meaning:</span> the list of symbols a formal vocabulary provides.</dd>
+<dd><span class="field">In this book:</span> what fixes the boundary of the expressible, and hence what a rule stated in that vocabulary can decide.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>Smith predictor</dt>
+<dd><span class="field">Meaning:</span> a control scheme that compensates for a known delay by acting on a model&#x27;s prediction of the delayed response.</dd>
+<dd><span class="field">In this book:</span> the classical answer to latency, and the shape of the advice in chapter 5: predict forward by the lag rather than react late.</dd>
+<dd><span class="field">Chapter:</span> 5</dd>
+<dt>State space</dt>
+<dd><span class="field">Meaning:</span> the set of configurations a system can occupy.</dd>
+<dd><span class="field">In this book:</span> what the seven coordinates are read against, and the thing that grows when the picture is widened to include other agents&#x27; pictures.</dd>
+<dt>Statistic blindness</dt>
+<dd><span class="field">Meaning:</span> a decision rule that acts only through a summary statistic inherits whatever that statistic fails to distinguish.</dd>
+<dd><span class="field">In this book:</span> the most reused result in the book. If the statistic fails to separate two states whose acceptable actions are disjoint, then every rule based on it, deterministic or randomized, acts unacceptably in one of them. Managing to the dashboard is exactly as safe as the dashboard is discriminating.</dd>
+<dd><span class="field">Chapter:</span> 8</dd>
+<dt>Stopping rule</dt>
+<dd><span class="field">Meaning:</span> the stated condition under which an episode of analysis ends.</dd>
+<dd><span class="field">In this book:</span> the book&#x27;s answer to the absence of an intrinsic stopping point in wicked problems. The rule stops an episode, not the problem, which is why it can be engineered at all.</dd>
+<dd><span class="field">Chapter:</span> 10</dd>
+<dt>Strictly</dt>
+<dd><span class="field">Meaning:</span> with the equal case excluded.</dd>
+<dd><span class="field">In this book:</span> load-bearing wherever it appears. &quot;Strictly weaker&quot; means the implication holds one way and provably fails the other, and several claims in the companion are exactly such separations.</dd>
+<dt>Structured cospans</dt>
+<dd><span class="field">Meaning:</span> a way of presenting an open system as a body together with its input and output interfaces.</dd>
+<dd><span class="field">In this book:</span> the device that makes systems composable by wiring interfaces, and the reason composition can be reasoned about at all.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+<dt>Sufficiency, inadequate</dt>
+<dd><span class="field">Meaning:</span> sufficiency: a representation carries everything the decision needs. Inadequate: it does not.</dd>
+<dd><span class="field">In this book:</span> a verdict about a representation rather than about the world. Infeasibility is declared relative to the present representation, and naming that is part of the verdict.</dd>
+<dd><span class="field">Chapter:</span> 7.4, 10</dd>
+<dt>Tape</dt>
+<dd><span class="field">Meaning:</span> the unbounded storage a Turing machine reads and writes.</dd>
+<dd><span class="field">In this book:</span> the resource whose absence bounds an agent and whose presence lifts the bound. Turing introduced the machine as a model of a human computer with pencil and paper, which is why paper is the right image.</dd>
+<dd><span class="field">Chapter:</span> 12</dd>
+<dt>Transition kernel</dt>
+<dd><span class="field">Meaning:</span> the rule giving the probability of the next state from the current state and action.</dd>
+<dd><span class="field">In this book:</span> written T, and one of the objects the hardness coordinates are read against.</dd>
+<dt>Void</dt>
+<dd><span class="field">Meaning:</span> something a given stage of a hierarchy cannot decide.</dd>
+<dd><span class="field">In this book:</span> shown to exist at every stage of every hierarchy of enrichment, with the halting problem as the level-zero instance. This is why no stage of enrichment is final.</dd>
+<dd><span class="field">Chapter:</span> 7.4</dd>
+<dt>2-cell</dt>
+<dd><span class="field">Meaning:</span> an arrow between arrows, the second dimension of a double category.</dd>
+<dd><span class="field">In this book:</span> what carries refinement, so that a re-description can be compared with another rather than only applied.</dd>
+<dd><span class="field">Chapter:</span> 7</dd>
+</dl>
 </section>
 <section class="chapter" id="bib" aria-labelledby="bib-h">
 <h2 id="bib-h"><span class="chaplabel">References</span>Bibliographic anchors for the next draft</h2>
