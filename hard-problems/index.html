@@ -667,9 +667,7 @@ theorem bayesEvidence_mixture_pos (Zobs ζ : S → PMF O) {ε : ℝ≥0∞}
     · exact h2
   have hone : (1 : ℝ≥0∞) = 0 := by
     rw [← (b.bind step).tsum_coe, tsum_congr hpred, tsum_zero]
-  exact one_ne_zero hone
-
-end</code></pre></details>
+  exact one_ne_zero hone</code></pre></details>
 <p>In real applications, the difficulty is not writing Bayes' rule. It is that \(T_\theta\), \(Z_{0,\theta}\), and sometimes \(a_{-0,t}\) are uncertain. The book's standard is therefore weaker and more useful: every state estimate must specify its observation sources, its countermodels, and what observation would change the recommended action.</p>
 <h3 id="sec-3-proxy-failure">Proxy failure</h3>
 <p>A metric \(m:S\to\mathbb{R}\) is not a valid target merely because it correlates with a desired outcome in historical data. It must remain informative under intervention. If selecting policy on \(m\) changes the relationship between \(m\) and the outcome, the proxy is not intervention-stable.</p>
