@@ -189,6 +189,11 @@ code,pre,.katex,mjx-container{direction:ltr;unicode-bidi:embed}
 details.lean{direction:ltr;text-align:left}
 table{direction:rtl}
 #toc .toc-num{margin-left:.5rem;margin-right:0}
+dl.glossary{margin:0 0 1.6rem}
+dl.glossary dt{margin:1.25rem 0 .35rem;font-weight:600}
+dl.glossary dt .latin{font-weight:400;color:var(--ink-soft);font-size:.92em}
+dl.glossary dd{margin:0 1.25rem .35rem 0}
+dl.glossary dd .field{color:var(--ink-faint)}
 .editions{margin:.9rem 0 0;font-size:.78rem;letter-spacing:.02em;color:var(--ink-faint)}
 .editions a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
 .editions a:hover{color:var(--accent);border-bottom-color:var(--accent)}
@@ -234,6 +239,8 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch10" data-target="ch10"><span class="toc-num">۱۰</span><span class="toc-text">قرارداد ناوبری و قاعدهٔ توقف</span></a></li>
 <li><a href="#ch11" data-target="ch11"><span class="toc-num">۱۱</span><span class="toc-text">یک مورد کارشده: سنجهٔ قابلیت اطمینان</span></a></li>
 <li><a href="#ch12" data-target="ch12"><span class="toc-num">۱۲</span><span class="toc-text">عامل‌ها همچون ماشین‌های کران‌دار</span></a></li>
+<li><a href="#glossary" data-target="glossary"><span class="toc-text">لغت‌نامهٔ جامع</span></a>
+</li>
 <li><a href="#bib" data-target="bib"><span class="toc-text">لنگرهای کتاب‌شناختی برای پیش‌نویس بعدی</span></a></li>
 </ol></details></nav>
 
@@ -1916,6 +1923,280 @@ theorem towerCard_unbounded {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
     ⟨N + 1,
       lt_of_le_of_lt (hmono.id_le N) (hmono (Nat.lt_succ_self N))⟩</code></pre></details>
 <p><strong>آنچه این خوانش نمی‌خرد.</strong> هیچ الگوریتمی فراهم نمی‌کند، و نتایجِ رام‌نشدنیِ فصل ۸ دست‌نخورده می‌مانند: بهینگیِ کران‌دار یک معیار است نه یک ساخت، و فضای باورِ صادقانه همان می‌ماند که بود. دربارهٔ اینکه یک انسان یا نهادِ معین واقعاً کدام پوشش را دارد هیچ نمی‌گوید، که پرسشی تجربی است و این کتاب پاسخش نمی‌دهد و نباید تظاهر کند که می‌دهد. و لایهٔ سوم را دقیقاً همان‌جا می‌گذارد که فصل ۲ گذاشت، چون هیچ مقدار دستگاه روی دو لایهٔ اول، شرطِ پذیرش را برنمی‌گزیند. خوانشِ ماشینی دیوارها را تیزتر می‌کند و پله‌ها را قیمت می‌گذارد. هدف را انتخاب نمی‌کند، و صورت‌بندی‌ای که ادعا کند می‌کند، همان خطایی را می‌کرد که این کتاب از صفحهٔ اولش از آن هشدار داده است.</p>
+</section>
+<section class="chapter" id="glossary" aria-labelledby="glossary-h">
+<h2 id="glossary-h"><span class="chaplabel">پیوست</span>لغت‌نامهٔ جامع</h2>
+<p>لغت‌نامه‌ای از واژه‌های دشوار، مفاهیم ریاضی، و اصطلاحات سیستمی و مدیریتیِ به‌کاررفته در این کتاب، به ترتیب الفبای فارسی، برای مرجعِ سریع هنگام مطالعه. این پیوست تنها در ویرایش فارسی هست.</p>
+<h3>الف</h3>
+<dl class="glossary">
+<dt>ابطال <span class="latin" lang="en" dir="ltr">(Refutation)</span></dt>
+<dd><span class="field">معنی:</span> رد شدن، نقض شدنِ یک فرضیه با شاهد.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی مشاهده‌ای رخ می‌دهد که مدلِ فعلی احتمالش را صفر می‌دانست، آن مدل ابطال شده است و باید جایش را به مدلی دیگر بدهد، نه آنکه با تنظیم سرِ پا نگه داشته شود.</dd>
+<dt>ابهامِ بحرانی‌برای‌تصمیم <span class="latin" lang="en" dir="ltr">(Decision-critical Ambiguity)</span></dt>
+<dd><span class="field">معنی:</span> ابهامی که مستقیماً تصمیم را زمین می‌زند.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی دو وضعیت با داده‌های موجود از هم تمیزدادنی نیستند و کنش‌های پذیرفتنی در آن دو هیچ اشتراکی ندارند؛ آن‌گاه هیچ کنشِ ایمنی وجود ندارد و باید کانالِ مشاهدهٔ تازه‌ای افزود.</dd>
+<dt>اتصال گالوایی <span class="latin" lang="en" dir="ltr">(Galois Connection)</span></dt>
+<dd><span class="field">معنی:</span> تناظری دوسویه میان دو ساختارِ مرتب.</dd>
+<dd><span class="field">کاربرد در متن:</span> صورتِ دقیقِ رابطهٔ میان یک دامنهٔ عینی و یک دامنهٔ انتزاعی، که تضمین می‌کند نتیجه‌گیری در سطح انتزاعی به سطح عینی منتقل شود.</dd>
+<dt>ارتفاع مانع <span class="latin" lang="en" dir="ltr">(Barrier Height)</span></dt>
+<dd><span class="field">معنی:</span> عمقِ گودترین فرورفتگی در بهترین مسیرِ موجود.</dd>
+<dd><span class="field">کاربرد در متن:</span> کمترین افتی که باید تحمل کنید تا از وضعیت کنونی به وضعیتی بهتر برسید؛ اگر مثبت باشد، هر مسیرِ مجاز از جایی بدتر می‌گذرد.</dd>
+<dt>استنتاج <span class="latin" lang="en" dir="ltr">(Inference)</span></dt>
+<dd><span class="field">معنی:</span> نتیجه گرفتن منطقی از روی شواهد، پی بردن.</dd>
+<dt>استوار <span class="latin" lang="en" dir="ltr">(Robust)</span></dt>
+<dd><span class="field">معنی:</span> مقاوم، محکم.</dd>
+<dd><span class="field">کاربرد در متن:</span> سیاستی یا مدلی که در «بدترین حالت ممکن» و با وجود بیشترین خطاها یا عدم‌قطعیت‌ها، باز هم کارایی قابل قبولی داشته باشد و سیستم را دچار فروپاشی نکند.</dd>
+<dt>افراز <span class="latin" lang="en" dir="ltr">(Partition)</span></dt>
+<dd><span class="field">معنی:</span> تقسیم یک مجموعه به بخش‌هایی که هم‌پوشانی ندارند و روی هم کل مجموعه را می‌پوشانند.</dd>
+<dt>اکیداً <span class="latin" lang="en" dir="ltr">(Strictly)</span></dt>
+<dd><span class="field">معنی:</span> به‌طور قطعی و بدون تساوی.</dd>
+<dd><span class="field">کاربرد در متن:</span> «اکیداً بدتر» یعنی واقعاً کمتر، نه مساوی؛ این تفاوت در قضیه‌ها بار معنایی دارد.</dd>
+<dt>امضا <span class="latin" lang="en" dir="ltr">(Signature)</span></dt>
+<dd><span class="field">معنی:</span> در منطق، فهرستِ نمادها و محمول‌هایی که یک توصیف اجازهٔ استفاده از آن‌ها را دارد.</dd>
+<dd><span class="field">کاربرد در متن:</span> همان «واژگانِ» یک بازنمایی؛ افزودن نماد به آن، توانِ بیانی را تغییر می‌دهد و همان بازنگری هستی‌شناختی است.</dd>
+<dt>اوراکلِ برون‌زاد <span class="latin" lang="en" dir="ltr">(Exogenous Oracle)</span></dt>
+<dd><span class="field">معنی:</span> یک قدرتِ غیبی، پاسخ‌گو یا منبعی از بیرون سیستم.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی برای حل یک مشکل ساختاری در سازمان، منتظر یک دستورِ جادویی از مدیران رده‌بالا (خارج از سیستم مورد بررسی) باشیم.</dd>
+<dt>آلایشِ اپسیلن <span class="latin" lang="en" dir="ltr">(ε-Contamination)</span></dt>
+<dd><span class="field">معنی:</span> در آمار بیزی، در نظر گرفتنِ یک احتمالِ بسیار کوچک (اپسیلن) برای اینکه تمام فرضیات ما کاملاً اشتباه باشد.</dd>
+<dd><span class="field">کاربرد در متن:</span> این کار باعث می‌شود مدلِ ریاضی هرگز احتمالات عجیب و غافلگیرکننده را «صفر» در نظر نگیرد و در صورت بروز اتفاقات غیرمنتظره، دچار خطای محاسباتیِ مطلق نشود.</dd>
+<dt>آهنگِ تصمیم / آهنگ بازنگری <span class="latin" lang="en" dir="ltr">(Cadence)</span></dt>
+<dd><span class="field">معنی:</span> ریتم، بازهٔ زمانی یا تناوبِ تکرار.</dd>
+<dd><span class="field">کاربرد در متن:</span> تعیین اینکه هر چند وقت یک‌بار باید داشبوردها یا وضعیت سیستم را بررسی کنیم (مثلاً بررسی دوهفته‌ای).</dd>
+</dl>
+<h3>ب - پ</h3>
+<dl class="glossary">
+<dt>بازپرداخت <span class="latin" lang="en" dir="ltr">(Payoff)</span></dt>
+<dd><span class="field">معنی:</span> سود یا زیانِ محقق‌شدهٔ یک عامل در پیِ یک کنش.</dd>
+<dt>بازتاب <span class="latin" lang="en" dir="ltr">(Reflection)</span></dt>
+<dd><span class="field">معنی:</span> بازگرداندنِ نتیجه از سطح انتزاعی به سطح اصلی. (با «بازتابندگی» اشتباه نشود.)</dd>
+<dd><span class="field">کاربرد در متن:</span> شرطِ سلامتِ هر انتزاع: موفقیت در نمایشِ جدید باید مستلزمِ موفقیت در مسئلهٔ اصلی باشد، وگرنه استدلالِ سطح‌بالا هیچ چیزی دربارهٔ مسئلهٔ شما اثبات نمی‌کند.</dd>
+<dt>بازتابندگی <span class="latin" lang="en" dir="ltr">(Reflexivity)</span></dt>
+<dd><span class="field">معنی:</span> اثر متقابل، تواناییِ یک سیستم در واکنش نشان دادن به خودش.</dd>
+<dd><span class="field">کاربرد در متن (قانون گودهارت):</span> وقتی شاخصی که برای اندازه‌گیری تعیین می‌کنیم، باعث تغییر رفتارِ سیستم شود. (مثال: کارمندانی که برای گرفتن پاداش، به جای حل مشکل، آمارها را دستکاری می‌کنند).</dd>
+<dt>بازگشت‌پذیری <span class="latin" lang="en" dir="ltr">(Reversibility)</span></dt>
+<dd><span class="field">معنی:</span> قابلیت بازگشت به حالت اول.</dd>
+<dd><span class="field">کاربرد در متن:</span> هزینه و زمانی که لازم است تا پس از انجام یک مداخلهٔ اشتباه، سیستم را به نقطهٔ امنِ قبلی برگردانیم.</dd>
+<dt>بازنگری هستی‌شناختی <span class="latin" lang="en" dir="ltr">(Ontological Revision)</span></dt>
+<dd><span class="field">معنی:</span> تغییر دادنِ تعاریف و مفاهیم پایه‌ای.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی راه‌حل مشکل با کلمات و مدل‌های فعلی قابل بیان نیست و باید کل چارچوب فکری، پارامترها و زاویه دیدمان به مسئله را دور بریزیم و از نو بسازیم.</dd>
+<dt>برون‌زاد <span class="latin" lang="en" dir="ltr">(Exogenous)</span></dt>
+<dd><span class="field">معنی:</span> چیزی که ریشه و منشأ آن در خارج از سیستم است.</dd>
+<dd><span class="field">کاربرد در متن:</span> متغیرها یا اتفاقاتی که ما هیچ کنترلی روی آن‌ها نداریم (مثل قطع شدن سراسری اینترنت).</dd>
+<dt>بسندگی / نابسنده <span class="latin" lang="en" dir="ltr">(Sufficiency / Inadequate)</span></dt>
+<dd><span class="field">معنی:</span> کافی بودن / ناکافی و ناقص بودنِ یک مدل یا ابزار برای حل مسئله.</dd>
+<dt>بسنده‌گرایی <span class="latin" lang="en" dir="ltr">(Satisficing)</span></dt>
+<dd><span class="field">معنی:</span> بسنده‌کردن به «به‌قدر کافی خوب» به‌جای جست‌وجوی بهینه.</dd>
+<dd><span class="field">کاربرد در متن:</span> مفهومِ سایمون؛ جست‌وجو وقتی می‌ایستد که سطحی از انتظار برآورده شود، نه وقتی ثابت شود بهترین گزینه پیدا شده است.</dd>
+<dt>بهرهٔ اطلاعاتیِ انتظاری <span class="latin" lang="en" dir="ltr">(Expected Information Gain)</span></dt>
+<dd><span class="field">معنی:</span> میزانِ اطلاعاتی که انتظار داریم یک آزمایش به ما بدهد.</dd>
+<dd><span class="field">کاربرد در متن:</span> معیارِ انتخابِ کاوش؛ نکتهٔ عملی‌اش این است که آزمایشی که نتیجه‌اش کنشِ شما را عوض نمی‌کند، بی‌ارزش است.</dd>
+<dt>بهینگیِ کران‌دار <span class="latin" lang="en" dir="ltr">(Bounded Optimality)</span></dt>
+<dd><span class="field">معنی:</span> بهینه‌بودن نسبت به منابعِ در دسترس، نه به‌طور مطلق.</dd>
+<dd><span class="field">کاربرد در متن:</span> بهینه‌سازی روی برنامه‌هایی که در بودجهٔ حافظه و زمانِ یک عامل جا می‌شوند؛ همین است محتوای صوریِ ادعای «سختی خاصیتِ زوج است».</dd>
+<dt>بیزی <span class="latin" lang="en" dir="ltr">(Bayesian)</span></dt>
+<dd><span class="field">معنی:</span> رویکردی در آمار و احتمالات.</dd>
+<dd><span class="field">کاربرد در متن:</span> مدلی که بر اساس یک حدس اولیه (Prior) شکل می‌گیرد و با جمع‌آوری شواهد و اطلاعات جدید، خود را مرتباً به‌روز و اصلاح می‌کند (Posterior).</dd>
+<dt>بیش‌اصلاح <span class="latin" lang="en" dir="ltr">(Overcorrection)</span></dt>
+<dd><span class="field">معنی:</span> واکنشِ بیش از اندازه.</dd>
+<dd><span class="field">کاربرد در متن:</span> خطری که وقتی رخ می‌دهد که آهنگِ بازنگری از تأخیرِ سیستم کوتاه‌تر باشد؛ اصلاح بر پایهٔ اطلاعاتِ کهنه، حلقه را به نوسان می‌اندازد.</dd>
+<dt>بیشینهٔ محلی <span class="latin" lang="en" dir="ltr">(Local Maximum)</span></dt>
+<dd><span class="field">معنی:</span> نقطه‌ای که هیچ‌یک از همسایه‌هایش بهتر نیست.</dd>
+<dd><span class="field">کاربرد در متن:</span> جایی که یک جست‌وجوگرِ کوته‌بین می‌ایستد، بی‌آنکه لزوماً بهترین وضعیتِ موجود باشد.</dd>
+<dt>پالایش <span class="latin" lang="en" dir="ltr">(Refinement)</span></dt>
+<dd><span class="field">معنی:</span> جایگزین کردنِ یک توصیفِ درشت با توصیفی ریزتر و دقیق‌تر، بی‌آنکه تعهدهای مرزی‌اش نقض شود.</dd>
+<dt>پس‌مرگی <span class="latin" lang="en" dir="ltr">(Postmortem)</span></dt>
+<dd><span class="field">معنی:</span> بازبینیِ پس از رخداد.</dd>
+<dd><span class="field">کاربرد در متن:</span> سندی که پس از یک خرابی نوشته می‌شود تا علت و درسِ آن ثبت شود؛ در موردِ کارشده، کیفیت همین سندها خودش یک سیگنال است.</dd>
+<dt>پیجر <span class="latin" lang="en" dir="ltr">(Pager / Paging)</span></dt>
+<dd><span class="field">معنی:</span> سامانهٔ فراخوانِ خودکارِ مهندسِ آماده‌به‌کار در زمان خرابی.</dd>
+<dd><span class="field">کاربرد در متن:</span> «ساعت‌های پیجر» بارِ واقعی بر دوشِ افراد را می‌سنجد و در موردِ کارشده، سقفِ آن یک حفاظِ الزام‌آور است.</dd>
+<dt>پیش‌بینِ اسمیث <span class="latin" lang="en" dir="ltr">(Smith Predictor)</span></dt>
+<dd><span class="field">معنی:</span> ساختاری در مهندسی کنترل برای کار با تأخیرِ معلوم.</dd>
+<dd><span class="field">کاربرد در متن:</span> مدل را روی شکافِ تأخیر به جلو می‌راند تا اصلاح بر پایهٔ وضعیتِ محتملِ کنونی انجام شود؛ اعتبارش یکسره به خوب‌بودنِ مدل بسته است.</dd>
+<dt>پیش‌راند <span class="latin" lang="en" dir="ltr">(Pushout)</span></dt>
+<dd><span class="field">معنی:</span> عملیاتی در ریاضیات (نظریه دسته‌ها) برای ترکیب و چسباندن دو سیستم مختلف از طریق یک مرز یا درگاهِ مشترک.</dd>
+<dt>پیش‌مرگی <span class="latin" lang="en" dir="ltr">(Pre-mortem)</span></dt>
+<dd><span class="field">معنی:</span> پیش‌بینیِ عامدانهٔ شکست، پیش از آغاز کار.</dd>
+<dd><span class="field">کاربرد در متن:</span> نشستنی که در آن می‌پرسند این مداخله چگونه دور زده می‌شود و هزینه‌اش به چه کسی منتقل می‌شود.</dd>
+<dt>پیشین / پسین <span class="latin" lang="en" dir="ltr">(Prior / Posterior)</span></dt>
+<dd><span class="field">معنی:</span> در آمار بیزی، پیشین یعنی «باور و حدس ما قبل از آزمایش» و پسین یعنی «باور اصلاح‌شدهٔ ما بعد از دیدن نتایج آزمایش».</dd>
+</dl>
+<h3>ت - چ</h3>
+<dl class="glossary">
+<dt>تابعگون <span class="latin" lang="en" dir="ltr">(Functor)</span></dt>
+<dd><span class="field">معنی:</span> نگاشتی در نظریه دسته‌ها (Category Theory).</dd>
+<dd><span class="field">کاربرد در متن:</span> ابزارِ ریاضی‌ای که ساختار یک سیستم را به سیستم دیگر تبدیل می‌کند، به شرطی که روابط و ویژگی‌های اصلی بین اجزای سیستم اول، در سیستم دوم هم حفظ شود.</dd>
+<dt>تأخیر <span class="latin" lang="en" dir="ltr">(Latency)</span></dt>
+<dd><span class="field">معنی:</span> وقفهٔ زمانی، فاصلهٔ زمانی بین انجام یک عمل و دریافت نتیجه یا بازخوردِ آن.</dd>
+<dt>تحلیل رقابتی <span class="latin" lang="en" dir="ltr">(Competitive Analysis)</span></dt>
+<dd><span class="field">معنی:</span> سنجشِ کارایی یک الگوریتمِ برخط در برابر بهترین راه‌حلِ ممکن با دانشِ کامل.</dd>
+<dd><span class="field">کاربرد در متن:</span> نظریهٔ پختهٔ همان شکافی که میان جست‌وجوگرِ بی‌نقشه و نقشه‌به‌دست وجود دارد؛ هزینهٔ کمبودِ اطلاعات را قیمت می‌گذارد.</dd>
+<dt>تسلط پارتو <span class="latin" lang="en" dir="ltr">(Pareto Dominance)</span></dt>
+<dd><span class="field">معنی:</span> گزینه‌ای بر گزینهٔ دیگر مسلط است اگر در همهٔ اهداف بهتر یا مساوی و در دست‌کم یکی بهتر باشد.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی دو گزینه بر هم مسلط نیستند، هیچ وزن‌گذاریِ مشروعی نمی‌تواند تصمیم را جای شما بگیرد؛ آن تصمیم متعلق به حکمرانی است.</dd>
+<dt>تشدید <span class="latin" lang="en" dir="ltr">(Escalation)</span></dt>
+<dd><span class="field">معنی:</span> بالا بردن، ارجاع دادن به سطح بالاتر.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی حل یک مسئله در حیطهٔ اختیارات عاملِ تصمیم‌گیرنده نیست و باید آن را به مدیران ارشد یا نهادهای بالاتر ارجاع دهد.</dd>
+<dt>تفکیک‌پذیری <span class="latin" lang="en" dir="ltr">(Resolution)</span></dt>
+<dd><span class="field">معنی:</span> ریزترین تفاوتی که ابزار یا واژگانِ شما می‌تواند تشخیص دهد.</dd>
+<dd><span class="field">کاربرد در متن:</span> زیرِ آن آستانه، هر قاعده‌ای که با آن واژگان بیان شود ناگزیر برخی وضعیت‌ها را بد رده‌بندی می‌کند.</dd>
+<dt>تک‌عددی‌سازی <span class="latin" lang="en" dir="ltr">(Scalarization)</span></dt>
+<dd><span class="field">معنی:</span> تبدیل کردنِ چندین پارامتر مختلف به یک نمره یا عدد واحد.</dd>
+<dd><span class="field">کاربرد در متن:</span> میانگین گرفتن از اهداف متعارض (مثل سرعت، کیفیت و هزینه) و تبدیل آن‌ها به یک نمرهٔ کل. نویسنده معتقد است این کار باعث پنهان شدن تضادهای واقعی در سازمان می‌شود.</dd>
+<dt>تمیزپذیریِ منفعل / کاوشی <span class="latin" lang="en" dir="ltr">(Passive / Probe Distinguishability)</span></dt>
+<dd><span class="field">معنی:</span> اینکه دو فرضیه را با تماشا می‌شود جدا کرد یا تنها با دخالت.</dd>
+<dd><span class="field">کاربرد در متن:</span> مرزِ میان «پیچیده» و «درهم‌تنیده»؛ برخی مدل‌ها را هیچ مقدار تماشا جدا نمی‌کند در حالی که یک مداخلهٔ کوچک جدا می‌کند.</dd>
+<dt>تنوع بایسته / قانون اَشبی <span class="latin" lang="en" dir="ltr">(Requisite Variety)</span></dt>
+<dd><span class="field">معنی:</span> یک اصل مهم در سایبرنتیک (Cybernetics).</dd>
+<dd><span class="field">کاربرد در متن:</span> این قانون می‌گوید: «تنوعِ ابزارهای کنترلیِ شما باید حداقل برابر با تنوعِ مشکلاتی باشد که سیستم با آن مواجه است». (شما نمی‌توانید یک سیستم پیچیده را با ابزارهای محدود و ساده کنترل کنید).</dd>
+<dt>تُهی‌گاه <span class="latin" lang="en" dir="ltr">(Void)</span></dt>
+<dd><span class="field">معنی:</span> شکاف عمیق، فضای خالی.</dd>
+<dd><span class="field">کاربرد در متن:</span> نقطه‌ای در تحلیل که در آن مدل‌ها و قوانین فعلی دیگر پاسخ‌گو نیستند و با بن‌بستِ منطقی روبرو می‌شویم.</dd>
+<dt>ثبات <span class="latin" lang="en" dir="ltr">(Register)</span></dt>
+<dd><span class="field">معنی:</span> خانهٔ حافظه‌ای که یک محاسبه‌گر می‌تواند یک مقدار را در آن نگه دارد.</dd>
+<dd><span class="field">کاربرد در متن:</span> مقایسهٔ انسان و ماشین‌حساب بر همین می‌چرخد: انسان حدوداً چهار ثباتِ قابل‌اعتماد دارد و حاصل‌ضرب‌های جزئی در آن جا نمی‌شوند.</dd>
+</dl>
+<h3>ح - س</h3>
+<dl class="glossary">
+<dt>حاشیه <span class="latin" lang="en" dir="ltr">(Margin)</span></dt>
+<dd><span class="field">معنی:</span> فاصلهٔ اطمینان تا مرزِ خطا.</dd>
+<dd><span class="field">کاربرد در متن:</span> ویژگی‌های از جنس حاشیه ترکیب نمی‌شوند: دو جزء که هر یک وضعیت را یک یکا جابه‌جا می‌کنند با هم دو یکا جابه‌جا می‌کنند، پس «هر سرویس درون بودجهٔ خطای خودش» استدلالِ معتبری نیست.</dd>
+<dt>درون‌زاد <span class="latin" lang="en" dir="ltr">(Endogenous)</span></dt>
+<dd><span class="field">معنی:</span> تولید شده از داخل، متغیرهایی که درون خود سیستم هستند و ما روی آن‌ها کنترل داریم.</dd>
+<dt>درهم‌تنیده <span class="latin" lang="en" dir="ltr">(Complex)</span></dt>
+<dd><span class="field">معنی:</span> در تفکیکِ اسنودن، وضعیتی که تنها با کاوش‌کردن فیصله می‌یابد، در برابر «پیچیده» که تحلیل از پشتِ میز حلش می‌کند.</dd>
+<dt>دسترسی‌پذیری مقیّد <span class="latin" lang="en" dir="ltr">(Constrained Reachability)</span></dt>
+<dd><span class="field">معنی:</span> توانایی رسیدن به هدف، با شرطِ رعایت خطوط قرمز.</dd>
+<dd><span class="field">کاربرد در متن:</span> آیا می‌توانیم با امکاناتی که در اختیار داریم به وضعیت مطلوب برسیم، بدون اینکه قیدهای مهم (مثل ایمنی، بودجه یا سلامت روان کارمندان) را نقض کنیم؟</dd>
+<dt>دفتر مدل <span class="latin" lang="en" dir="ltr">(Model Ledger)</span></dt>
+<dd><span class="field">معنی:</span> جدولی از فرض‌های صریح.</dd>
+<dd><span class="field">کاربرد در متن:</span> نخستین فراوردهٔ عملیِ کتاب؛ برای هر فرض: شاهدش، مدل‌های رقیب، آسیبِ خطا، و مشاهدهٔ بعدی که به‌روزش می‌کند. فرضِ نانوشته غایب نیست، فقط حسابرسی‌ناپذیر است.</dd>
+<dt>ربایش <span class="latin" lang="en" dir="ltr">(Abduction)</span></dt>
+<dd><span class="field">معنی:</span> ساختنِ فرضیهٔ تازه، در برابر استنتاج که از فرضیه به نتیجه می‌رود.</dd>
+<dd><span class="field">کاربرد در متن:</span> پس از ابطالِ یک مدل، هیچ قضیه‌ای مدلِ جانشین را تولید نمی‌کند؛ آن کار ربایش است و آدم‌ها انجامش می‌دهند.</dd>
+<dt>رسیدن-و-پرهیز <span class="latin" lang="en" dir="ltr">(Reach-Avoid)</span></dt>
+<dd><span class="field">معنی:</span> مسئلهٔ رسیدن به یک مجموعهٔ هدف در حینِ پرهیز از یک مجموعهٔ ناایمن، با احتمالی دست‌کم برابر یک آستانه.</dd>
+<dt>رؤیتگر / ناظر <span class="latin" lang="en" dir="ltr">(Observer)</span></dt>
+<dd><span class="field">معنی:</span> در مهندسی کنترل، سازه‌ای که وضعیتِ پنهانِ یک سیستم را از خروجی‌هایش برآورد می‌کند.</dd>
+<dd><span class="field">کاربرد در متن:</span> خودِ «مشاهده» همین است: نسخهٔ کاری‌ای که کنارِ سیستم اجرا می‌شود و با شکافِ میان پیش‌بینی و سیگنال اصلاح می‌شود، نه خواندنِ مستقیمِ واقعیت.</dd>
+<dt>سست / پادسست <span class="latin" lang="en" dir="ltr">(Lax / Oplax)</span></dt>
+<dd><span class="field">معنی:</span> نگاشتی که برابری را تنها در یک جهت و تا حدِ یک سلولِ مقایسه برمی‌آورد.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی معناشناسی دقیقاً ترکیبی نیست، آن سلولِ مقایسه خودش اندازه‌گیریِ شکستِ ترکیبی است، یعنی همان جایی که برآمدن و تداخل در آن زندگی می‌کند.</dd>
+<dt>سنجه / نماینده <span class="latin" lang="en" dir="ltr">(Metric / Proxy)</span></dt>
+<dd><span class="field">معنی:</span> معیاری که به جای هدف اصلی اندازه گرفته می‌شود.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی نمی‌توانیم خودِ «کیفیت» را اندازه بگیریم، از «تعداد تیکت‌های خرابی» به عنوان یک نماینده استفاده می‌کنیم.</dd>
+<dt>سیبرنتیک <span class="latin" lang="en" dir="ltr">(Cybernetics)</span></dt>
+<dd><span class="field">معنی:</span> دانشِ کنترل و ارتباط در سیستم‌های جانوری و ماشینی؛ خاستگاهِ قانونِ تنوع بایسته و قضیهٔ تنظیم‌کنندهٔ خوب.</dd>
+<dt>۲-سلول <span class="latin" lang="en" dir="ltr">(2-cell)</span></dt>
+<dd><span class="field">معنی:</span> در دومقوله، مربعی که سازگاریِ دو مسیرِ تبدیل را گواهی می‌کند.</dd>
+<dd><span class="field">کاربرد در متن:</span> گواهی بر اینکه پالایشِ یک زیرسیستم، قراردادِ رابطی را که معماریِ بزرگ‌تر لازم دارد نمی‌شکند.</dd>
+</dl>
+<h3>ش - ف</h3>
+<dl class="glossary">
+<dt>شبکهٔ مفهوم <span class="latin" lang="en" dir="ltr">(Concept Lattice)</span></dt>
+<dd><span class="field">معنی:</span> ساختارِ مرتبِ همهٔ «مفهوم‌»هایی که از یک جدولِ اشیا و ویژگی‌ها بیرون می‌آید.</dd>
+<dd><span class="field">کاربرد در متن:</span> جبرِ توانِ تمایزگذاریِ داشبورد؛ سنجه‌های مشتق آن را ریزتر نمی‌کنند و تنها کانالِ مشاهدهٔ تازه جابه‌جایش می‌کند.</dd>
+<dt>شرکت‌پذیر / یکانی <span class="latin" lang="en" dir="ltr">(Associative / Unital)</span></dt>
+<dd><span class="field">معنی:</span> ترتیبِ گروه‌بندی در ترکیب اهمیت ندارد / عضوی بی‌اثر وجود دارد.</dd>
+<dd><span class="field">کاربرد در متن:</span> ترکیبِ سیستم‌های باز تنها «تا حدِ» یکریختی چنین است، و همین است که ساختار را از مقوله به دومقوله می‌برد.</dd>
+<dt>شمارا <span class="latin" lang="en" dir="ltr">(Countable)</span></dt>
+<dd><span class="field">معنی:</span> قابلِ شماره‌گذاری با اعداد طبیعی، هرچند بی‌کران.</dd>
+<dt>عاملِ تنزیل <span class="latin" lang="en" dir="ltr">(Discount Factor)</span></dt>
+<dd><span class="field">معنی:</span> ضریبی در اقتصاد و نظریه تصمیم.</dd>
+<dd><span class="field">کاربرد در متن:</span> نشان می‌دهد که ما چقدر ارزشِ نتایج و پاداش‌های آینده را نسبت به زمان حال «کمتر» می‌دانیم. (ارزش‌گذاری روی زمان).</dd>
+<dt>عاملیت / اختیار <span class="latin" lang="en" dir="ltr">(Agency)</span></dt>
+<dd><span class="field">معنی:</span> میزان توانمندی، قدرت و مجموعه ابزارهای مجازی که یک فرد یا سیستم برای ایجاد تغییر در اختیار دارد.</dd>
+<dt>علیّت <span class="latin" lang="en" dir="ltr">(Causality)</span></dt>
+<dd><span class="field">معنی:</span> رابطهٔ علت و معلول؛ اینکه دقیقاً چه چیزی باعث بروز چه اتفاقی شده است.</dd>
+<dt>عملگر <span class="latin" lang="en" dir="ltr">(Effector)</span></dt>
+<dd><span class="field">معنی:</span> ابزارِ اثرگذاری بر جهان، در برابر حس‌گر که تنها می‌خواند.</dd>
+<dd><span class="field">کاربرد در متن:</span> مجموعهٔ کنش‌های واقعیِ شما؛ نرم‌افزار نمی‌تواند مدارِ عملگرها را فراخ‌تر کند و تنها عملگرِ تازه چنین می‌کند.</dd>
+<dt>عملگَرد <span class="latin" lang="en" dir="ltr">(Operad)</span></dt>
+<dd><span class="field">معنی:</span> ساختاری ریاضی برای توصیفِ شیوه‌های مجازِ سرهم‌کردنِ اجزا؛ اینجا زبانِ نمودارهای سیم‌کشی.</dd>
+<dt>فروکاست <span class="latin" lang="en" dir="ltr">(Reduct)</span></dt>
+<dd><span class="field">معنی:</span> در منطق، همان ساختار با واژگانی کم‌تر.</dd>
+<dd><span class="field">کاربرد در متن:</span> انتزاع، گذر به یک فروکاست است؛ بازنگری هستی‌شناختی حرکتِ معکوس، یعنی گسترشِ واژگان با نمادِ نو.</dd>
+<dt>فشردگی <span class="latin" lang="en" dir="ltr">(Compactness)</span></dt>
+<dd><span class="field">معنی:</span> قضیه‌ای در منطق مرتبهٔ اول.</dd>
+<dd><span class="field">کاربرد در متن:</span> اگر دو فرضیهٔ رقیب با هر دستهٔ متناهی از مشاهده‌ها سازگار باشند، دو جهانِ کاملِ سازگار با کلِ جریانِ مشاهده وجود دارد؛ پس این ابهام با داده‌ٔ بیشتر حل نمی‌شود.</dd>
+<dt>فضای وضعیت <span class="latin" lang="en" dir="ltr">(State Space)</span></dt>
+<dd><span class="field">معنی:</span> مجموعِ تمامی حالت‌های ممکنی که یک سیستم در طول زمان می‌تواند در آن‌ها قرار بگیرد.</dd>
+<dt>فلات / فرورفتگی <span class="latin" lang="en" dir="ltr">(Plateau / Dip)</span></dt>
+<dd><span class="field">معنی:</span> فلات: وضعیتی در روند کار که پیشرفت متوقف می‌شود و نمودار حالت افقی و یکنواخت پیدا می‌کند. فرورفتگی: افتِ مقطعی و موقت عملکرد، که معمولاً برای ایجاد یک تغییر ساختاری بزرگ (و رسیدن به قله‌های بالاتر) اجتناب‌ناپذیر است.</dd>
+</dl>
+<h3>ق - م</h3>
+<dl class="glossary">
+<dt>قاعده توقف <span class="latin" lang="en" dir="ltr">(Stopping Rule)</span></dt>
+<dd><span class="field">معنی:</span> دستورالعملی که تعیین می‌کند چه زمانی باید دست از جستجو، تحلیل یا مداخله برداریم و پرونده را (چه با موفقیت و چه با شکست) ببندیم.</dd>
+<dt>قرارداد ناوبری <span class="latin" lang="en" dir="ltr">(Navigation Contract)</span></dt>
+<dd><span class="field">معنی:</span> توافق‌نامه‌ای شفاف و خروجیِ نهایی تحلیل که شامل اهداف، محدودیت‌ها، ابزارها، نقاط کور و شرایط خروج از بحران است.</dd>
+<dt>قطری‌سازی <span class="latin" lang="en" dir="ltr">(Diagonalization)</span></dt>
+<dd><span class="field">معنی:</span> ترفندِ ساختنِ چیزی که از هر عضوِ یک فهرست فرار می‌کند، با مخالفت‌کردن با عضوِ n-ام در جای n-ام.</dd>
+<dd><span class="field">کاربرد در متن:</span> موتورِ اثباتِ اینکه هیچ انبارِ شمارایی از قاعده‌ها کامل نیست، و به همین دلیل نردبانِ بازنگری پلهٔ آخر ندارد.</dd>
+<dt>قیاسی <span class="latin" lang="en" dir="ltr">(Analogical)</span></dt>
+<dd><span class="field">معنی:</span> بر اساس تشابه، تمثیلی. نتیجه‌گیری برای یک سیستم بر اساس شباهت‌های ساختاری‌اش با سیستمی دیگر.</dd>
+<dt>قید احتمالی <span class="latin" lang="en" dir="ltr">(Chance Constraint)</span></dt>
+<dd><span class="field">معنی:</span> شرطی که تنها با احتمالی دست‌کم برابرِ یک آستانه لازم است برقرار باشد، نه همیشه.</dd>
+<dt>کاوشِ ایمن‌به‌شکست <span class="latin" lang="en" dir="ltr">(Safe-to-fail Probe)</span></dt>
+<dd><span class="field">معنی:</span> انجام یک آزمایش بسیار کوچک، کم‌هزینه و ایزوله در سیستم برای جمع‌آوری اطلاعات. به طوری که اگر آزمایش شکست خورد، آسیبی به کل سیستم وارد نشود.</dd>
+<dt>کوریِ آماره <span class="latin" lang="en" dir="ltr">(Statistic Blindness)</span></dt>
+<dd><span class="field">معنی:</span> ناتوانیِ ارثیِ هر قاعده‌ای که تنها از راهِ یک عددِ خلاصه عمل می‌کند.</dd>
+<dd><span class="field">کاربرد در متن:</span> اگر آن خلاصه دو وضعیتِ نیازمندِ کنش‌های ناسازگار را یکی نشان دهد، هر تصمیمِ مبتنی بر داشبورد در یکی از آن دو نابه‌جا عمل می‌کند.</dd>
+<dt>لانهٔ کبوتری <span class="latin" lang="en" dir="ltr">(Pigeonhole Principle)</span></dt>
+<dd><span class="field">معنی:</span> اگر n چیز را در m&lt;n خانه بگذاریم، خانه‌ای بیش از یکی می‌گیرد.</dd>
+<dd><span class="field">کاربرد در متن:</span> کفِ حالت بازتابی؛ ماشینی که ماشین دیگری را وفادارانه دنبال می‌کند دست‌کم به‌اندازهٔ آن وضعیت لازم دارد.</dd>
+<dt>متناهی / فرامتناهی <span class="latin" lang="en" dir="ltr">(Finite / Transfinite)</span></dt>
+<dd><span class="field">معنی:</span> متناهی یعنی محدود و پایان‌پذیر (دارای حد مشخص)؛ فرامتناهی یعنی بی‌کران و فراتر از محدوده‌های قابل شمارش.</dd>
+<dt>مجموعهٔ باورمند <span class="latin" lang="en" dir="ltr">(Credal Set)</span></dt>
+<dd><span class="field">معنی:</span> مجموعه‌ای از توزیع‌های پیشین، وقتی تعهد به یک پیشینِ یگانه دفاع‌پذیر نیست.</dd>
+<dt>محمول <span class="latin" lang="en" dir="ltr">(Predicate)</span></dt>
+<dd><span class="field">معنی:</span> در منطق ریاضی، یک ویژگی، صفت یا عبارتی است که می‌تواند در مورد اشیاء بیان شود و نتیجهٔ آن یا «درست» (True) است یا «غلط» (False).</dd>
+<dt>مسئلهٔ ایستایی <span class="latin" lang="en" dir="ltr">(Halting Problem)</span></dt>
+<dd><span class="field">معنی:</span> پرسشِ اینکه آیا یک برنامه سرانجام می‌ایستد یا نه.</dd>
+<dd><span class="field">کاربرد در متن:</span> نمونهٔ سطح‌صفرِ تُهی‌گاه؛ هیچ برنامه‌ای این را برای همهٔ برنامه‌ها تصمیم نمی‌گیرد، و این با ماشین بررسی شده است.</dd>
+<dt>مشاهده‌پذیری <span class="latin" lang="en" dir="ltr">(Observability)</span></dt>
+<dd><span class="field">معنی:</span> توانایی ما برای درکِ وضعیتِ درونی و پنهانِ یک سیستم، فقط از طریق نگاه کردن به خروجی‌ها و داده‌های ظاهری آن (مثل داشبوردها).</dd>
+<dt>مقوله / دومقوله <span class="latin" lang="en" dir="ltr">(Category / Double Category)</span></dt>
+<dd><span class="field">معنی:</span> مفاهیمی در نظریه دسته‌ها؛ «محیط» یا «چارچوبی» که در آن مجموعه‌ای از اشیاء ریاضی و روابط (پیکان‌ها) بین آن‌ها تعریف می‌شود.</dd>
+<dt>مؤلفه / مختصه <span class="latin" lang="en" dir="ltr">(Coordinate / Component)</span></dt>
+<dd><span class="field">معنی:</span> یک بُعد، یک بخش یا یک محور از یک سیستم چندبُعدی.</dd>
+</dl>
+<h3>ن - ی</h3>
+<dl class="glossary">
+<dt>ناوردایی / ناوردا <span class="latin" lang="en" dir="ltr">(Invariant / Invariance)</span></dt>
+<dd><span class="field">معنی:</span> ثابت، تغییرناپذیر.</dd>
+<dd><span class="field">کاربرد در متن:</span> ویژگی‌ها یا قوانین بنیادینی در سیستم که حتی پس از اعمال تغییرات یا ترکیب شدنِ اجزای مختلف، همچنان پایدار باقی می‌مانند و نقض نمی‌شوند.</dd>
+<dt>ناهمواری <span class="latin" lang="en" dir="ltr">(Ruggedness)</span></dt>
+<dd><span class="field">معنی:</span> وجود مانع و پستی‌وبلندی در مسیرِ رسیدن به هدف.</dd>
+<dd><span class="field">کاربرد در متن:</span> این مفهوم نشان می‌دهد که در فضای سیاست‌گذاری، حرکت از یک وضعیت خوب به یک وضعیتِ «بهتر»، همیشه یک خطِ صاف و رو به بالا نیست؛ بلکه گاهی لازم است ابتدا مقداری افت و ضرر (عبور از دره) را تحمل کنیم.</dd>
+<dt>نسبی‌سازی، اثبات‌های طبیعی، جبری‌سازی <span class="latin" lang="en" dir="ltr">(Relativization, Natural Proofs, Algebrization)</span></dt>
+<dd><span class="field">معنی:</span> سه مانعِ شناخته‌شده در نظریهٔ پیچیدگی.</dd>
+<dd><span class="field">کاربرد در متن:</span> در واژگانِ این کتاب، هر سه تشخیصی دربارهٔ چارچوب‌اند: اولی کوریِ آماره است، دومی شکستِ نماینده، و سومی شکافِ تنوع در مجموعهٔ کنش.</dd>
+<dt>نوار <span class="latin" lang="en" dir="ltr">(Tape)</span></dt>
+<dd><span class="field">معنی:</span> در مدلِ ماشینِ تورینگ، رشتهٔ ورودی و حافظهٔ کاری.</dd>
+<dd><span class="field">کاربرد در متن:</span> عامل نواری دارد که کنترلش نمی‌کند؛ وقتی آن نوار خودِ وضعیت باشد، تصویری از جهان کاری برای انجام‌دادن ندارد.</dd>
+<dt>نیم‌رخ سختی <span class="latin" lang="en" dir="ltr">(Hardness Profile)</span></dt>
+<dd><span class="field">معنی:</span> خواندنِ سختی به‌صورت چند مختصهٔ جداگانه به‌جای یک عدد.</dd>
+<dd><span class="field">کاربرد در متن:</span> صورت‌بندی، مشاهده‌پذیری، عاملیت، تأخیر، ناهمواری، بازگشت‌پذیری و بازتابندگی؛ هر یک ادعایی تشخیصی با شاهد، نه نمره‌ای از ده.</dd>
+<dt>واژه‌نگاشتی / لکسیکوگرافیک <span class="latin" lang="en" dir="ltr">(Lexicographic)</span></dt>
+<dd><span class="field">معنی:</span> به ترتیب حروف الفبا، ترتیب لغت‌نامه‌ای.</dd>
+<dd><span class="field">کاربرد در متن:</span> نوعی قاعدهٔ تصمیم‌گیریِ مطلق و سلسله‌مراتب‌دار. به این معنا که اولویت اول (مثلاً ایمنی سرورها) مطلقاً مهم‌تر از اولویت دوم (مثلاً سرعت ارائه محصول) است و هیچ مقداری از اولویت دوم نمی‌تواند نقص در اولویت اول را جبران کند.</dd>
+<dt>هستهٔ گذار <span class="latin" lang="en" dir="ltr">(Transition Kernel)</span></dt>
+<dd><span class="field">معنی:</span> در فرآیندهای مارکوفی، فرمول یا قانونِ احتمالی‌ای است که تعیین می‌کند سیستم با چه احتمالی از وضعیتِ فعلیِ خود به وضعیتِ بعدی منتقل می‌شود.</dd>
+<dt>هستی‌شناختی <span class="latin" lang="en" dir="ltr">(Ontological)</span></dt>
+<dd><span class="field">معنی:</span> مربوط به وجود و ماهیت.</dd>
+<dd><span class="field">کاربرد در متن:</span> نگاه به ذات و تعاریف پایه‌ای که سیستم را شکل می‌دهند.</dd>
+<dt>هم‌ارزی <span class="latin" lang="en" dir="ltr">(Equivalence)</span></dt>
+<dd><span class="field">معنی:</span> معادل بودن، برابری ارزشی در شرایطی که ظاهر چیزها متفاوت است.</dd>
+<dt>هم‌حدهای متناهی / هم‌ضرب‌ها <span class="latin" lang="en" dir="ltr">(Finite Colimits / Coproducts)</span></dt>
+<dd><span class="field">معنی:</span> مفاهیمی تخصصی در نظریه دسته‌ها که روش‌هایی برای ترکیب کردن، ادغام و ساختنِ اشیاء جدید از روی اشیاء موجود ارائه می‌دهند.</dd>
+<dt>هم‌طنابیِ ساختاریافته <span class="latin" lang="en" dir="ltr">(Structured Cospans)</span></dt>
+<dd><span class="field">معنی:</span> در ریاضیات شبکه‌ای، ابزاری است برای نشان دادنِ «رابط‌ها یا پورت‌های ورودی/خروجی» در یک سیستم باز، که مشخص می‌کند این سیستم چگونه می‌تواند با سیستم‌های دیگر متصل (سیم‌کشی) شود.</dd>
+<dt>یکریختیِ همدوس <span class="latin" lang="en" dir="ltr">(Coherent Isomorphism)</span></dt>
+<dd><span class="field">معنی:</span> تناظرِ یک‌به‌یک و ساختاری.</dd>
+<dd><span class="field">کاربرد در متن:</span> وقتی دو بخش از یک سیستم، با وجود تفاوت‌های ظاهری، ساختار و عملکردی معادل (و قابل جایگزینی با یکدیگر) داشته باشند. در فصل ۷ نکتهٔ دقیق‌تر این است که ترکیب تنها «تا حدِ» چنین یکریختی‌ای شرکت‌پذیر است، یعنی برابریِ دقیق برقرار نیست و همین است که ساختار را به دومقوله می‌بَرد.</dd>
+</dl>
 </section>
 <section class="chapter" id="bib" aria-labelledby="bib-h">
 <h2 id="bib-h"><span class="chaplabel">منابع</span>لنگرهای کتاب‌شناختی برای پیش‌نویس بعدی</h2>

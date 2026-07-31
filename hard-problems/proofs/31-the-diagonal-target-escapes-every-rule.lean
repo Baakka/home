@@ -1,5 +1,5 @@
-import Mathlib.Computability.Halting
-import Mathlib.Computability.TuringDegree
+import Mathlib
+
 
 /-!
 # Hard Problems: the tower of representations (section 7.4, chapter 10)

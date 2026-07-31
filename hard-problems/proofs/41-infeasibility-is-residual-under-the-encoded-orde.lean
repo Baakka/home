@@ -1,5 +1,6 @@
 import Mathlib
 
+
 /-!
 # Hard Problems, Chapters 1 and 10: the problem object and the navigation contract
 

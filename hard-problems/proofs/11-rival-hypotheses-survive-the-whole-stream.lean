@@ -1,4 +1,5 @@
-import Mathlib.ModelTheory.Satisfiability
+import Mathlib
+
 
 /-!
 # Hard Problems: definability, signature adequacy, persistent ambiguity
