@@ -3,9 +3,9 @@ import Mathlib
 /-!
 This snippet is about:
 
-  card_policySpace
+  statistic_based_rule_fails'
 
-found at line 832 of 838, near the end of this file.
+found at line 822 of 834, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -623,16 +623,35 @@ section Ashby
 
 variable {D A O : Type*}
 
+/-- The separation a counting bound actually needs: two disturbances that the
+regulator answers the same way must be told apart by that shared response.
+Nothing is required of responses the rule never issues, or of pairs it answers
+differently, because the bound already charges for the difference in response.
+
+Demanding that *every* response separate *every* pair, which is how the law is
+usually stated informally, is sufficient but strictly stronger:
+`fiberSeparating_of_injective` gives the implication and
+`fiberSeparating_strictly_weaker` witnesses that it does not reverse. -/
+def FiberSeparating (ω : D → A → O) (ρ : D → A) : Prop :=
+  ∀ d d', ρ d = ρ d' → ω d (ρ d) = ω d' (ρ d') → d = d'
+
+/-- The informal premise implies the one the counting argument uses. -/
+theorem fiberSeparating_of_injective (ω : D → A → O)
+    (hinj : ∀ a, Function.Injective fun d => ω d a) (ρ : D → A) :
+    FiberSeparating ω ρ := by
+  intro d d' h1 h2
+  apply hinj (ρ d)
+  show ω d (ρ d) = ω d' (ρ d)
+  rw [h2, ← h1]
+
 /-- Ashby's law of requisite variety, counting form. `ω d a` is the outcome
-of disturbance `d` under regulator response `a`. If distinct disturbances
-produce distinct outcomes under any fixed response (the disturbances really
-are distinct as far as the outcome is concerned), then any response rule `ρ`
-satisfies: the number of disturbances is at most the number of responses
-actually used times the number of outcomes actually hit. Only variety in the
-regulator can absorb variety in the disturbances. -/
+of disturbance `d` under regulator response `a`. If the response rule `ρ`
+separates the disturbances it answers alike (`FiberSeparating`), then the
+number of disturbances is at most the number of responses actually used times
+the number of outcomes actually hit. Only variety in the regulator can absorb
+variety in the disturbances. -/
 theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ) :
     Fintype.card D ≤
       (Finset.univ.image ρ).card * (Finset.univ.image fun d => ω d (ρ d)).card := by
   have key :
@@ -644,21 +663,44 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
         ⟨Finset.mem_image_of_mem ρ (Finset.mem_univ d),
          Finset.mem_image_of_mem _ (Finset.mem_univ d)⟩
     · intro d _ d' _ hdd
-      have h1 : ρ d = ρ d' := congrArg Prod.fst hdd
-      have h2 : ω d (ρ d) = ω d' (ρ d') := congrArg Prod.snd hdd
-      apply hinj (ρ d)
-      show ω d (ρ d) = ω d' (ρ d)
-      rw [h2, ← h1]
+      exact hsep d d' (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key
+
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d => ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ => ()) (fun _ => ())
+  simp at this
+
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d => ω d a := by
+  refine ⟨fun d a => if a then d else false, id, ?_, ?_⟩
+  · intro d d' h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this
 
 /-- Perfect regulation: holding the outcome constant requires at least as
 much response variety as there is disturbance variety. -/
 theorem requisite_variety_perfect [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ)
+    (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card D ≤ (Finset.univ.image ρ).card := by
-  have h := requisite_variety ω hinj ρ
+  have h := requisite_variety ω ρ hsep
   have himg : (Finset.univ.image fun d => ω d (ρ d)).card ≤ 1 := by
     apply Finset.card_le_one.mpr
     intro x hx y hy
@@ -787,52 +829,6 @@ theorem statistic_based_rule_fails' {Y : Type*} {m : S → Y} (Astar : S → Set
   rw [hm] at h1
   exact Set.disjoint_left.mp hdisj h1 h2
 
-/-- The randomized version: a stochastic rule that acts only through the
-statistic cannot be supported inside both acceptable sets either. Whatever
-it randomizes over, some realization it actually plays is unacceptable in
-one of the two conflated states. -/
-theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set A)
-    {s s' : S} (hm : m s = m s') (hdisj : Disjoint (Astar s) (Astar s'))
-    (α : ℝ → PMF A) :
-    ¬((α (m s)).support ⊆ Astar s ∧ (α (m s')).support ⊆ Astar s') := by
-  rintro ⟨h1, h2⟩
-  obtain ⟨a, ha⟩ := (α (m s)).support_nonempty
-  have ha' : a ∈ (α (m s')).support := by rw [← hm]; exact ha
-  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha')
-
 end Campbell
-
-/-! ## Safety and composition (Leveson) -/
-
-section Leveson
-
-/-- Set-invariance safety is compositional: if each component maps the safe
-set into itself, so does the composite. This is the kind of safety property
-chapter 7's interfaces can carry. -/
-theorem invariance_comp {S : Type*} {C : Set S} {f g : S → S}
-    (hf : Set.MapsTo f C C) (hg : Set.MapsTo g C C) :
-    Set.MapsTo (g ∘ f) C C :=
-  hg.comp hf
-
-/-- Margin-style safety is not compositional: two components that each move
-the state by at most one can jointly move it by two. Component-level safety
-margins do not add up to system-level safety; the hazard lives in the
-composition, which is Leveson's point in miniature. -/
-theorem increment_bound_not_compositional :
-    ∃ f g : ℝ → ℝ,
-      (∀ x, |f x - x| ≤ 1) ∧ (∀ x, |g x - x| ≤ 1) ∧
-      ∃ x : ℝ, ¬ (|(g ∘ f) x - x| ≤ 1) := by
-  refine ⟨fun x => x + 1, fun x => x + 1, fun x => by norm_num,
-    fun x => by norm_num, 0, ?_⟩
-  norm_num [Function.comp]
-
-/-- The policy space over a finite problem is exponentially large: the
-augmentation of chapter 8 is a diagnostic classification, not a computable
-space, and this is the one-line reason. -/
-theorem card_policySpace (S A : Type*) [Fintype S] [Fintype A] [DecidableEq S] :
-    Fintype.card (S → A) = Fintype.card A ^ Fintype.card S :=
-  Fintype.card_fun
-
-end Leveson
 end
 end HardProblems

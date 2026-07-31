@@ -696,18 +696,39 @@ s_t\in C\;\forall t\leq H
 <p>This is the formal version of a blunt question: do we possess a path to the state we say we want, without violating what we say we will not sacrifice? Reversibility (the \(\mathsf{Re}\) coordinate of the profile) is the same question asked backwards: reachability of the acceptable region from the states an error would leave you in, with the path constraint relaxed.</p>
 <p>Finite-horizon stochastic reach-avoid is the standard name for the object just defined: Abate, Prandini, Lygeros, and Sastry solve it by backward recursion, and Summers and Lygeros give the stochastic version its name and its value-iteration treatment. The robust reading descends from minimax reachability of a target tube, Bertsekas and Rhodes's 1971 problem, posed there in a set-membership setting with no chance level, so what carries over is the worst-case-over-a-class move rather than the constraint itself. And reversibility itself is a capture basin in the sense of viability theory (Aubin, Bayen, and Saint-Pierre), whose continuous-time, indefinite-horizon setting is why that literature does not settle the discrete, chance-constrained question asked here.</p>
 <p>In a human system, focal actions may be insufficient because needed actions belong to another agent, require consent, or depend on institutional authority. The correct response is not "take ownership." It is to update the action set.</p>
-<p>One cybernetic bound governs the whole chapter; Ashby proved it, and this book restates it in the chapter's coordinates. The law of requisite variety, in its counting form: if distinct disturbances produce distinct outcomes under any fixed response, then the number of disturbances a regulator can absorb is at most the number of responses it actually deploys times the number of distinct outcomes that actually occur; holding the outcome constant therefore requires at least as much response variety as there is disturbance variety (machine-checked). An actor whose authority map leaves it few deployable responses is not underperforming; it is under-equipped, and the remedy is authority, coalition, or a wider tolerance, not exhortation.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F15-requisite-variety-counting-form.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<p>One cybernetic bound governs the whole chapter; Ashby proved it, and this book restates it in the chapter's coordinates. The law of requisite variety, in its counting form: if the regulator's rule tells apart the disturbances it answers the same way, then the number of disturbances it can absorb is at most the number of responses it actually deploys times the number of distinct outcomes that actually occur; holding the outcome constant therefore requires at least as much response variety as there is disturbance variety (machine-checked). The premise is weaker than the textbook one, which asks every response to separate every pair of disturbances, and the companion checks that the difference is strict: nothing need be assumed about responses the rule never issues, or about pairs it already answers differently, since the bound charges for that difference anyway. The premise cannot be dropped altogether, and the companion exhibits the two-disturbance counterexample that breaks the bound without it (machine-checked). An actor whose authority map leaves it few deployable responses is not underperforming; it is under-equipped, and the remedy is authority, coalition, or a wider tolerance, not exhortation.</p>
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): FiberSeparating, fiberSeparating_of_injective, requisite_variety<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F15-requisite-variety-counting-form.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The separation a counting bound actually needs: two disturbances that the
+regulator answers the same way must be told apart by that shared response.
+Nothing is required of responses the rule never issues, or of pairs it answers
+differently, because the bound already charges for the difference in response.
+
+Demanding that *every* response separate *every* pair, which is how the law is
+usually stated informally, is sufficient but strictly stronger:
+`fiberSeparating_of_injective` gives the implication and
+`fiberSeparating_strictly_weaker` witnesses that it does not reverse. -/
+def FiberSeparating (ω : D → A → O) (ρ : D → A) : Prop :=
+  ∀ d d&#x27;, ρ d = ρ d&#x27; → ω d (ρ d) = ω d&#x27; (ρ d&#x27;) → d = d&#x27;
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The informal premise implies the one the counting argument uses. -/
+theorem fiberSeparating_of_injective (ω : D → A → O)
+    (hinj : ∀ a, Function.Injective fun d =&gt; ω d a) (ρ : D → A) :
+    FiberSeparating ω ρ := by
+  intro d d&#x27; h1 h2
+  apply hinj (ρ d)
+  show ω d (ρ d) = ω d&#x27; (ρ d)
+  rw [h2, ← h1]
+
+-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Ashby&#x27;s law of requisite variety, counting form. `ω d a` is the outcome
-of disturbance `d` under regulator response `a`. If distinct disturbances
-produce distinct outcomes under any fixed response (the disturbances really
-are distinct as far as the outcome is concerned), then any response rule `ρ`
-satisfies: the number of disturbances is at most the number of responses
-actually used times the number of outcomes actually hit. Only variety in the
-regulator can absorb variety in the disturbances. -/
+of disturbance `d` under regulator response `a`. If the response rule `ρ`
+separates the disturbances it answers alike (`FiberSeparating`), then the
+number of disturbances is at most the number of responses actually used times
+the number of outcomes actually hit. Only variety in the regulator can absorb
+variety in the disturbances. -/
 theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d =&gt; ω d a)
-    (ρ : D → A) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ) :
     Fintype.card D ≤
       (Finset.univ.image ρ).card * (Finset.univ.image fun d =&gt; ω d (ρ d)).card := by
   have key :
@@ -719,13 +740,37 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
         ⟨Finset.mem_image_of_mem ρ (Finset.mem_univ d),
          Finset.mem_image_of_mem _ (Finset.mem_univ d)⟩
     · intro d _ d&#x27; _ hdd
-      have h1 : ρ d = ρ d&#x27; := congrArg Prod.fst hdd
-      have h2 : ω d (ρ d) = ω d&#x27; (ρ d&#x27;) := congrArg Prod.snd hdd
-      apply hinj (ρ d)
-      show ω d (ρ d) = ω d&#x27; (ρ d)
-      rw [h2, ← h1]
+      exact hsep d d&#x27; (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key</code></pre></details>
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_fails_without_separation, fiberSeparating_strictly_weaker<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F16-the-separation-premise-is-load-bearing-and-weake.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d =&gt; ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ =&gt; ()) (fun _ =&gt; ())
+  simp at this
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d =&gt; ω d a := by
+  refine ⟨fun d a =&gt; if a then d else false, id, ?_, ?_⟩
+  · intro d d&#x27; h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this</code></pre></details>
 <h3 id="sec-4-the-authority-map">The authority map</h3>
 <p>Partition the candidate levers and system drivers that appear in the plan into:</p>
 <div class="mathblock">\[
@@ -766,7 +811,7 @@ P(o_{t+\tau}\mid \operatorname{do}(a'))
 \right\},
 \]</div>
 <p>where \(D\) is an appropriate distributional distance. If the threshold is never reached, take \(\tau_\delta(a,a')=\infty\): the intervention is unobservable against that alternative at that resolution, which is itself a diagnosis, not a missing value. When a whole set of alternatives matters, the conservative planning quantity is the worst case \(\sup_{a'}\tau_\delta(a,a')\). The quantity is model-dependent; its purpose is to force a forecast of when action becomes distinguishable from non-action. Demanding a stronger signal never shortens the wait: \(\tau_\delta\) is monotone in \(\delta\) (machine-checked).</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): obsLag_mono_resolution<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F16-observability-lag-is-monotone-in-resolution.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): obsLag_mono_resolution<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F17-observability-lag-is-monotone-in-resolution.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Demanding a stronger signal never shortens the wait: the observability
 lag is monotone in the resolution `δ`. (Also proved independently by
 Harmonic&#x27;s Aristotle prover; see `aristotle/`.) -/
@@ -778,7 +823,7 @@ theorem obsLag_mono_resolution (dist : Ω → Ω → ℝ≥0∞) (obs : A → �
   exact ⟨n, rfl, h.trans hn⟩</code></pre></details>
 <p>That human judgement degrades predictably under delay, accumulation, and nonlinearity is Sterman's finding and Dörner's, and in both cases it is experimental rather than anecdotal; this chapter should be read as the control-theoretic face of those experiments.</p>
 <p>A decision cadence \(\Delta\) substantially shorter than \(\tau_\delta\) creates an overcorrection risk, especially under high-gain policies. One half of this is a theorem: reviewing strictly before the lag, the observable laws under \(a\) and \(a'\) still differ by less than \(\delta\), so whatever the early review concludes, it is not \(\delta\)-level evidence distinguishing the intervention from its alternative (machine-checked). The other half is not: early revision does not guarantee oscillation. Stability depends on the whole closed-loop system: policy gain, filtering, state dynamics, delays, model mismatch, and exogenous disturbances.</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): no_signal_before_lag<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F17-no-signal-before-the-lag.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): no_signal_before_lag<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F18-no-signal-before-the-lag.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Reviewing strictly before the lag yields no discriminating signal: at any
 cadence `Δ &lt; τ_δ`, the observable laws under `a` and `a&#x27;` are still within
 `δ` of each other. Whatever a fast review concludes, it is not evidence that
@@ -818,7 +863,7 @@ B(x,y)
 \left[J(x)-J(z)\right],
 \]</div>
 <p>with three conventions stated rather than assumed. Paths include their endpoints, so \(B(x,y)\geq 0\). If no admissible path from \(x\) to \(y\) exists, \(B(x,y)=\infty\): unreachability is an agency finding (chapter 4) and must stay distinguishable from "reachable but expensive," which is the ruggedness finding. And \(B\) is relative to the declared edge set; adding an admissible move can only lower it, which is why "what counts as one change" belongs in the ledger. One class of additions is exactly neutral: a shortcut backed by an admissible path that never dips below the lower of its two endpoints changes neither reachability nor any barrier height (machine-checked), and the depth clause is essential rather than decorative, since a shortcut dropped over a two-hop dip lowers the barrier the moment it is admitted (machine-checked, by that countermodel). This is the certificate that lets route planners compress a map without lying about it, and chapter 7 meets the same clause again under the name reflection.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): pathBetween_shortcut_nonempty_iff, barrier_shortcut_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F18-backed-shortcuts-are-neutral.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): pathBetween_shortcut_nonempty_iff, barrier_shortcut_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F19-backed-shortcuts-are-neutral.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- Reachability form: shortcuts backed by mere admissible paths do not
 change what is reachable. -/
 theorem pathBetween_shortcut_nonempty_iff {Adj S : X → X → Prop}
@@ -854,7 +899,7 @@ theorem barrier_shortcut_eq {Adj S : X → X → Prop} {J : X → ℝ}
     have key : ENNReal.ofReal (J x - J z) ≤ ENNReal.ofReal (J x - J p) :=
       ENNReal.ofReal_le_ofReal (by linarith)
     exact key.trans (le_biSup (fun p =&gt; ENNReal.ofReal (J x - J p)) hp)</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F19-without-the-depth-clause-a-shortcut-hides-a-vall.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F20-without-the-depth-clause-a-shortcut-hides-a-vall.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- The depth clause in `barrier_shortcut_eq` is essential, not decorative:
 with mere `Nonempty` backing, a shortcut can hide a valley. On the
 two-step chain with a dip in the middle, admitting the backed shortcut
@@ -888,7 +933,7 @@ theorem exists_shortcut_hiding_valley :
     rw [hunion]
     exact lt_of_lt_of_le (ENNReal.ofReal_pos.mpr one_pos) hlow</code></pre></details>
 <p>Two propositions then hold. If \(B(x,y)&gt;0\), every admissible route to the better state first passes through a configuration strictly worse than \(x\) under \(J\) (machine-checked). Conversely, if some admissible path never dips below \(J(x)\), then \(B(x,y)=0\) (machine-checked): a claimed valley with a painless route around it is not a valley. A third proposition says where valleys come from at all: an additively separable objective on the configuration hypercube has zero barrier to its coordinatewise maximizer, since disagreeing coordinates can be flipped one at a time without the objective ever dipping (machine-checked). Ruggedness is a property of <em>coupling</em> between decisions, Kauffman's K rather than his N: a landscape is only as rugged as its interactions, and a claimed valley in a system whose parts do not interact is a modeling error, not a terrain feature. (Kauffman supplies the landscape; reading K as coupling between decisions rather than between genes is Levinthal's import of it into organization science.)</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_dip_of_barrier_pos<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F20-positive-barrier-forces-a-dip.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_dip_of_barrier_pos<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F21-positive-barrier-forces-a-dip.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A positive barrier means every admissible route to `y` first visits a
 configuration strictly worse than the start. This is the formal content of
 &quot;every feasible route to the better state first passes through a
@@ -903,7 +948,7 @@ theorem exists_dip_of_barrier_pos {Adj : X → X → Prop} {J : X → ℝ} {x y 
   refine ⟨z, hmem, ?_⟩
   have := ENNReal.ofReal_pos.mp hpos
   linarith</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_monotone_path<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F21-a-painless-route-means-zero-barrier.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_monotone_path<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F22-a-painless-route-means-zero-barrier.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- If some admissible path never dips below the start value, the barrier
 vanishes: the converse companion to `exists_dip_of_barrier_pos`. (Also
 proved independently by Harmonic&#x27;s Aristotle prover; see `aristotle/`.) -/
@@ -914,7 +959,7 @@ theorem barrier_eq_zero_of_monotone_path {Adj : X → X → Prop} {J : X → ℝ
   refine le_trans (iInf_le _ γ) ?_
   refine iSup_le fun z =&gt; iSup_le fun hz =&gt; ?_
   simp [ENNReal.ofReal_eq_zero, hγ z hz]</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_separable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F22-separable-objectives-have-no-valleys.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_separable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F23-separable-objectives-have-no-valleys.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- An additively separable objective admits a monotone flip path from any
 configuration to the coordinatewise maximizer: the barrier vanishes.
 Ruggedness requires interaction. -/
@@ -931,7 +976,7 @@ theorem barrier_eq_zero_of_separable {V : Type*} [Fintype V] [DecidableEq V]
   simp only [sub_nonpos]
   exact h</code></pre></details>
 <p>A fourth proposition concerns who owns the moves. The local-maximum definition presumes one objective and one owner of the edge set; where decision rights are split, a configuration can be stable under every unilaterally admissible change while a jointly admissible change improves it (machine-checked, by a two-coordinate witness), which is Rivkin and Siggelkow's finding about decentralized firms that freeze their own search. Chapter 4's authority map is therefore part of the ruggedness finding, not adjacent to it: whose moves count as one change decides where the local maxima are. One scope line belongs beside these propositions: everything here is a property of the objective and the declared moves, not of the search process running over them, and imperfect search has pathologies of its own, self-reinforcing subprocesses among them (Wentworth, on demons in imperfect search), that no landscape statement captures.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): IsLocalMax, exists_unilaterally_stable_not_joint_max<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F23-stability-is-relative-to-who-owns-the-moves.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): IsLocalMax, exists_unilaterally_stable_not_joint_max<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F24-stability-is-relative-to-who-owns-the-moves.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A weak local maximum: no single admissible change improves `J`. -/
 def IsLocalMax (Adj : X → X → Prop) (J : X → ℝ) (x : X) : Prop :=
   ∀ y, Adj x y → J y ≤ J x
@@ -983,7 +1028,7 @@ L(b)\rightarrow y\leftarrow L(c)
 <p>compose by pushout along their shared boundary, yielding a system from \(a\) to \(c\). Under the standard hypotheses (\(\mathsf{X}\) with finite colimits, \(\mathsf{A}\) with finite coproducts, and \(L\) preserving finite coproducts; the original construction assumes \(L\) a left adjoint), Baez and Courser's structured cospans support a symmetric monoidal double category of open systems; the comparison with Fong's earlier decorated cospans is due to Baez, Courser, and Vasilakopoulou.</p>
 <p>One caveat carries operational weight. Composition of open systems is associative and unital only up to coherent isomorphism, because a pushout is defined only up to isomorphism; that is exactly why the ambient structure is a double category rather than a category (the associator is constructed, not assumed; machine-checked). An architecture diagram that silently treats regrouped compositions as equal is assuming those isomorphisms are identities, and the assumption should be written down, because it fails precisely when boundary identifications carry information.</p>
 <p>Composition also decides which safety properties survive it. Invariance-style properties compose: if each component maps the safe set into itself, so does the composite (machine-checked). Margin-style properties do not: two components each moving the state by at most one unit can jointly move it by two (machine-checked). Interfaces can carry guarantees of the first kind; guarantees of the second kind must be re-established at the level of the whole. That the hazard lives in the composition rather than in the components is Leveson's reading of accidents, and chapters 9 and 10 build their guardrails on it. The question of which properties survive composition has an ancestor in Simon's near-decomposability, which asked in 1962 when a system's parts can be analyzed as if independent; the machinery here inherits the question rather than discovers it.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): invariance_comp<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F24-invariance-composes.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): invariance_comp<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F25-invariance-composes.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Set-invariance safety is compositional: if each component maps the safe
 set into itself, so does the composite. This is the kind of safety property
 chapter 7&#x27;s interfaces can carry. -/
@@ -991,7 +1036,7 @@ theorem invariance_comp {S : Type*} {C : Set S} {f g : S → S}
     (hf : Set.MapsTo f C C) (hg : Set.MapsTo g C C) :
     Set.MapsTo (g ∘ f) C C :=
   hg.comp hf</code></pre></details>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): increment_bound_not_compositional<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F25-margins-do-not-compose.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): increment_bound_not_compositional<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F26-margins-do-not-compose.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Margin-style safety is not compositional: two components that each move
 the state by at most one can jointly move it by two. Component-level safety
 margins do not add up to system-level safety; the hazard lives in the
@@ -1024,7 +1069,7 @@ theorem increment_bound_not_compositional :
 <p>The idea that semantics should be a functor is Lawvere's; the applied tradition this chapter leans on, decorated and structured cospans and wiring-diagram operads, is Fong's, Spivak's, Baez's, and Courser's.</p>
 <p>Strictness is the ideal, not the norm. In practice a semantics often fails the equation while retaining a canonical comparison cell \(\llbracket g\circ f\rrbracket \Rightarrow \llbracket g\rrbracket\circ\llbracket f\rrbracket\); such a semantics is lax (or oplax, with the arrow reversed). This is not a defect to be hidden: the comparison cell is a <em>measurement</em> of compositional failure, of the interference, emergence, or context-dependence that the parts' behaviors do not determine. The diagnostic question is therefore not only "is the semantics functorial" but "how far from functorial, in which direction, and does the intervention live inside the gap."</p>
 <p>Human interfaces also drift. The wiring survives while the semantics moves: the cospan's legs, the reporting format, the meeting cadence, the declared metric all remain formally intact, and the meaning of what flows through them changes, because chapter 8's counter-moves act on the semantics family rather than the syntax. A contract check is therefore a time-indexed claim: verified at \(t\), it says nothing at \(t+1\) without an invariance argument (machine-checked witness). The gap between a symbol and what it measures is Pattee's epistemic cut, and interfaces sit on it; temporal concept analysis (Wolff) is the formal home for dashboards whose lattice itself moves. The remedies are chapter 8's, not this chapter's: anchors outside any one party's control, sanctioned recalibration windows, and re-verification on a cadence matched to the drift rate, which is what the worked case's contract tests and guild review implement.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): SemanticDrift, contract_check_time_indexed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F26-contract-checks-are-time-indexed.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): SemanticDrift, contract_check_time_indexed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F27-contract-checks-are-time-indexed.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Semantic drift: the syntax is fixed while its interpretation changes
 over time. The wiring of chapter 7 is the constant part; chapter 8&#x27;s
 counter-moves act on the semantics family. -/
@@ -1052,7 +1097,7 @@ theorem contract_check_time_indexed :
 <h3 id="sec-7-4"><span class="subnum">7.4</span> Ontological revision: when abstraction is not enough</h3>
 <p>When the navigation contract returns its fourth verdict, the target unreachable under the present action set and no probe able to gather separating evidence, the correct response is not to search deeper. It is to abandon the representation. Chapter 10's exit is an exit from a state space, not from a problem.</p>
 <p>This is the operational purpose of this chapter's functors, and it is where they stop being bookkeeping. A re-description that respects admissible moves transfers reachability forward, so emptiness in the image refutes an entire technique class at the source (machine-checked); this is the logical schema of the barrier theorems in chapter 11's second profile. And re-description genuinely moves barriers: the same start, target, and evaluation can carry an infinite barrier in one representation and none in another (machine-checked), so unreachability is a property of the representation, not of the problem. The soundness condition is <em>reflection</em>: an escape hatch counts only if success in the new category implies success in the old, and a functor that does not reflect the goal proves nothing, however friendly its codomain. The condition is not new. It is the soundness relation of Cousot and Cousot's abstract interpretation, stated there between a concrete and an abstract domain and given its Galois-connection form in 1979; and the statement across a change of category has its own precedent, since Garrabrant, working with an induced functor between categories of Cartesian frames over a refined and a coarse world model, proves that ensurability and controllability transfer in both directions under exact correspondence while observability transfers in one direction only. What this section adds is the specialization of the condition to a fixed goal predicate and an admissible-move structure, which is what lets emptiness in the image refute a technique class at the source. It is recorded as a definition in the companion because practitioners outside program analysis, who inherit the maneuver without its proof obligation, routinely omit it.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): PathBetween.map, isEmpty_of_map_isEmpty<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F27-re-description-transfers-reachability.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): PathBetween.map, isEmpty_of_map_isEmpty<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F28-re-description-transfers-reachability.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A re-description that respects admissibility maps paths to paths. -/
 def PathBetween.map {X X&#x27; : Type*} {Adj : X → X → Prop}
     {Adj&#x27; : X&#x27; → X&#x27; → Prop} (φ : X → X&#x27;)
@@ -1074,7 +1119,7 @@ theorem isEmpty_of_map_isEmpty {X X&#x27; : Type*} {Adj : X → X → Prop}
     (h : IsEmpty (PathBetween Adj&#x27; (φ x) (φ y))) :
     IsEmpty (PathBetween Adj x y) :=
   ⟨fun γ =&gt; h.false (γ.map φ hφ)⟩</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_escape_hatch, Reflects<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F28-the-escape-hatch-exists.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_escape_hatch, Reflects<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F29-the-escape-hatch-exists.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- Escape hatches exist: the same start, target, and evaluation can carry
 an infinite barrier in one representation and a zero barrier in another.
 Unreachability is a property of the representation, not of the problem. -/
@@ -1106,7 +1151,7 @@ def Reflects {X X&#x27; : Type*} (φ : X → X&#x27;) (P : X → Prop) (P&#x27; 
   ∀ x, P&#x27; (φ x) → P x</code></pre></details>
 <p>The problem being solved has owners too. An agent whose objective is defined over an old ontology and whose world-model upgrades underneath it faces what de Blanc named an ontological crisis, and the fracturing of concepts across a model refinement is Armstrong's model splintering. de Blanc's target is preservation of the utility function, though the map he transports it along is selected by a structural test, bisimulation combined with divergence between predicted observation laws, which makes his construction a precedent for this section's move rather than a foil to it; Armstrong asks which refactoring of a reward function counts as natural once the features it was defined over splinter one to many; this section's demand is reachability-preservation, and the narrowness is deliberate. A category of models easily leaves its morphism structure underdetermined (Rogers's reading of Armstrong's construction is one worked case: the arrows are not pinned down by the objects, so the intended notion of update has no canonical carrier), so the demand here is stated relative to a fixed goal predicate and the admissible-move structure, not to transport of whole belief states.</p>
 <p>Model theory gives the maneuver its established home. A representation is a signature, the stock of predicates a description is permitted to use; abstraction is passage to a reduct, and ontological revision is expansion by new symbols (Hodges). Expansion is exactly the move that changes expressive power: one new predicate separating two previously indistinguishable states makes a target expressible that provably no rule over the old vocabulary decides (machine-checked), which is chapter 3's resolution principle read as an instruction rather than a limit. Reflection, in turn, is the one-predicate shadow of what model theorists require of elementary embeddings, maps that preserve and reflect every formula of the language at once.</p>
-<details class="lean"><summary>Lean proof (Definability.lean): expansion_gain<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F29-expansion-changes-what-is-decidable-in-the-vocab.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
+<details class="lean"><summary>Lean proof (Definability.lean): expansion_gain<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-expansion-changes-what-is-decidable-in-the-vocab.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
 /-- **Ontological escape hatch, definability form.** A single new predicate
 separating two previously indistinguishable states makes a previously
 inexpressible target expressible: the target `{z | P z}` itself is decided
@@ -1125,7 +1170,7 @@ theorem expansion_gain {L : Set (X → Prop)} {P : X → Prop} {x y : X}
     intro a b hab
     exact hab P (Set.mem_insert _ _)</code></pre></details>
 <p>Two families of theorems now bracket the maneuver, one from below and one from above. From below, revision provably can pay, and can pay infinitely: a single separating predicate makes a previously inexpressible target expressible, and a re-description can erase an infinite barrier outright (both machine-checked). From above, revision provably never finishes. No countably presented stock of decision rules is complete, because the diagonal target, built by flipping each rule on its own index, escapes every rule in the stock (machine-checked), and the construction applies verbatim to every stage of every hierarchy of such stocks (machine-checked): each new map carries a void of its own. The level-zero void is not hypothetical: whether a program halts is not decidable by any program (machine-checked, resting on the mathlib formalization). The relativized fact is classical and sharper. Grant the machines an oracle for the halting problem and the halting problem for oracle machines reappears one level up, and so on transfinitely, through Turing's ordinal logics and Post's degrees of unsolvability; diagonalization, the same engine checked above, drives every level. The consequence is a boundary on this section's own optimism. Ontological revision is a move that can always be made and can always matter, and there is no representation from which it never needs to be made again: the ladder has no top rung. That is a theorem about the formal model, not a metaphor about the world; what carries into practice is chapter 10's discipline, which was engineered for exactly this shape of non-closure, a stopping rule for the episode precisely because the tower supplies none.</p>
-<details class="lean"><summary>Lean proof (Definability.lean, Ruggedness.lean): expansion_gain, exists_escape_hatch<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-revision-pays-twice-over-definability.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-revision-pays-twice-over-ruggedness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
+<details class="lean"><summary>Lean proof (Definability.lean, Ruggedness.lean): expansion_gain, exists_escape_hatch<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-revision-pays-twice-over-definability.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-revision-pays-twice-over-ruggedness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
 /-- **Ontological escape hatch, definability form.** A single new predicate
 separating two previously indistinguishable states makes a previously
 inexpressible target expressible: the target `{z | P z}` itself is decided
@@ -1166,14 +1211,14 @@ theorem exists_escape_hatch :
   · exact barrier_eq_zero_of_monotone_path
       ⟨[false, true], rfl, rfl, by simp [List.isChain_cons]⟩
       (fun z _ =&gt; le_rfl)</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): diagonal_escape<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-the-diagonal-target-escapes-every-rule.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): diagonal_escape<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F32-the-diagonal-target-escapes-every-rule.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- Cantor&#x27;s diagonal at the level of decision rules: no countable
 enumeration of rules is complete; the diagonal target flips each rule on
 its own index and so escapes every entry. -/
 theorem diagonal_escape (e : ℕ → ℕ → Bool) :
     ∃ f : ℕ → Bool, ∀ k, f ≠ e k :=
   ⟨fun n =&gt; !(e n n), fun k h =&gt; by simpa using congrFun h k⟩</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F32-every-stage-of-every-hierarchy-has-a-void.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F33-every-stage-of-every-hierarchy-has-a-void.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The tower does not close: every stage of an arbitrary hierarchy of
 countably-presented rule stocks misses a target constructible from that
 very stage. Enrichment is always worth something (`expansion_gain`) and
@@ -1181,7 +1226,7 @@ never finished. -/
 theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
     ∃ f : ℕ → Bool, ∀ k, f ≠ stage i k :=
   diagonal_escape (stage i)</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): halting_void<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F33-the-level-zero-void-halting.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): halting_void<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F34-the-level-zero-void-halting.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The level-zero void, concretely: whether a program halts on its own
 description is not decidable by any program. Mathlib&#x27;s halting problem in
 this file&#x27;s vocabulary. -/
@@ -1215,7 +1260,7 @@ T_{\theta}(s_t,a_{0,t},a_{-0,t}),
 a_{i,t}\sim\pi_{i,t}(h_t^i).
 \]</div>
 <p><strong>Reflexivity relocates the state; it does not break the formalism.</strong> Define the extended state \(\tilde{s}_t=(s_t,\pi_{-0,t})\). The pair evolves as an ordinary Markov process under an extended kernel, and its \(S\)-marginal recovers the original transition (machine-checked). The check covers adaptation operators driven by the focal action, deterministic or stochastic; dependence on observations and payoffs folds into the policy coordinate the same way. What augmentation costs is observability: the new coordinates, the other agents' policies, are unobserved, and the problem returns to chapter 3 with a larger hidden state. This is the loop announced there: adaptive counterparts are why beliefs over \(S\) alone stop being sufficient, and the drift discussion of chapter 1 lands here as well, because what looks like a drifting \(\theta_t\) is often an adapting \(\pi_{-0,t}\) that the model failed to represent. One reflexive channel stays outside even the augmented formalism: the extended state carries the other agents' policies, and the ladder below adds the focal agent's own model-revision rule, but no coordinate holds a focal policy that is itself an optimizer pursuing objectives diverging from the declared \(G_0\). That case is mesa-optimization, an inner optimizer emerging inside the learned policy (Hubinger, van Merwijk, Mikulik, Skalse, and Garrabrant), with the divergence from \(G_0\) its inner alignment failure rather than its definition, and it is flagged here rather than modeled. The flagged case is not formally empty: Turner, Smith, Shah, Critch, and Tadepalli prove that stated environmental symmetries suffice for optimal policies under most reward functions to favor states retaining more reachable options, which is chapter 4's reachability coordinate read as a prediction about the coordinate this formalism declines to carry.</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): extendStep, extendStep_fst, extendStepRand_fst<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F34-the-extended-state-marginalizes-correctly.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): extendStep, extendStep_fst, extendStepRand_fst<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F35-the-extended-state-marginalizes-correctly.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- One step of a reflexive system: the transition depends on the other
 agents&#x27; current policy configuration `p : P`, and that configuration adapts
 in response to the focal action via `U`. -/
@@ -1250,7 +1295,7 @@ theorem extendStepRand_fst (T : S → A → P → PMF S) (U : P → A → PMF P)
   simp only [h]
   exact PMF.bind_pure _</code></pre></details>
 <p>The augmentation is a diagnostic classification, not a computable space. Over a finite problem the policy coordinate alone has \(|A|^{|S|}\) points (machine-checked, as a footnote to the word "explosive"), and planning over the honest belief space is intractable in general: exact partially observed planning is hard in the complexity-theoretic sense and undecidable at infinite horizon (Papadimitriou and Tsitsiklis; Madani, Hanks, and Condon). The mathematics of this chapter proves <em>why</em> the unaugmented dashboard fails; it does not compute a better one. That is what chapter 9's probes are for: they buy decision-relevant bits about the augmented state precisely because computing it outright is not on offer.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): card_policySpace<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F35-the-policy-coordinate-is-explosive.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): card_policySpace<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F36-the-policy-coordinate-is-explosive.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- The policy space over a finite problem is exponentially large: the
 augmentation of chapter 8 is a diagnostic classification, not a computable
 space, and this is the one-line reason. -/
@@ -1258,7 +1303,7 @@ theorem card_policySpace (S A : Type*) [Fintype S] [Fintype A] [DecidableEq S] :
     Fintype.card (S → A) = Fintype.card A ^ Fintype.card S :=
   Fintype.card_fun</code></pre></details>
 <p>This chapter's machinery climbs a ladder that is older than its latest naming: its rungs correspond to single-loop, double-loop, and deutero-learning (Argyris and Schön; the third term is Bateson's, from 1942), a correspondence this book draws rather than one those sources claim. Iordache's self-evolvable systems name the same three depths, and the self-* vocabulary of autonomic computing (Kephart and Chess) walks the lower rungs: <em>adaptable</em> systems tune parameters within a fixed model class; <em>evolvable</em> systems revise the class when refuted, which is chapter 3's zero-evidence discipline; <em>self-evolvable</em> systems own the revision operator itself. In this framework the rungs are depths of augmentation: the counterparty's policy, then its update operator, then the focal agent's own model-revision rule, each internalized by the same machine-checked marginal construction, each at the price of a larger hidden state and a variety bill that compounds (machine-checked as arithmetic: perfectly regulating state and policy together demands response variety at least \(|S| \cdot |A|^{|S|}\)). And the ladder does not close at the top: a system that owns its own revision rule still does not own the <em>justification</em> of that rule, which is where chapter 2's boundary stands, whatever the rung.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_augmented<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F36-the-variety-bill-compounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_augmented<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F37-the-variety-bill-compounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Reflexivity is expensive, as a counting bound: perfectly regulating the
 augmented state of chapter 8 (system state paired with the counterparty&#x27;s
 policy) demands response variety at least `|S| * |A| ^ |S|`. Composing the
@@ -1266,17 +1311,17 @@ requisite-variety bound with the policy-space cardinality turns the
 adjective &quot;explosive&quot; into arithmetic. -/
 theorem requisite_variety_augmented {S A R O : Type*} [Fintype S] [Fintype A]
     [DecidableEq S] [DecidableEq R] [DecidableEq O]
-    (ω : S × (S → A) → R → O) (hinj : ∀ r, Function.Injective fun d =&gt; ω d r)
-    (ρ : S × (S → A) → R) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : S × (S → A) → R → O) (ρ : S × (S → A) → R)
+    (hsep : FiberSeparating ω ρ) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card S * Fintype.card A ^ Fintype.card S ≤
       (Finset.univ.image ρ).card := by
-  have h := requisite_variety_perfect ω hinj ρ o₀ hperf
+  have h := requisite_variety_perfect ω ρ hsep o₀ hperf
   rwa [Fintype.card_prod, card_policySpace] at h</code></pre></details>
 <p>A metric can remain statistically associated with a goal while becoming strategically unreliable once the metric is targeted. This is a mechanism of Goodhart-like failure, not a universal law. Some target measures improve the world; others are gamed, displaced, or made cosmetic. The refutable form of the claim "our metric is intervention-stable" is the absence of a witness: an intervened dynamics under which the metric does not fall while the goal strictly falls. The companion exhibits one such witness in miniature; exhibiting one ends the discussion.</p>
 <p>The witness has formal relatives, and they locate what it adds. Manheim and Garrabrant taxonomize the mechanisms that produce the divergence, four ways a proxy comes apart from a goal under optimization pressure; Skalse, Howe, Krasheninnikov, and Krueger prove the static counterpart, that over the full policy space no pair of non-constant reward functions is immune to hacking against each other; and the economic ancestor is Holmström and Milgrom's multitask model, in which pricing the measurable task diverts effort from the unmeasurable one. The witness above is the dynamical member of the family: a single intervened dynamics rather than a classification or a policy-space bound, which is what makes the stability claim refutable case by case.</p>
 <p>The warnings have owners. Goodhart's 1975 form: any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes. Campbell's: the more a quantitative indicator is used for social decision-making, the more it corrupts the process it was meant to monitor. The familiar aphorism, that a measure which becomes a target ceases to be a good measure, is neither of theirs; it is Strathern's paraphrase. Reflexivity in the wider sense is Soros's, and it is worth stating correctly: not that observation disturbs the system, but that participants' fallible beliefs are part of the system's causal structure, so acting on a belief can help make it true or false.</p>
 <p>One fragment of the warning is a theorem rather than a tendency. A decision rule that acts only through a summary statistic inherits the statistic's blindness: if the statistic fails to separate two states whose acceptable-action sets are disjoint, then every rule based on it, deterministic or randomized, acts unacceptably in at least one of them (machine-checked). Managing to the dashboard is exactly as safe as the dashboard is discriminating, which is chapter 3's condition. The reflexive twist this chapter adds is that agents under measurement do not wait for conflated states to occur; they manufacture them.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails, statistic_based_randomized_rule_fails<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F37-statistic-based-rules-inherit-blindness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails, statistic_based_randomized_rule_fails, FactorsThrough, AlmostSurelyAcceptableAt, MeasureRandomizedUnacceptableAt, measure_randomized_factoring_disjoint_obstruction<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F38-statistic-based-rules-inherit-blindness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- A decision rule that acts only through a summary statistic inherits the
 statistic&#x27;s blindness: if the statistic fails to separate two states whose
 acceptable-action sets are disjoint, then every rule based on it acts
@@ -1305,7 +1350,54 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
   rintro ⟨h1, h2⟩
   obtain ⟨a, ha⟩ := (α (m s)).support_nonempty
   have ha&#x27; : a ∈ (α (m s&#x27;)).support := by rw [← hm]; exact ha
-  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha&#x27;)</code></pre></details>
+  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha&#x27;)
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- `f` factors through `q` when all information used by `f` passes through
+`q`. -/
+def FactorsThrough {X Q Y : Type*} (f : X → Y) (q : X → Q) : Prop :=
+  ∃ g : Q → Y, f = g ∘ q
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- A measure-theoretic randomized decision is acceptable at `s` when it is
+supported on acceptable actions up to a null set. -/
+def AlmostSurelyAcceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ∀ᵐ a ∂(decision s : MeasureTheory.Measure Action), a ∈ acceptable s
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- For an arbitrary probability measure, “acts unacceptably” means failure to
+be almost surely supported on the acceptable set.  When the set is measurable,
+this is equivalent to assigning positive mass to its complement. -/
+def MeasureRandomizedUnacceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ¬ AlmostSurelyAcceptableAt acceptable decision s
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The randomized obstruction for completely general probability measures.
+No countability or measurability of the acceptable sets is required. -/
+theorem measure_randomized_factoring_disjoint_obstruction
+    {State Signal Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action) (signal : State → Signal)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action)
+    (hfactor : FactorsThrough decision signal) {x y : State}
+    (hidentified : signal x = signal y)
+    (hdisjoint : Disjoint (acceptable x) (acceptable y)) :
+    MeasureRandomizedUnacceptableAt acceptable decision x ∨
+      MeasureRandomizedUnacceptableAt acceptable decision y := by
+  have heq : decision x = decision y := hfactor.eq_of_eq hidentified
+  by_cases hx : AlmostSurelyAcceptableAt acceptable decision x
+  · right
+    intro hy
+    unfold AlmostSurelyAcceptableAt at hx hy
+    rw [← heq] at hy
+    have hb := hx.and hy
+    have hf : ∀ᵐ _a ∂(decision x : MeasureTheory.Measure Action), False :=
+      hb.mono (fun _a ha =&gt; hdisjoint.le_bot ha)
+    exact probabilityMeasure_not_ae_false (decision x) hf
+  · exact Or.inl hx</code></pre></details>
 <h3 id="sec-8-procedure-adversarial-and-participatory-pre-mortem">Procedure: adversarial and participatory pre-mortem</h3>
 <p>For each intervention, ask:</p>
 <ol><li>Which agents gain, lose, or gain exposure?</li><li>What is the cheapest way to satisfy the observable rule while defeating its purpose?</li><li>To which unmeasured population, subsystem, or time horizon can the cost be displaced?</li><li>Which people possess local knowledge about workarounds, harms, or dependencies that the model omits?</li><li>What observation distinguishes legitimate resistance from strategic evasion?</li></ol>
@@ -1317,7 +1409,7 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
 <h2 id="ch9-h"><span class="chaplabel">Chapter 9</span>Probes: constrained system identification</h2>
 <p>When \(T\), \(Z\), or \(\Pi\) is uncertain, a large intervention is often a bad first measurement. A probe should be selected for <strong>decision-relevant information gain</strong> under explicit risk constraints.</p>
 <p>The prescription that the complex be met by probe-sense-respond rather than by analysis is Snowden's, as is the safe-to-fail probe itself. The boundary he draws between the complicated and the complex is not rhetoric; it can be stated in this book's terms. Call two live models <em>passively distinguishable</em> when watching alone eventually separates their observation laws, and <em>probe distinguishable</em> when some policy does. Watching is a special case of acting, and there exist model pairs that no amount of passive observation separates while a single intervention does (machine-checked, by an explicit two-state example). The complicated is what analysis can settle from the armchair; the complex is what only probes can settle, and the boundary between them is a property of the model class, not of the analyst's diligence.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): flipModel, inertModel, exists_probe_only_distinguishable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F38-a-probe-separates-what-watching-cannot.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): flipModel, inertModel, exists_probe_only_distinguishable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F39-a-probe-separates-what-watching-cannot.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Witness model: the state is observed exactly, the passive action `false`
 leaves the state alone, and the probe action `true` flips it. -/
 noncomputable def flipModel : POSystem Bool Bool Bool where
@@ -1362,7 +1454,7 @@ I\!\left(\Theta;O_{t:t+H}\mid e,h_t^0\right),
 <p>the mutual information between the model class and future observations, conditional on the experiment and current history. Treating \(\Theta\) as a random variable presupposes the Bayesian reading of chapter 2: a prior over models must exist for the criterion to be defined. Where only a credal set is defensible, replace EIG by a robust criterion, such as choosing the probe that maximizes the worst-case distinguishability between the live models.</p>
 <p>Raiffa and Schlaifer built the preposterior machinery behind experiment valuation; Lindley proposed mutual information as the value of an experiment; Howard put the practical rule below most sharply: information unable to change an action is worthless. That observation can never lower attainable expected utility is older than all three: it is Blackwell's comparison of experiments. Treating the model class as a random variable is one step short of Duff's Bayes-adaptive construction, which folds it into the planning state outright and was extended to partial observation by Ross, Chaib-draa, and Pineau; and the tension the probe manages, acting to learn against acting to perform, is Feldbaum's dual control.</p>
 <p>In practice, use a simpler version: select an experiment only if its possible outcomes would cause different subsequent actions. This is a theorem, not a heuristic: observing before acting never lowers achievable expected utility, and the value of observation is zero exactly when a single action is optimal under every possible outcome (machine-checked, for finite outcome and action spaces). The practical rule is the contrapositive. So is the bookkeeping version: a probe is decision-irrelevant exactly when its recommendation is constant across possible outcomes (machine-checked). The same criterion runs physical searches: infotaxis (Vergassola, Villermaux, and Shraiman) steers by expected information gain when gradients are useless, which is chapter 9 with wind for a state space.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): value_of_information_nonneg, value_of_information_eq_zero_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F39-the-value-of-observation-is-nonnegative-zero-iff.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): value_of_information_nonneg, value_of_information_eq_zero_iff_possible, value_of_information_eq_zero_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F40-the-value-of-observation-is-nonnegative-zero-iff.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Raiffa&#x27;s dictum, the inequality half: observing the outcome before
 acting never lowers achievable expected utility. `w` is the (nonnegative)
 weight the agent&#x27;s predictive distribution puts on each observation, and
@@ -1382,15 +1474,26 @@ theorem value_of_information_nonneg (u : A → O → ℝ) (w : O → ℝ)
 
 -- LeanTest/HardProblems/SystemsTheory.lean
 /-- Value of information is zero exactly when a single action is optimal
-under every possible outcome, so the observation cannot change the decision.
-This is the theorem behind chapter 9&#x27;s practical criterion: an experiment
-whose outcomes all select the same action purchases nothing. -/
-theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
-    (hw : ∀ o, 0 &lt; w o) :
+under every outcome the experiment can actually produce.
+
+The support qualification is the whole content of the statement, and it is
+where a careless version goes wrong. Quantifying over *every* outcome, rather
+than every outcome of positive weight, makes the criterion false: an outcome of
+weight zero contributes nothing to either side, so an action that is optimal
+everywhere except there still leaves the value of information at zero, while
+the unqualified right-hand side fails. `value_of_information_eq_zero_iff` is
+the corollary for a strictly positive predictive distribution, where the
+qualification can be dropped because it is vacuous.
+
+Aristotle reached the same qualification independently, from the informal claim
+alone, and produced the two-outcome counterexample that forces it. This project
+had the side condition too, but paid for it globally, by assuming every outcome
+has positive weight; that assumption is not needed and is dropped here. -/
+theorem value_of_information_eq_zero_iff_possible (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 ≤ w o) :
     (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; ∑ o, w o * u a o) =
       (∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o)
-    ↔ ∃ a : A, ∀ o, ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
-  have hle := value_of_information_nonneg u w fun o =&gt; (hw o).le
+    ↔ ∃ a : A, ∀ o, 0 &lt; w o → ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
   constructor
   · intro heq
     obtain ⟨a₀, -, ha₀⟩ :=
@@ -1403,31 +1506,49 @@ theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
     have hnonneg : ∀ o ∈ (Finset.univ : Finset O),
         0 ≤ w o * ((Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) - u a₀ o) := by
       intro o _
-      exact mul_nonneg (hw o).le
+      exact mul_nonneg (hw o)
         (sub_nonneg.mpr (Finset.le_sup&#x27; (fun a =&gt; u a o) (Finset.mem_univ a₀)))
     have hzero :
         ∑ o, w o * ((Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) - u a₀ o) = 0 := by
       simp only [mul_sub]
       rw [Finset.sum_sub_distrib, ← hsum, sub_self]
     have hterm := (Finset.sum_eq_zero_iff_of_nonneg hnonneg).mp hzero
-    refine ⟨a₀, fun o a&#x27; =&gt; ?_⟩
+    refine ⟨a₀, fun o hpos a&#x27; =&gt; ?_⟩
     rcases mul_eq_zero.mp (hterm o (Finset.mem_univ o)) with h | h
-    · exact absurd h (ne_of_gt (hw o))
+    · exact absurd h (ne_of_gt hpos)
     · have hs : (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) = u a₀ o :=
         sub_eq_zero.mp h
       calc u a&#x27; o ≤ Finset.univ.sup&#x27; Finset.univ_nonempty (fun a =&gt; u a o) :=
             Finset.le_sup&#x27; (fun a =&gt; u a o) (Finset.mem_univ a&#x27;)
         _ = u a₀ o := hs
   · rintro ⟨a, ha⟩
-    have hpt : ∀ o, (Finset.univ.sup&#x27; Finset.univ_nonempty fun a&#x27; =&gt; u a&#x27; o) = u a o := by
-      intro o
-      exact le_antisymm (Finset.sup&#x27;_le _ _ fun a&#x27; _ =&gt; ha o a&#x27;)
-        (Finset.le_sup&#x27; (fun a&#x27; =&gt; u a&#x27; o) (Finset.mem_univ a))
-    refine le_antisymm hle ?_
-    calc ∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty (fun a&#x27; =&gt; u a&#x27; o)
-        = ∑ o, w o * u a o := by simp only [hpt]
-      _ ≤ _ := Finset.le_sup&#x27; (fun a =&gt; ∑ o, w o * u a o) (Finset.mem_univ a)</code></pre></details>
-<details class="lean"><summary>Lean proof (Dynamics.lean): DecisionRelevant, not_decisionRelevant_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F40-decision-irrelevance-is-a-constant-recommendatio.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+    have hterms : ∀ o ∈ (Finset.univ : Finset O),
+        w o * u a o
+          = w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a&#x27; =&gt; u a&#x27; o := by
+      intro o _
+      rcases eq_or_lt_of_le (hw o) with h | h
+      · rw [← h]; ring
+      · congr 1
+        exact (le_antisymm (Finset.sup&#x27;_le _ _ fun a&#x27; _ =&gt; ha o h a&#x27;)
+          (Finset.le_sup&#x27; (fun a&#x27; =&gt; u a&#x27; o) (Finset.mem_univ a))).symm
+    refine le_antisymm (value_of_information_nonneg u w hw) ?_
+    rw [← Finset.sum_congr rfl hterms]
+    exact Finset.le_sup&#x27; (fun a =&gt; ∑ o, w o * u a o) (Finset.mem_univ a)
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The criterion for a strictly positive predictive distribution, where every
+outcome is possible and the support qualification is vacuous. This is the form
+chapter 9 uses: an experiment whose outcomes all select the same action
+purchases nothing. -/
+theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 &lt; w o) :
+    (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; ∑ o, w o * u a o) =
+      (∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o)
+    ↔ ∃ a : A, ∀ o, ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
+  rw [value_of_information_eq_zero_iff_possible u w fun o =&gt; (hw o).le]
+  exact ⟨fun ⟨a, ha⟩ =&gt; ⟨a, fun o a&#x27; =&gt; ha o (hw o) a&#x27;⟩,
+         fun ⟨a, ha⟩ =&gt; ⟨a, fun o _ a&#x27; =&gt; ha o a&#x27;⟩⟩</code></pre></details>
+<details class="lean"><summary>Lean proof (Dynamics.lean): DecisionRelevant, not_decisionRelevant_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F41-decision-irrelevance-is-a-constant-recommendatio.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Chapter 9&#x27;s practical criterion: a probe is decision-relevant when at
 least two possible outcomes select different subsequent actions. -/
 def DecisionRelevant {Act : Type*} (e : Probe O Act) : Prop :=
@@ -1473,7 +1594,7 @@ theorem not_decisionRelevant_iff {Act : Type*} (e : Probe O Act) :
 <p>Analysis stops when one of four conditions is established:</p>
 <ol><li><strong>Execute:</strong> a policy is feasible and robust enough under the stated model class.</li><li><strong>Probe:</strong> uncertainty is decision-critical but can be reduced within the constraints.</li><li><strong>Escalate or negotiate:</strong> the required action or objective choice belongs to a different authority.</li><li><strong>Exit or declare infeasibility:</strong> no acceptable path exists under the present action set and constraints.</li></ol>
 <p>The fourth verdict is narrower than it sounds: infeasibility is declared relative to the present representation, and section 7.4 names the move that remains after it, exit from the state space rather than from the problem. The four conditions are findings, and findings can co-occur: a policy can be feasible for the focal agent while the authority to choose the objective sits elsewhere. As a checklist the list above is complete; as a <em>rule</em> it becomes deterministic only under a declared priority order, and the order is itself a governance choice. A legitimacy-first ordering puts escalation above execution (do not execute what you lack standing to choose, even feasibly); an emergency ordering may invert that. Whichever order is chosen, it belongs in the navigation contract as part of \(\sigma\), and in the ledger next to chapter 2's reading and weights. Under any declared order, infeasibility is residual: it is declared only when all three positive findings fail, never while a live option remains (machine-checked under the encoded order). The companion formalization encodes one such order, execute before probe before escalate; a legitimacy-first deployment swaps the first and third tests.</p>
-<details class="lean"><summary>Lean proof (Core.lean): Assessment.verdict_infeasible_iff, verdictOfList_eq_residual_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F41-infeasibility-is-residual-under-the-encoded-orde.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Core.lean
+<details class="lean"><summary>Lean proof (Core.lean): Assessment.verdict_infeasible_iff, verdictOfList_eq_residual_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F42-infeasibility-is-residual-under-the-encoded-orde.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Core.lean
 /-- Infeasibility is exactly the failure of all three positive findings:
 the rule never declares infeasibility while a live option remains. -/
 theorem Assessment.verdict_infeasible_iff (a : Assessment) :
@@ -1497,7 +1618,7 @@ theorem verdictOfList_eq_residual_iff {V : Type*} (rules : List (Bool × V))
     cases b &lt;;&gt; simp_all [verdictOfList]</code></pre></details>
 <p>The absence of an intrinsic stopping rule is Rittel and Webber's finding about wicked problems (the word itself is Churchman's, from the 1967 editorial that recorded Rittel's presentation), and this chapter does not overturn it so much as answer it: the rule above stops an analysis episode, not the problem, and it is engineered precisely because the problem supplies nothing to find. That rule's ancestor is Simon's satisficing: search halts when an aspiration level is met, not when an optimum has been demonstrated.</p>
 <p>There is no final theorem that resolves human difficulty. Within the formal model the absence is itself a theorem rather than a resignation: every countably presented stock of rules misses a target of its own construction, at every stage of enrichment (machine-checked), so section 7.4's ladder has no top rung even inside the mathematics. There is, however, a discipline: do not promise a solution until you have specified the model, the preserved invariants, the missing information, and the harms your method permits.</p>
-<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F42-no-stage-of-enrichment-is-final.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F43-no-stage-of-enrichment-is-final.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The tower does not close: every stage of an arbitrary hierarchy of
 countably-presented rule stocks misses a target constructible from that
 very stage. Enrichment is always worth something (`expansion_gain`) and
@@ -1516,7 +1637,7 @@ theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
 <div class="table-wrap"><table><thead><tr><th scope="col">Assumption</th><th scope="col">Evidence</th><th scope="col">Countermodels</th><th scope="col">Damage if wrong</th><th scope="col">Next observation</th></tr></thead><tbody><tr><td>Incident count tracks system health</td><td>Historical correlation, pre-target</td><td>Underreporting; severity downgrading</td><td>Bonuses reward concealment</td><td>Sev-mix audit vs ticket-verified incident rate</td></tr><tr><td>Availability is measured where users are</td><td>Synthetic probes, single region</td><td>Edge failures invisible to probes</td><td>"Green" dashboard during user pain</td><td>Support-ticket vs dashboard correlation, per region</td></tr><tr><td>On-call load is sustainable</td><td>No formal signal</td><td>Exit interviews say otherwise</td><td>Attrition of exactly the people who hold tacit system knowledge</td><td>Paging hours per person per week</td></tr><tr><td>Teams can prioritize reliability work</td><td>Roadmap says 20%</td><td>Product deadlines override in practice</td><td>Traverse never happens</td><td>Sprint-level allocation audit</td></tr><tr><td>The queue migration is the fix</td><td>Architecture review</td><td>Alert miscalibration, not architecture, drives incidents</td><td>A year spent on the wrong valley</td><td>The chapter 9 probe below</td></tr><tr><td>Reading: robust now, Bayesian after probe</td><td>Mechanism models have no defensible prior between them yet</td><td>A prior is defensible after all</td><td>Premature averaging hides the worse world</td><td>Probe posterior</td></tr><tr><td>Weights \(W\) and the lexicographic rule</td><td>Council resolution naming both weightings</td><td>A stakeholder outside the council weights differently</td><td>Reversals decided by whoever shouts</td><td>Annual re-ratification</td></tr><tr><td>Horizon six quarters, no inner discount</td><td>Sponsor commitment in writing</td><td>Quarter-end pressure reintroduces discounting silently</td><td>Traverse abandoned mid-dip</td><td>Allocation audit at quarter boundaries</td></tr><tr><td>Edge set: one service per sprint</td><td>Platform team estimate</td><td>Coupled services cannot move alone</td><td>Barrier estimates wrong for both routes</td><td>First migration slice, if funded</td></tr><tr><td>Stopping order: legitimacy-first</td><td>Council resolution</td><td>Emergency inverts it</td><td>Verdicts flip silently under pressure</td><td>Recorded in every contract review</td></tr></tbody></table></div>
 <p><strong>Formulation (chapter 2).</strong> The objective is a vector: availability, recovery time, delivery velocity, on-call wellbeing, cost. The mandated bonus scalar fails diagnostic 1's precondition before any reversal is tested: it weights raw incident count, which is not a coordinate of the declared vector but a proxy for two of them, so it is a formulation failure of the crudest kind, an objective built on an indicator. Within the declared vector, two viable roadmaps (incremental migration versus the feature roadmap) have Pareto-incomparable return vectors, and two defensible weightings in \(W\) rank them oppositely: a recovery-and-wellbeing weighting favors migration, a velocity weighting favors features. By chapter 2 that reversal certifies genuine multi-objective conflict, so the decision is returned to governance: the engineering council and the executive sponsor adopt a lexicographic rule (a floor on recovery time and paging load first, then velocity), record who chose it, and record the horizon and discount conventions in the ledger. The bonus coupling is severed; that is a chapter 8 decision made in chapter 2.</p>
 <p><strong>Observability (chapter 3).</strong> The dashboard state (count down, uptime flat) is consistent with three live models on two axes. The <em>reporting axis</em>: declared counts are honest (the system genuinely stabilized), or declared counts are suppressed (downgraded severities, off-ticket fixes). The <em>mechanism axis</em>, which concerns whatever incident load is real: instability is architectural (cascading retries), or it is fed by alert fatigue (a miscalibrated paging floor floods on-call, and exhausted responders let recoverable blips become real incidents). The dashboard summary takes the same value in all three worlds, so the statistic-blindness theorem applies to any rule driven by the dashboard alone, deterministic or randomized. The two axes then part company, and they illustrate chapter 9's boundary exactly. The reporting axis is <em>passively</em> distinguishable once the right second signals exist: a ticket-verified incident rate (support tickets reconciled against declared incidents) and a quarterly postmortem-quality audit separate honest from suppressed reporting by watching alone; that is the complicated cell, and chapter 8 records what the watching found. The mechanism axis is not: no signal in the case's channel set separates architecture from fatigue without intervening on the paging system itself, which is the complex cell, and the chapter 9 probe exists for it. One debt is recorded immediately: the suppression model is an adaptive counter-move, so chapter 3's Markov standing assumption fails for it, and once suppression is confirmed live the belief analysis must be rerun on the augmented state of chapter 8 (system state paired with reporting behavior). A zero-evidence event is pre-registered: a sev-1 outage with no preceding pages refutes the observation model itself and triggers ledger revision, not blame.</p>
-<p><strong>Agency (chapter 4).</strong> The migration needs two platform engineers who do not exist, and hiring is not something the team controls. The authority map makes the gap precise: <em>direct</em> control covers SLO policy, deploy gates, paging configuration, postmortem format; <em>inducible</em> via the sponsor: headcount for the platform team, roadmap trade-offs, bonus-structure changes; <em>exogenous drivers</em>, entries in the plan that are not actions at all: cloud-provider incidents, the acquisition-driven traffic spike, the market deadline. The first unreachable prerequisite is exactly the headcount. Requisite variety gives the diagnosis teeth, and its hypothesis is checked rather than assumed. The postmortem corpus distinguishes fourteen root-cause classes, audited as producing pairwise distinct outcomes under each fixed response; that audit is the theorem's injectivity premise, not a convenience. The rotation deploys three responses (restart, roll back, escalate) and tolerates four outcomes. Three times four is twelve, and twelve is less than fourteen: the bound is violated, and no rotation of this variety can keep outcomes tolerable across the disturbance inventory. The gap is equipment, not diligence. The verdict for this sub-problem, under the declared legitimacy-first order, is escalation, with the arithmetic attached.</p>
+<p><strong>Agency (chapter 4).</strong> The migration needs two platform engineers who do not exist, and hiring is not something the team controls. The authority map makes the gap precise: <em>direct</em> control covers SLO policy, deploy gates, paging configuration, postmortem format; <em>inducible</em> via the sponsor: headcount for the platform team, roadmap trade-offs, bonus-structure changes; <em>exogenous drivers</em>, entries in the plan that are not actions at all: cloud-provider incidents, the acquisition-driven traffic spike, the market deadline. The first unreachable prerequisite is exactly the headcount. Requisite variety gives the diagnosis teeth, and its hypothesis is checked rather than assumed. The postmortem corpus distinguishes fourteen root-cause classes, audited as producing distinct outcomes within each response the rotation actually issues; that audit is the theorem's separation premise, not a convenience. The audit is cheaper than the textbook statement suggests, because it is owed only for classes the rotation answers the same way: two classes it already restarts must be told apart by restarting, while a class it restarts and a class it escalates need no comparison at all. The rotation deploys three responses (restart, roll back, escalate) and tolerates four outcomes. Three times four is twelve, and twelve is less than fourteen: the bound is violated, and no rotation of this variety can keep outcomes tolerable across the disturbance inventory. The gap is equipment, not diligence. The verdict for this sub-problem, under the declared legitimacy-first order, is escalation, with the arithmetic attached.</p>
 <p><strong>Latency (chapter 5).</strong> With hiring escalated, the team still has to decide when to look. Lags are forecast per signal, against a declared comparison action: the rival feature roadmap, not a null action, since doing nothing is not on the table. The probe below shows its leading signal in about six weeks. For the migration, two signals carry different lags: the first slice's change-failure rate is a leading indicator with a one-quarter lag, and the fleet-wide verified incident rate is the terminal signal, invisible for about two quarters (backlog burn-down, then decay of legacy failure modes). Cadences are matched signal by signal: the probe is read at quarter end, the slice indicator at one quarter after funding, the fleet-wide rate at the two-quarter mark and not before. The theorem is quoted to the sponsor who wants weekly readouts of the fleet-wide rate: strictly before that signal's lag, a review of it cannot contain evidence discriminating the migration from the rival roadmap at the declared resolution (one fewer sev-2 per month). What an early review would do is a judgment the theorem does not make. One guardrail triggers earlier regardless of every lag: more than eight paging hours per person per week, measured weekly on every team including the probe teams, pauses feature work. Waiting is not licensed while people absorb harm, whatever the lag structure says.</p>
 <p><strong>Reversibility (the R coordinate).</strong> Recovery is analyzed before any traverse is authorized. Technical reversal is cheap: each migration slice rolls back in one sprint, and the rollback has been rehearsed. The irreversible axis is human: a departed senior on-call engineer does not roll back, and the two resignations already on the books are the case's only unrecoverable losses to date. The paging cap is therefore the R guardrail as much as the L one, and the hardness profile records R against attrition risk rather than system state. Which makes the choice of route, and not just its depth, the next question.</p>
 <p><strong>Ruggedness (chapter 6).</strong> Two routes are on the table: migrate everything at once, or migrate one service per sprint. The declared edge set does the first cut by itself: under one service per sprint, the big-bang route is not a path at all, since its single step, all services in flight at once, is not an admissible move, and the council declines to coarsen the edge set to admit it. Even offered arguendo under that coarser edge set, its forecast dip (velocity loss around 20% for two quarters, overlapping rollback windows) exceeds the tolerable depth the council sets at 10%. So the big-bang route is rejected twice over: inadmissible as declared, and too deep even if admitted. The strangler-pattern route is a genuine path in the declared edge set, dipping shallower and longer: about 10% for up to three quarters, one slice in flight at a time. Neither route is dip-free, so the decision rests on admissibility and the depth bound. (Had a dip-free route existed, chapter 6's converse theorem would have dissolved the valley talk entirely; here it merely bounds it.)</p>
@@ -1535,7 +1656,7 @@ theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
 <p><strong>A second profile, sketched: the P versus NP meta-problem.</strong> The reliability case is hard the way organizations are hard. For contrast, run the profile on a problem hard the opposite way. The framework cannot analyze P versus NP <em>as a statement</em>; a conjecture has no dynamics, no observation channel, no counterparty. What it can analyze is the meta-problem: the complexity theorist as focal agent, the state as the current reach of mathematical knowledge, actions as investments in proof techniques, and \(\Theta\) as uncertainty about the proof landscape itself.</p>
 <div class="table-wrap"><table><thead><tr><th scope="col">Dimension</th><th scope="col">Locus</th><th scope="col">Finding</th></tr></thead><tbody><tr><td>\(\mathsf{F}\)</td><td>goal, framework choice</td><td>The goal is clean and uncontested, a luxury no organization has. The residual F-risk is independence from the axioms: the target set may be empty, which is the infeasibility verdict, and reverse mathematics is the probe for it</td></tr><tr><td>\(\mathsf{O}\)</td><td>what evidence can separate</td><td>Severe. Numerical and oracle-based evidence is consistent with worlds demanding opposite conclusions; see the barriers below</td></tr><tr><td>\(\mathsf{A}\)</td><td>admissible technique classes</td><td>A requisite-variety gap: the classical moves provably lack the variety to constrain arbitrary polynomial-time computation</td></tr><tr><td>\(\mathsf{L}\)</td><td>technique-to-evidence lag</td><td>Decades; reviews run on leading indicators (restricted-class lower bounds), not the terminal question</td></tr><tr><td>\(\mathsf{Ru}\)</td><td>proof landscape</td><td>Extreme, per edge set: within a barred technique class the target is unreachable outright, our inadmissibility finding rather than a deep-but-finite barrier</td></tr><tr><td>\(\mathsf{Re}\)</td><td>cost of error</td><td>Epistemic reversal is nearly free; the irreversible axes are careers and a community absorbing a false proof</td></tr><tr><td>\(\mathsf{X}\)</td><td>adaptation</td><td>Near zero, and the profile should say so honestly. Worst-case instances are adversarial in the quantifier sense, not the strategic sense: nothing adapts to the prover's policy, and probing is safe. The one footnote is natural proofs, a logical self-reference rather than a counter-move</td></tr></tbody></table></div>
 <p>The three classical barriers are, in this vocabulary, framework diagnoses rather than curiosities. <em>Relativization</em> (Baker, Gill, Solovay): there are oracle worlds on either side of the question, and any technique whose verdict is insensitive to which world it inhabits takes the same value in both; since the correct conclusions in the two worlds are disjoint, no such technique decides the question. That is the statistic-blindness theorem verbatim, with the technique as the statistic and the oracle worlds as the conflated states (machine-checked in the general form). <em>Natural proofs</em> (Razborov, Rudich): the naturalness of a lower-bound property is a proxy for hardness that self-defeats; if strong pseudorandomness exists, a usable natural property would break it, so targeting the proxy collapses the proxy. This is chapter 3's proxy failure with a twist of self-reference, and honesty requires saying it is not chapter 8: nothing adapted. <em>Algebrization</em> (Aaronson, Wigderson): the algebraic extension of the admissible move set still lacks the variety to reach the target, an agency finding.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails&#x27;<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F43-statistic-blindness-general-form.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails&#x27;<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F44-statistic-blindness-general-form.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- The statistic-blindness theorem with an arbitrary statistic codomain:
 nothing in the argument uses the real numbers. This is the form the
 relativization barrier of complexity theory instantiates: a proof
@@ -1559,7 +1680,7 @@ theorem statistic_based_rule_fails&#x27; {Y : Type*} {m : S → Y} (Astar : S �
 <p>The agent side of the pairing has been carried as a list of capacities: a maintained model, a running estimate, a policy class, and limits on how much can be held in mind and how fast it can be revised. This chapter fixes one formal model for that list and reads the profile through it. The model is the obvious one. An agent is a machine with an observation tape it does not control, an action alphabet it writes to, a resource envelope, and a program. Optimizing over programs subject to the envelope, rather than over actions subject to nothing, is Russell and Subramanian's bounded optimality, and it is the formal content of the claim made in chapter 1 that difficulty is a predicate on a system together with whoever is attached to it.</p>
 <p>The reading earns its place by collapsing most of the agent scale and refusing to collapse the rest.</p>
 <p><strong>The tuning rungs are one machine.</strong> Represent a machine as a step map \(\sigma:S\times I\to S\) with an output map \(S\to O\). A system that tunes the parameters of its own model looks like a different kind of thing: a parameterized dynamics \(\sigma_\theta\) together with a rule retuning \(\theta\) from experience. It is not a different kind of thing. It is one fixed machine on the product \(S\times\Theta\), and the tuned run is exactly the projection of the fixed machine's run, in the state coordinate and in the parameter coordinate alike (machine-checked). Learning a parameter is indistinguishable, from outside, from carrying it as state. The collapse is not free, and its price is the same currency chapter 4 charges: the fixed machine's state space has product cardinality, so every rung folded into the program is paid for in variety.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tuned, Tuned.fixedStep, Tuned.stateRun_eq_fst, Tuned.paramRun_eq_snd, card_fixed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F44-self-tuning-is-one-machine-on-the-product.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tuned, Tuned.fixedStep, Tuned.stateRun_eq_fst, Tuned.paramRun_eq_snd, card_fixed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F45-self-tuning-is-one-machine-on-the-product.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- A parameterized dynamics with a tuning rule: at each step the
 current parameter drives the state update and is itself retuned from
 experience. -/
@@ -1606,7 +1727,7 @@ theorem card_fixed (S Θ : Type*) [Fintype S] [Fintype Θ] :
   exact Fintype.card_prod S Θ</code></pre></details>
 <p>That settles the lower half of chapter 8's ladder. Maintaining an estimate against a fixed picture, tuning that picture's parameters, and adding variables to it are not three capacities but three programs, and a universal machine runs any of them. What the machine reading leaves standing is a partition into exactly three levels: the <strong>program</strong>, meaning anything computable from the tapes the agent already has; the <strong>interface</strong>, meaning the observation channel and the effectors, which are the physical coupling to the system; and the <strong>objective</strong>, meaning the acceptance condition. Chapter 2 is the third level and is untouched by everything here, which is the machine-theoretic restatement of its exemption in chapter 1.1.</p>
 <p><strong>The action wall is hardware.</strong> Let the effectors be a set \(G\) of state transformations and let reachability be the finite compositions drawn from \(G\). Three facts hold together. Any admissible trajectory stays inside the reachable set, whatever policy generated it, history-dependent or randomized or arbitrary; admitting a programmed macro, meaning an effector whose effect is already reachable from every state, leaves reachability unchanged; and a genuinely new effector can strictly enlarge it (machine-checked). The first says no decision rule escapes the orbit of its own effectors. The second says software cannot widen the orbit by composing what it already has, however cleverly it dispatches. The third says the wall is not a law of nature but a fact about equipment. Chapter 4's finding, that a target outside your reach yields to adding an action and to nothing else, is this triple.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Reach, traj_mem_reach, Programmed, reach_insert_programmed, exists_new_effector_enlarges_reach<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F45-reach-is-a-property-of-the-effectors.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Reach, traj_mem_reach, Programmed, reach_insert_programmed, exists_new_effector_enlarges_reach<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F46-reach-is-a-property-of-the-effectors.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- Finite-composition reachability: `y` is reachable from `x` by
 applying effectors drawn from `G`. -/
 inductive Reach (G : Set (X → X)) (x : X) : X → Prop
@@ -1666,7 +1787,7 @@ theorem exists_new_effector_enlarges_reach :
     cases h with
     | tail hy hmem heq =&gt; exact hmem.elim</code></pre></details>
 <p><strong>The observation wall has a degenerate corner, and it is the calculator.</strong> Chapter 3's machinery presumes that observations fail to determine the state. Suppose they do not. When the observation map is injective, observational equivalence collapses to equality, the robust menu at every state is the whole acceptable set, and decision-critical ambiguity cannot occur at all (machine-checked). Every estimator rung of the ladder is then vacuous. A picture of the world is what a machine grows when its input tape stops being the state; when the tape is the state, there is nothing for the picture to do.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): robustMenu, obsEq_iff_eq_of_injective, robustMenu_eq_of_injective, no_ambiguity_of_injective<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F46-injective-observation-retires-the-observer.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): robustMenu, obsEq_iff_eq_of_injective, robustMenu_eq_of_injective, no_ambiguity_of_injective<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F47-injective-observation-retires-the-observer.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The robust menu at `s`: the actions acceptable in every state that
 looks like `s`. -/
 def robustMenu (obs : S → Ω) (Acc : S → Set A) (s : S) : Set A :=
@@ -1714,8 +1835,8 @@ theorem no_ambiguity_of_injective {obs : S → Ω}
   rw [hDisj] at hx
   exact hx</code></pre></details>
 <p>This answers the question chapter 1 opened with and did not close. A pocket calculator beats a person at long multiplication, and the reason is not that it sits higher on any scale. Its problem has trivial observability, since the operands are given; trivial reflexivity, since the operands do not care; and trivial reachability, since its output alphabet covers the answers. Every coordinate of the profile is switched off except the resource envelope. The scale was never a ranking of competence because the scale is indexed by what is hidden, and nothing is hidden from a calculator.</p>
-<p>What separates the person from the calculator is then a space bound and not a class boundary. Both run the same schoolbook algorithm; the person has roughly four reliable registers, and n-digit multiplication does not fit in a constant number of them. The classical form of that claim is that unary multiplication verification is not accepted by any finite-state machine (machine-checked, by a state-collision argument). This is the formal shape of the fourth diagnostic in chapter 1.1's list, the one detected by varying the size of the problem and watching where performance falls off: degradation with scale, from an agent whose registers do not scale, with nothing structurally wrong anywhere. Give the person paper and the bound lifts, which is the pleasant fact that Turing's 1936 machine was introduced as a model of a human computer with pencil and paper. In this reading the calculator is not an anomaly the framework must explain. It is where the framework's model of an agent came from.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): mulLang, IsRegularLang, mulLang_not_regular<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F47-no-finite-state-machine-multiplies.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<p>What separates the person from the calculator is then a space bound and not a class boundary. Both run the same schoolbook algorithm; the person has roughly four reliable registers, and n-digit multiplication does not fit in a constant number of them. The classical form of that claim is that unary multiplication verification is not accepted by any finite-state machine (machine-checked, by a state-collision argument). Unary is the wrong notation for a claim about digits, so the bound is proved again over fixed-width positional encoding, which is the notation the sentence is actually about: verifying an \(n\)-digit product costs at least \(2^n\) states (machine-checked). Recognising a correct product is also not the same task as producing one, and a device that must reproduce an operand needs memory enough to have held it (machine-checked). Counted in states the bound reads as exponential, which flatters it, because a machine with \(k\) states holds only \(\log k\) bits; the honest unit is memory, and there the same fact is linear, \(n\) digits of input forcing \(n\) bits of register, so no fixed register budget covers every width (both machine-checked). This is the formal shape of the fourth diagnostic in chapter 1.1's list, the one detected by varying the size of the problem and watching where performance falls off: degradation with scale, from an agent whose registers do not scale, with nothing structurally wrong anywhere. Give the person paper and the bound lifts, which is the pleasant fact that Turing's 1936 machine was introduced as a model of a human computer with pencil and paper. That lift is checked too, and separately, because an impossibility theorem cannot establish it: an explicit counting procedure decides the very language no finite machine accepts, and it runs (machine-checked). In this reading the calculator is not an anomaly the framework must explain. It is where the framework's model of an agent came from.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): mulLang, IsRegularLang, mulLang_not_regular<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F48-no-finite-state-machine-multiplies.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The unary multiplication-verification language over a three-letter
 alphabet: `m` copies of letter 0, then `n` copies of letter 1, then
 `m * n` copies of letter 2. -/
@@ -1769,8 +1890,228 @@ theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
   rcases hu with ⟨rfl, rfl, hu⟩
   simp at hu
   exact hkl hu</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): digits, binMul, digits_injOn, binMul_needs_exp_states<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F49-positional-multiplication-costs-exponentially-ma.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- The `n`-bit positional encoding of `a`, least significant digit first,
+written in the letters 0 and 1 of a three-letter alphabet whose third letter
+`2` is a separator. This is what &quot;n-digit&quot; means in the book&#x27;s sentence:
+fixed width, positional, not unary. -/
+def digits (n a : ℕ) : List (Fin 3) :=
+  (List.range n).map (fun i =&gt; if a / 2 ^ i % 2 = 1 then (1 : Fin 3) else 0)
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Verifying an `n`-digit multiplication: the two operands and their product,
+each in fixed-width positional notation, separated by `2`. -/
+def binMul (n : ℕ) : Language (Fin 3) :=
+  {w | ∃ a b : ℕ, a &lt; 2 ^ n ∧ b &lt; 2 ^ n ∧
+    w = digits n a ++ [2] ++ digits n b ++ [2] ++ digits (2 * n) (a * b)}
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Fixed-width positional encoding is injective below the width&#x27;s capacity,
+which is what makes distinct operands distinguishable prefixes. -/
+theorem digits_injOn (n : ℕ) :
+    ∀ a &lt; 2 ^ n, ∀ b &lt; 2 ^ n, digits n a = digits n b → a = b := by
+  intro a ha b hb h
+  apply Nat.eq_of_testBit_eq
+  intro i
+  by_cases hi : i &lt; n
+  · have he := congrArg (fun l : List (Fin 3) =&gt; l[i]?) h
+    simp [digits, hi] at he
+    have hab : (a / 2 ^ i % 2 = 1) ↔ (b / 2 ^ i % 2 = 1) := by
+      by_cases hx : a / 2 ^ i % 2 = 1 &lt;;&gt; by_cases hy : b / 2 ^ i % 2 = 1 &lt;;&gt;
+        simp_all
+    simpa [Nat.testBit, Nat.shiftRight_eq_div_pow, Nat.one_and_eq_mod_two] using hab
+  · have hni : n ≤ i := Nat.le_of_not_gt hi
+    rw [Nat.testBit_eq_false_of_lt
+          (lt_of_lt_of_le ha (Nat.pow_le_pow_right (by omega) hni)),
+      Nat.testBit_eq_false_of_lt
+          (lt_of_lt_of_le hb (Nat.pow_le_pow_right (by omega) hni))]
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Any finite-state machine verifying `n`-digit multiplication has at least
+`2 ^ n` states. This is the claim chapter 12 makes, over the encoding the
+claim is about: memory grows with the digit count, not merely without bound. -/
+theorem binMul_needs_exp_states (n : ℕ) :
+    ∀ (σ : Type) (_ : Fintype σ) (M : DFA (Fin 3) σ),
+      M.accepts = binMul n → 2 ^ n ≤ Fintype.card σ := by
+  intro σ inst M hM
+  by_cases hn : n = 0
+  · subst n
+    simp only [pow_zero, Nat.one_le_iff_ne_zero]
+    exact Nat.ne_of_gt (Fintype.card_pos_iff.mpr ⟨M.start⟩)
+  · have hnpos : 0 &lt; n := Nat.pos_of_ne_zero hn
+    rw [← Fintype.card_fin (2 ^ n)]
+    apply Fintype.card_le_of_injective (fun a : Fin (2 ^ n) =&gt; M.eval (digits n a))
+    intro a b hab
+    apply Fin.ext
+    let z : List (Fin 3) := [2] ++ digits n 1 ++ [2] ++ digits (2 * n) a
+    have ha_mem : digits n a ++ z ∈ binMul n := by
+      simpa only [z, List.append_assoc] using
+        (binMul_probe_mem (n := n) (a := (a : ℕ)) hnpos a.isLt)
+    have hsuffix := dfa_same_state_suffix M (z := z) hab
+    rw [hM] at hsuffix
+    have hb_mem : digits n b ++ z ∈ binMul n := hsuffix.mp ha_mem
+    exact (binMul_probe_only (a := (a : ℕ)) (b := (b : ℕ)) a.isLt b.isLt
+      (by simpa only [z, List.append_assoc] using hb_mem)).symm</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): Emitter, emitter_needs_exp_states<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F50-computing-a-product-is-not-checking-one.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- A device that reads an operand into memory and must later emit the product
+with 1, which is the operand itself. -/
+structure Emitter (S : Type*) where
+  mem : ℕ → S
+  emit : S → ℕ
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Memory must distinguish every operand it might have to reproduce: at least
+`2 ^ n` states for `n`-digit operands. Computing needs the operand held, and a
+constant memory cannot hold it. -/
+theorem emitter_needs_exp_states {S : Type} [Fintype S] (E : Emitter S)
+    (n : ℕ) (h : ∀ a &lt; 2 ^ n, E.emit (E.mem a) = a) :
+    2 ^ n ≤ Fintype.card S := by
+  let f : Fin (2 ^ n) → S := fun a =&gt; E.mem a
+  have hf : Function.Injective f := by
+    intro a b hab
+    apply Fin.ext
+    have ha := h a.1 a.2
+    have hb := h b.1 b.2
+    exact ha.symm.trans ((congrArg E.emit hab).trans hb)
+  simpa using Fintype.card_le_of_injective f hf</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): binMul_needs_n_bits, RegisterMachine, RegisterMachine.ComputesMultiplicationAt, RegisterMachine.linear_bit_lower_bound, RegisterMachine.no_constant_register_budget<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F51-the-honest-unit-is-bits-of-register.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- The same bound in the honest unit, on the verifying side: a machine whose
+state fits in `s` bits cannot verify `n`-digit products unless `s` is at least
+`n`. One bit per digit.
+
+This is what makes the exponential above readable rather than impressive.
+`2 ^ n` states *is* `n` bits, so the two statements say the same thing, and
+quoting the state count alone invites the reader to hear an exponential cost
+where the cost is linear. Mine, not Aristotle&#x27;s: the job asking for it ran out
+of budget, and by then it was a two-line corollary of the state bound. -/
+theorem binMul_needs_n_bits (n s : ℕ) (M : DFA (Fin 3) (Fin (2 ^ s)))
+    (hM : M.accepts = binMul n) : n ≤ s := by
+  have h := binMul_needs_exp_states n (Fin (2 ^ s)) inferInstance M hM
+  rw [Fintype.card_fin] at h
+  exact (Nat.pow_le_pow_iff_right (by norm_num : 1 &lt; 2)).mp h
+
+-- LeanTest/HardProblems/Positional.lean
+/-- A streaming machine with `k` finite-range registers. -/
+structure RegisterMachine (base range k : ℕ) where
+  init : Fin k → Fin range
+  step : (Fin k → Fin range) → Fin base → (Fin k → Fin range)
+  output : (Fin k → Fin range) → ℕ
+
+-- LeanTest/HardProblems/Positional.lean
+/-- The machine computes `n`-digit multiplication when its final-state output
+is the product for every pair in the full fixed-width range `[0, base^n)`.
+In particular, this quantifies over the actual transition-based execution; it
+is not the mere existence of an unconstrained function on inputs. -/
+def ComputesMultiplicationAt {base range k : ℕ} [NeZero base]
+    (M : RegisterMachine base range k) (n : ℕ) : Prop :=
+  ∀ x y, x &lt; base ^ n → y &lt; base ^ n →
+    M.output (M.run (multiplicationInput base n x y)) = x * y
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Quantitative binary form.  If all register configurations can be encoded
+in at most `bits` bits, correctness forces at least `n` bits. -/
+theorem linear_bit_lower_bound {base range k n bits : ℕ} [NeZero base]
+    (M : RegisterMachine base range k) (hbase : 2 ≤ base) (hn : 0 &lt; n)
+    (hM : M.ComputesMultiplicationAt n)
+    (hbits : range ^ k ≤ 2 ^ bits) :
+    n ≤ bits := by
+  have h1 : base ^ n ≤ range ^ k := state_capacity_lower_bound M hbase hn hM
+  have h2 : base ^ n ≤ 2 ^ bits := h1.trans hbits
+  have h3 : 2 ^ n ≤ base ^ n := Nat.pow_le_pow_left hbase _
+  have h4 : 2 ^ n ≤ 2 ^ bits := h3.trans h2
+  exact (Nat.pow_le_pow_iff_right (by decide : 1 &lt; 2)).mp h4
+
+-- LeanTest/HardProblems/Positional.lean
+/-- For every fixed register count and fixed range, some positive digit width
+cannot be handled.  Thus no constant register budget computes multiplication
+at every width. -/
+theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
+    ∃ n &gt; 0, ∀ M : RegisterMachine base range k,
+      letI : NeZero base := ⟨by omega⟩
+      ¬ M.ComputesMultiplicationAt n := by
+  letI : NeZero base := ⟨by omega⟩
+  have hbase1 : 1 &lt; base := hbase
+  by_cases hk : k = 0
+  · exact ⟨1, by norm_num, fun M hM =&gt; by
+      have hcap := state_capacity_lower_bound M hbase (by norm_num : 0 &lt; 1) hM
+      simp [hk] at hcap
+      omega⟩
+  · by_cases hr : range = 0
+    · exact ⟨1, by norm_num, fun M hM =&gt; by
+        have hcap := state_capacity_lower_bound M hbase (by norm_num : 0 &lt; 1) hM
+        simp [hr, hk] at hcap
+        omega⟩
+    · have hk0 : k ≠ 0 := hk
+      have hpos : 0 &lt; range ^ k := by positivity
+      exact ⟨range ^ k, hpos, fun M hM =&gt; by
+        have hcap := state_capacity_lower_bound M hbase hpos hM
+        exact (Nat.lt_pow_self hbase1).not_ge hcap⟩</code></pre></details>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): stripRun, mulDecide, mulDecide_correct<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F52-paper-lifts-the-bound-by-an-explicit-procedure.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Strip a maximal run of the letter `a`, returning its length and the rest.
+This is the scratch work a person does with pencil and paper. -/
+def stripRun (a : Fin 3) : List (Fin 3) → ℕ × List (Fin 3)
+  | [] =&gt; (0, [])
+  | x :: xs =&gt;
+      if x = a then
+        let r := stripRun a xs
+        (r.1 + 1, r.2)
+      else (0, x :: xs)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- An explicit decider: count the run of 0s, then of 1s, then of 2s, and
+check that nothing is left over and that the last count is the product. -/
+def mulDecide (w : List (Fin 3)) : Bool :=
+  let r0 := stripRun 0 w
+  let r1 := stripRun 1 r0.2
+  let r2 := stripRun 2 r1.2
+  r2.2.isEmpty &amp;&amp; (r2.1 == r0.1 * r1.1)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The concrete procedure is correct. With unbounded scratch space the task
+is easy, while no fixed finite register set suffices, and that contrast is the
+calculator argument. -/
+theorem mulDecide_correct : ∀ w : List (Fin 3), mulDecide w = true ↔ w ∈ mulLang := by
+  intro w
+  constructor
+  · intro h
+    simp only [mulDecide, Bool.and_eq_true, List.isEmpty_iff, beq_iff_eq] at h
+    rcases h with ⟨hrest, hcount⟩
+    refine ⟨(stripRun 0 w).1, (stripRun 1 (stripRun 0 w).2).1, ?_⟩
+    have h0 := stripRun_reconstruct 0 w
+    have h1 := stripRun_reconstruct 1 (stripRun 0 w).2
+    have h2 := stripRun_reconstruct 2 (stripRun 1 (stripRun 0 w).2).2
+    calc
+      w = List.replicate (stripRun 0 w).1 0 ++ (stripRun 0 w).2 := h0.symm
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (stripRun 1 (stripRun 0 w).2).2) := by rw [h1]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (List.replicate (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).1 2 ++
+              (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).2)) := by rw [h2]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+          List.replicate ((stripRun 0 w).1 * (stripRun 1 (stripRun 0 w).2).1) 2 := by
+            rw [hrest, hcount]
+            simp
+  · rintro ⟨m, n, rfl⟩
+    have h0 : (0 : Fin 3) ∉ List.replicate n 1 ++ List.replicate (m * n) 2 := by
+      simp
+    have hr0 := stripRun_replicate_append_of_not_mem 0 m
+      (List.replicate n 1 ++ List.replicate (m * n) 2) h0
+    have h1 : (1 : Fin 3) ∉ List.replicate (m * n) 2 := by
+      simp
+    have hr1 := stripRun_replicate_append_of_not_mem 1 n
+      (List.replicate (m * n) 2) h1
+    have hr2 := stripRun_replicate_append_of_not_mem 2 (m * n) [] (by simp)
+    have hr2&#x27; : stripRun 2 (List.replicate (m * n) 2) = (m * n, []) := by
+      simpa using hr2
+    rw [List.append_assoc]
+    simp only [mulDecide]
+    rw [hr0, hr1, hr2&#x27;]
+    simp</code></pre></details>
 <p><strong>Maplessness is the online case.</strong> Chapter 6 insists that a barrier is a property of the objective and the declared moves and not of the search running over them, and the informal reading of ruggedness keeps sliding into a claim about the searcher. The machine reading separates the two cleanly, because the same landscape can be presented to an agent that sees only its neighbours and to one holding the whole map. On a five-vertex path with a two-peaked evaluation, every strict-ascent walk from the start stalls at the lesser peak, an admissible route to the global maximum exists in the same graph, and every such route dips below that peak (machine-checked). All three at once. Being stuck is a property of the local rule, reachability is a property of the graph, and the barrier survives both. The distinction dissolves nothing and licenses nothing: holding the map does not remove the valley, it converts the valley into a priced line item, which is what chapter 6 said and what the short edition of this book states as its thesis. Competitive analysis, in the sense of Sleator and Tarjan, is the mature theory of exactly this gap, and it is the natural home for the ruggedness coordinate when the question is what the shortage of information costs rather than what the terrain contains.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): pathAdj, J, Ascent, ascent_from_zero_stalls, route_to_max_exists, every_route_dips<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F48-online-stalls-where-offline-does-not.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): pathAdj, J, Ascent, ascent_from_zero_stalls, route_to_max_exists, every_route_dips<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F53-online-stalls-where-offline-does-not.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The path graph on five vertices: adjacent iff the indices differ by
 one. -/
 def pathAdj (i j : Fin 5) : Prop := i.val + 1 = j.val ∨ j.val + 1 = i.val
@@ -1841,7 +2182,7 @@ theorem every_route_dips (l : List (Fin 5)) (hchain : l.Chain&#x27; pathAdj)
   -- this is a two-value comparison, so evaluate it in the kernel instead
   · simp [J]</code></pre></details>
 <p><strong>Representation is counted, not judged.</strong> Chapter 8 claims that what decides difficulty in the reflexive case is the difference in representational capacity between the two sides. As machines the claim is a pigeonhole. Say a machine tracks another when some encoding of the tracked machine's states into its own intertwines the dynamics and reproduces the outputs. If the tracked machine is output-separated, meaning distinct states are told apart by outputs along some input word, then every tracking map is injective, a finite tracker needs at least as many states as its target, and mutual tracking between output-separated machines forces equal state counts (machine-checked). Steering something strictly smaller is ordinary work with a complicated object. Steering an equal is a different activity, and the difference is arithmetic rather than temperament.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tracks, Tracks.injective, card_le_of_tracks, card_eq_of_mutual_tracks<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F49-tracking-costs-states.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tracks, Tracks.injective, card_le_of_tracks, card_eq_of_mutual_tracks<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F54-tracking-costs-states.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- `f` tracks machine `B` inside machine `A`: the encoding intertwines
 the dynamics and reproduces the outputs. This is what it means for `A`
 to maintain a faithful copy of `B`. -/
@@ -1883,7 +2224,7 @@ theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
     Fintype.card S = Fintype.card T := by
   exact le_antisymm (card_le_of_tracks hg hA) (card_le_of_tracks hf hB)</code></pre></details>
 <p>The augmentation that repairs the reflexive case inherits the same arithmetic. Widening the picture to include the counterpart's picture of you is well defined at every round and never closes: with at least two counterpart actions, each round multiplies the state count by the policies over the current space, so the tower is strictly increasing and unbounded (machine-checked). Chapter 8's "each round adds something you cannot see" is that sequence.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): towerCard, towerCard_strictMono, towerCard_unbounded<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F50-the-augmentation-tower-is-unbounded.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): towerCard, towerCard_strictMono, towerCard_unbounded<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F55-the-augmentation-tower-is-unbounded.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The state count of the k-th augmentation round: start at `s`
 states; each round pairs the current space with the counterpart&#x27;s
 policies over it (`p` actions). -/

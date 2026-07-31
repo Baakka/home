@@ -5,7 +5,7 @@ This snippet is about:
 
   supportEquiv_iff_no_concept_separates
 
-found at line 975 of 1003, near the end of this file.
+found at line 1138 of 1166, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -623,16 +623,35 @@ section Ashby
 
 variable {D A O : Type*}
 
+/-- The separation a counting bound actually needs: two disturbances that the
+regulator answers the same way must be told apart by that shared response.
+Nothing is required of responses the rule never issues, or of pairs it answers
+differently, because the bound already charges for the difference in response.
+
+Demanding that *every* response separate *every* pair, which is how the law is
+usually stated informally, is sufficient but strictly stronger:
+`fiberSeparating_of_injective` gives the implication and
+`fiberSeparating_strictly_weaker` witnesses that it does not reverse. -/
+def FiberSeparating (ω : D → A → O) (ρ : D → A) : Prop :=
+  ∀ d d', ρ d = ρ d' → ω d (ρ d) = ω d' (ρ d') → d = d'
+
+/-- The informal premise implies the one the counting argument uses. -/
+theorem fiberSeparating_of_injective (ω : D → A → O)
+    (hinj : ∀ a, Function.Injective fun d => ω d a) (ρ : D → A) :
+    FiberSeparating ω ρ := by
+  intro d d' h1 h2
+  apply hinj (ρ d)
+  show ω d (ρ d) = ω d' (ρ d)
+  rw [h2, ← h1]
+
 /-- Ashby's law of requisite variety, counting form. `ω d a` is the outcome
-of disturbance `d` under regulator response `a`. If distinct disturbances
-produce distinct outcomes under any fixed response (the disturbances really
-are distinct as far as the outcome is concerned), then any response rule `ρ`
-satisfies: the number of disturbances is at most the number of responses
-actually used times the number of outcomes actually hit. Only variety in the
-regulator can absorb variety in the disturbances. -/
+of disturbance `d` under regulator response `a`. If the response rule `ρ`
+separates the disturbances it answers alike (`FiberSeparating`), then the
+number of disturbances is at most the number of responses actually used times
+the number of outcomes actually hit. Only variety in the regulator can absorb
+variety in the disturbances. -/
 theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ) :
     Fintype.card D ≤
       (Finset.univ.image ρ).card * (Finset.univ.image fun d => ω d (ρ d)).card := by
   have key :
@@ -644,21 +663,44 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
         ⟨Finset.mem_image_of_mem ρ (Finset.mem_univ d),
          Finset.mem_image_of_mem _ (Finset.mem_univ d)⟩
     · intro d _ d' _ hdd
-      have h1 : ρ d = ρ d' := congrArg Prod.fst hdd
-      have h2 : ω d (ρ d) = ω d' (ρ d') := congrArg Prod.snd hdd
-      apply hinj (ρ d)
-      show ω d (ρ d) = ω d' (ρ d)
-      rw [h2, ← h1]
+      exact hsep d d' (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key
+
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d => ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ => ()) (fun _ => ())
+  simp at this
+
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d => ω d a := by
+  refine ⟨fun d a => if a then d else false, id, ?_, ?_⟩
+  · intro d d' h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this
 
 /-- Perfect regulation: holding the outcome constant requires at least as
 much response variety as there is disturbance variety. -/
 theorem requisite_variety_perfect [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ)
+    (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card D ≤ (Finset.univ.image ρ).card := by
-  have h := requisite_variety ω hinj ρ
+  have h := requisite_variety ω ρ hsep
   have himg : (Finset.univ.image fun d => ω d (ρ d)).card ≤ 1 := by
     apply Finset.card_le_one.mpr
     intro x hx y hy
@@ -800,6 +842,98 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
   have ha' : a ∈ (α (m s')).support := by rw [← hm]; exact ha
   exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha')
 
+/-! `statistic_based_randomized_rule_fails` reads "acts unacceptably" as
+playing an unacceptable action somewhere in the support, which is the right
+reading for a `PMF` and gets normalization for free, since a `PMF` sums to one
+by construction. It is the wrong reading for a distribution with no atoms at
+all: a continuous law can be supported entirely outside the acceptable set
+while every single action has probability zero, and a support-based statement
+says nothing useful there.
+
+So the same obstruction is stated once more for an arbitrary probability
+measure, where acting unacceptably means failing to be *almost surely*
+acceptable. The acceptable sets need not even be measurable, because the
+conclusion is phrased through almost-everywhere membership rather than through
+the measure of a complement.
+
+This generalization is Aristotle's, from an independent formalization of the
+same informal claim; the support-based version above is this project's. Its own
+discrete formulation rolled a distribution structure by hand and then needed
+normalization as an explicit side condition, with a counterexample showing why.
+Using mathlib's `PMF` and `ProbabilityMeasure` sidesteps that entirely, so only
+the generalization is kept here. -/
+
+/-- `f` factors through `q` when all information used by `f` passes through
+`q`. -/
+def FactorsThrough {X Q Y : Type*} (f : X → Y) (q : X → Q) : Prop :=
+  ∃ g : Q → Y, f = g ∘ q
+
+/-- A function factoring through a map is constant on each fibre of that map. -/
+theorem FactorsThrough.eq_of_eq {X Q Y : Type*} {f : X → Y} {q : X → Q}
+    (hf : FactorsThrough f q) {x y : X} (hxy : q x = q y) : f x = f y := by
+  obtain ⟨g, hg⟩ := hf
+  simp [hg, hxy]
+
+/-- A measure-theoretic randomized decision is acceptable at `s` when it is
+supported on acceptable actions up to a null set. -/
+def AlmostSurelyAcceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ∀ᵐ a ∂(decision s : MeasureTheory.Measure Action), a ∈ acceptable s
+
+/-- For an arbitrary probability measure, “acts unacceptably” means failure to
+be almost surely supported on the acceptable set.  When the set is measurable,
+this is equivalent to assigning positive mass to its complement. -/
+def MeasureRandomizedUnacceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ¬ AlmostSurelyAcceptableAt acceptable decision s
+
+private lemma probabilityMeasure_not_ae_false {Action : Type*} [MeasurableSpace Action]
+    (p : MeasureTheory.ProbabilityMeasure Action) :
+    ¬ (∀ᵐ _a ∂(p : MeasureTheory.Measure Action), False) := by
+  intro h
+  rw [MeasureTheory.ae_iff] at h
+  have hu : {_a : Action | ¬ False} = Set.univ := by ext; simp
+  rw [hu] at h
+  exact MeasureTheory.IsProbabilityMeasure.ne_zero (p : MeasureTheory.Measure Action)
+    (MeasureTheory.Measure.measure_univ_eq_zero.mp h)
+
+/-- The randomized obstruction for completely general probability measures.
+No countability or measurability of the acceptable sets is required. -/
+theorem measure_randomized_factoring_disjoint_obstruction
+    {State Signal Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action) (signal : State → Signal)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action)
+    (hfactor : FactorsThrough decision signal) {x y : State}
+    (hidentified : signal x = signal y)
+    (hdisjoint : Disjoint (acceptable x) (acceptable y)) :
+    MeasureRandomizedUnacceptableAt acceptable decision x ∨
+      MeasureRandomizedUnacceptableAt acceptable decision y := by
+  have heq : decision x = decision y := hfactor.eq_of_eq hidentified
+  by_cases hx : AlmostSurelyAcceptableAt acceptable decision x
+  · right
+    intro hy
+    unfold AlmostSurelyAcceptableAt at hx hy
+    rw [← heq] at hy
+    have hb := hx.and hy
+    have hf : ∀ᵐ _a ∂(decision x : MeasureTheory.Measure Action), False :=
+      hb.mono (fun _a ha => hdisjoint.le_bot ha)
+    exact probabilityMeasure_not_ae_false (decision x) hf
+  · exact Or.inl hx
+
+/-- Dashboard form of the general probability-measure obstruction. -/
+theorem measure_randomized_statistic_rule_disjoint_obstruction
+    {State Statistic Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action) (statistic : State → Statistic)
+    (rule : Statistic → MeasureTheory.ProbabilityMeasure Action) {x y : State}
+    (hidentified : statistic x = statistic y)
+    (hdisjoint : Disjoint (acceptable x) (acceptable y)) :
+    MeasureRandomizedUnacceptableAt acceptable (rule ∘ statistic) x ∨
+      MeasureRandomizedUnacceptableAt acceptable (rule ∘ statistic) y := by
+  apply measure_randomized_factoring_disjoint_obstruction acceptable statistic
+    (rule ∘ statistic) ⟨rule, rfl⟩ hidentified hdisjoint
+
 end Campbell
 
 /-! ## Safety and composition (Leveson) -/
@@ -840,11 +974,11 @@ requisite-variety bound with the policy-space cardinality turns the
 adjective "explosive" into arithmetic. -/
 theorem requisite_variety_augmented {S A R O : Type*} [Fintype S] [Fintype A]
     [DecidableEq S] [DecidableEq R] [DecidableEq O]
-    (ω : S × (S → A) → R → O) (hinj : ∀ r, Function.Injective fun d => ω d r)
-    (ρ : S × (S → A) → R) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : S × (S → A) → R → O) (ρ : S × (S → A) → R)
+    (hsep : FiberSeparating ω ρ) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card S * Fintype.card A ^ Fintype.card S ≤
       (Finset.univ.image ρ).card := by
-  have h := requisite_variety_perfect ω hinj ρ o₀ hperf
+  have h := requisite_variety_perfect ω ρ hsep o₀ hperf
   rwa [Fintype.card_prod, card_policySpace] at h
 
 /-- Semantic drift: the syntax is fixed while its interpretation changes
@@ -891,15 +1025,26 @@ theorem value_of_information_nonneg (u : A → O → ℝ) (w : O → ℝ)
     (hw o)
 
 /-- Value of information is zero exactly when a single action is optimal
-under every possible outcome, so the observation cannot change the decision.
-This is the theorem behind chapter 9's practical criterion: an experiment
-whose outcomes all select the same action purchases nothing. -/
-theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
-    (hw : ∀ o, 0 < w o) :
+under every outcome the experiment can actually produce.
+
+The support qualification is the whole content of the statement, and it is
+where a careless version goes wrong. Quantifying over *every* outcome, rather
+than every outcome of positive weight, makes the criterion false: an outcome of
+weight zero contributes nothing to either side, so an action that is optimal
+everywhere except there still leaves the value of information at zero, while
+the unqualified right-hand side fails. `value_of_information_eq_zero_iff` is
+the corollary for a strictly positive predictive distribution, where the
+qualification can be dropped because it is vacuous.
+
+Aristotle reached the same qualification independently, from the informal claim
+alone, and produced the two-outcome counterexample that forces it. This project
+had the side condition too, but paid for it globally, by assuming every outcome
+has positive weight; that assumption is not needed and is dropped here. -/
+theorem value_of_information_eq_zero_iff_possible (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 ≤ w o) :
     (Finset.univ.sup' Finset.univ_nonempty fun a => ∑ o, w o * u a o) =
       (∑ o, w o * Finset.univ.sup' Finset.univ_nonempty fun a => u a o)
-    ↔ ∃ a : A, ∀ o, ∀ a' : A, u a' o ≤ u a o := by
-  have hle := value_of_information_nonneg u w fun o => (hw o).le
+    ↔ ∃ a : A, ∀ o, 0 < w o → ∀ a' : A, u a' o ≤ u a o := by
   constructor
   · intro heq
     obtain ⟨a₀, -, ha₀⟩ :=
@@ -912,30 +1057,48 @@ theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
     have hnonneg : ∀ o ∈ (Finset.univ : Finset O),
         0 ≤ w o * ((Finset.univ.sup' Finset.univ_nonempty fun a => u a o) - u a₀ o) := by
       intro o _
-      exact mul_nonneg (hw o).le
+      exact mul_nonneg (hw o)
         (sub_nonneg.mpr (Finset.le_sup' (fun a => u a o) (Finset.mem_univ a₀)))
     have hzero :
         ∑ o, w o * ((Finset.univ.sup' Finset.univ_nonempty fun a => u a o) - u a₀ o) = 0 := by
       simp only [mul_sub]
       rw [Finset.sum_sub_distrib, ← hsum, sub_self]
     have hterm := (Finset.sum_eq_zero_iff_of_nonneg hnonneg).mp hzero
-    refine ⟨a₀, fun o a' => ?_⟩
+    refine ⟨a₀, fun o hpos a' => ?_⟩
     rcases mul_eq_zero.mp (hterm o (Finset.mem_univ o)) with h | h
-    · exact absurd h (ne_of_gt (hw o))
+    · exact absurd h (ne_of_gt hpos)
     · have hs : (Finset.univ.sup' Finset.univ_nonempty fun a => u a o) = u a₀ o :=
         sub_eq_zero.mp h
       calc u a' o ≤ Finset.univ.sup' Finset.univ_nonempty (fun a => u a o) :=
             Finset.le_sup' (fun a => u a o) (Finset.mem_univ a')
         _ = u a₀ o := hs
   · rintro ⟨a, ha⟩
-    have hpt : ∀ o, (Finset.univ.sup' Finset.univ_nonempty fun a' => u a' o) = u a o := by
-      intro o
-      exact le_antisymm (Finset.sup'_le _ _ fun a' _ => ha o a')
-        (Finset.le_sup' (fun a' => u a' o) (Finset.mem_univ a))
-    refine le_antisymm hle ?_
-    calc ∑ o, w o * Finset.univ.sup' Finset.univ_nonempty (fun a' => u a' o)
-        = ∑ o, w o * u a o := by simp only [hpt]
-      _ ≤ _ := Finset.le_sup' (fun a => ∑ o, w o * u a o) (Finset.mem_univ a)
+    have hterms : ∀ o ∈ (Finset.univ : Finset O),
+        w o * u a o
+          = w o * Finset.univ.sup' Finset.univ_nonempty fun a' => u a' o := by
+      intro o _
+      rcases eq_or_lt_of_le (hw o) with h | h
+      · rw [← h]; ring
+      · congr 1
+        exact (le_antisymm (Finset.sup'_le _ _ fun a' _ => ha o h a')
+          (Finset.le_sup' (fun a' => u a' o) (Finset.mem_univ a))).symm
+    refine le_antisymm (value_of_information_nonneg u w hw) ?_
+    rw [← Finset.sum_congr rfl hterms]
+    exact Finset.le_sup' (fun a => ∑ o, w o * u a o) (Finset.mem_univ a)
+
+/-- The criterion for a strictly positive predictive distribution, where every
+outcome is possible and the support qualification is vacuous. This is the form
+chapter 9 uses: an experiment whose outcomes all select the same action
+purchases nothing. -/
+theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 < w o) :
+    (Finset.univ.sup' Finset.univ_nonempty fun a => ∑ o, w o * u a o) =
+      (∑ o, w o * Finset.univ.sup' Finset.univ_nonempty fun a => u a o)
+    ↔ ∃ a : A, ∀ o, ∀ a' : A, u a' o ≤ u a o := by
+  rw [value_of_information_eq_zero_iff_possible u w fun o => (hw o).le]
+  exact ⟨fun ⟨a, ha⟩ => ⟨a, fun o a' => ha o (hw o) a'⟩,
+         fun ⟨a, ha⟩ => ⟨a, fun o _ a' => ha o a'⟩⟩
+
 
 end Raiffa
 

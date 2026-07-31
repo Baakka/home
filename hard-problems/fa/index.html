@@ -696,18 +696,39 @@ s_t\in C\;\forall t\leq H
 <p>این نسخهٔ صوریِ یک پرسش رُک است: آیا مسیری به وضعیتی که می‌گوییم می‌خواهیم در اختیار داریم، بی‌آنکه آنچه می‌گوییم فدا نمی‌کنیم را نقض کنیم؟ بازگشت‌پذیری (مختصهٔ \(\mathsf{Re}\) در نیم‌رخ) همان پرسش است که برعکس پرسیده شده: دسترسی‌پذیریِ ناحیهٔ پذیرفتنی از وضعیت‌هایی که خطا شما را در آن‌ها می‌گذارد، با قید مسیرِ سست‌شده.</p>
 <p>«رسیدن-و-پرهیزِ تصادفی در افق متناهی» نام استاندارد شیئی است که همین حالا تعریف شد: آبته، پراندینی، لیگروس و ساستری آن را با بازگشتِ رو‌به‌عقب حل می‌کنند، و سامرز و لیگروس به نسخهٔ تصادفی‌اش نام و پردازشِ تکرار مقدار می‌دهند. خوانش استوار از دسترسی‌پذیریِ بیشینه‌کمینهٔ یک لولهٔ هدف نسب می‌برد، مسئلهٔ ۱۹۷۱ برتسکاس و رودز، که آنجا در چارچوبی مبتنی بر عضویت مجموعه و بی‌هیچ سطح احتمال طرح شده بود؛ پس آنچه منتقل می‌شود حرکتِ بدترین-حالت-روی-یک-رده است نه خودِ قید. و بازگشت‌پذیری خودش یک حوضهٔ گرفتن است به معنای نظریهٔ زیست‌پذیری (اوبن، بایِن و سن‌پیر)، که چارچوب زمان-پیوسته و افق-نامعینش همان دلیلی است که آن ادبیات پرسشِ گسسته و مقیدبه‌احتمالِ اینجا را فیصله نمی‌دهد.</p>
 <p>در یک سیستم انسانی، کنش‌های کانونی می‌توانند بسنده نباشند، چون کنش‌های لازم از آنِ عاملی دیگرند، رضایت می‌خواهند، یا به اختیار نهادی بستگی دارند. پاسخ درست «مسئولیتش را بپذیر» نیست. به‌روزکردن مجموعهٔ کنش است.</p>
-<p>یک کرانِ سیبرنتیک بر کل این فصل حاکم است؛ اشبی اثباتش کرد، و این کتاب آن را در مختصه‌های همین فصل بازگو می‌کند. قانون تنوع بایسته، در صورت شمارشی‌اش: اگر اختلال‌های متمایز زیر هر پاسخِ ثابت نتیجه‌های متمایز تولید کنند، آن‌گاه شمار اختلال‌هایی که یک تنظیم‌کننده می‌تواند جذب کند دست‌بالا برابر است با شمار پاسخ‌هایی که واقعاً به کار می‌گیرد ضرب در شمار نتیجه‌های متمایزی که واقعاً رخ می‌دهند؛ پس ثابت‌نگه‌داشتن نتیجه دست‌کم به همان اندازه تنوعِ پاسخ می‌طلبد که تنوعِ اختلال وجود دارد (بررسی‌شده با ماشین). کنش‌گری که نقشهٔ اختیارش پاسخ‌های به‌کارگرفتنیِ کمی برایش می‌گذارد کم‌کار نیست؛ کم‌تجهیز است، و علاجش اختیار، اتحاد، یا تحملی فراخ‌تر است، نه نصیحت.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F15-requisite-variety-counting-form.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<p>یک کرانِ سیبرنتیک بر کل این فصل حاکم است؛ اشبی اثباتش کرد، و این کتاب آن را در مختصه‌های همین فصل بازگو می‌کند. قانون تنوع بایسته، در صورت شمارشی‌اش: اگر قاعدهٔ تنظیم‌کننده اختلال‌هایی را که یکسان پاسخشان می‌دهد از هم تمیز دهد، آن‌گاه شمار اختلال‌هایی که می‌تواند جذب کند دست‌بالا برابر است با شمار پاسخ‌هایی که واقعاً به کار می‌گیرد ضرب در شمار نتیجه‌های متمایزی که واقعاً رخ می‌دهند؛ پس ثابت‌نگه‌داشتن نتیجه دست‌کم به همان اندازه تنوعِ پاسخ می‌طلبد که تنوعِ اختلال وجود دارد (بررسی‌شده با ماشین). این فرض از فرضِ کتاب‌های درسی ضعیف‌تر است، که از هر پاسخ می‌خواهد هر جفت اختلال را جدا کند، و صورت‌بندی همراه بررسی می‌کند که این تفاوت اکید است: دربارهٔ پاسخ‌هایی که قاعده هرگز صادرشان نمی‌کند، یا جفت‌هایی که پیشاپیش پاسخ‌های متفاوت می‌گیرند، نیازی به هیچ فرضی نیست، چون کران آن تفاوت را همان‌جا به حساب می‌آورد. این فرض را به‌کلی نمی‌توان انداخت، و صورت‌بندی همراه آن مثالِ نقضِ دواختلالی را نشان می‌دهد که بی آن فرض، کران را می‌شکند (بررسی‌شده با ماشین). کنش‌گری که نقشهٔ اختیارش پاسخ‌های به‌کارگرفتنیِ کمی برایش می‌گذارد کم‌کار نیست؛ کم‌تجهیز است، و علاجش اختیار، اتحاد، یا تحملی فراخ‌تر است، نه نصیحت.</p>
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): FiberSeparating, fiberSeparating_of_injective, requisite_variety<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F15-requisite-variety-counting-form.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The separation a counting bound actually needs: two disturbances that the
+regulator answers the same way must be told apart by that shared response.
+Nothing is required of responses the rule never issues, or of pairs it answers
+differently, because the bound already charges for the difference in response.
+
+Demanding that *every* response separate *every* pair, which is how the law is
+usually stated informally, is sufficient but strictly stronger:
+`fiberSeparating_of_injective` gives the implication and
+`fiberSeparating_strictly_weaker` witnesses that it does not reverse. -/
+def FiberSeparating (ω : D → A → O) (ρ : D → A) : Prop :=
+  ∀ d d&#x27;, ρ d = ρ d&#x27; → ω d (ρ d) = ω d&#x27; (ρ d&#x27;) → d = d&#x27;
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The informal premise implies the one the counting argument uses. -/
+theorem fiberSeparating_of_injective (ω : D → A → O)
+    (hinj : ∀ a, Function.Injective fun d =&gt; ω d a) (ρ : D → A) :
+    FiberSeparating ω ρ := by
+  intro d d&#x27; h1 h2
+  apply hinj (ρ d)
+  show ω d (ρ d) = ω d&#x27; (ρ d)
+  rw [h2, ← h1]
+
+-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Ashby&#x27;s law of requisite variety, counting form. `ω d a` is the outcome
-of disturbance `d` under regulator response `a`. If distinct disturbances
-produce distinct outcomes under any fixed response (the disturbances really
-are distinct as far as the outcome is concerned), then any response rule `ρ`
-satisfies: the number of disturbances is at most the number of responses
-actually used times the number of outcomes actually hit. Only variety in the
-regulator can absorb variety in the disturbances. -/
+of disturbance `d` under regulator response `a`. If the response rule `ρ`
+separates the disturbances it answers alike (`FiberSeparating`), then the
+number of disturbances is at most the number of responses actually used times
+the number of outcomes actually hit. Only variety in the regulator can absorb
+variety in the disturbances. -/
 theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d =&gt; ω d a)
-    (ρ : D → A) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ) :
     Fintype.card D ≤
       (Finset.univ.image ρ).card * (Finset.univ.image fun d =&gt; ω d (ρ d)).card := by
   have key :
@@ -719,13 +740,37 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
         ⟨Finset.mem_image_of_mem ρ (Finset.mem_univ d),
          Finset.mem_image_of_mem _ (Finset.mem_univ d)⟩
     · intro d _ d&#x27; _ hdd
-      have h1 : ρ d = ρ d&#x27; := congrArg Prod.fst hdd
-      have h2 : ω d (ρ d) = ω d&#x27; (ρ d&#x27;) := congrArg Prod.snd hdd
-      apply hinj (ρ d)
-      show ω d (ρ d) = ω d&#x27; (ρ d)
-      rw [h2, ← h1]
+      exact hsep d d&#x27; (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key</code></pre></details>
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_fails_without_separation, fiberSeparating_strictly_weaker<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F16-the-separation-premise-is-load-bearing-and-weake.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d =&gt; ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ =&gt; ()) (fun _ =&gt; ())
+  simp at this
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d =&gt; ω d a := by
+  refine ⟨fun d a =&gt; if a then d else false, id, ?_, ?_⟩
+  · intro d d&#x27; h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this</code></pre></details>
 <h3 id="sec-4-the-authority-map">نقشهٔ اختیار</h3>
 <p>اهرم‌ها و محرک‌های سیستمیِ نامزد که در طرح ظاهر می‌شوند را چنین افراز کنید:</p>
 <div class="mathblock">\[
@@ -766,7 +811,7 @@ P(o_{t+\tau}\mid \operatorname{do}(a'))
 \right\},
 \]</div>
 <p>که در آن \(D\) فاصله‌ای توزیعیِ مناسب است. اگر آستانه هرگز نرسد، \(\tau_\delta(a,a')=\infty\) بگیرید: مداخله در آن تفکیک‌پذیری در برابر آن جایگزین مشاهده‌ناپذیر است، و این خودش یک تشخیص است نه مقداری مفقود. وقتی مجموعهٔ کاملی از جایگزین‌ها مهم است، کمیتِ محافظه‌کارانه برای برنامه‌ریزی بدترین حالت \(\sup_{a'}\tau_\delta(a,a')\) است. این کمیت مدل‌وابسته است؛ کارش این است که وادارتان کند پیش‌بینی کنید کنش چه وقت از ناکنش تمیزدادنی می‌شود. طلبِ سیگنالی قوی‌تر هرگز انتظار را کوتاه نمی‌کند: \(\tau_\delta\) نسبت به \(\delta\) یکنواست (بررسی‌شده با ماشین).</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): obsLag_mono_resolution<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F16-observability-lag-is-monotone-in-resolution.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): obsLag_mono_resolution<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F17-observability-lag-is-monotone-in-resolution.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Demanding a stronger signal never shortens the wait: the observability
 lag is monotone in the resolution `δ`. (Also proved independently by
 Harmonic&#x27;s Aristotle prover; see `aristotle/`.) -/
@@ -778,7 +823,7 @@ theorem obsLag_mono_resolution (dist : Ω → Ω → ℝ≥0∞) (obs : A → �
   exact ⟨n, rfl, h.trans hn⟩</code></pre></details>
 <p>اینکه داوریِ انسانی زیر تأخیر، انباشت، و ناخطی‌بودن به‌طرزی پیش‌بینی‌پذیر افت می‌کند یافتهٔ استرمن و دورنر است، و در هر دو مورد آزمایشی است نه حکایتی؛ این فصل را باید چهرهٔ کنترل‌نظریِ همان آزمایش‌ها خواند.</p>
 <p>آهنگِ تصمیمِ \(\Delta\) که به‌طور چشمگیری از \(\tau_\delta\) کوتاه‌تر باشد خطرِ بیش‌اصلاح می‌سازد، بخصوص زیر سیاست‌های پربهره. نیمی از این یک قضیه است: با بازنگری اکیداً پیش از آن وقفه، قانون‌های مشاهده‌پذیر زیر \(a\) و \(a'\) هنوز کمتر از \(\delta\) تفاوت دارند، پس هر نتیجه‌ای که آن بازنگریِ زودهنگام بگیرد، شاهدی در سطح \(\delta\) برای تمیزدادن مداخله از جایگزینش نیست (بررسی‌شده با ماشین). نیم دیگر قضیه نیست: بازنگری زودهنگام نوسان را تضمین نمی‌کند. پایداری به کل سیستمِ حلقه‌بسته بستگی دارد: بهرهٔ سیاست، پالایش، دینامیک وضعیت، تأخیرها، ناهم‌خوانیِ مدل، و اختلال‌های برون‌زاد.</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): no_signal_before_lag<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F17-no-signal-before-the-lag.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): no_signal_before_lag<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F18-no-signal-before-the-lag.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Reviewing strictly before the lag yields no discriminating signal: at any
 cadence `Δ &lt; τ_δ`, the observable laws under `a` and `a&#x27;` are still within
 `δ` of each other. Whatever a fast review concludes, it is not evidence that
@@ -818,7 +863,7 @@ B(x,y)
 \left[J(x)-J(z)\right],
 \]</div>
 <p>با سه قرارداد که بیان می‌شوند نه فرض. مسیرها سرهایشان را در بر می‌گیرند، پس \(B(x,y)\geq 0\). اگر هیچ مسیر مجازی از \(x\) به \(y\) نباشد، \(B(x,y)=\infty\): دست‌نیافتنی‌بودن یافته‌ای از جنس عاملیت است (فصل ۴) و باید از «دست‌یافتنی اما گران»، که یافتهٔ ناهمواری است، تمیزدادنی بماند. و \(B\) نسبت به مجموعهٔ یالِ اعلام‌شده است؛ افزودن یک حرکت مجاز فقط می‌تواند پایینش بیاورد، و به همین دلیل «چه چیزی یک تغییر به حساب می‌آید» جایش در دفتر است. یک رده از افزودن‌ها دقیقاً بی‌اثر است: میان‌بری که پشتوانه‌اش مسیری مجاز باشد که هرگز زیر پایین‌ترینِ دو سرش فرو نمی‌رود، نه دسترسی‌پذیری را تغییر می‌دهد و نه هیچ ارتفاع مانعی را (بررسی‌شده با ماشین)، و بندِ عمق ضروری است نه تزئینی، چون میان‌بری که روی یک فرورفتگیِ دوگامی انداخته شود همان لحظه که پذیرفته شود مانع را پایین می‌آورد (بررسی‌شده با ماشین، با همان مثال نقض). این همان گواهی است که به مسیریاب‌ها اجازه می‌دهد نقشه را فشرده کنند بی‌آنکه دربارهٔ آن دروغ بگویند، و فصل ۷ همین بند را دوباره زیر نام بازتاب می‌بیند.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): pathBetween_shortcut_nonempty_iff, barrier_shortcut_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F18-backed-shortcuts-are-neutral.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): pathBetween_shortcut_nonempty_iff, barrier_shortcut_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F19-backed-shortcuts-are-neutral.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- Reachability form: shortcuts backed by mere admissible paths do not
 change what is reachable. -/
 theorem pathBetween_shortcut_nonempty_iff {Adj S : X → X → Prop}
@@ -854,7 +899,7 @@ theorem barrier_shortcut_eq {Adj S : X → X → Prop} {J : X → ℝ}
     have key : ENNReal.ofReal (J x - J z) ≤ ENNReal.ofReal (J x - J p) :=
       ENNReal.ofReal_le_ofReal (by linarith)
     exact key.trans (le_biSup (fun p =&gt; ENNReal.ofReal (J x - J p)) hp)</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F19-without-the-depth-clause-a-shortcut-hides-a-vall.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F20-without-the-depth-clause-a-shortcut-hides-a-vall.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- The depth clause in `barrier_shortcut_eq` is essential, not decorative:
 with mere `Nonempty` backing, a shortcut can hide a valley. On the
 two-step chain with a dip in the middle, admitting the backed shortcut
@@ -888,7 +933,7 @@ theorem exists_shortcut_hiding_valley :
     rw [hunion]
     exact lt_of_lt_of_le (ENNReal.ofReal_pos.mpr one_pos) hlow</code></pre></details>
 <p>آن‌گاه دو گزاره برقرار است. اگر \(B(x,y)&gt;0\)، هر مسیر مجاز به آن وضعیت بهتر نخست از پیکربندی‌ای می‌گذرد که زیر \(J\) اکیداً بدتر از \(x\) است (بررسی‌شده با ماشین). برعکس، اگر مسیری مجاز هرگز زیر \(J(x)\) فرو نرود، آن‌گاه \(B(x,y)=0\) (بررسی‌شده با ماشین): درّهٔ ادعاشده‌ای که راهی بی‌درد گِردش دارد درّه نیست. گزارهٔ سوم می‌گوید درّه‌ها اصلاً از کجا می‌آیند: هدفی که روی مکعبِ پیکربندی به‌طور جمعی تفکیک‌پذیر باشد مانعی صفر تا بیشینه‌سازِ مختصه‌به‌مختصه‌اش دارد، چون مختصه‌های ناهم‌خوان را می‌شود یکی‌یکی برگرداند بی‌آنکه هدف هرگز فرو رود (بررسی‌شده با ماشین). ناهمواری خاصیتِ <em>جفت‌شدگی</em> میان تصمیم‌هاست، یعنی K کافمن نه N او: چشم‌انداز فقط به همان اندازه ناهموار است که برهم‌کنش‌هایش، و درّهٔ ادعاشده در سیستمی که اجزایش برهم‌کنش ندارند خطای مدل‌سازی است، نه ویژگیِ زمین. (کافمن چشم‌انداز را می‌دهد؛ خواندنِ K به‌عنوان جفت‌شدگی میان تصمیم‌ها نه میان ژن‌ها، واردکردنِ آن به علم سازمان توسط لِوینتال است.)</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_dip_of_barrier_pos<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F20-positive-barrier-forces-a-dip.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_dip_of_barrier_pos<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F21-positive-barrier-forces-a-dip.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A positive barrier means every admissible route to `y` first visits a
 configuration strictly worse than the start. This is the formal content of
 &quot;every feasible route to the better state first passes through a
@@ -903,7 +948,7 @@ theorem exists_dip_of_barrier_pos {Adj : X → X → Prop} {J : X → ℝ} {x y 
   refine ⟨z, hmem, ?_⟩
   have := ENNReal.ofReal_pos.mp hpos
   linarith</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_monotone_path<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F21-a-painless-route-means-zero-barrier.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_monotone_path<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F22-a-painless-route-means-zero-barrier.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- If some admissible path never dips below the start value, the barrier
 vanishes: the converse companion to `exists_dip_of_barrier_pos`. (Also
 proved independently by Harmonic&#x27;s Aristotle prover; see `aristotle/`.) -/
@@ -914,7 +959,7 @@ theorem barrier_eq_zero_of_monotone_path {Adj : X → X → Prop} {J : X → ℝ
   refine le_trans (iInf_le _ γ) ?_
   refine iSup_le fun z =&gt; iSup_le fun hz =&gt; ?_
   simp [ENNReal.ofReal_eq_zero, hγ z hz]</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_separable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F22-separable-objectives-have-no-valleys.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): barrier_eq_zero_of_separable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F23-separable-objectives-have-no-valleys.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- An additively separable objective admits a monotone flip path from any
 configuration to the coordinatewise maximizer: the barrier vanishes.
 Ruggedness requires interaction. -/
@@ -931,7 +976,7 @@ theorem barrier_eq_zero_of_separable {V : Type*} [Fintype V] [DecidableEq V]
   simp only [sub_nonpos]
   exact h</code></pre></details>
 <p>گزارهٔ چهارم به این می‌پردازد که حرکت‌ها مالِ چه کسی‌اند. تعریف بیشینهٔ محلی یک هدف و یک صاحب برای مجموعهٔ یال را پیش‌فرض می‌گیرد؛ جایی که حقوق تصمیم تقسیم شده، پیکربندی‌ای می‌تواند زیر هر تغییرِ یک‌جانبهٔ مجاز پایدار باشد در حالی که تغییری مجازِ مشترک بهبودش می‌دهد (بررسی‌شده با ماشین، با گواهی دومختصه‌ای)، و این یافتهٔ ریوکین و زیگلکو دربارهٔ شرکت‌های نامتمرکزی است که جست‌وجوی خودشان را منجمد می‌کنند. پس نقشهٔ اختیارِ فصل ۴ بخشی از یافتهٔ ناهمواری است، نه چیزی مجاور آن: اینکه حرکت‌های چه کسی یک تغییر به شمار می‌آید تعیین می‌کند بیشینه‌های محلی کجایند. یک سطرِ دامنه کنار این گزاره‌ها جا دارد: هر چه اینجاست خاصیتِ هدف و حرکت‌های اعلام‌شده است، نه خاصیتِ فرایند جست‌وجویی که روی آن‌ها اجرا می‌شود، و جست‌وجوی ناکامل آسیب‌شناسی‌های خودش را دارد، از جمله زیرفرایندهای خودتقویت‌کننده (ونت‌ورث، دربارهٔ دیوهای جست‌وجوی ناکامل)، که هیچ گزارهٔ چشم‌اندازی آن‌ها را در خود نمی‌گیرد.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): IsLocalMax, exists_unilaterally_stable_not_joint_max<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F23-stability-is-relative-to-who-owns-the-moves.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): IsLocalMax, exists_unilaterally_stable_not_joint_max<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F24-stability-is-relative-to-who-owns-the-moves.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A weak local maximum: no single admissible change improves `J`. -/
 def IsLocalMax (Adj : X → X → Prop) (J : X → ℝ) (x : X) : Prop :=
   ∀ y, Adj x y → J y ≤ J x
@@ -983,7 +1028,7 @@ L(b)\rightarrow y\leftarrow L(c)
 <p>با پیش‌راند روی مرز مشترکشان ترکیب می‌شوند و سیستمی از \(a\) به \(c\) می‌دهند. زیر فرض‌های استاندارد (\(\mathsf{X}\) با هم‌حدهای متناهی، \(\mathsf{A}\) با هم‌ضرب‌های متناهی، و \(L\) که هم‌ضرب‌های متناهی را حفظ می‌کند؛ ساختِ اصلی \(L\) را الحاقِ چپ می‌گیرد)، هم‌طنابی‌های ساختاریافتهٔ بائز و کورسر یک دومقولهٔ مونوئیدیِ متقارن از سیستم‌های باز را پشتیبانی می‌کنند؛ مقایسه با هم‌طنابی‌های آراستهٔ پیشینِ فونگ از بائز، کورسر و واسیلاکوپولو است.</p>
 <p>یک تبصره وزن عملیاتی دارد. ترکیب سیستم‌های باز تنها تا حد یک یکریختیِ همدوس شرکت‌پذیر و یکانی است، چون پیش‌راند تنها تا حد یکریختی تعریف می‌شود؛ و دقیقاً به همین دلیل است که ساختار پیرامون یک دومقوله است نه یک مقوله (شرکت‌گر ساخته می‌شود، فرض نمی‌شود؛ بررسی‌شده با ماشین). نمودار معماری‌ای که خاموشانه ترکیب‌های بازگروه‌بندی‌شده را مساوی بگیرد، دارد فرض می‌کند آن یکریختی‌ها همانی‌اند، و این فرض را باید نوشت، چون دقیقاً وقتی شکست می‌خورد که یکی‌سازی‌های مرزی حاملِ اطلاعات باشند.</p>
 <p>ترکیب همچنین تعیین می‌کند کدام ویژگی‌های ایمنی از آن جان به در می‌برند. ویژگی‌های از جنس ناوردایی ترکیب می‌شوند: اگر هر جزء مجموعهٔ ایمن را به خودش بنگارد، مرکب هم چنین می‌کند (بررسی‌شده با ماشین). ویژگی‌های از جنس حاشیه نه: دو جزء که هر یک وضعیت را دست‌بالا یک یکا جابه‌جا می‌کنند می‌توانند با هم دو یکا جابه‌جایش کنند (بررسی‌شده با ماشین). رابط‌ها می‌توانند تضمین‌های نوع اول را حمل کنند؛ تضمین‌های نوع دوم را باید در سطح کل از نو برقرار کرد. اینکه خطر در ترکیب زندگی می‌کند نه در اجزا، خوانشِ لِوِسون از سوانح است، و فصل‌های ۹ و ۱۰ حفاظ‌هایشان را بر آن می‌سازند. پرسشِ اینکه کدام ویژگی‌ها از ترکیب جان به در می‌برند نیایی دارد در تقریباً‌تجزیه‌پذیریِ سایمون، که در ۱۹۶۲ پرسید اجزای یک سیستم چه وقت می‌توانند چنان تحلیل شوند که گویی مستقل‌اند؛ دستگاهِ اینجا آن پرسش را به ارث می‌برد نه آنکه کشفش کند.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): invariance_comp<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F24-invariance-composes.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): invariance_comp<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F25-invariance-composes.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Set-invariance safety is compositional: if each component maps the safe
 set into itself, so does the composite. This is the kind of safety property
 chapter 7&#x27;s interfaces can carry. -/
@@ -991,7 +1036,7 @@ theorem invariance_comp {S : Type*} {C : Set S} {f g : S → S}
     (hf : Set.MapsTo f C C) (hg : Set.MapsTo g C C) :
     Set.MapsTo (g ∘ f) C C :=
   hg.comp hf</code></pre></details>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): increment_bound_not_compositional<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F25-margins-do-not-compose.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): increment_bound_not_compositional<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F26-margins-do-not-compose.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Margin-style safety is not compositional: two components that each move
 the state by at most one can jointly move it by two. Component-level safety
 margins do not add up to system-level safety; the hazard lives in the
@@ -1024,7 +1069,7 @@ theorem increment_bound_not_compositional :
 <p>این ایده که معناشناسی باید تابعگون باشد از لاور است؛ سنت کاربردی‌ای که این فصل بر آن تکیه می‌کند، یعنی هم‌طنابی‌های آراسته و ساختاریافته و عملگَردهای نمودار سیم‌کشی، از فونگ، اسپیواک، بائز و کورسر است.</p>
 <p>اکیدبودن آرمان است، نه هنجار. در عمل، معناشناسی اغلب آن معادله را برنمی‌آورد در حالی که سلولِ مقایسهٔ کانونیِ \(\llbracket g\circ f\rrbracket \Rightarrow \llbracket g\rrbracket\circ\llbracket f\rrbracket\) را نگه می‌دارد؛ چنین معناشناسی‌ای سست است (یا پادسست، با پیکان برگردانده). این نقصی نیست که پنهان شود: آن سلولِ مقایسه <em>اندازه‌گیریِ</em> شکستِ ترکیبی است، اندازه‌گیریِ تداخل، برآمدن، یا زمینه‌وابستگی‌ای که رفتار اجزا تعیینش نمی‌کند. پس پرسش تشخیصی تنها «آیا این معناشناسی تابعگونی است» نیست، بلکه «چقدر از تابعگونی دور است، در کدام جهت، و آیا مداخله درون همان شکاف زندگی می‌کند» هم هست.</p>
 <p>رابط‌های انسانی هم رانش می‌کنند. سیم‌کشی جان به در می‌برد در حالی که معناشناسی جابه‌جا می‌شود: پایه‌های هم‌طنابی، قالب گزارش، آهنگ جلسه‌ها، سنجهٔ اعلام‌شده، همه به‌طور صوری دست‌نخورده می‌مانند، و معنای آنچه از آن‌ها می‌گذرد تغییر می‌کند، چون ضدحرکت‌های فصل ۸ روی خانوادهٔ معناشناسی عمل می‌کنند نه روی نحو. پس بررسیِ یک قرارداد ادعایی زمان‌نمایه‌دار است: اگر در \(t\) وارسی شده باشد، دربارهٔ \(t+1\) هیچ نمی‌گوید مگر با استدلالی از جنس ناوردایی (گواهی بررسی‌شده با ماشین). شکاف میان یک نماد و آنچه اندازه می‌گیرد همان بُرشِ معرفتیِ پَتی است، و رابط‌ها بر آن می‌نشینند؛ تحلیل مفهومِ زمانی (ولف) خانهٔ صوری داشبوردهایی است که خودِ شبکه‌شان جابه‌جا می‌شود. علاج‌ها از آنِ فصل ۸ است نه این فصل: لنگرهایی بیرون از کنترل هر یک از طرف‌ها، پنجره‌های بازکالیبرهٔ مجاز، و بازوارسی با آهنگی متناسب با نرخ رانش، که همان است که آزمون‌های قرارداد و بازنگریِ صنفی در موردِ کارشده پیاده می‌کنند.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): SemanticDrift, contract_check_time_indexed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F26-contract-checks-are-time-indexed.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): SemanticDrift, contract_check_time_indexed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F27-contract-checks-are-time-indexed.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Semantic drift: the syntax is fixed while its interpretation changes
 over time. The wiring of chapter 7 is the constant part; chapter 8&#x27;s
 counter-moves act on the semantics family. -/
@@ -1052,7 +1097,7 @@ theorem contract_check_time_indexed :
 <h3 id="sec-7-4"><span class="subnum">۷٫۴</span> بازنگری هستی‌شناختی: وقتی انتزاع کافی نیست</h3>
 <p>وقتی قرارداد ناوبری حکم چهارمش را برمی‌گرداند، یعنی هدف زیر مجموعهٔ کنشِ کنونی دست‌نیافتنی است و هیچ کاوشی نمی‌تواند شاهدِ جداکننده جمع کند، پاسخ درست جست‌وجوی عمیق‌تر نیست. رهاکردن آن بازنمایی است. خروجِ فصل ۱۰ خروج از یک فضای وضعیت است، نه از یک مسئله.</p>
 <p>این هدفِ عملیاتیِ تابعگون‌های این فصل است، و همان‌جاست که از دفترداری‌بودن درمی‌آیند. بازتوصیفی که حرکت‌های مجاز را پاس بدارد دسترسی‌پذیری را به جلو منتقل می‌کند، پس تُهی‌بودن در تصویر، یک ردهٔ کاملِ فن را در سرچشمه ابطال می‌کند (بررسی‌شده با ماشین)؛ این همان طرحِ منطقیِ قضیه‌های مانع در نیم‌رخ دومِ فصل ۱۱ است. و بازتوصیف به‌راستی موانع را جابه‌جا می‌کند: همان مبدأ، هدف، و ارزیابی می‌تواند در یک بازنمایی مانعی بی‌کران داشته باشد و در دیگری هیچ (بررسی‌شده با ماشین)، پس دست‌نیافتنی‌بودن خاصیتِ آن بازنمایی است، نه خاصیت مسئله. شرط سلامت <em>بازتاب</em> است: یک دریچهٔ فرار تنها آن‌گاه به شمار می‌آید که موفقیت در مقولهٔ نو مستلزم موفقیت در مقولهٔ کهنه باشد، و تابعگونی که هدف را بازنمی‌تاباند هیچ اثبات نمی‌کند، هرچقدر هم هم‌دامنش دوستانه باشد. این شرط تازه نیست. همان رابطهٔ سلامتِ تفسیر انتزاعیِ کوزو و کوزو است، که آنجا میان یک دامنهٔ عینی و یک دامنهٔ انتزاعی بیان شد و در ۱۹۷۹ صورت اتصال گالوایی‌اش را گرفت؛ و بیانِ آن در گذر از یک مقوله به مقولهٔ دیگر پیشینهٔ خودش را دارد، چون گرابرانت، با کار روی تابعگونی القایی میان مقوله‌های قاب‌های دکارتی بر یک مدلِ جهانِ پالوده و یک مدلِ درشت، اثبات می‌کند که تضمین‌پذیری و کنترل‌پذیری زیر تناظر دقیق در هر دو جهت منتقل می‌شوند در حالی که مشاهده‌پذیری تنها در یک جهت منتقل می‌شود. آنچه این بخش می‌افزاید تخصیصِ آن شرط به یک محمولِ هدفِ ثابت و ساختاری از حرکت‌های مجاز است، و همین است که می‌گذارد تُهی‌بودن در تصویر یک ردهٔ فن را در سرچشمه ابطال کند. این در صورت‌بندی همراه به‌عنوان یک تعریف ثبت شده است، چون کارورزانِ بیرون از تحلیل برنامه، که این مانور را بی‌تکلیفِ اثباتش به ارث می‌برند، مرتباً از قلمش می‌اندازند.</p>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): PathBetween.map, isEmpty_of_map_isEmpty<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F27-re-description-transfers-reachability.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): PathBetween.map, isEmpty_of_map_isEmpty<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F28-re-description-transfers-reachability.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- A re-description that respects admissibility maps paths to paths. -/
 def PathBetween.map {X X&#x27; : Type*} {Adj : X → X → Prop}
     {Adj&#x27; : X&#x27; → X&#x27; → Prop} (φ : X → X&#x27;)
@@ -1074,7 +1119,7 @@ theorem isEmpty_of_map_isEmpty {X X&#x27; : Type*} {Adj : X → X → Prop}
     (h : IsEmpty (PathBetween Adj&#x27; (φ x) (φ y))) :
     IsEmpty (PathBetween Adj x y) :=
   ⟨fun γ =&gt; h.false (γ.map φ hφ)⟩</code></pre></details>
-<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_escape_hatch, Reflects<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F28-the-escape-hatch-exists.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
+<details class="lean"><summary>Lean proof (Ruggedness.lean): exists_escape_hatch, Reflects<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F29-the-escape-hatch-exists.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Ruggedness.lean
 /-- Escape hatches exist: the same start, target, and evaluation can carry
 an infinite barrier in one representation and a zero barrier in another.
 Unreachability is a property of the representation, not of the problem. -/
@@ -1106,7 +1151,7 @@ def Reflects {X X&#x27; : Type*} (φ : X → X&#x27;) (P : X → Prop) (P&#x27; 
   ∀ x, P&#x27; (φ x) → P x</code></pre></details>
 <p>مسئله‌ای که حل می‌شود صاحب هم دارد. عاملی که هدفش روی هستی‌شناسی‌ای کهنه تعریف شده و مدلِ جهانش زیر پایش ارتقا می‌یابد با چیزی روبه‌روست که دو بلان بحران هستی‌شناختی نامید، و شکسته‌شدنِ مفاهیم در گذر از یک پالایشِ مدل، شکافتِ مدلِ آرمسترانگ است. هدفِ دو بلان حفظِ تابع سودمندی است، هرچند نگاشتی که آن را در امتدادش منتقل می‌کند با آزمونی ساختاری برگزیده می‌شود، یعنی دوشبیه‌سازی به‌همراه واگرایی میان قانون‌های پیش‌بینی‌شدهٔ مشاهده، و همین ساختِ او را پیشینه‌ای برای حرکت این بخش می‌کند نه نقطهٔ مقابلش؛ آرمسترانگ می‌پرسد کدام بازآراییِ یک تابع پاداش طبیعی به شمار می‌آید وقتی ویژگی‌هایی که روی‌شان تعریف شده بود یک‌به‌چند می‌شکنند؛ خواستِ این بخش حفظِ دسترسی‌پذیری است، و این باریکی عامدانه است. یک مقولهٔ مدل‌ها به‌آسانی ساختار ریخت‌هایش را نامعین می‌گذارد (خوانشِ راجرز از ساختِ آرمسترانگ یک موردِ کارشده است: پیکان‌ها با اشیا میخ نمی‌شوند، پس مفهومِ مقصودِ به‌روزرسانی حاملِ کانونی ندارد)، پس خواستِ اینجا نسبت به یک محمولِ هدفِ ثابت و ساختارِ حرکت‌های مجاز بیان می‌شود، نه نسبت به انتقالِ کلِ وضعیت‌های باور.</p>
 <p>نظریهٔ مدل خانهٔ جاافتادهٔ این مانور را می‌دهد. یک بازنمایی همان امضا است، انبارِ محمول‌هایی که یک توصیف اجازهٔ به‌کارگیری‌شان را دارد؛ انتزاع گذر به یک فروکاست است، و بازنگری هستی‌شناختی گسترش با نمادهای نو (هاجز). گسترش دقیقاً همان حرکتی است که توانِ بیانی را تغییر می‌دهد: یک محمولِ نو که دو وضعیتِ پیش‌تر تمیزناپذیر را جدا کند، هدفی را بیان‌شدنی می‌کند که به‌طور اثبات‌شده هیچ قاعده‌ای روی واژگان کهنه دربارهٔ آن تصمیم نمی‌گیرد (بررسی‌شده با ماشین)، و این همان اصلِ تفکیک‌پذیریِ فصل ۳ است که به‌جای یک حد، به‌عنوان یک دستور خوانده شده. بازتاب هم به‌نوبهٔ خود سایهٔ تک‌محمولیِ چیزی است که نظریه‌پردازان مدل از نشاندن‌های مقدماتی می‌طلبند، یعنی نگاشت‌هایی که هر فرمول زبان را یک‌جا حفظ و بازتاب می‌کنند.</p>
-<details class="lean"><summary>Lean proof (Definability.lean): expansion_gain<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F29-expansion-changes-what-is-decidable-in-the-vocab.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
+<details class="lean"><summary>Lean proof (Definability.lean): expansion_gain<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-expansion-changes-what-is-decidable-in-the-vocab.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
 /-- **Ontological escape hatch, definability form.** A single new predicate
 separating two previously indistinguishable states makes a previously
 inexpressible target expressible: the target `{z | P z}` itself is decided
@@ -1125,7 +1170,7 @@ theorem expansion_gain {L : Set (X → Prop)} {P : X → Prop} {x y : X}
     intro a b hab
     exact hab P (Set.mem_insert _ _)</code></pre></details>
 <p>دو خانواده از قضیه‌ها اکنون این مانور را از دو سو در میان می‌گیرند، یکی از پایین و یکی از بالا. از پایین، بازنگری به‌طور اثبات‌شده می‌تواند سود بدهد، و می‌تواند بی‌کران سود بدهد: یک محمولِ جداکنندهٔ یگانه هدفی را که پیش‌تر بیان‌ناشدنی بود بیان‌شدنی می‌کند، و یک بازتوصیف می‌تواند مانعی بی‌کران را یکسره پاک کند (هر دو بررسی‌شده با ماشین). از بالا، بازنگری به‌طور اثبات‌شده هرگز تمام نمی‌شود. هیچ انبارِ شمارا‌ارائه‌شده از قاعده‌های تصمیم کامل نیست، چون هدفِ قطری، که با برگرداندنِ هر قاعده روی نمایهٔ خودش ساخته می‌شود، از هر قاعده‌ای در آن انبار می‌گریزد (بررسی‌شده با ماشین)، و این ساخت عیناً بر هر مرحله از هر سلسله‌مراتبی از چنین انبارهایی اطلاق می‌شود (بررسی‌شده با ماشین): هر نگاشت نو تُهیگاهی از خودش حمل می‌کند. تُهیگاهِ سطح‌صفر فرضی نیست: اینکه آیا یک برنامه می‌ایستد با هیچ برنامه‌ای تصمیم‌پذیر نیست (بررسی‌شده با ماشین، با تکیه بر صورت‌بندیِ mathlib). واقعیتِ نسبی‌شده کلاسیک و تیزتر است. به ماشین‌ها اوراکلی برای مسئلهٔ ایستایی بدهید و مسئلهٔ ایستایی برای ماشین‌های اوراکلی یک سطح بالاتر از نو سر برمی‌آورد، و همین‌طور به‌طور فرامتناهی، از راه منطق‌های ترتیبیِ تورینگ و درجه‌های ناحل‌پذیریِ پست؛ قطری‌سازی، همان موتوری که در بالا بررسی شد، هر سطح را می‌راند. پیامدش مرزی بر خوش‌بینیِ خودِ این بخش است. بازنگری هستی‌شناختی حرکتی است که همیشه می‌شود انجامش داد و همیشه می‌تواند مهم باشد، و هیچ بازنمایی‌ای نیست که از آن دیگر هرگز لازم نشود انجامش داد: این نردبان پلهٔ آخر ندارد. این قضیه‌ای است دربارهٔ مدل صوری، نه استعاره‌ای دربارهٔ جهان؛ آنچه به عمل منتقل می‌شود انضباطِ فصل ۱۰ است، که دقیقاً برای همین شکلِ ناانسدادی مهندسی شد، یعنی قاعده‌ای برای توقفِ یک قسط، درست از آن‌رو که آن برج هیچ قاعده‌ای فراهم نمی‌کند.</p>
-<details class="lean"><summary>Lean proof (Definability.lean, Ruggedness.lean): expansion_gain, exists_escape_hatch<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-revision-pays-twice-over-definability.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F30-revision-pays-twice-over-ruggedness.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
+<details class="lean"><summary>Lean proof (Definability.lean, Ruggedness.lean): expansion_gain, exists_escape_hatch<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-revision-pays-twice-over-definability.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-revision-pays-twice-over-ruggedness.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Definability.lean
 /-- **Ontological escape hatch, definability form.** A single new predicate
 separating two previously indistinguishable states makes a previously
 inexpressible target expressible: the target `{z | P z}` itself is decided
@@ -1166,14 +1211,14 @@ theorem exists_escape_hatch :
   · exact barrier_eq_zero_of_monotone_path
       ⟨[false, true], rfl, rfl, by simp [List.isChain_cons]⟩
       (fun z _ =&gt; le_rfl)</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): diagonal_escape<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F31-the-diagonal-target-escapes-every-rule.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): diagonal_escape<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F32-the-diagonal-target-escapes-every-rule.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- Cantor&#x27;s diagonal at the level of decision rules: no countable
 enumeration of rules is complete; the diagonal target flips each rule on
 its own index and so escapes every entry. -/
 theorem diagonal_escape (e : ℕ → ℕ → Bool) :
     ∃ f : ℕ → Bool, ∀ k, f ≠ e k :=
   ⟨fun n =&gt; !(e n n), fun k h =&gt; by simpa using congrFun h k⟩</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F32-every-stage-of-every-hierarchy-has-a-void.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F33-every-stage-of-every-hierarchy-has-a-void.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The tower does not close: every stage of an arbitrary hierarchy of
 countably-presented rule stocks misses a target constructible from that
 very stage. Enrichment is always worth something (`expansion_gain`) and
@@ -1181,7 +1226,7 @@ never finished. -/
 theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
     ∃ f : ℕ → Bool, ∀ k, f ≠ stage i k :=
   diagonal_escape (stage i)</code></pre></details>
-<details class="lean"><summary>Lean proof (Tower.lean): halting_void<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F33-the-level-zero-void-halting.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): halting_void<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F34-the-level-zero-void-halting.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The level-zero void, concretely: whether a program halts on its own
 description is not decidable by any program. Mathlib&#x27;s halting problem in
 this file&#x27;s vocabulary. -/
@@ -1215,7 +1260,7 @@ T_{\theta}(s_t,a_{0,t},a_{-0,t}),
 a_{i,t}\sim\pi_{i,t}(h_t^i).
 \]</div>
 <p><strong>بازتابندگی وضعیت را جابه‌جا می‌کند؛ صورت‌بندی را نمی‌شکند.</strong> وضعیت گسترده را \(\tilde{s}_t=(s_t,\pi_{-0,t})\) تعریف کنید. این زوج زیر یک هستهٔ گسترده مانند یک فرایند مارکوفِ معمولی تحول می‌یابد، و حاشیهٔ \(S\)-اش گذارِ اصلی را بازمی‌یابد (بررسی‌شده با ماشین). این بررسی عملگرهای سازگاری‌ای را در بر می‌گیرد که با کنشِ کانونی رانده می‌شوند، قطعی یا تصادفی؛ وابستگی به مشاهده‌ها و بازپرداخت‌ها به همان شکل در مختصهٔ سیاست تا می‌شود. آنچه این گستراندن هزینه می‌برد مشاهده‌پذیری است: مختصه‌های نو، یعنی سیاست‌های عامل‌های دیگر، مشاهده‌نشده‌اند، و مسئله با وضعیتِ پنهانِ بزرگ‌تری به فصل ۳ بازمی‌گردد. این همان حلقه‌ای است که آنجا اعلام شد: همتاهای سازگارشونده دلیلِ آنند که باور روی \(S\) به‌تنهایی از بسندگی می‌افتد، و بحثِ رانشِ فصل ۱ هم اینجا فرود می‌آید، چون آنچه شبیه \(\theta_t\)ای رانش‌کننده به نظر می‌رسد اغلب \(\pi_{-0,t}\)ای سازگارشونده است که مدل از بازنمایی‌اش ناتوان بوده. یک کانالِ بازتابی حتی بیرون از صورت‌بندیِ گسترده می‌ماند: وضعیت گسترده سیاست‌های عامل‌های دیگر را حمل می‌کند، و نردبان زیر، قاعدهٔ بازنگریِ مدلِ خودِ عامل کانونی را می‌افزاید، اما هیچ مختصه‌ای سیاستِ کانونی‌ای را در خود ندارد که خودش بهینه‌سازی باشد در پیِ هدف‌هایی واگرا از \(G_0\)ی اعلام‌شده. آن حالت، بهینه‌سازیِ میانی است، بهینه‌سازی درونی‌ای که درون سیاستِ آموخته‌شده برمی‌آید (هوبینگر، فان مرویک، میکولیک، اسکالسه و گرابرانت)، که واگرایی‌اش از \(G_0\) شکستِ هم‌راستاییِ درونیِ آن است نه تعریفش، و اینجا پرچم می‌خورد نه آنکه مدل شود. حالتِ پرچم‌خورده به‌طور صوری تُهی نیست: ترنر، اسمیت، شاه، کریچ و تدپالی اثبات می‌کنند که تقارن‌های بیان‌شدهٔ محیطی بسنده‌اند تا سیاست‌های بهینه زیر بیشترِ تابع‌های پاداش، وضعیت‌هایی را ترجیح دهند که گزینه‌های دست‌یافتنیِ بیشتری نگه می‌دارند، و این همان مختصهٔ دسترسی‌پذیریِ فصل ۴ است که به‌عنوان پیش‌بینی‌ای دربارهٔ همان مختصه‌ای خوانده شده که این صورت‌بندی از حملش تن می‌زند.</p>
-<details class="lean"><summary>Lean proof (Dynamics.lean): extendStep, extendStep_fst, extendStepRand_fst<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F34-the-extended-state-marginalizes-correctly.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+<details class="lean"><summary>Lean proof (Dynamics.lean): extendStep, extendStep_fst, extendStepRand_fst<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F35-the-extended-state-marginalizes-correctly.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- One step of a reflexive system: the transition depends on the other
 agents&#x27; current policy configuration `p : P`, and that configuration adapts
 in response to the focal action via `U`. -/
@@ -1250,7 +1295,7 @@ theorem extendStepRand_fst (T : S → A → P → PMF S) (U : P → A → PMF P)
   simp only [h]
   exact PMF.bind_pure _</code></pre></details>
 <p>این گستراندن یک رده‌بندیِ تشخیصی است، نه فضایی محاسبه‌پذیر. روی مسئله‌ای متناهی، تنها مختصهٔ سیاست \(|A|^{|S|}\) نقطه دارد (بررسی‌شده با ماشین، به‌عنوان پانویسی بر واژهٔ «انفجاری»)، و برنامه‌ریزی روی فضای باورِ صادقانه در حالت کلی رام‌نشدنی است: برنامه‌ریزیِ دقیقِ جزئاً‌مشاهده‌شده به معنای پیچیدگی-نظری سخت است و در افق بی‌کران تصمیم‌ناپذیر (پاپادیمیتریو و تسیتسیکلیس؛ مدنی، هنکس و کاندن). ریاضیاتِ این فصل اثبات می‌کند <em>چرا</em> داشبوردِ گسترده‌نشده شکست می‌خورد؛ داشبورد بهتری محاسبه نمی‌کند. کاوش‌های فصل ۹ برای همین‌اند: بیت‌های مرتبط با تصمیم دربارهٔ وضعیت گسترده را می‌خرند، دقیقاً از آن‌رو که محاسبهٔ سرراستش در دسترس نیست.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): card_policySpace<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F35-the-policy-coordinate-is-explosive.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): card_policySpace<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F36-the-policy-coordinate-is-explosive.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- The policy space over a finite problem is exponentially large: the
 augmentation of chapter 8 is a diagnostic classification, not a computable
 space, and this is the one-line reason. -/
@@ -1258,7 +1303,7 @@ theorem card_policySpace (S A : Type*) [Fintype S] [Fintype A] [DecidableEq S] :
     Fintype.card (S → A) = Fintype.card A ^ Fintype.card S :=
   Fintype.card_fun</code></pre></details>
 <p>دستگاهِ این فصل از نردبانی بالا می‌رود که از آخرین نام‌گذاری‌اش قدیمی‌تر است: پله‌هایش با یادگیریِ تک‌حلقه، دوحلقه، و دوترو متناظرند (آرگیریس و شون؛ اصطلاح سوم از بیتسن است، از ۱۹۴۲)، تناظری که این کتاب می‌کشد نه آنکه آن منابع ادعایش کنند. سیستم‌های خودتحول‌پذیرِ یورداکه همان سه عمق را نام می‌برند، و واژگانِ خود-* در رایانشِ خودمختار (کفارت و چس) پله‌های پایینی را می‌پیمایند: سیستم‌های <em>سازش‌پذیر</em> پارامترها را درون ردهٔ مدلی ثابت تنظیم می‌کنند؛ سیستم‌های <em>تحول‌پذیر</em> وقتی ابطال شوند آن رده را بازنگری می‌کنند، که همان انضباطِ شاهدِ‌صفرِ فصل ۳ است؛ سیستم‌های <em>خودتحول‌پذیر</em> خودِ عملگرِ بازنگری را در اختیار دارند. در این چارچوب، پله‌ها عمق‌های گستراندن‌اند: سیاستِ طرف مقابل، سپس عملگرِ به‌روزرسانی‌اش، سپس قاعدهٔ بازنگریِ مدلِ خودِ عامل کانونی، که هر یک با همان ساختِ حاشیه‌ایِ بررسی‌شده با ماشین درونی می‌شود، و هر یک به بهای وضعیتِ پنهانِ بزرگ‌تر و صورت‌حسابی از تنوع که مرکب می‌شود (بررسی‌شده با ماشین به‌عنوان حساب: تنظیمِ بی‌نقصِ وضعیت و سیاست با هم، تنوعِ پاسخی دست‌کم به اندازهٔ \(|S| \cdot |A|^{|S|}\) می‌طلبد). و این نردبان در بالا بسته نمی‌شود: سیستمی که قاعدهٔ بازنگریِ خودش را در اختیار دارد باز هم <em>توجیهِ</em> آن قاعده را در اختیار ندارد، و همان‌جاست که مرزِ فصل ۲ ایستاده، هر پله‌ای که باشد.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_augmented<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F36-the-variety-bill-compounds.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): requisite_variety_augmented<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F37-the-variety-bill-compounds.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Reflexivity is expensive, as a counting bound: perfectly regulating the
 augmented state of chapter 8 (system state paired with the counterparty&#x27;s
 policy) demands response variety at least `|S| * |A| ^ |S|`. Composing the
@@ -1266,17 +1311,17 @@ requisite-variety bound with the policy-space cardinality turns the
 adjective &quot;explosive&quot; into arithmetic. -/
 theorem requisite_variety_augmented {S A R O : Type*} [Fintype S] [Fintype A]
     [DecidableEq S] [DecidableEq R] [DecidableEq O]
-    (ω : S × (S → A) → R → O) (hinj : ∀ r, Function.Injective fun d =&gt; ω d r)
-    (ρ : S × (S → A) → R) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : S × (S → A) → R → O) (ρ : S × (S → A) → R)
+    (hsep : FiberSeparating ω ρ) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card S * Fintype.card A ^ Fintype.card S ≤
       (Finset.univ.image ρ).card := by
-  have h := requisite_variety_perfect ω hinj ρ o₀ hperf
+  have h := requisite_variety_perfect ω ρ hsep o₀ hperf
   rwa [Fintype.card_prod, card_policySpace] at h</code></pre></details>
 <p>یک سنجه می‌تواند از نظر آماری با یک هدف همبسته بماند در حالی که به‌محض هدف‌شدنش از نظر راهبردی نامعتمد شود. این یک سازوکارِ شکستِ گودهارت‌گونه است، نه یک قانون همگانی. برخی سنجه‌های هدف‌شده جهان را بهتر می‌کنند؛ برخی دیگر بازی می‌خورند، جابه‌جا می‌شوند، یا آرایشی می‌شوند. صورت ابطال‌پذیرِ ادعای «سنجهٔ ما زیر مداخله پایدار است» نبودِ یک گواه است: دینامیکی مداخله‌شده که زیر آن سنجه نمی‌افتد در حالی که هدف اکیداً می‌افتد. صورت‌بندی همراه یکی از چنین گواه‌هایی را در مقیاس کوچک نشان می‌دهد؛ نشان‌دادنِ یکی بحث را تمام می‌کند.</p>
 <p>این گواه خویشاوندان صوری دارد، و همان‌ها جای افزودهٔ آن را مشخص می‌کنند. مانهایم و گرابرانت سازوکارهایی را رده‌بندی می‌کنند که آن واگرایی را تولید می‌کنند، چهار راهی که یک نماینده زیر فشار بهینه‌سازی از هدف جدا می‌افتد؛ اسکالسه، هاو، کراشنینیکوف و کروگر همتای ایستایش را اثبات می‌کنند، که روی کل فضای سیاست هیچ زوجی از تابع‌های پاداشِ ناثابت از هک‌شدن در برابر یکدیگر ایمن نیست؛ و نیای اقتصادی‌اش مدلِ چندوظیفهٔ هولمستروم و میلگروم است، که در آن قیمت‌گذاری بر وظیفهٔ اندازه‌پذیر، کوشش را از وظیفهٔ اندازه‌ناپذیر برمی‌گرداند. گواهِ بالا عضوِ دینامیکیِ این خانواده است: یک دینامیکِ مداخله‌شدهٔ یگانه به‌جای یک رده‌بندی یا یک کرانِ فضای سیاست، و همین است که ادعای پایداری را مورد‌به‌مورد ابطال‌پذیر می‌کند.</p>
 <p>این هشدارها صاحب دارند. صورتِ ۱۹۷۵ گودهارت: هر نظمِ آماریِ مشاهده‌شده گرایش دارد فرو بریزد به‌محض آنکه برای مقصودهای کنترلی بر آن فشار گذاشته شود. صورتِ کمپبل: هرچه یک شاخص کمی بیشتر برای تصمیم‌گیری اجتماعی به کار رود، بیشتر همان فرایندی را فاسد می‌کند که قرار بود پایشش کند. آن قصارِ آشنا، که سنجه‌ای که هدف شود از سنجهٔ خوب‌بودن می‌افتد، از هیچ‌یک از آن دو نیست؛ بازگفتِ استراترن است. بازتابندگی به معنای فراخ‌ترش از سوروس است، و می‌ارزد درست بیانش کنیم: نه اینکه مشاهده سیستم را برمی‌آشوبد، بلکه اینکه باورهای خطاپذیرِ مشارکت‌کنندگان بخشی از ساختار علّیِ سیستم‌اند، پس عمل‌کردن بر پایهٔ یک باور می‌تواند به درست یا غلط‌شدنش کمک کند.</p>
 <p>پاره‌ای از این هشدار قضیه است نه گرایش. قاعدهٔ تصمیمی که تنها از راه یک آمارهٔ خلاصه عمل کند، کوریِ همان آماره را به ارث می‌برد: اگر آن آماره دو وضعیت را که مجموعه‌های کنشِ پذیرفتنی‌شان ناهم‌پوش است جدا نکند، آن‌گاه هر قاعده‌ای که بر آن بنا شود، قطعی یا تصادفی، دست‌کم در یکی از آن دو نابه‌جا عمل می‌کند (بررسی‌شده با ماشین). مدیریت‌کردن بر پایهٔ داشبورد دقیقاً به همان اندازه ایمن است که داشبورد تمایزبخش است، و این همان شرط فصل ۳ است. پیچِ بازتابی‌ای که این فصل می‌افزاید این است که عامل‌هایِ زیرِ اندازه‌گیری منتظر رخ‌دادنِ وضعیت‌های درهم‌آمیخته نمی‌مانند؛ خودشان می‌سازندشان.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails, statistic_based_randomized_rule_fails<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F37-statistic-based-rules-inherit-blindness.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails, statistic_based_randomized_rule_fails, FactorsThrough, AlmostSurelyAcceptableAt, MeasureRandomizedUnacceptableAt, measure_randomized_factoring_disjoint_obstruction<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F38-statistic-based-rules-inherit-blindness.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- A decision rule that acts only through a summary statistic inherits the
 statistic&#x27;s blindness: if the statistic fails to separate two states whose
 acceptable-action sets are disjoint, then every rule based on it acts
@@ -1305,7 +1350,54 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
   rintro ⟨h1, h2⟩
   obtain ⟨a, ha⟩ := (α (m s)).support_nonempty
   have ha&#x27; : a ∈ (α (m s&#x27;)).support := by rw [← hm]; exact ha
-  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha&#x27;)</code></pre></details>
+  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha&#x27;)
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- `f` factors through `q` when all information used by `f` passes through
+`q`. -/
+def FactorsThrough {X Q Y : Type*} (f : X → Y) (q : X → Q) : Prop :=
+  ∃ g : Q → Y, f = g ∘ q
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- A measure-theoretic randomized decision is acceptable at `s` when it is
+supported on acceptable actions up to a null set. -/
+def AlmostSurelyAcceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ∀ᵐ a ∂(decision s : MeasureTheory.Measure Action), a ∈ acceptable s
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- For an arbitrary probability measure, “acts unacceptably” means failure to
+be almost surely supported on the acceptable set.  When the set is measurable,
+this is equivalent to assigning positive mass to its complement. -/
+def MeasureRandomizedUnacceptableAt {State Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action) (s : State) : Prop :=
+  ¬ AlmostSurelyAcceptableAt acceptable decision s
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The randomized obstruction for completely general probability measures.
+No countability or measurability of the acceptable sets is required. -/
+theorem measure_randomized_factoring_disjoint_obstruction
+    {State Signal Action : Type*} [MeasurableSpace Action]
+    (acceptable : State → Set Action) (signal : State → Signal)
+    (decision : State → MeasureTheory.ProbabilityMeasure Action)
+    (hfactor : FactorsThrough decision signal) {x y : State}
+    (hidentified : signal x = signal y)
+    (hdisjoint : Disjoint (acceptable x) (acceptable y)) :
+    MeasureRandomizedUnacceptableAt acceptable decision x ∨
+      MeasureRandomizedUnacceptableAt acceptable decision y := by
+  have heq : decision x = decision y := hfactor.eq_of_eq hidentified
+  by_cases hx : AlmostSurelyAcceptableAt acceptable decision x
+  · right
+    intro hy
+    unfold AlmostSurelyAcceptableAt at hx hy
+    rw [← heq] at hy
+    have hb := hx.and hy
+    have hf : ∀ᵐ _a ∂(decision x : MeasureTheory.Measure Action), False :=
+      hb.mono (fun _a ha =&gt; hdisjoint.le_bot ha)
+    exact probabilityMeasure_not_ae_false (decision x) hf
+  · exact Or.inl hx</code></pre></details>
 <h3 id="sec-8-procedure-adversarial-and-participatory-pre-mortem">رویه: پیش‌مرگیِ خصمانه و مشارکتی</h3>
 <p>برای هر مداخله بپرسید:</p>
 <ol><li>کدام عامل‌ها سود می‌برند، زیان می‌بینند، یا در معرض قرار می‌گیرند؟</li><li>ارزان‌ترین راه برآوردنِ قاعدهٔ مشاهده‌پذیر در حالی که هدفش شکست بخورد چیست؟</li><li>هزینه را می‌شود به کدام جمعیت، زیرسامانه، یا افق زمانیِ اندازه‌گیری‌نشده جابه‌جا کرد؟</li><li>چه کسانی دانشِ محلی دربارهٔ راه‌های دورزدن، آسیب‌ها، یا وابستگی‌هایی دارند که مدل از قلم انداخته است؟</li><li>کدام مشاهده مقاومتِ مشروع را از فرارِ راهبردی تمیز می‌دهد؟</li></ol>
@@ -1317,7 +1409,7 @@ theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set
 <h2 id="ch9-h"><span class="chaplabel">فصل ۹</span>کاوش‌ها: شناسایی مقیدِ سیستم</h2>
 <p>وقتی \(T\)، \(Z\)، یا \(\Pi\) نامعین است، مداخلهٔ بزرگ اغلب نخستین اندازه‌گیریِ بدی است. کاوش را باید برای <strong>بهرهٔ اطلاعاتیِ مرتبط با تصمیم</strong> زیر قیدهای صریحِ خطر برگزید.</p>
 <p>این تجویز که با پیچیده‌ٔ‌درهم‌تنیده باید با کاوش-حس-پاسخ روبه‌رو شد نه با تحلیل، از اسنودن است، و کاوشِ ایمن-به-شکست هم از او. مرزی که او میان پیچیده و درهم‌تنیده می‌کشد بلاغت نیست؛ می‌شود آن را به زبان همین کتاب بیان کرد. دو مدل زنده را <em>تمیزپذیرِ منفعل</em> بنامید وقتی تماشا به‌تنهایی سرانجام قانون‌های مشاهده‌شان را جدا کند، و <em>تمیزپذیرِ کاوشی</em> وقتی سیاستی چنین کند. تماشا حالت خاصی از عمل‌کردن است، و زوج‌هایی از مدل وجود دارند که هیچ مقدار مشاهدهٔ منفعل جدایشان نمی‌کند در حالی که یک مداخلهٔ یگانه چنین می‌کند (بررسی‌شده با ماشین، با مثالی صریح از دو وضعیت). پیچیده آن است که تحلیل می‌تواند از پشت میز فیصله‌اش دهد؛ درهم‌تنیده آن است که تنها کاوش‌ها می‌توانند فیصله‌اش دهند، و مرز میانشان خاصیتِ ردهٔ مدل است، نه خاصیتِ کوشاییِ تحلیل‌گر.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): flipModel, inertModel, exists_probe_only_distinguishable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F38-a-probe-separates-what-watching-cannot.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): flipModel, inertModel, exists_probe_only_distinguishable<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F39-a-probe-separates-what-watching-cannot.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Witness model: the state is observed exactly, the passive action `false`
 leaves the state alone, and the probe action `true` flips it. -/
 noncomputable def flipModel : POSystem Bool Bool Bool where
@@ -1362,7 +1454,7 @@ I\!\left(\Theta;O_{t:t+H}\mid e,h_t^0\right),
 <p>یعنی اطلاعات متقابل میان ردهٔ مدل و مشاهده‌های آینده، شرطی بر آزمایش و تاریخچهٔ کنونی. گرفتنِ \(\Theta\) به‌عنوان متغیر تصادفی، خوانش بیزیِ فصل ۲ را پیش‌فرض می‌گیرد: برای تعریف‌شدنِ این معیار باید پیشینی روی مدل‌ها موجود باشد. جایی که تنها یک مجموعهٔ باورمند دفاع‌پذیر است، بهرهٔ اطلاعاتیِ انتظاری را با معیاری استوار عوض کنید، مثلاً برگزیدنِ کاوشی که تمایزپذیریِ بدترین‌حالت میان مدل‌های زنده را بیشینه کند.</p>
 <p>رایفا و شلایفر دستگاهِ پیش‌پسینِ پشتِ ارزش‌گذاریِ آزمایش را ساختند؛ لیندلی اطلاعات متقابل را به‌عنوان ارزش یک آزمایش پیشنهاد کرد؛ هاوارد قاعدهٔ عملیِ زیر را تیزتر از همه بیان کرد: اطلاعاتی که نتواند یک کنش را تغییر دهد بی‌ارزش است. اینکه مشاهده هرگز نمی‌تواند سودمندیِ انتظاریِ دست‌یافتنی را پایین بیاورد از هر سهٔ این‌ها قدیمی‌تر است: مقایسهٔ آزمایش‌های بلک‌ول است. گرفتنِ ردهٔ مدل به‌عنوان متغیر تصادفی یک گام پیش از ساختِ بیزی-سازگارِ داف است، که آن را یکسره در وضعیتِ برنامه‌ریزی تا می‌زند و راس، شیب‌درا و پینو به مشاهدهٔ جزئی گسترشش دادند؛ و تنشی که کاوش مدیریتش می‌کند، یعنی عمل برای آموختن در برابر عمل برای اجرا، همان کنترل دوگانهٔ فلدباوم است.</p>
 <p>در عمل، از نسخهٔ ساده‌تری استفاده کنید: آزمایشی را فقط آن‌گاه برگزینید که نتایج ممکنش کنش‌های بعدیِ متفاوتی به بار آورند. این یک قضیه است نه یک سرانگشتی: مشاهده پیش از عمل هرگز سودمندیِ انتظاریِ دست‌یافتنی را پایین نمی‌آورد، و ارزش مشاهده دقیقاً وقتی صفر است که یک کنش یگانه زیر هر نتیجهٔ ممکن بهینه باشد (بررسی‌شده با ماشین، برای فضاهای متناهیِ نتیجه و کنش). قاعدهٔ عملی همان عکس نقیض است. نسخهٔ دفترداری‌اش هم چنین است: کاوشی دقیقاً وقتی نامرتبط با تصمیم است که توصیه‌اش در سراسر نتایج ممکن ثابت باشد (بررسی‌شده با ماشین). همین معیار جست‌وجوهای فیزیکی را هم می‌راند: اطلاع‌گرایی (ورگاسولا، ویلرمو و شرایمن) وقتی گرادیان‌ها بی‌فایده‌اند با بهرهٔ اطلاعاتیِ انتظاری هدایت می‌کند، و این همان فصل ۹ است با باد به‌جای فضای وضعیت.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): value_of_information_nonneg, value_of_information_eq_zero_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F39-the-value-of-observation-is-nonnegative-zero-iff.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): value_of_information_nonneg, value_of_information_eq_zero_iff_possible, value_of_information_eq_zero_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F40-the-value-of-observation-is-nonnegative-zero-iff.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- Raiffa&#x27;s dictum, the inequality half: observing the outcome before
 acting never lowers achievable expected utility. `w` is the (nonnegative)
 weight the agent&#x27;s predictive distribution puts on each observation, and
@@ -1382,15 +1474,26 @@ theorem value_of_information_nonneg (u : A → O → ℝ) (w : O → ℝ)
 
 -- LeanTest/HardProblems/SystemsTheory.lean
 /-- Value of information is zero exactly when a single action is optimal
-under every possible outcome, so the observation cannot change the decision.
-This is the theorem behind chapter 9&#x27;s practical criterion: an experiment
-whose outcomes all select the same action purchases nothing. -/
-theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
-    (hw : ∀ o, 0 &lt; w o) :
+under every outcome the experiment can actually produce.
+
+The support qualification is the whole content of the statement, and it is
+where a careless version goes wrong. Quantifying over *every* outcome, rather
+than every outcome of positive weight, makes the criterion false: an outcome of
+weight zero contributes nothing to either side, so an action that is optimal
+everywhere except there still leaves the value of information at zero, while
+the unqualified right-hand side fails. `value_of_information_eq_zero_iff` is
+the corollary for a strictly positive predictive distribution, where the
+qualification can be dropped because it is vacuous.
+
+Aristotle reached the same qualification independently, from the informal claim
+alone, and produced the two-outcome counterexample that forces it. This project
+had the side condition too, but paid for it globally, by assuming every outcome
+has positive weight; that assumption is not needed and is dropped here. -/
+theorem value_of_information_eq_zero_iff_possible (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 ≤ w o) :
     (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; ∑ o, w o * u a o) =
       (∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o)
-    ↔ ∃ a : A, ∀ o, ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
-  have hle := value_of_information_nonneg u w fun o =&gt; (hw o).le
+    ↔ ∃ a : A, ∀ o, 0 &lt; w o → ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
   constructor
   · intro heq
     obtain ⟨a₀, -, ha₀⟩ :=
@@ -1403,31 +1506,49 @@ theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
     have hnonneg : ∀ o ∈ (Finset.univ : Finset O),
         0 ≤ w o * ((Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) - u a₀ o) := by
       intro o _
-      exact mul_nonneg (hw o).le
+      exact mul_nonneg (hw o)
         (sub_nonneg.mpr (Finset.le_sup&#x27; (fun a =&gt; u a o) (Finset.mem_univ a₀)))
     have hzero :
         ∑ o, w o * ((Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) - u a₀ o) = 0 := by
       simp only [mul_sub]
       rw [Finset.sum_sub_distrib, ← hsum, sub_self]
     have hterm := (Finset.sum_eq_zero_iff_of_nonneg hnonneg).mp hzero
-    refine ⟨a₀, fun o a&#x27; =&gt; ?_⟩
+    refine ⟨a₀, fun o hpos a&#x27; =&gt; ?_⟩
     rcases mul_eq_zero.mp (hterm o (Finset.mem_univ o)) with h | h
-    · exact absurd h (ne_of_gt (hw o))
+    · exact absurd h (ne_of_gt hpos)
     · have hs : (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o) = u a₀ o :=
         sub_eq_zero.mp h
       calc u a&#x27; o ≤ Finset.univ.sup&#x27; Finset.univ_nonempty (fun a =&gt; u a o) :=
             Finset.le_sup&#x27; (fun a =&gt; u a o) (Finset.mem_univ a&#x27;)
         _ = u a₀ o := hs
   · rintro ⟨a, ha⟩
-    have hpt : ∀ o, (Finset.univ.sup&#x27; Finset.univ_nonempty fun a&#x27; =&gt; u a&#x27; o) = u a o := by
-      intro o
-      exact le_antisymm (Finset.sup&#x27;_le _ _ fun a&#x27; _ =&gt; ha o a&#x27;)
-        (Finset.le_sup&#x27; (fun a&#x27; =&gt; u a&#x27; o) (Finset.mem_univ a))
-    refine le_antisymm hle ?_
-    calc ∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty (fun a&#x27; =&gt; u a&#x27; o)
-        = ∑ o, w o * u a o := by simp only [hpt]
-      _ ≤ _ := Finset.le_sup&#x27; (fun a =&gt; ∑ o, w o * u a o) (Finset.mem_univ a)</code></pre></details>
-<details class="lean"><summary>Lean proof (Dynamics.lean): DecisionRelevant, not_decisionRelevant_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F40-decision-irrelevance-is-a-constant-recommendatio.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
+    have hterms : ∀ o ∈ (Finset.univ : Finset O),
+        w o * u a o
+          = w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a&#x27; =&gt; u a&#x27; o := by
+      intro o _
+      rcases eq_or_lt_of_le (hw o) with h | h
+      · rw [← h]; ring
+      · congr 1
+        exact (le_antisymm (Finset.sup&#x27;_le _ _ fun a&#x27; _ =&gt; ha o h a&#x27;)
+          (Finset.le_sup&#x27; (fun a&#x27; =&gt; u a&#x27; o) (Finset.mem_univ a))).symm
+    refine le_antisymm (value_of_information_nonneg u w hw) ?_
+    rw [← Finset.sum_congr rfl hterms]
+    exact Finset.le_sup&#x27; (fun a =&gt; ∑ o, w o * u a o) (Finset.mem_univ a)
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The criterion for a strictly positive predictive distribution, where every
+outcome is possible and the support qualification is vacuous. This is the form
+chapter 9 uses: an experiment whose outcomes all select the same action
+purchases nothing. -/
+theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
+    (hw : ∀ o, 0 &lt; w o) :
+    (Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; ∑ o, w o * u a o) =
+      (∑ o, w o * Finset.univ.sup&#x27; Finset.univ_nonempty fun a =&gt; u a o)
+    ↔ ∃ a : A, ∀ o, ∀ a&#x27; : A, u a&#x27; o ≤ u a o := by
+  rw [value_of_information_eq_zero_iff_possible u w fun o =&gt; (hw o).le]
+  exact ⟨fun ⟨a, ha⟩ =&gt; ⟨a, fun o a&#x27; =&gt; ha o (hw o) a&#x27;⟩,
+         fun ⟨a, ha⟩ =&gt; ⟨a, fun o _ a&#x27; =&gt; ha o a&#x27;⟩⟩</code></pre></details>
+<details class="lean"><summary>Lean proof (Dynamics.lean): DecisionRelevant, not_decisionRelevant_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F41-decision-irrelevance-is-a-constant-recommendatio.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Dynamics.lean
 /-- Chapter 9&#x27;s practical criterion: a probe is decision-relevant when at
 least two possible outcomes select different subsequent actions. -/
 def DecisionRelevant {Act : Type*} (e : Probe O Act) : Prop :=
@@ -1473,7 +1594,7 @@ theorem not_decisionRelevant_iff {Act : Type*} (e : Probe O Act) :
 <p>تحلیل وقتی می‌ایستد که یکی از چهار شرط برقرار شود:</p>
 <ol><li><strong>اجرا:</strong> سیاستی زیر ردهٔ مدلِ بیان‌شده شدنی و به‌قدر کافی استوار است.</li><li><strong>کاوش:</strong> عدم‌قطعیت برای تصمیم بحرانی است اما درون قیدها کاهش‌پذیر است.</li><li><strong>تشدید یا چانه‌زنی:</strong> کنشِ لازم یا انتخابِ هدف از آنِ اختیاری دیگر است.</li><li><strong>خروج یا اعلام نشدنی‌بودن:</strong> زیر مجموعهٔ کنشِ کنونی و قیدها هیچ مسیر پذیرفتنی‌ای وجود ندارد.</li></ol>
 <p>حکم چهارم باریک‌تر از آن است که به گوش می‌آید: نشدنی‌بودن نسبت به بازنماییِ کنونی اعلام می‌شود، و بخش ۷٫۴ نام حرکتی را می‌برد که پس از آن می‌ماند، یعنی خروج از فضای وضعیت نه از مسئله. این چهار شرط یافته‌اند، و یافته‌ها می‌توانند هم‌زمان رخ دهند: سیاستی می‌تواند برای عامل کانونی شدنی باشد در حالی که اختیارِ انتخاب هدف جای دیگری نشسته است. به‌عنوان فهرست کنترل، فهرست بالا کامل است؛ به‌عنوان یک <em>قاعده</em> تنها زیر ترتیب تقدمی اعلام‌شده قطعی می‌شود، و آن ترتیب خودش انتخابی حکمرانی است. ترتیبِ مشروعیت-نخست تشدید را بالای اجرا می‌گذارد (آنچه صلاحیت انتخابش را نداری اجرا نکن، حتی اگر شدنی باشد)؛ ترتیبِ اضطراری می‌تواند این را وارونه کند. هر ترتیبی برگزیده شود، جایش در قرارداد ناوبری به‌عنوان بخشی از \(\sigma\) است، و در دفتر کنار خوانش و وزن‌های فصل ۲. زیر هر ترتیب اعلام‌شده، نشدنی‌بودن باقیمانده است: تنها وقتی اعلام می‌شود که هر سه یافتهٔ مثبت شکست بخورند، هرگز در حالی که گزینه‌ای زنده مانده است (بررسی‌شده با ماشین زیر ترتیبِ رمزگذاری‌شده). صورت‌بندی همراه یکی از این ترتیب‌ها را رمزگذاری می‌کند، اجرا پیش از کاوش پیش از تشدید؛ استقراری با مشروعیت-نخست، آزمون اول و سوم را جابه‌جا می‌کند.</p>
-<details class="lean"><summary>Lean proof (Core.lean): Assessment.verdict_infeasible_iff, verdictOfList_eq_residual_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F41-infeasibility-is-residual-under-the-encoded-orde.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Core.lean
+<details class="lean"><summary>Lean proof (Core.lean): Assessment.verdict_infeasible_iff, verdictOfList_eq_residual_iff<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F42-infeasibility-is-residual-under-the-encoded-orde.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Core.lean
 /-- Infeasibility is exactly the failure of all three positive findings:
 the rule never declares infeasibility while a live option remains. -/
 theorem Assessment.verdict_infeasible_iff (a : Assessment) :
@@ -1497,7 +1618,7 @@ theorem verdictOfList_eq_residual_iff {V : Type*} (rules : List (Bool × V))
     cases b &lt;;&gt; simp_all [verdictOfList]</code></pre></details>
 <p>نبودِ قاعدهٔ توقفِ درونی یافتهٔ ریتل و وبر دربارهٔ مسئله‌های شرور است (خودِ آن واژه از چرچمن است، از سرمقالهٔ ۱۹۶۷ که ارائهٔ ریتل را ثبت کرد)، و این فصل آن را چندان که پاسخش دهد وارونه نمی‌کند: قاعدهٔ بالا یک قسطِ تحلیل را متوقف می‌کند، نه مسئله را، و دقیقاً از آن‌رو مهندسی شده که مسئله چیزی برای یافتن فراهم نمی‌کند. نیای آن قاعده بسنده‌گراییِ سایمون است: جست‌وجو وقتی می‌ایستد که سطحی از آرزو برآورده شود، نه وقتی بهینه‌ای نشان داده شود.</p>
 <p>هیچ قضیهٔ نهایی‌ای نیست که دشواریِ انسانی را فیصله دهد. درون مدل صوری، همین نبودن خودش قضیه است نه تسلیم: هر انبارِ شمارا‌ارائه‌شده از قاعده‌ها هدفی از ساختِ خودش را از دست می‌دهد، در هر مرحله از غنی‌سازی (بررسی‌شده با ماشین)، پس نردبانِ بخش ۷٫۴ حتی درون ریاضیات هم پلهٔ آخر ندارد. اما انضباطی هست: تا مدل، ناوردایانِ حفظ‌شده، اطلاعات مفقود، و آسیب‌هایی که روش‌تان مجاز می‌دارد را مشخص نکرده‌اید، وعدهٔ حل ندهید.</p>
-<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F42-no-stage-of-enrichment-is-final.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
+<details class="lean"><summary>Lean proof (Tower.lean): no_final_stage<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F43-no-stage-of-enrichment-is-final.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Tower.lean
 /-- The tower does not close: every stage of an arbitrary hierarchy of
 countably-presented rule stocks misses a target constructible from that
 very stage. Enrichment is always worth something (`expansion_gain`) and
@@ -1516,7 +1637,7 @@ theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
 <div class="table-wrap"><table><thead><tr><th scope="col">فرض</th><th scope="col">شاهد</th><th scope="col">ضدمدل‌ها</th><th scope="col">آسیب در صورت خطا</th><th scope="col">مشاهدهٔ بعدی</th></tr></thead><tbody><tr><td>شمار رویدادها سلامت سیستم را ردیابی می‌کند</td><td>همبستگی تاریخی، پیش از هدف‌گذاری</td><td>کم‌گزارشی؛ پایین‌آوردنِ درجهٔ شدت</td><td>پاداش‌ها به پنهان‌کاری جایزه می‌دهند</td><td>حسابرسیِ ترکیب شدت در برابر نرخ رویدادِ تأییدشده با تیکت</td></tr><tr><td>دسترس‌پذیری همان‌جا که کاربران‌اند اندازه گرفته می‌شود</td><td>کاوش‌های ترکیبی، یک ناحیهٔ یگانه</td><td>شکست‌های لبه برای کاوش‌ها نامرئی‌اند</td><td>داشبورد «سبز» در میانهٔ دردِ کاربر</td><td>همبستگیِ تیکت پشتیبانی با داشبورد، به‌تفکیک ناحیه</td></tr><tr><td>بارِ آماده‌به‌کاری پایدار است</td><td>هیچ سیگنال رسمی‌ای نیست</td><td>مصاحبه‌های خروج جز این می‌گویند</td><td>ریزشِ دقیقاً همان کسانی که دانش ضمنیِ سیستم را در خود دارند</td><td>ساعت‌های پیجرخوردن به‌ازای هر نفر در هفته</td></tr><tr><td>تیم‌ها می‌توانند کارِ قابلیت اطمینان را در اولویت بگذارند</td><td>نقشهٔ راه می‌گوید ۲۰ درصد</td><td>در عمل، مهلت‌های محصول غلبه می‌کنند</td><td>پیمایش هرگز رخ نمی‌دهد</td><td>حسابرسیِ تخصیص در سطح دورهٔ کاری</td></tr><tr><td>مهاجرتِ صف همان راه‌حل است</td><td>بازنگری معماری</td><td>بدکالیبره‌بودنِ هشدار، نه معماری، رویدادها را می‌راند</td><td>یک سال صرف‌شده در درهٔ غلط</td><td>کاوشِ فصل ۹ در زیر</td></tr><tr><td>خوانش: اکنون استوار، پس از کاوش بیزی</td><td>مدل‌های سازوکار هنوز پیشینی دفاع‌پذیر میان خود ندارند</td><td>بالاخره پیشینی دفاع‌پذیر است</td><td>میانگین‌گیریِ نابهنگام جهانِ بدتر را پنهان می‌کند</td><td>پسینِ کاوش</td></tr><tr><td>وزن‌های \(W\) و قاعدهٔ واژه‌نگاشتی</td><td>قرارِ شورا که هر دو وزن‌گذاری را نام می‌برد</td><td>ذی‌نفعی بیرون از شورا متفاوت وزن می‌دهد</td><td>معکوس‌شدن رتبه‌ها را هر که بلندتر فریاد بزند تعیین می‌کند</td><td>تصویب مجددِ سالانه</td></tr><tr><td>افق شش فصل، بی‌تنزیلِ درونی</td><td>تعهد کتبیِ حامی</td><td>فشارِ پایان فصل، تنزیل را خاموشانه بازمی‌گرداند</td><td>پیمایش در میانهٔ فرورفتگی رها می‌شود</td><td>حسابرسیِ تخصیص در مرزهای فصل</td></tr><tr><td>مجموعهٔ یال: یک سرویس در هر دورهٔ کاری</td><td>برآورد تیم پلتفرم</td><td>سرویس‌های جفت‌شده نمی‌توانند تنها حرکت کنند</td><td>برآورد مانع برای هر دو مسیر غلط است</td><td>نخستین بُرشِ مهاجرت، اگر بودجه بگیرد</td></tr><tr><td>ترتیب توقف: مشروعیت-نخست</td><td>قرارِ شورا</td><td>اضطرار آن را وارونه می‌کند</td><td>حکم‌ها زیر فشار خاموشانه می‌چرخند</td><td>در هر بازنگریِ قرارداد ثبت می‌شود</td></tr></tbody></table></div>
 <p><strong>صورت‌بندی (فصل ۲).</strong> هدف یک بردار است: دسترس‌پذیری، زمان بازیابی، سرعت تحویل، بهزیستیِ آماده‌به‌کاری، هزینه. عددِ پاداشِ تحمیل‌شده، پیش از آنکه هیچ معکوس‌شدنی آزموده شود، پیش‌شرطِ تشخیص ۱ را برنمی‌آورد: به شمار خامِ رویدادها وزن می‌دهد، که مختصه‌ای از بردار اعلام‌شده نیست بلکه نمایندهٔ دوتای آن‌هاست، پس شکستِ صورت‌بندی از خام‌ترین نوع است، هدفی بنا‌شده بر یک شاخص. درون بردار اعلام‌شده، دو نقشهٔ راهِ زیست‌پذیر (مهاجرت گام‌به‌گام در برابر نقشهٔ راهِ قابلیت‌ها) بردارهای بازدهِ پارتو-ناسنجش‌پذیر دارند، و دو وزن‌گذاریِ دفاع‌پذیر در \(W\) آن‌ها را وارونهٔ هم رتبه می‌دهند: وزن‌گذاریِ بازیابی‌و‌بهزیستی مهاجرت را ترجیح می‌دهد، وزن‌گذاریِ سرعت قابلیت‌ها را. بر پایهٔ فصل ۲ آن معکوس‌شدن نزاعِ راستینِ چندهدفه را گواهی می‌کند، پس تصمیم به حکمرانی بازگردانده می‌شود: شورای مهندسی و حامیِ اجرایی قاعده‌ای واژه‌نگاشتی می‌پذیرند (نخست یک کف بر زمان بازیابی و بار پیجر، سپس سرعت)، ثبت می‌کنند چه کسی آن را برگزید، و قراردادهای افق و تنزیل را در دفتر ثبت می‌کنند. گره‌خوردگیِ پاداش بریده می‌شود؛ این تصمیمی از جنس فصل ۸ است که در فصل ۲ گرفته شده.</p>
 <p><strong>مشاهده‌پذیری (فصل ۳).</strong> وضعیت داشبورد (شمار پایین، آپ‌تایم تخت) با سه مدل زنده روی دو محور سازگار است. <em>محور گزارش‌دهی</em>: شمارهای اعلام‌شده صادقانه‌اند (سیستم به‌راستی پایدار شده)، یا شمارهای اعلام‌شده سرکوب‌شده‌اند (درجهٔ شدتِ پایین‌آورده، رفعِ بی‌تیکت). <em>محور سازوکار</em>، که به هر بارِ رویدادی که واقعی است می‌پردازد: ناپایداری معماری است (تلاش‌های مجددِ آبشاری)، یا با خستگیِ هشدار تغذیه می‌شود (کفِ بدکالیبرهٔ پیجر، آماده‌به‌کاری را غرق می‌کند، و پاسخ‌دهندگانِ فرسوده می‌گذارند نوسان‌های بازیافتنی به رویدادهای واقعی بدل شوند). خلاصهٔ داشبورد در هر سه جهان همان مقدار را می‌گیرد، پس قضیهٔ کوریِ آماره بر هر قاعده‌ای که تنها با داشبورد رانده شود اطلاق می‌شود، قطعی یا تصادفی. آن‌گاه این دو محور از هم جدا می‌شوند، و دقیقاً مرزِ فصل ۹ را نشان می‌دهند. محور گزارش‌دهی، به‌محض وجود سیگنال‌های دومِ درست، <em>منفعلانه</em> تمیزپذیر است: نرخ رویدادِ تأییدشده با تیکت (تیکت‌های پشتیبانی که با رویدادهای اعلام‌شده تطبیق داده شده‌اند) و حسابرسیِ فصلیِ کیفیت پس‌مرگی، گزارش‌دهیِ صادقانه را با تماشا به‌تنهایی از سرکوب‌شده جدا می‌کنند؛ این همان خانهٔ پیچیده است، و فصل ۸ ثبت می‌کند تماشا چه یافت. محور سازوکار چنین نیست: هیچ سیگنالی در مجموعهٔ کانالِ این مورد، معماری را از خستگی جدا نمی‌کند بی‌آنکه بر خودِ سامانهٔ پیجر مداخله شود، و این همان خانهٔ درهم‌تنیده است، و کاوشِ فصل ۹ برای همین وجود دارد. یک بدهی بی‌درنگ ثبت می‌شود: مدل سرکوب یک ضدحرکتِ سازگارشونده است، پس فرضِ پایدارِ مارکوفیِ فصل ۳ برایش شکست می‌خورد، و به‌محض تأیید زنده‌بودنِ سرکوب، تحلیل باور باید روی وضعیت گسترده‌شدهٔ فصل ۸ از نو اجرا شود (وضعیت سیستم جفت‌شده با رفتار گزارش‌دهی). یک رخدادِ شاهدِ‌صفر از پیش ثبت می‌شود: یک قطعیِ درجه‌یک بی‌هیچ پیجرِ پیشین، خودِ مدل مشاهده را ابطال می‌کند و بازنگریِ دفتر را برمی‌انگیزد، نه سرزنش را.</p>
-<p><strong>عاملیت (فصل ۴).</strong> این مهاجرت دو مهندس پلتفرم می‌خواهد که وجود ندارند، و استخدام چیزی نیست که تیم کنترلش کند. نقشهٔ اختیار این شکاف را دقیق می‌کند: کنترل <em>مستقیم</em> سیاست SLO، دروازه‌های استقرار، پیکربندی پیجر، و قالب پس‌مرگی را در بر می‌گیرد؛ <em>القاشدنی</em> از راه حامی: سرشمارِ تیم پلتفرم، بدل‌های نقشهٔ راه، تغییرهای ساختار پاداش؛ <em>محرک‌های برون‌زاد</em>، ورودی‌هایی در طرح که اصلاً کنش نیستند: رویدادهای ارائه‌دهندهٔ ابر، جهشِ ترافیکِ ناشی از تملک، مهلت بازار. نخستین پیش‌نیازِ دست‌نیافتنی دقیقاً همان سرشمار است. تنوع بایسته به این تشخیص دندان می‌دهد، و فرضش بررسی می‌شود نه فرض گرفته. پیکرهٔ پس‌مرگی‌ها چهارده ردهٔ ریشه‌ای را تمیز می‌دهد، که حسابرسی شده‌اند که زیر هر پاسخِ ثابت نتیجه‌های دوبه‌دو متمایز تولید می‌کنند؛ آن حسابرسی همان فرضِ یک‌به‌یکیِ قضیه است، نه یک راحتی. آن نوبت‌دهی سه پاسخ به کار می‌گیرد (بازراه‌اندازی، بازگردانی، تشدید) و چهار نتیجه را تحمل می‌کند. سه ضرب در چهار دوازده است، و دوازده کمتر از چهارده است: کران نقض شده، و هیچ نوبت‌دهی‌ای با این تنوع نمی‌تواند نتیجه‌ها را در سراسر فهرست اختلال‌ها تحمل‌پذیر نگه دارد. شکاف تجهیزات است، نه کوشایی. حکم این زیرمسئله، زیر ترتیبِ اعلام‌شدهٔ مشروعیت-نخست، تشدید است، با آن حساب‌وکتاب پیوست‌شده.</p>
+<p><strong>عاملیت (فصل ۴).</strong> این مهاجرت دو مهندس پلتفرم می‌خواهد که وجود ندارند، و استخدام چیزی نیست که تیم کنترلش کند. نقشهٔ اختیار این شکاف را دقیق می‌کند: کنترل <em>مستقیم</em> سیاست SLO، دروازه‌های استقرار، پیکربندی پیجر، و قالب پس‌مرگی را در بر می‌گیرد؛ <em>القاشدنی</em> از راه حامی: سرشمارِ تیم پلتفرم، بدل‌های نقشهٔ راه، تغییرهای ساختار پاداش؛ <em>محرک‌های برون‌زاد</em>، ورودی‌هایی در طرح که اصلاً کنش نیستند: رویدادهای ارائه‌دهندهٔ ابر، جهشِ ترافیکِ ناشی از تملک، مهلت بازار. نخستین پیش‌نیازِ دست‌نیافتنی دقیقاً همان سرشمار است. تنوع بایسته به این تشخیص دندان می‌دهد، و فرضش بررسی می‌شود نه فرض گرفته. پیکرهٔ پس‌مرگی‌ها چهارده ردهٔ ریشه‌ای را تمیز می‌دهد، که حسابرسی شده‌اند که درونِ هر پاسخی که نوبت‌دهی واقعاً صادر می‌کند نتیجه‌های متمایز تولید می‌کنند؛ آن حسابرسی همان فرضِ جداسازیِ قضیه است، نه یک راحتی. این حسابرسی ارزان‌تر از آن است که جملهٔ کتابِ درسی می‌نمایاند، چون تنها برای رده‌هایی بدهکار است که نوبت‌دهی یکسان پاسخشان می‌دهد: دو رده که هر دو را بازراه‌اندازی می‌کند باید با همان بازراه‌اندازی از هم تمیز داده شوند، در حالی که رده‌ای که بازراه‌اندازی می‌شود و رده‌ای که تشدید می‌شود هیچ مقایسه‌ای نمی‌خواهند. آن نوبت‌دهی سه پاسخ به کار می‌گیرد (بازراه‌اندازی، بازگردانی، تشدید) و چهار نتیجه را تحمل می‌کند. سه ضرب در چهار دوازده است، و دوازده کمتر از چهارده است: کران نقض شده، و هیچ نوبت‌دهی‌ای با این تنوع نمی‌تواند نتیجه‌ها را در سراسر فهرست اختلال‌ها تحمل‌پذیر نگه دارد. شکاف تجهیزات است، نه کوشایی. حکم این زیرمسئله، زیر ترتیبِ اعلام‌شدهٔ مشروعیت-نخست، تشدید است، با آن حساب‌وکتاب پیوست‌شده.</p>
 <p><strong>تأخیر (فصل ۵).</strong> با تشدیدِ استخدام، تیم هنوز باید تصمیم بگیرد چه وقت نگاه کند. وقفه‌ها به‌تفکیک سیگنال پیش‌بینی می‌شوند، در برابر کنشِ مقایسه‌ایِ اعلام‌شده: نقشهٔ راهِ رقیبِ قابلیت‌ها، نه یک کنش تُهی، چون هیچ‌کاری‌نکردن روی میز نیست. کاوشِ زیر، سیگنال پیشروش را در حدود شش هفته نشان می‌دهد. برای مهاجرت، دو سیگنال وقفه‌های متفاوت دارند: نرخ شکستِ تغییر در نخستین بُرش، شاخصی پیشرو با وقفهٔ یک‌فصلی است، و نرخ رویدادِ تأییدشده در سراسر ناوگان سیگنال نهایی است، که حدود دو فصل نامرئی است (سوزاندنِ انباشتِ کار، سپس فروکشِ حالت‌های شکستِ میراثی). آهنگ‌ها سیگنال‌به‌سیگنال تطبیق می‌شوند: کاوش در پایان فصل خوانده می‌شود، شاخصِ بُرش یک فصل پس از بودجه‌گرفتن، و نرخ سراسرِ ناوگان در نشانِ دو‌فصلی و نه پیش از آن. آن قضیه برای حامی‌ای نقل می‌شود که خوانشِ هفتگیِ نرخ سراسر ناوگان را می‌خواهد: اکیداً پیش از وقفهٔ آن سیگنال، بازنگری‌اش نمی‌تواند شاهدی داشته باشد که مهاجرت را در تفکیک‌پذیریِ اعلام‌شده (یک درجه‌دوی کمتر در ماه) از نقشهٔ راهِ رقیب تمیز دهد. اینکه بازنگریِ زودهنگام چه می‌کند داوری‌ای است که آن قضیه نمی‌کند. یک حفاظ بی‌اعتنا به هر وقفه‌ای زودتر برمی‌انگیزد: بیش از هشت ساعت پیجر به‌ازای هر نفر در هفته، که هفتگی روی هر تیم از جمله تیم‌های کاوش اندازه گرفته می‌شود، کارِ قابلیت‌ها را متوقف می‌کند. انتظارکشیدن در حالی که آدم‌ها آسیب جذب می‌کنند مجاز نیست، هر چه ساختار وقفه بگوید.</p>
 <p><strong>بازگشت‌پذیری (مختصهٔ R).</strong> بازیابی پیش از مجازشدنِ هر پیمایشی تحلیل می‌شود. بازگشتِ فنی ارزان است: هر بُرشِ مهاجرت در یک دورهٔ کاری بازمی‌گردد، و بازگردانی تمرین شده است. محورِ برگشت‌ناپذیر انسانی است: مهندسِ ارشدِ آماده‌به‌کارِ رفته بازنمی‌گردد، و آن دو استعفای ثبت‌شده تنها زیان‌های بازنیافتنیِ این مورد تا امروزند. پس سقفِ پیجر همان‌قدر حفاظِ R است که حفاظِ L، و نیم‌رخ سختی، R را در برابر خطر ریزش ثبت می‌کند نه در برابر وضعیت سیستم. و همین است که انتخابِ مسیر، و نه فقط عمقش، را به پرسش بعدی بدل می‌کند.</p>
 <p><strong>ناهمواری (فصل ۶).</strong> دو مسیر روی میز است: مهاجرت همه‌چیز یک‌جا، یا مهاجرت یک سرویس در هر دورهٔ کاری. مجموعهٔ یالِ اعلام‌شده خودش برشِ اول را می‌زند: زیر «یک سرویس در هر دوره»، مسیرِ انفجار‌بزرگ اصلاً یک مسیر نیست، چون گامِ یگانه‌اش، یعنی همهٔ سرویس‌ها یک‌جا در پرواز، حرکتی مجاز نیست، و شورا از درشت‌کردنِ مجموعهٔ یال برای پذیرفتنش تن می‌زند. حتی اگر محضِ بحث زیر آن مجموعهٔ یالِ درشت‌تر عرضه شود، فرورفتگیِ پیش‌بینی‌شده‌اش (افتِ سرعت حدود ۲۰ درصد برای دو فصل، با پنجره‌های بازگردانیِ هم‌پوشان) از عمقِ تحمل‌پذیری که شورا روی ۱۰ درصد می‌گذارد فراتر می‌رود. پس مسیر انفجار‌بزرگ دو بار رد می‌شود: نامجاز به‌همان‌گونه که اعلام شد، و بیش از حد عمیق حتی اگر پذیرفته شود. مسیرِ الگوی خفه‌کننده در مجموعهٔ یالِ اعلام‌شده مسیری راستین است، که کم‌عمق‌تر و درازتر فرو می‌رود: حدود ۱۰ درصد برای تا سه فصل، با یک بُرش در پرواز در هر زمان. هیچ‌یک از دو مسیر بی‌فرورفتگی نیست، پس تصمیم بر مجازبودن و کرانِ عمق تکیه می‌کند. (اگر مسیری بی‌فرورفتگی وجود داشت، قضیهٔ عکسِ فصل ۶ سخنِ درّه را یکسره منحل می‌کرد؛ اینجا فقط کرانش می‌زند.)</p>
@@ -1535,7 +1656,7 @@ theorem no_final_stage (stage : ℕ → ℕ → ℕ → Bool) (i : ℕ) :
 <p><strong>یک نیم‌رخ دوم، به‌اجمال: فرامسئلهٔ P در برابر NP.</strong> موردِ قابلیت اطمینان به همان شکلی سخت است که سازمان‌ها سخت‌اند. برای تقابل، نیم‌رخ را روی مسئله‌ای اجرا کنید که به شکل وارونه سخت است. این چارچوب نمی‌تواند P در برابر NP را <em>به‌عنوان یک گزاره</em> تحلیل کند؛ یک حدس دینامیک ندارد، کانال مشاهده ندارد، طرف مقابل ندارد. آنچه می‌تواند تحلیل کند فرامسئله است: نظریه‌پردازِ پیچیدگی به‌عنوان عاملِ کانونی، وضعیت به‌عنوان دامنهٔ کنونیِ دانش ریاضی، کنش‌ها به‌عنوان سرمایه‌گذاری در فنون اثبات، و \(\Theta\) به‌عنوان عدم‌قطعیت دربارهٔ خودِ چشم‌اندازِ اثبات.</p>
 <div class="table-wrap"><table><thead><tr><th scope="col">بُعد</th><th scope="col">جایگاه</th><th scope="col">یافته</th></tr></thead><tbody><tr><td>\(\mathsf{F}\)</td><td>هدف، انتخاب چارچوب</td><td>هدف پاکیزه و بی‌نزاع است، تجملی که هیچ سازمانی ندارد. خطرِ F باقیمانده استقلال از اصل‌های موضوعه است: مجموعهٔ هدف می‌تواند تُهی باشد، که همان حکمِ نشدنی‌بودن است، و ریاضیات معکوس کاوشِ آن است</td></tr><tr><td>\(\mathsf{O}\)</td><td>چه شاهدی می‌تواند جدا کند</td><td>شدید. شاهدِ عددی و اوراکل‌محور با جهان‌هایی سازگار است که نتیجه‌های وارونهٔ هم می‌طلبند؛ به موانع زیر نگاه کنید</td></tr><tr><td>\(\mathsf{A}\)</td><td>رده‌های مجازِ فن</td><td>شکافی از جنس تنوع بایسته: حرکت‌های کلاسیک به‌طور اثبات‌شده تنوعِ لازم برای مقیدکردنِ محاسبهٔ دلخواهِ زمان-چندجمله‌ای را ندارند</td></tr><tr><td>\(\mathsf{L}\)</td><td>وقفهٔ فن تا شاهد</td><td>دهه‌ها؛ بازنگری‌ها بر شاخص‌های پیشرو اجرا می‌شوند (کران‌های پایین برای رده‌های محدود)، نه بر پرسش نهایی</td></tr><tr><td>\(\mathsf{Ru}\)</td><td>چشم‌اندازِ اثبات</td><td>بی‌نهایت، به‌تفکیک مجموعهٔ یال: درون ردهٔ فنی که سد شده، هدف یکسره دست‌نیافتنی است، که یافتهٔ نامجازبودنِ ما است نه مانعی عمیق‌اما‌متناهی</td></tr><tr><td>\(\mathsf{Re}\)</td><td>هزینهٔ خطا</td><td>بازگشتِ معرفتی تقریباً رایگان است؛ محورهای برگشت‌ناپذیر، حرفه‌ها و جامعه‌ای است که اثباتی غلط را جذب می‌کند</td></tr><tr><td>\(\mathsf{X}\)</td><td>سازگاری</td><td>نزدیک به صفر، و نیم‌رخ باید صادقانه همین را بگوید. نمونه‌های بدترین‌حالت به معنای سوسویی خصمانه‌اند، نه به معنای راهبردی: هیچ چیزی خودش را با سیاستِ اثبات‌کننده سازگار نمی‌کند، و کاوش ایمن است. تنها پانویس، اثبات‌های طبیعی است، که خودارجاعی‌ای منطقی است نه یک ضدحرکت</td></tr></tbody></table></div>
 <p>این سه مانعِ کلاسیک، در این واژگان، تشخیص‌هایی دربارهٔ چارچوب‌اند نه کنجکاوی‌هایی جالب. <em>نسبی‌سازی</em> (بیکر، گیل، سولووی): جهان‌های اوراکلی در هر دو سوی این پرسش وجود دارند، و هر فنی که حکمش به اینکه در کدام جهان ساکن است بی‌اعتنا باشد در هر دو همان مقدار را می‌گیرد؛ و چون نتیجه‌های درست در آن دو جهان ناهم‌پوش‌اند، هیچ فنی از این دست دربارهٔ آن پرسش تصمیم نمی‌گیرد. این عیناً همان قضیهٔ کوریِ آماره است، با فن در نقش آماره و جهان‌های اوراکلی در نقش وضعیت‌های درهم‌آمیخته (بررسی‌شده با ماشین در صورت کلی). <em>اثبات‌های طبیعی</em> (رازبروف، رودیچ): طبیعی‌بودنِ یک ویژگیِ کرانِ پایین، نماینده‌ای برای سختی است که خودش را نقض می‌کند؛ اگر شبه‌تصادفیِ قوی موجود باشد، ویژگیِ طبیعیِ به‌کاربستنی آن را می‌شکند، پس هدف‌گرفتنِ آن نماینده خودِ نماینده را فرو می‌ریزد. این همان شکستِ نمایندهٔ فصل ۳ است با پیچی از خودارجاعی، و صداقت می‌طلبد بگوییم فصل ۸ نیست: چیزی سازگار نشد. <em>جبری‌سازی</em> (آرونسون، ویگدرسون): گسترشِ جبریِ مجموعهٔ حرکتِ مجاز باز هم تنوعِ لازم برای رسیدن به هدف را ندارد، که یافته‌ای از جنس عاملیت است.</p>
-<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails&#x27;<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F43-statistic-blindness-general-form.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+<details class="lean"><summary>Lean proof (SystemsTheory.lean): statistic_based_rule_fails&#x27;<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F44-statistic-blindness-general-form.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
 /-- The statistic-blindness theorem with an arbitrary statistic codomain:
 nothing in the argument uses the real numbers. This is the form the
 relativization barrier of complexity theory instantiates: a proof
@@ -1559,7 +1680,7 @@ theorem statistic_based_rule_fails&#x27; {Y : Type*} {m : S → Y} (Astar : S �
 <p>سمتِ عاملِ آن زوج تا اینجا به‌عنوان فهرستی از توانایی‌ها حمل شده: مدلی نگه‌داشته‌شده، برآوردی جاری، ردهٔ سیاست، و محدودیت بر اینکه چقدر می‌شود در ذهن نگه داشت و با چه سرعتی بازنگری کرد. این فصل یک مدل صوری برای آن فهرست تثبیت می‌کند و نیم‌رخ را از خلال آن می‌خواند. آن مدل، مدلِ بدیهی است. عامل ماشینی است با نوارِ مشاهده‌ای که در اختیارش نیست، الفبایی از کنش که در آن می‌نویسد، پوششی از منابع، و یک برنامه. بهینه‌سازی روی برنامه‌ها با قید آن پوشش، به‌جای بهینه‌سازی روی کنش‌ها بی‌هیچ قید، همان بهینگیِ کران‌دارِ راسل و سوبرامانیان است، و محتوای صوریِ همان ادعایی است که در فصل ۱ شد، اینکه دشواری محمولی است بر یک سیستم به‌همراه هر که به آن متصل است.</p>
 <p>این خوانش جایش را با فروریختنِ بیشترِ مقیاسِ عامل و تن‌زدن از فروریختنِ بقیه به دست می‌آورد.</p>
 <p><strong>پله‌های تنظیم یک ماشین‌اند.</strong> ماشین را با نگاشتِ گامِ \(\sigma:S\times I\to S\) و نگاشتِ خروجیِ \(S\to O\) بازنمایی کنید. سیستمی که پارامترهای مدل خودش را تنظیم می‌کند به چیزی از جنسی دیگر می‌ماند: دینامیکی پارامتری‌شدهٔ \(\sigma_\theta\) به‌همراه قاعده‌ای که \(\theta\) را از تجربه بازتنظیم می‌کند. از جنسی دیگر نیست. یک ماشینِ ثابتِ یگانه روی حاصل‌ضربِ \(S\times\Theta\) است، و اجرای تنظیم‌شده دقیقاً تصویرِ اجرای همان ماشینِ ثابت است، هم در مختصهٔ وضعیت و هم در مختصهٔ پارامتر (بررسی‌شده با ماشین). آموختنِ یک پارامتر، از بیرون، از حمل‌کردنش به‌عنوان وضعیت تمیزناپذیر است. این فروریختن رایگان نیست، و بهایش به همان ارزی است که فصل ۴ می‌گیرد: فضای وضعیتِ آن ماشینِ ثابت عدد اصلیِ حاصل‌ضربی دارد، پس هر پله‌ای که در برنامه تا شود با تنوع پرداخت می‌شود.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tuned, Tuned.fixedStep, Tuned.stateRun_eq_fst, Tuned.paramRun_eq_snd, card_fixed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F44-self-tuning-is-one-machine-on-the-product.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tuned, Tuned.fixedStep, Tuned.stateRun_eq_fst, Tuned.paramRun_eq_snd, card_fixed<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F45-self-tuning-is-one-machine-on-the-product.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- A parameterized dynamics with a tuning rule: at each step the
 current parameter drives the state update and is itself retuned from
 experience. -/
@@ -1606,7 +1727,7 @@ theorem card_fixed (S Θ : Type*) [Fintype S] [Fintype Θ] :
   exact Fintype.card_prod S Θ</code></pre></details>
 <p>این نیمهٔ پایینیِ نردبانِ فصل ۸ را فیصله می‌دهد. نگه‌داشتن یک برآورد در برابر تصویری ثابت، تنظیم پارامترهای آن تصویر، و افزودن متغیر به آن، سه توانایی نیستند بلکه سه برنامه‌اند، و یک ماشینِ همگانی هر یک را اجرا می‌کند. آنچه خوانشِ ماشینی برجا می‌گذارد افرازی است به دقیقاً سه لایه: <strong>برنامه</strong>، یعنی هر چه از نوارهایی که عامل همین حالا دارد محاسبه‌شدنی است؛ <strong>رابط</strong>، یعنی کانال مشاهده و عملگرها، که جفت‌شدگیِ فیزیکی با سیستم‌اند؛ و <strong>هدف</strong>، یعنی شرط پذیرش. فصل ۲ همان لایهٔ سوم است و هر چه اینجاست دست به آن نمی‌زند، و این بازگفتِ ماشین-نظریِ همان استثنایی است که در فصل ۱٫۱ داشت.</p>
 <p><strong>دیوارِ کنش سخت‌افزار است.</strong> بگذارید عملگرها مجموعه‌ای \(G\) از تبدیل‌های وضعیت باشند و دسترسی‌پذیری همان ترکیب‌های متناهیِ برگرفته از \(G\). سه واقعیت با هم برقرارند. هر مسیرِ مجازی درون مجموعهٔ دست‌یافتنی می‌ماند، هر سیاستی که تولیدش کرده باشد، تاریخچه‌وابسته یا تصادفی یا دلخواه؛ پذیرفتنِ یک ماکروی برنامه‌ریزی‌شده، یعنی عملگری که اثرش از هر وضعیتی پیش‌تر دست‌یافتنی است، دسترسی‌پذیری را بی‌تغییر می‌گذارد؛ و عملگری به‌راستی نو می‌تواند اکیداً بزرگ‌ترش کند (بررسی‌شده با ماشین). اولی می‌گوید هیچ قاعدهٔ تصمیمی از مدارِ عملگرهای خودش نمی‌گریزد. دومی می‌گوید نرم‌افزار نمی‌تواند با ترکیب‌کردنِ آنچه پیش‌تر دارد آن مدار را فراخ‌تر کند، هر چقدر هم زیرکانه توزیع کند. سومی می‌گوید آن دیوار قانونِ طبیعت نیست بلکه واقعیتی است دربارهٔ تجهیزات. یافتهٔ فصل ۴، اینکه هدفی بیرون از دسترس‌تان تنها به افزودن کنش تسلیم می‌شود و به هیچ چیز دیگر، همین سه‌گانه است.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Reach, traj_mem_reach, Programmed, reach_insert_programmed, exists_new_effector_enlarges_reach<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F45-reach-is-a-property-of-the-effectors.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Reach, traj_mem_reach, Programmed, reach_insert_programmed, exists_new_effector_enlarges_reach<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F46-reach-is-a-property-of-the-effectors.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- Finite-composition reachability: `y` is reachable from `x` by
 applying effectors drawn from `G`. -/
 inductive Reach (G : Set (X → X)) (x : X) : X → Prop
@@ -1666,7 +1787,7 @@ theorem exists_new_effector_enlarges_reach :
     cases h with
     | tail hy hmem heq =&gt; exact hmem.elim</code></pre></details>
 <p><strong>دیوارِ مشاهده گوشه‌ای واگن دارد، و آن گوشه ماشین‌حساب است.</strong> دستگاهِ فصل ۳ پیش‌فرض می‌گیرد که مشاهده‌ها از تعیینِ وضعیت ناتوان‌اند. فرض کنید ناتوان نباشند. وقتی نگاشتِ مشاهده یک‌به‌یک است، هم‌ارزی مشاهده‌ای به تساوی فرو می‌ریزد، فهرستِ استوار در هر وضعیت کلِ مجموعهٔ پذیرفتنی است، و ابهامِ بحرانی-برای-تصمیم اصلاً نمی‌تواند رخ دهد (بررسی‌شده با ماشین). آن‌گاه هر پلهٔ برآوردگری از آن نردبان تُهی است. تصویری از جهان چیزی است که ماشین وقتی می‌رویاند که نوار ورودی‌اش از وضعیت‌بودن بیفتد؛ وقتی نوار همان وضعیت است، تصویر کاری برای کردن ندارد.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): robustMenu, obsEq_iff_eq_of_injective, robustMenu_eq_of_injective, no_ambiguity_of_injective<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F46-injective-observation-retires-the-observer.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): robustMenu, obsEq_iff_eq_of_injective, robustMenu_eq_of_injective, no_ambiguity_of_injective<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F47-injective-observation-retires-the-observer.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The robust menu at `s`: the actions acceptable in every state that
 looks like `s`. -/
 def robustMenu (obs : S → Ω) (Acc : S → Set A) (s : S) : Set A :=
@@ -1714,8 +1835,8 @@ theorem no_ambiguity_of_injective {obs : S → Ω}
   rw [hDisj] at hx
   exact hx</code></pre></details>
 <p>این پرسشی را پاسخ می‌دهد که فصل ۱ گشود و نبست. یک ماشین‌حساب جیبی در ضرب طولانی انسان را شکست می‌دهد، و دلیلش این نیست که روی هیچ مقیاسی بالاتر می‌نشیند. مسئله‌اش مشاهده‌پذیریِ پیش‌پاافتاده دارد، چون عملوندها داده شده‌اند؛ بازتابندگیِ پیش‌پاافتاده، چون عملوندها اهمیتی نمی‌دهند؛ و دسترسی‌پذیریِ پیش‌پاافتاده، چون الفبای خروجی‌اش پاسخ‌ها را پوشش می‌دهد. هر مختصهٔ نیم‌رخ خاموش است مگر پوششِ منابع. آن مقیاس هرگز رتبه‌بندیِ شایستگی نبود چون با آنچه پنهان است نمایه می‌شود، و از ماشین‌حساب چیزی پنهان نیست.</p>
-<p>آن‌گاه آنچه انسان را از ماشین‌حساب جدا می‌کند کرانی بر فضاست نه مرزی میان رده‌ها. هر دو همان الگوریتم کتابِ مدرسه را اجرا می‌کنند؛ انسان حدوداً چهار ثباتِ قابل‌اعتماد دارد، و ضربِ \(n\)-رقمی در شمار ثابتی از آن‌ها جا نمی‌شود. صورت کلاسیکِ آن ادعا این است که وارسیِ ضربِ یکانی توسط هیچ ماشینِ متناهی‌الوضعیتی پذیرفته نمی‌شود (بررسی‌شده با ماشین، با استدلالی از جنس برخوردِ وضعیت‌ها). این صورتِ صوریِ تشخیصِ چهارم در فهرست فصل ۱٫۱ است، همانی که با تغییر اندازهٔ مسئله و تماشای جایی که کارایی فرو می‌ریزد آشکار می‌شود: افت با مقیاس، از عاملی که ثبات‌هایش مقیاس نمی‌گیرند، در حالی که هیچ‌جا هیچ چیزی ساختاراً خراب نیست. به انسان کاغذ بدهید و آن کران برداشته می‌شود، و این همان واقعیتِ خوشایند است که ماشینِ ۱۹۳۶ تورینگ به‌عنوان مدلی از یک محاسبه‌گرِ انسانی با مداد و کاغذ معرفی شد. در این خوانش، ماشین‌حساب ناهنجاری‌ای نیست که چارچوب باید توضیحش دهد. همان‌جایی است که مدلِ عاملِ این چارچوب از آن آمد.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): mulLang, IsRegularLang, mulLang_not_regular<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F47-no-finite-state-machine-multiplies.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<p>آن‌گاه آنچه انسان را از ماشین‌حساب جدا می‌کند کرانی بر فضاست نه مرزی میان رده‌ها. هر دو همان الگوریتم کتابِ مدرسه را اجرا می‌کنند؛ انسان حدوداً چهار ثباتِ قابل‌اعتماد دارد، و ضربِ \(n\)-رقمی در شمار ثابتی از آن‌ها جا نمی‌شود. صورت کلاسیکِ آن ادعا این است که وارسیِ ضربِ یکانی توسط هیچ ماشینِ متناهی‌الوضعیتی پذیرفته نمی‌شود (بررسی‌شده با ماشین، با استدلالی از جنس برخوردِ وضعیت‌ها). یکانی برای ادعایی دربارهٔ رقم‌ها نمادگذاریِ درستی نیست، پس آن کران دوباره روی رمزگذاریِ مکانیِ با عرضِ ثابت اثبات می‌شود، که همان نمادگذاری‌ای است که این جمله واقعاً درباره‌اش است: وارسیِ حاصل‌ضربِ \(n\)-رقمی دست‌کم \(2^n\) وضعیت خرج دارد (بررسی‌شده با ماشین). بازشناسیِ یک حاصل‌ضربِ درست هم همان کارِ تولیدکردنش نیست، و دستگاهی که باید یک عملوند را بازتولید کند حافظه‌ای می‌خواهد که بتوانسته باشد آن را نگه دارد (بررسی‌شده با ماشین). شمرده به وضعیت، آن کران نمایی به گوش می‌آید، که خوش‌آب‌ورنگش می‌کند، چون ماشینی با \(k\) وضعیت تنها \(\log k\) بیت نگه می‌دارد؛ یکانِ صادق حافظه است، و همان واقعیت آنجا خطی است، \(n\) رقمِ ورودی \(n\) بیتِ ثبات را الزام می‌کند، پس هیچ بودجهٔ ثابتی از ثبات‌ها همهٔ عرض‌ها را نمی‌پوشاند (هر دو بررسی‌شده با ماشین). این صورتِ صوریِ تشخیصِ چهارم در فهرست فصل ۱٫۱ است، همانی که با تغییر اندازهٔ مسئله و تماشای جایی که کارایی فرو می‌ریزد آشکار می‌شود: افت با مقیاس، از عاملی که ثبات‌هایش مقیاس نمی‌گیرند، در حالی که هیچ‌جا هیچ چیزی ساختاراً خراب نیست. به انسان کاغذ بدهید و آن کران برداشته می‌شود، و این همان واقعیتِ خوشایند است که ماشینِ ۱۹۳۶ تورینگ به‌عنوان مدلی از یک محاسبه‌گرِ انسانی با مداد و کاغذ معرفی شد. آن برداشته‌شدن هم بررسی می‌شود، و جداگانه، چون یک قضیهٔ ناممکنی نمی‌تواند آن را برقرار کند: یک رویهٔ شمارشِ صریح همان زبانی را تصمیم می‌گیرد که هیچ ماشینِ متناهی نمی‌پذیردش، و اجرا می‌شود (بررسی‌شده با ماشین). در این خوانش، ماشین‌حساب ناهنجاری‌ای نیست که چارچوب باید توضیحش دهد. همان‌جایی است که مدلِ عاملِ این چارچوب از آن آمد.</p>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): mulLang, IsRegularLang, mulLang_not_regular<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F48-no-finite-state-machine-multiplies.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The unary multiplication-verification language over a three-letter
 alphabet: `m` copies of letter 0, then `n` copies of letter 1, then
 `m * n` copies of letter 2. -/
@@ -1769,8 +1890,228 @@ theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
   rcases hu with ⟨rfl, rfl, hu⟩
   simp at hu
   exact hkl hu</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): digits, binMul, digits_injOn, binMul_needs_exp_states<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F49-positional-multiplication-costs-exponentially-ma.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- The `n`-bit positional encoding of `a`, least significant digit first,
+written in the letters 0 and 1 of a three-letter alphabet whose third letter
+`2` is a separator. This is what &quot;n-digit&quot; means in the book&#x27;s sentence:
+fixed width, positional, not unary. -/
+def digits (n a : ℕ) : List (Fin 3) :=
+  (List.range n).map (fun i =&gt; if a / 2 ^ i % 2 = 1 then (1 : Fin 3) else 0)
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Verifying an `n`-digit multiplication: the two operands and their product,
+each in fixed-width positional notation, separated by `2`. -/
+def binMul (n : ℕ) : Language (Fin 3) :=
+  {w | ∃ a b : ℕ, a &lt; 2 ^ n ∧ b &lt; 2 ^ n ∧
+    w = digits n a ++ [2] ++ digits n b ++ [2] ++ digits (2 * n) (a * b)}
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Fixed-width positional encoding is injective below the width&#x27;s capacity,
+which is what makes distinct operands distinguishable prefixes. -/
+theorem digits_injOn (n : ℕ) :
+    ∀ a &lt; 2 ^ n, ∀ b &lt; 2 ^ n, digits n a = digits n b → a = b := by
+  intro a ha b hb h
+  apply Nat.eq_of_testBit_eq
+  intro i
+  by_cases hi : i &lt; n
+  · have he := congrArg (fun l : List (Fin 3) =&gt; l[i]?) h
+    simp [digits, hi] at he
+    have hab : (a / 2 ^ i % 2 = 1) ↔ (b / 2 ^ i % 2 = 1) := by
+      by_cases hx : a / 2 ^ i % 2 = 1 &lt;;&gt; by_cases hy : b / 2 ^ i % 2 = 1 &lt;;&gt;
+        simp_all
+    simpa [Nat.testBit, Nat.shiftRight_eq_div_pow, Nat.one_and_eq_mod_two] using hab
+  · have hni : n ≤ i := Nat.le_of_not_gt hi
+    rw [Nat.testBit_eq_false_of_lt
+          (lt_of_lt_of_le ha (Nat.pow_le_pow_right (by omega) hni)),
+      Nat.testBit_eq_false_of_lt
+          (lt_of_lt_of_le hb (Nat.pow_le_pow_right (by omega) hni))]
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Any finite-state machine verifying `n`-digit multiplication has at least
+`2 ^ n` states. This is the claim chapter 12 makes, over the encoding the
+claim is about: memory grows with the digit count, not merely without bound. -/
+theorem binMul_needs_exp_states (n : ℕ) :
+    ∀ (σ : Type) (_ : Fintype σ) (M : DFA (Fin 3) σ),
+      M.accepts = binMul n → 2 ^ n ≤ Fintype.card σ := by
+  intro σ inst M hM
+  by_cases hn : n = 0
+  · subst n
+    simp only [pow_zero, Nat.one_le_iff_ne_zero]
+    exact Nat.ne_of_gt (Fintype.card_pos_iff.mpr ⟨M.start⟩)
+  · have hnpos : 0 &lt; n := Nat.pos_of_ne_zero hn
+    rw [← Fintype.card_fin (2 ^ n)]
+    apply Fintype.card_le_of_injective (fun a : Fin (2 ^ n) =&gt; M.eval (digits n a))
+    intro a b hab
+    apply Fin.ext
+    let z : List (Fin 3) := [2] ++ digits n 1 ++ [2] ++ digits (2 * n) a
+    have ha_mem : digits n a ++ z ∈ binMul n := by
+      simpa only [z, List.append_assoc] using
+        (binMul_probe_mem (n := n) (a := (a : ℕ)) hnpos a.isLt)
+    have hsuffix := dfa_same_state_suffix M (z := z) hab
+    rw [hM] at hsuffix
+    have hb_mem : digits n b ++ z ∈ binMul n := hsuffix.mp ha_mem
+    exact (binMul_probe_only (a := (a : ℕ)) (b := (b : ℕ)) a.isLt b.isLt
+      (by simpa only [z, List.append_assoc] using hb_mem)).symm</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): Emitter, emitter_needs_exp_states<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F50-computing-a-product-is-not-checking-one.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- A device that reads an operand into memory and must later emit the product
+with 1, which is the operand itself. -/
+structure Emitter (S : Type*) where
+  mem : ℕ → S
+  emit : S → ℕ
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Memory must distinguish every operand it might have to reproduce: at least
+`2 ^ n` states for `n`-digit operands. Computing needs the operand held, and a
+constant memory cannot hold it. -/
+theorem emitter_needs_exp_states {S : Type} [Fintype S] (E : Emitter S)
+    (n : ℕ) (h : ∀ a &lt; 2 ^ n, E.emit (E.mem a) = a) :
+    2 ^ n ≤ Fintype.card S := by
+  let f : Fin (2 ^ n) → S := fun a =&gt; E.mem a
+  have hf : Function.Injective f := by
+    intro a b hab
+    apply Fin.ext
+    have ha := h a.1 a.2
+    have hb := h b.1 b.2
+    exact ha.symm.trans ((congrArg E.emit hab).trans hb)
+  simpa using Fintype.card_le_of_injective f hf</code></pre></details>
+<details class="lean"><summary>Lean proof (Positional.lean): binMul_needs_n_bits, RegisterMachine, RegisterMachine.ComputesMultiplicationAt, RegisterMachine.linear_bit_lower_bound, RegisterMachine.no_constant_register_budget<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F51-the-honest-unit-is-bits-of-register.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Positional.lean
+/-- The same bound in the honest unit, on the verifying side: a machine whose
+state fits in `s` bits cannot verify `n`-digit products unless `s` is at least
+`n`. One bit per digit.
+
+This is what makes the exponential above readable rather than impressive.
+`2 ^ n` states *is* `n` bits, so the two statements say the same thing, and
+quoting the state count alone invites the reader to hear an exponential cost
+where the cost is linear. Mine, not Aristotle&#x27;s: the job asking for it ran out
+of budget, and by then it was a two-line corollary of the state bound. -/
+theorem binMul_needs_n_bits (n s : ℕ) (M : DFA (Fin 3) (Fin (2 ^ s)))
+    (hM : M.accepts = binMul n) : n ≤ s := by
+  have h := binMul_needs_exp_states n (Fin (2 ^ s)) inferInstance M hM
+  rw [Fintype.card_fin] at h
+  exact (Nat.pow_le_pow_iff_right (by norm_num : 1 &lt; 2)).mp h
+
+-- LeanTest/HardProblems/Positional.lean
+/-- A streaming machine with `k` finite-range registers. -/
+structure RegisterMachine (base range k : ℕ) where
+  init : Fin k → Fin range
+  step : (Fin k → Fin range) → Fin base → (Fin k → Fin range)
+  output : (Fin k → Fin range) → ℕ
+
+-- LeanTest/HardProblems/Positional.lean
+/-- The machine computes `n`-digit multiplication when its final-state output
+is the product for every pair in the full fixed-width range `[0, base^n)`.
+In particular, this quantifies over the actual transition-based execution; it
+is not the mere existence of an unconstrained function on inputs. -/
+def ComputesMultiplicationAt {base range k : ℕ} [NeZero base]
+    (M : RegisterMachine base range k) (n : ℕ) : Prop :=
+  ∀ x y, x &lt; base ^ n → y &lt; base ^ n →
+    M.output (M.run (multiplicationInput base n x y)) = x * y
+
+-- LeanTest/HardProblems/Positional.lean
+/-- Quantitative binary form.  If all register configurations can be encoded
+in at most `bits` bits, correctness forces at least `n` bits. -/
+theorem linear_bit_lower_bound {base range k n bits : ℕ} [NeZero base]
+    (M : RegisterMachine base range k) (hbase : 2 ≤ base) (hn : 0 &lt; n)
+    (hM : M.ComputesMultiplicationAt n)
+    (hbits : range ^ k ≤ 2 ^ bits) :
+    n ≤ bits := by
+  have h1 : base ^ n ≤ range ^ k := state_capacity_lower_bound M hbase hn hM
+  have h2 : base ^ n ≤ 2 ^ bits := h1.trans hbits
+  have h3 : 2 ^ n ≤ base ^ n := Nat.pow_le_pow_left hbase _
+  have h4 : 2 ^ n ≤ 2 ^ bits := h3.trans h2
+  exact (Nat.pow_le_pow_iff_right (by decide : 1 &lt; 2)).mp h4
+
+-- LeanTest/HardProblems/Positional.lean
+/-- For every fixed register count and fixed range, some positive digit width
+cannot be handled.  Thus no constant register budget computes multiplication
+at every width. -/
+theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
+    ∃ n &gt; 0, ∀ M : RegisterMachine base range k,
+      letI : NeZero base := ⟨by omega⟩
+      ¬ M.ComputesMultiplicationAt n := by
+  letI : NeZero base := ⟨by omega⟩
+  have hbase1 : 1 &lt; base := hbase
+  by_cases hk : k = 0
+  · exact ⟨1, by norm_num, fun M hM =&gt; by
+      have hcap := state_capacity_lower_bound M hbase (by norm_num : 0 &lt; 1) hM
+      simp [hk] at hcap
+      omega⟩
+  · by_cases hr : range = 0
+    · exact ⟨1, by norm_num, fun M hM =&gt; by
+        have hcap := state_capacity_lower_bound M hbase (by norm_num : 0 &lt; 1) hM
+        simp [hr, hk] at hcap
+        omega⟩
+    · have hk0 : k ≠ 0 := hk
+      have hpos : 0 &lt; range ^ k := by positivity
+      exact ⟨range ^ k, hpos, fun M hM =&gt; by
+        have hcap := state_capacity_lower_bound M hbase hpos hM
+        exact (Nat.lt_pow_self hbase1).not_ge hcap⟩</code></pre></details>
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): stripRun, mulDecide, mulDecide_correct<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F52-paper-lifts-the-bound-by-an-explicit-procedure.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+/-- Strip a maximal run of the letter `a`, returning its length and the rest.
+This is the scratch work a person does with pencil and paper. -/
+def stripRun (a : Fin 3) : List (Fin 3) → ℕ × List (Fin 3)
+  | [] =&gt; (0, [])
+  | x :: xs =&gt;
+      if x = a then
+        let r := stripRun a xs
+        (r.1 + 1, r.2)
+      else (0, x :: xs)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- An explicit decider: count the run of 0s, then of 1s, then of 2s, and
+check that nothing is left over and that the last count is the product. -/
+def mulDecide (w : List (Fin 3)) : Bool :=
+  let r0 := stripRun 0 w
+  let r1 := stripRun 1 r0.2
+  let r2 := stripRun 2 r1.2
+  r2.2.isEmpty &amp;&amp; (r2.1 == r0.1 * r1.1)
+
+-- LeanTest/HardProblems/BoundedMachines.lean
+/-- The concrete procedure is correct. With unbounded scratch space the task
+is easy, while no fixed finite register set suffices, and that contrast is the
+calculator argument. -/
+theorem mulDecide_correct : ∀ w : List (Fin 3), mulDecide w = true ↔ w ∈ mulLang := by
+  intro w
+  constructor
+  · intro h
+    simp only [mulDecide, Bool.and_eq_true, List.isEmpty_iff, beq_iff_eq] at h
+    rcases h with ⟨hrest, hcount⟩
+    refine ⟨(stripRun 0 w).1, (stripRun 1 (stripRun 0 w).2).1, ?_⟩
+    have h0 := stripRun_reconstruct 0 w
+    have h1 := stripRun_reconstruct 1 (stripRun 0 w).2
+    have h2 := stripRun_reconstruct 2 (stripRun 1 (stripRun 0 w).2).2
+    calc
+      w = List.replicate (stripRun 0 w).1 0 ++ (stripRun 0 w).2 := h0.symm
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (stripRun 1 (stripRun 0 w).2).2) := by rw [h1]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (List.replicate (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).1 2 ++
+              (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).2)) := by rw [h2]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+          List.replicate ((stripRun 0 w).1 * (stripRun 1 (stripRun 0 w).2).1) 2 := by
+            rw [hrest, hcount]
+            simp
+  · rintro ⟨m, n, rfl⟩
+    have h0 : (0 : Fin 3) ∉ List.replicate n 1 ++ List.replicate (m * n) 2 := by
+      simp
+    have hr0 := stripRun_replicate_append_of_not_mem 0 m
+      (List.replicate n 1 ++ List.replicate (m * n) 2) h0
+    have h1 : (1 : Fin 3) ∉ List.replicate (m * n) 2 := by
+      simp
+    have hr1 := stripRun_replicate_append_of_not_mem 1 n
+      (List.replicate (m * n) 2) h1
+    have hr2 := stripRun_replicate_append_of_not_mem 2 (m * n) [] (by simp)
+    have hr2&#x27; : stripRun 2 (List.replicate (m * n) 2) = (m * n, []) := by
+      simpa using hr2
+    rw [List.append_assoc]
+    simp only [mulDecide]
+    rw [hr0, hr1, hr2&#x27;]
+    simp</code></pre></details>
 <p><strong>بی‌نقشگی همان حالتِ برخط است.</strong> فصل ۶ اصرار می‌کند که مانع خاصیتِ هدف و حرکت‌های اعلام‌شده است و نه خاصیتِ جست‌وجویی که روی آن‌ها اجرا می‌شود، و خوانشِ غیررسمیِ ناهمواری مرتباً به ادعایی دربارهٔ جست‌وجوگر می‌لغزد. خوانشِ ماشینی این دو را پاکیزه جدا می‌کند، چون همان چشم‌انداز را می‌شود هم به عاملی عرضه کرد که فقط همسایه‌هایش را می‌بیند و هم به عاملی که کل نقشه را در دست دارد. روی مسیری پنج‌رأسی با ارزیابی‌ای دوقله‌ای، هر پیمایشِ فرازِ اکید از مبدأ در قلهٔ کوچک‌تر می‌ایستد، مسیری مجاز به بیشینهٔ سراسری در همان گراف وجود دارد، و هر چنین مسیری زیر آن قله فرو می‌رود (بررسی‌شده با ماشین). هر سه با هم. گیرافتادن خاصیتِ قاعدهٔ محلی است، دسترسی‌پذیری خاصیتِ گراف است، و مانع از هر دو جان به در می‌برد. این تمایز چیزی را منحل نمی‌کند و چیزی را مجاز نمی‌کند: در دست داشتن نقشه درّه را برنمی‌دارد، درّه را به یک قلم در صورتحساب بدل می‌کند، که همان است که فصل ۶ گفت و همان است که ویرایش کوتاهِ این کتاب به‌عنوان تزش بیان می‌کند. تحلیل رقابتی، به معنای اسلیتور و تارجان، نظریهٔ پختهٔ دقیقاً همین شکاف است، و خانهٔ طبیعیِ مختصهٔ ناهمواری است وقتی پرسش این باشد که کمبود اطلاعات چه هزینه‌ای دارد نه آنکه آن زمین چه در خود دارد.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): pathAdj, J, Ascent, ascent_from_zero_stalls, route_to_max_exists, every_route_dips<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F48-online-stalls-where-offline-does-not.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): pathAdj, J, Ascent, ascent_from_zero_stalls, route_to_max_exists, every_route_dips<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F53-online-stalls-where-offline-does-not.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The path graph on five vertices: adjacent iff the indices differ by
 one. -/
 def pathAdj (i j : Fin 5) : Prop := i.val + 1 = j.val ∨ j.val + 1 = i.val
@@ -1841,7 +2182,7 @@ theorem every_route_dips (l : List (Fin 5)) (hchain : l.Chain&#x27; pathAdj)
   -- this is a two-value comparison, so evaluate it in the kernel instead
   · simp [J]</code></pre></details>
 <p><strong>بازنمایی شمرده می‌شود، نه داوری.</strong> فصل ۸ ادعا می‌کند آنچه دشواری را در حالت بازتابی تعیین می‌کند تفاوت در ظرفیتِ بازنمایی میان دو طرف است. به زبان ماشین‌ها این ادعا یک لانهٔ کبوتری است. بگویید ماشینی ماشین دیگری را دنبال می‌کند وقتی رمزگذاری‌ای از وضعیت‌های ماشینِ دنبال‌شده در وضعیت‌های خودش، دینامیک را در هم می‌بافد و خروجی‌ها را بازتولید می‌کند. اگر ماشینِ دنبال‌شده خروجی-جداشده باشد، یعنی وضعیت‌های متمایزش با خروجی‌ها در امتداد واژه‌ای ورودی از هم تمیز داده شوند، آن‌گاه هر نگاشتِ دنبال‌کردن یک‌به‌یک است، دنبال‌کنندهٔ متناهی دست‌کم به‌اندازهٔ هدفش وضعیت لازم دارد، و دنبال‌کردنِ متقابل میان ماشین‌های خروجی-جداشده شمارِ وضعیت‌های برابر را تحمیل می‌کند (بررسی‌شده با ماشین). هدایتِ چیزی اکیداً کوچک‌تر کاری معمولی است با شیئی پیچیده. هدایتِ یک هم‌سطح فعالیتی متفاوت است، و آن تفاوت حساب‌وکتاب است نه خوی.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tracks, Tracks.injective, card_le_of_tracks, card_eq_of_mutual_tracks<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F49-tracking-costs-states.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): Tracks, Tracks.injective, card_le_of_tracks, card_eq_of_mutual_tracks<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F54-tracking-costs-states.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- `f` tracks machine `B` inside machine `A`: the encoding intertwines
 the dynamics and reproduces the outputs. This is what it means for `A`
 to maintain a faithful copy of `B`. -/
@@ -1883,7 +2224,7 @@ theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
     Fintype.card S = Fintype.card T := by
   exact le_antisymm (card_le_of_tracks hg hA) (card_le_of_tracks hf hB)</code></pre></details>
 <p>گستراندنی که حالت بازتابی را ترمیم می‌کند همان حساب‌وکتاب را به ارث می‌برد. فراخ‌کردنِ تصویر تا تصویرِ طرف مقابل از شما را در بر بگیرد در هر دور خوش‌تعریف است و هرگز بسته نمی‌شود: با دست‌کم دو کنش برای طرف مقابل، هر دور شمارِ وضعیت را در سیاست‌های روی فضای کنونی ضرب می‌کند، پس آن برج اکیداً صعودی و بی‌کران است (بررسی‌شده با ماشین). «هر دور چیزی می‌افزاید که نمی‌توانید ببینید» در فصل ۸، همان دنباله است.</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean): towerCard, towerCard_strictMono, towerCard_unbounded<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F50-the-augmentation-tower-is-unbounded.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean proof (BoundedMachines.lean): towerCard, towerCard_strictMono, towerCard_unbounded<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F55-the-augmentation-tower-is-unbounded.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- The state count of the k-th augmentation round: start at `s`
 states; each round pairs the current space with the counterpart&#x27;s
 policies over it (`p` actions). -/

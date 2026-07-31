@@ -3,10 +3,11 @@ import Mathlib
 /-!
 This snippet is about:
 
-  value_of_information_nonneg
-  value_of_information_eq_zero_iff
+  flipModel
+  inertModel
+  exists_probe_only_distinguishable
 
-found at line 903 of 943, near the end of this file.
+found at line 788 of 796, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -624,16 +625,35 @@ section Ashby
 
 variable {D A O : Type*}
 
+/-- The separation a counting bound actually needs: two disturbances that the
+regulator answers the same way must be told apart by that shared response.
+Nothing is required of responses the rule never issues, or of pairs it answers
+differently, because the bound already charges for the difference in response.
+
+Demanding that *every* response separate *every* pair, which is how the law is
+usually stated informally, is sufficient but strictly stronger:
+`fiberSeparating_of_injective` gives the implication and
+`fiberSeparating_strictly_weaker` witnesses that it does not reverse. -/
+def FiberSeparating (ω : D → A → O) (ρ : D → A) : Prop :=
+  ∀ d d', ρ d = ρ d' → ω d (ρ d) = ω d' (ρ d') → d = d'
+
+/-- The informal premise implies the one the counting argument uses. -/
+theorem fiberSeparating_of_injective (ω : D → A → O)
+    (hinj : ∀ a, Function.Injective fun d => ω d a) (ρ : D → A) :
+    FiberSeparating ω ρ := by
+  intro d d' h1 h2
+  apply hinj (ρ d)
+  show ω d (ρ d) = ω d' (ρ d)
+  rw [h2, ← h1]
+
 /-- Ashby's law of requisite variety, counting form. `ω d a` is the outcome
-of disturbance `d` under regulator response `a`. If distinct disturbances
-produce distinct outcomes under any fixed response (the disturbances really
-are distinct as far as the outcome is concerned), then any response rule `ρ`
-satisfies: the number of disturbances is at most the number of responses
-actually used times the number of outcomes actually hit. Only variety in the
-regulator can absorb variety in the disturbances. -/
+of disturbance `d` under regulator response `a`. If the response rule `ρ`
+separates the disturbances it answers alike (`FiberSeparating`), then the
+number of disturbances is at most the number of responses actually used times
+the number of outcomes actually hit. Only variety in the regulator can absorb
+variety in the disturbances. -/
 theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ) :
     Fintype.card D ≤
       (Finset.univ.image ρ).card * (Finset.univ.image fun d => ω d (ρ d)).card := by
   have key :
@@ -645,21 +665,44 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
         ⟨Finset.mem_image_of_mem ρ (Finset.mem_univ d),
          Finset.mem_image_of_mem _ (Finset.mem_univ d)⟩
     · intro d _ d' _ hdd
-      have h1 : ρ d = ρ d' := congrArg Prod.fst hdd
-      have h2 : ω d (ρ d) = ω d' (ρ d') := congrArg Prod.snd hdd
-      apply hinj (ρ d)
-      show ω d (ρ d) = ω d' (ρ d)
-      rw [h2, ← h1]
+      exact hsep d d' (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key
+
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d => ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ => ()) (fun _ => ())
+  simp at this
+
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d => ω d a := by
+  refine ⟨fun d a => if a then d else false, id, ?_, ?_⟩
+  · intro d d' h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this
 
 /-- Perfect regulation: holding the outcome constant requires at least as
 much response variety as there is disturbance variety. -/
 theorem requisite_variety_perfect [Fintype D] [DecidableEq A] [DecidableEq O]
-    (ω : D → A → O) (hinj : ∀ a, Function.Injective fun d => ω d a)
-    (ρ : D → A) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
+    (ω : D → A → O) (ρ : D → A) (hsep : FiberSeparating ω ρ)
+    (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
     Fintype.card D ≤ (Finset.univ.image ρ).card := by
-  have h := requisite_variety ω hinj ρ
+  have h := requisite_variety ω ρ hsep
   have himg : (Finset.univ.image fun d => ω d (ρ d)).card ≤ 1 := by
     apply Finset.card_le_one.mpr
     intro x hx y hy
@@ -749,195 +792,5 @@ theorem exists_probe_only_distinguishable :
     simp [PMF.pure_apply] at this
 
 end Cynefin
-
-/-! ## Statistic-based rules (Campbell, Goodhart) -/
-
-section Campbell
-
-variable {S A : Type*}
-
-/-- A decision rule that acts only through a summary statistic inherits the
-statistic's blindness: if the statistic fails to separate two states whose
-acceptable-action sets are disjoint, then every rule based on it acts
-unacceptably in at least one of the two. Managing to the dashboard is safe
-exactly to the extent that the dashboard separates decision-relevant
-states. -/
-theorem statistic_based_rule_fails {m : S → ℝ} (Astar : S → Set A)
-    {s s' : S} (hm : m s = m s') (hdisj : Disjoint (Astar s) (Astar s'))
-    (α : ℝ → A) :
-    α (m s) ∉ Astar s ∨ α (m s') ∉ Astar s' := by
-  by_contra hc
-  push Not at hc
-  obtain ⟨h1, h2⟩ := hc
-  rw [hm] at h1
-  exact Set.disjoint_left.mp hdisj h1 h2
-
-/-- The statistic-blindness theorem with an arbitrary statistic codomain:
-nothing in the argument uses the real numbers. This is the form the
-relativization barrier of complexity theory instantiates: a proof
-technique whose verdict factors through relativizing observations takes
-the same value in the two Baker-Gill-Solovay worlds, whose correct
-conclusions are disjoint, so no such technique is correct in both. -/
-theorem statistic_based_rule_fails' {Y : Type*} {m : S → Y} (Astar : S → Set A)
-    {s s' : S} (hm : m s = m s') (hdisj : Disjoint (Astar s) (Astar s'))
-    (α : Y → A) :
-    α (m s) ∉ Astar s ∨ α (m s') ∉ Astar s' := by
-  by_contra hc
-  push Not at hc
-  obtain ⟨h1, h2⟩ := hc
-  rw [hm] at h1
-  exact Set.disjoint_left.mp hdisj h1 h2
-
-/-- The randomized version: a stochastic rule that acts only through the
-statistic cannot be supported inside both acceptable sets either. Whatever
-it randomizes over, some realization it actually plays is unacceptable in
-one of the two conflated states. -/
-theorem statistic_based_randomized_rule_fails {m : S → ℝ} (Astar : S → Set A)
-    {s s' : S} (hm : m s = m s') (hdisj : Disjoint (Astar s) (Astar s'))
-    (α : ℝ → PMF A) :
-    ¬((α (m s)).support ⊆ Astar s ∧ (α (m s')).support ⊆ Astar s') := by
-  rintro ⟨h1, h2⟩
-  obtain ⟨a, ha⟩ := (α (m s)).support_nonempty
-  have ha' : a ∈ (α (m s')).support := by rw [← hm]; exact ha
-  exact Set.disjoint_left.mp hdisj (h1 ha) (h2 ha')
-
-end Campbell
-
-/-! ## Safety and composition (Leveson) -/
-
-section Leveson
-
-/-- Set-invariance safety is compositional: if each component maps the safe
-set into itself, so does the composite. This is the kind of safety property
-chapter 7's interfaces can carry. -/
-theorem invariance_comp {S : Type*} {C : Set S} {f g : S → S}
-    (hf : Set.MapsTo f C C) (hg : Set.MapsTo g C C) :
-    Set.MapsTo (g ∘ f) C C :=
-  hg.comp hf
-
-/-- Margin-style safety is not compositional: two components that each move
-the state by at most one can jointly move it by two. Component-level safety
-margins do not add up to system-level safety; the hazard lives in the
-composition, which is Leveson's point in miniature. -/
-theorem increment_bound_not_compositional :
-    ∃ f g : ℝ → ℝ,
-      (∀ x, |f x - x| ≤ 1) ∧ (∀ x, |g x - x| ≤ 1) ∧
-      ∃ x : ℝ, ¬ (|(g ∘ f) x - x| ≤ 1) := by
-  refine ⟨fun x => x + 1, fun x => x + 1, fun x => by norm_num,
-    fun x => by norm_num, 0, ?_⟩
-  norm_num [Function.comp]
-
-/-- The policy space over a finite problem is exponentially large: the
-augmentation of chapter 8 is a diagnostic classification, not a computable
-space, and this is the one-line reason. -/
-theorem card_policySpace (S A : Type*) [Fintype S] [Fintype A] [DecidableEq S] :
-    Fintype.card (S → A) = Fintype.card A ^ Fintype.card S :=
-  Fintype.card_fun
-
-/-- Reflexivity is expensive, as a counting bound: perfectly regulating the
-augmented state of chapter 8 (system state paired with the counterparty's
-policy) demands response variety at least `|S| * |A| ^ |S|`. Composing the
-requisite-variety bound with the policy-space cardinality turns the
-adjective "explosive" into arithmetic. -/
-theorem requisite_variety_augmented {S A R O : Type*} [Fintype S] [Fintype A]
-    [DecidableEq S] [DecidableEq R] [DecidableEq O]
-    (ω : S × (S → A) → R → O) (hinj : ∀ r, Function.Injective fun d => ω d r)
-    (ρ : S × (S → A) → R) (o₀ : O) (hperf : ∀ d, ω d (ρ d) = o₀) :
-    Fintype.card S * Fintype.card A ^ Fintype.card S ≤
-      (Finset.univ.image ρ).card := by
-  have h := requisite_variety_perfect ω hinj ρ o₀ hperf
-  rwa [Fintype.card_prod, card_policySpace] at h
-
-/-- Semantic drift: the syntax is fixed while its interpretation changes
-over time. The wiring of chapter 7 is the constant part; chapter 8's
-counter-moves act on the semantics family. -/
-def SemanticDrift {W B : Type*} (sem : ℕ → W → B) : Prop :=
-  ∃ t x, sem (t + 1) x ≠ sem t x
-
-/-- A contract check is a time-indexed claim: a concrete witness where the
-contract holds under the semantics at time zero, the semantics drifts with
-the syntax unchanged, and the same contract fails at time one. Checking the
-square once certifies the interface only for the moment of checking. -/
-theorem contract_check_time_indexed :
-    ∃ (sem : ℕ → Bool → Bool) (contract : (Bool → Bool) → Prop),
-      contract (sem 0) ∧ SemanticDrift sem ∧ ¬contract (sem 1) := by
-  refine ⟨fun t => if t = 0 then id else not, fun f => f true = true, ?_, ⟨0, true, ?_⟩, ?_⟩
-  · simp
-  · simp
-  · simp
-
-end Leveson
-
-/-! ## Value of information (Raiffa) -/
-
-section Raiffa
-
-variable {A O : Type*} [Fintype A] [Fintype O] [Nonempty A]
-
-/-- Raiffa's dictum, the inequality half: observing the outcome before
-acting never lowers achievable expected utility. `w` is the (nonnegative)
-weight the agent's predictive distribution puts on each observation, and
-`u a o` the utility of committing to `a` when the observation is `o`.
-The left side is the best the agent can do committing now; the right side
-is the value of deciding after seeing `o`. -/
-theorem value_of_information_nonneg (u : A → O → ℝ) (w : O → ℝ)
-    (hw : ∀ o, 0 ≤ w o) :
-    (Finset.univ.sup' Finset.univ_nonempty fun a => ∑ o, w o * u a o) ≤
-      ∑ o, w o * Finset.univ.sup' Finset.univ_nonempty fun a => u a o := by
-  apply Finset.sup'_le
-  intro a _
-  apply Finset.sum_le_sum
-  intro o _
-  exact mul_le_mul_of_nonneg_left (Finset.le_sup' (fun a => u a o) (Finset.mem_univ a))
-    (hw o)
-
-/-- Value of information is zero exactly when a single action is optimal
-under every possible outcome, so the observation cannot change the decision.
-This is the theorem behind chapter 9's practical criterion: an experiment
-whose outcomes all select the same action purchases nothing. -/
-theorem value_of_information_eq_zero_iff (u : A → O → ℝ) (w : O → ℝ)
-    (hw : ∀ o, 0 < w o) :
-    (Finset.univ.sup' Finset.univ_nonempty fun a => ∑ o, w o * u a o) =
-      (∑ o, w o * Finset.univ.sup' Finset.univ_nonempty fun a => u a o)
-    ↔ ∃ a : A, ∀ o, ∀ a' : A, u a' o ≤ u a o := by
-  have hle := value_of_information_nonneg u w fun o => (hw o).le
-  constructor
-  · intro heq
-    obtain ⟨a₀, -, ha₀⟩ :=
-      Finset.exists_mem_eq_sup' (Finset.univ_nonempty (α := A))
-        (fun a => ∑ o, w o * u a o)
-    have hsum : ∑ o, w o * u a₀ o
-        = ∑ o, w o * Finset.univ.sup' Finset.univ_nonempty fun a => u a o := by
-      rw [← heq]
-      exact ha₀.symm
-    have hnonneg : ∀ o ∈ (Finset.univ : Finset O),
-        0 ≤ w o * ((Finset.univ.sup' Finset.univ_nonempty fun a => u a o) - u a₀ o) := by
-      intro o _
-      exact mul_nonneg (hw o).le
-        (sub_nonneg.mpr (Finset.le_sup' (fun a => u a o) (Finset.mem_univ a₀)))
-    have hzero :
-        ∑ o, w o * ((Finset.univ.sup' Finset.univ_nonempty fun a => u a o) - u a₀ o) = 0 := by
-      simp only [mul_sub]
-      rw [Finset.sum_sub_distrib, ← hsum, sub_self]
-    have hterm := (Finset.sum_eq_zero_iff_of_nonneg hnonneg).mp hzero
-    refine ⟨a₀, fun o a' => ?_⟩
-    rcases mul_eq_zero.mp (hterm o (Finset.mem_univ o)) with h | h
-    · exact absurd h (ne_of_gt (hw o))
-    · have hs : (Finset.univ.sup' Finset.univ_nonempty fun a => u a o) = u a₀ o :=
-        sub_eq_zero.mp h
-      calc u a' o ≤ Finset.univ.sup' Finset.univ_nonempty (fun a => u a o) :=
-            Finset.le_sup' (fun a => u a o) (Finset.mem_univ a')
-        _ = u a₀ o := hs
-  · rintro ⟨a, ha⟩
-    have hpt : ∀ o, (Finset.univ.sup' Finset.univ_nonempty fun a' => u a' o) = u a o := by
-      intro o
-      exact le_antisymm (Finset.sup'_le _ _ fun a' _ => ha o a')
-        (Finset.le_sup' (fun a' => u a' o) (Finset.mem_univ a))
-    refine le_antisymm hle ?_
-    calc ∑ o, w o * Finset.univ.sup' Finset.univ_nonempty (fun a' => u a' o)
-        = ∑ o, w o * u a o := by simp only [hpt]
-      _ ≤ _ := Finset.le_sup' (fun a => ∑ o, w o * u a o) (Finset.mem_univ a)
-
-end Raiffa
 end
 end HardProblems

@@ -3,11 +3,10 @@ import Mathlib
 /-!
 This snippet is about:
 
-  FiberSeparating
-  fiberSeparating_of_injective
-  requisite_variety
+  requisite_variety_fails_without_separation
+  fiberSeparating_strictly_weaker
 
-found at line 656 of 674, near the end of this file.
+found at line 688 of 700, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -668,6 +667,33 @@ theorem requisite_variety [Fintype D] [DecidableEq A] [DecidableEq O]
       exact hsep d d' (congrArg Prod.fst hdd) (congrArg Prod.snd hdd)
   rw [Finset.card_product] at key
   simpa using key
+
+/-- The separation premise is load-bearing, not decoration. Drop it and the
+inequality is false: two disturbances, one response, one outcome gives
+`2 ≤ 1 * 1`. -/
+theorem requisite_variety_fails_without_separation :
+    ¬ ∀ (ω : Bool → Unit → Unit) (ρ : Bool → Unit),
+        Fintype.card Bool ≤
+          (Finset.univ.image ρ).card *
+            (Finset.univ.image fun d => ω d (ρ d)).card := by
+  intro h
+  have := h (fun _ _ => ()) (fun _ => ())
+  simp at this
+
+/-- Fiberwise separation is strictly weaker than separation under every fixed
+response. The rule `ρ = id` answers each disturbance its own way, so every
+fiber is a singleton and separation is free, while the response `false`
+collapses both disturbances to the same outcome. A bound that assumed the
+informal premise would exclude this regulator for no reason. -/
+theorem fiberSeparating_strictly_weaker :
+    ∃ (ω : Bool → Bool → Bool) (ρ : Bool → Bool),
+      FiberSeparating ω ρ ∧ ¬ ∀ a, Function.Injective fun d => ω d a := by
+  refine ⟨fun d a => if a then d else false, id, ?_, ?_⟩
+  · intro d d' h1 _
+    exact h1
+  · intro hinj
+    have := hinj false (a₁ := true) (a₂ := false) rfl
+    simp at this
 
 end Ashby
 end

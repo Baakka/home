@@ -10,7 +10,7 @@ This snippet is about:
   route_to_max_exists
   every_route_dips
 
-found at line 432 of 435, near the end of this file.
+found at line 536 of 539, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -314,6 +314,110 @@ theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
   rcases hu with ⟨rfl, rfl, hu⟩
   simp at hu
   exact hkl hu
+
+/-! The bound above says a *finite* machine cannot verify the language. The
+chapter's next sentence claims that paper lifts the bound, which is a different
+and stronger claim: that the task really is doable once scratch space is
+unbounded. An impossibility theorem cannot establish it. So here is the
+procedure, explicitly, with its correctness proved.
+
+The first attempt at this was vacuous and worth recording. Asking for
+`∃ f, ∀ w, f w = true ↔ w ∈ mulLang` is discharged by classical choice for
+*any* predicate, the halting problem included, since a decision function is
+only asserted to exist and never to be computed. The statement below names the
+procedure instead, so nothing is left for choice to supply. -/
+
+/-- Strip a maximal run of the letter `a`, returning its length and the rest.
+This is the scratch work a person does with pencil and paper. -/
+def stripRun (a : Fin 3) : List (Fin 3) → ℕ × List (Fin 3)
+  | [] => (0, [])
+  | x :: xs =>
+      if x = a then
+        let r := stripRun a xs
+        (r.1 + 1, r.2)
+      else (0, x :: xs)
+
+/-- An explicit decider: count the run of 0s, then of 1s, then of 2s, and
+check that nothing is left over and that the last count is the product. -/
+def mulDecide (w : List (Fin 3)) : Bool :=
+  let r0 := stripRun 0 w
+  let r1 := stripRun 1 r0.2
+  let r2 := stripRun 2 r1.2
+  r2.2.isEmpty && (r2.1 == r0.1 * r1.1)
+
+lemma stripRun_reconstruct (a : Fin 3) (w : List (Fin 3)) :
+    List.replicate (stripRun a w).1 a ++ (stripRun a w).2 = w := by
+  induction w with
+  | nil => rfl
+  | cons x xs ih =>
+    simp only [stripRun]
+    split
+    · rename_i h
+      simp only
+      rw [List.replicate_succ]
+      simp [ih, h]
+    · rfl
+
+lemma stripRun_replicate_append_of_not_mem (a : Fin 3) (n : ℕ)
+    (xs : List (Fin 3)) (hxs : a ∉ xs) :
+    stripRun a (List.replicate n a ++ xs) = (n, xs) := by
+  induction n with
+  | zero =>
+    simp only [List.replicate_zero, List.nil_append]
+    cases xs with
+    | nil => rfl
+    | cons x xs' =>
+      simp_all [stripRun]
+      intro h
+      exact hxs.1 h.symm
+  | succ n ih =>
+    simp [List.replicate_succ, stripRun]
+    exact ⟨congr_arg Prod.fst ih, congr_arg Prod.snd ih⟩
+
+/-- The concrete procedure is correct. With unbounded scratch space the task
+is easy, while no fixed finite register set suffices, and that contrast is the
+calculator argument. -/
+theorem mulDecide_correct : ∀ w : List (Fin 3), mulDecide w = true ↔ w ∈ mulLang := by
+  intro w
+  constructor
+  · intro h
+    simp only [mulDecide, Bool.and_eq_true, List.isEmpty_iff, beq_iff_eq] at h
+    rcases h with ⟨hrest, hcount⟩
+    refine ⟨(stripRun 0 w).1, (stripRun 1 (stripRun 0 w).2).1, ?_⟩
+    have h0 := stripRun_reconstruct 0 w
+    have h1 := stripRun_reconstruct 1 (stripRun 0 w).2
+    have h2 := stripRun_reconstruct 2 (stripRun 1 (stripRun 0 w).2).2
+    calc
+      w = List.replicate (stripRun 0 w).1 0 ++ (stripRun 0 w).2 := h0.symm
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (stripRun 1 (stripRun 0 w).2).2) := by rw [h1]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          (List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+            (List.replicate (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).1 2 ++
+              (stripRun 2 (stripRun 1 (stripRun 0 w).2).2).2)) := by rw [h2]
+      _ = List.replicate (stripRun 0 w).1 0 ++
+          List.replicate (stripRun 1 (stripRun 0 w).2).1 1 ++
+          List.replicate ((stripRun 0 w).1 * (stripRun 1 (stripRun 0 w).2).1) 2 := by
+            rw [hrest, hcount]
+            simp
+  · rintro ⟨m, n, rfl⟩
+    have h0 : (0 : Fin 3) ∉ List.replicate n 1 ++ List.replicate (m * n) 2 := by
+      simp
+    have hr0 := stripRun_replicate_append_of_not_mem 0 m
+      (List.replicate n 1 ++ List.replicate (m * n) 2) h0
+    have h1 : (1 : Fin 3) ∉ List.replicate (m * n) 2 := by
+      simp
+    have hr1 := stripRun_replicate_append_of_not_mem 1 n
+      (List.replicate (m * n) 2) h1
+    have hr2 := stripRun_replicate_append_of_not_mem 2 (m * n) [] (by simp)
+    have hr2' : stripRun 2 (List.replicate (m * n) 2) = (m * n, []) := by
+      simpa using hr2
+    rw [List.append_assoc]
+    simp only [mulDecide]
+    rw [hr0, hr1, hr2']
+    simp
+
 
 end RegMult
 
