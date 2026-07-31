@@ -1,5 +1,18 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  verdict_infeasible_iff
+  verdictOfList_eq_residual_iff
+
+found at line 240 of 249, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/Core.lean -/
+
 
 /-!
 # Hard Problems, Chapters 1 and 10: the problem object and the navigation contract

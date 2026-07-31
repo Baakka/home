@@ -1,5 +1,15 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  exists_dip_of_barrier_pos
+
+found at line 366 of 377, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

@@ -1,5 +1,19 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  mulLang
+  IsRegularLang
+  mulLang_not_regular
+
+found at line 310 of 316, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

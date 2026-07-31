@@ -1,5 +1,15 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  tsum_bayesEvidence_mul_bayesUpdateOr
+
+found at line 461 of 481, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

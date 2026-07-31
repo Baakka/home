@@ -1,5 +1,22 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  pathAdj
+  J
+  Ascent
+  ascent_from_zero_stalls
+  route_to_max_exists
+  every_route_dips
+
+found at line 432 of 435, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

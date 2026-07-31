@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  statistic_based_rule_fails
+  statistic_based_randomized_rule_fails
+
+found at line 795 of 806, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

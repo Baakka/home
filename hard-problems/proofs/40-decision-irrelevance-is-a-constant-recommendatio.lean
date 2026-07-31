@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  DecisionRelevant
+  not_decisionRelevant_iff
+
+found at line 664 of 669, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

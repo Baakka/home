@@ -1,5 +1,15 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  barrier_lt_iff_superlevel
+
+found at line 600 of 615, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

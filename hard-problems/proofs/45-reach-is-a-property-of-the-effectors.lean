@@ -1,5 +1,21 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  Reach
+  traj_mem_reach
+  Programmed
+  reach_insert_programmed
+  exists_new_effector_enlarges_reach
+
+found at line 194 of 200, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

@@ -1,5 +1,17 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  extendStep
+  extendStep_fst
+  extendStepRand_fst
+
+found at line 618 of 623, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

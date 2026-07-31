@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  SemanticDrift
+  contract_check_time_indexed
+
+found at line 863 of 871, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

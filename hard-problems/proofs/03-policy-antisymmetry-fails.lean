@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  policyPreorder
+  policyPreorder_not_antisymmetric
+
+found at line 369 of 373, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

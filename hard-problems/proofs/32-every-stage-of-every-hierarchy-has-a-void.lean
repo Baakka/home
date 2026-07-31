@@ -1,5 +1,17 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  no_final_stage
+
+found at line 56 of 60, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/Tower.lean -/
+
 
 /-!
 # Hard Problems: the tower of representations (section 7.4, chapter 10)

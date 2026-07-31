@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  scalarize_le_scalarize
+  scalarize_lt_scalarize
+
+found at line 384 of 392, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

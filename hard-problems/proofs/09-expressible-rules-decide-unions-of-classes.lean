@@ -1,5 +1,19 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  VocabEquiv
+  VocabInvariant
+  exists_invariant_decider_iff
+
+found at line 85 of 96, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/Definability.lean -/
+
 
 /-!
 # Hard Problems: definability, signature adequacy, persistent ambiguity

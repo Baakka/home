@@ -1,5 +1,17 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  flipModel
+  inertModel
+  exists_probe_only_distinguishable
+
+found at line 746 of 754, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

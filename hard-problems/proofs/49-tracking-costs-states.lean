@@ -1,5 +1,20 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  Tracks
+  injective
+  card_le_of_tracks
+  card_eq_of_mutual_tracks
+
+found at line 124 of 127, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

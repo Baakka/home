@@ -1,5 +1,19 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  towerCard
+  towerCard_strictMono
+  towerCard_unbounded
+
+found at line 530 of 536, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

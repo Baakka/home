@@ -1,5 +1,15 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  requisite_variety_augmented
+
+found at line 841 of 852, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 

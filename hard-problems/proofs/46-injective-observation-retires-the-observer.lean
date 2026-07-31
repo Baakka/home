@@ -1,5 +1,20 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  robustMenu
+  obsEq_iff_eq_of_injective
+  robustMenu_eq_of_injective
+  no_ambiguity_of_injective
+
+found at line 242 of 257, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

@@ -1,5 +1,21 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  Tuned
+  fixedStep
+  stateRun_eq_fst
+  paramRun_eq_snd
+  card_fixed
+
+found at line 490 of 495, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/BoundedMachines.lean -/
+
 
 /-!
 # Agents as bounded machines

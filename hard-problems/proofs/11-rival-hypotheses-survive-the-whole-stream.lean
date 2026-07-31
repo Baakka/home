@@ -1,5 +1,18 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  satisfiable_of_finite_observations
+  rival_hypotheses_persist
+
+found at line 163 of 166, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/Definability.lean -/
+
 
 /-!
 # Hard Problems: definability, signature adequacy, persistent ambiguity

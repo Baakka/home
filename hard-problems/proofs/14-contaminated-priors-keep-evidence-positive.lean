@@ -1,5 +1,16 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  contaminate
+  bayesEvidence_mixture_pos
+
+found at line 571 of 583, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
 /-! Inlined dependency: LeanTest/HardProblems/Core.lean -/
 
 
@@ -569,5 +580,4 @@ theorem bayesEvidence_mixture_pos (Zobs ζ : S → PMF O) {ε : ℝ≥0∞}
   exact one_ne_zero hone
 
 end
-
 end HardProblems

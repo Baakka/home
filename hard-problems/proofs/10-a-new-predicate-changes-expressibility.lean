@@ -1,5 +1,17 @@
 import Mathlib
 
+/-!
+This snippet is about:
+
+  expansion_gain
+
+found at line 106 of 120, near the end of this file.
+
+Everything above it is the companion's own dependencies, inlined so that
+this file needs nothing but mathlib. -/
+
+/-! Target module: LeanTest/HardProblems/Definability.lean -/
+
 
 /-!
 # Hard Problems: definability, signature adequacy, persistent ambiguity
