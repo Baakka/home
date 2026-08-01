@@ -3,12 +3,13 @@ import Mathlib
 /-!
 This snippet is about:
 
-  robustMenu
-  obsEq_iff_eq_of_injective
-  robustMenu_eq_of_injective
-  no_ambiguity_of_injective
+  Reach
+  traj_mem_reach
+  Programmed
+  reach_insert_programmed
+  exists_new_effector_enlarges_reach
 
-found at line 242 of 257, near the end of this file.
+found at line 197 of 203, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -17,37 +18,15 @@ this file needs nothing but mathlib. -/
 
 
 /-!
-# Agents as bounded machines
+# Bounded-machine examples
 
-The framework's agents are resource-bounded machines, and this module is
-the reading of the hardness profile that follows from taking that
-literally. Its results are grouped by the claim they discharge:
-
-* representation bounds (`card_le_of_tracks`, `card_eq_of_mutual_tracks`):
-  faithfully tracking a machine costs at least its state count, so a
-  smaller machine cannot represent a larger one and mutual modelling
-  forces parity (book chapter 8);
-* the action wall (`traj_mem_reach`, `reach_insert_programmed`,
-  `exists_new_effector_enlarges_reach`): reachability is a property of
-  the effector set, closed under everything a program can compose from
-  it, and moved only by a new effector (chapter 4);
-* the observation wall's converse (`robustMenu_eq_of_injective`,
-  `no_ambiguity_of_injective`): when the observation map is injective the
-  estimator machinery is vacuous (chapter 3);
-* the scaling diagnostic (`mulLang_not_regular`): no finite-state machine
-  verifies unary multiplication, so a constant-space agent degrades with
-  problem size while nothing structural is wrong;
-* online versus offline (`ascent_from_zero_stalls`, `route_to_max_exists`,
-  `every_route_dips`): on one fixed landscape the neighbour-comparing
-  searcher stalls where the map-holding searcher does not, and the
-  barrier survives both (chapter 6);
-* the ladder collapse (`Tuned.stateRun_eq_fst`, `card_fixed`) and the
-  regress (`towerCard_strictMono`, `towerCard_unbounded`): self-tuning is
-  one fixed machine on a product space, and augmenting against a modelled
-  counterpart never closes (chapter 8).
-
-Every proof in this file was produced by Harmonic's Aristotle prover
-against the statements as written here, and re-checked locally.
+This module contains several independent finite-machine results: exact
+tracking bounds, finite-composition reachability, injective observation, a
+unary nonregularity example, one fixed local-search counterexample, product
+state dynamics, and the growth of one explicitly defined augmentation
+recurrence. Their interpretations remain tied to their individual hypotheses.
+Most proofs were produced by Harmonic's Aristotle prover against the statements
+as written and then checked locally.
 -/
 
 namespace HardProblems
@@ -103,25 +82,50 @@ theorem Tracks.injective {A : Machine I O S} {B : Machine I O T} {f : T → S}
   have eq2 : f (B.run t₂ w) = A.run (f t₂) w := h.run_eq t₂ w
   rw [← h.out_eq (B.run t₁ w), ← h.out_eq (B.run t₂ w), eq1, eq2, hft]
 
-/-- The pigeonhole bound: a finite machine can faithfully track an
-output-separated machine only if it has at least as many states.
-"Something below you on the scale cannot represent you." -/
+/-- The pigeonhole bound: a finite machine can exactly track an
+output-separated machine only if it has at least as many states. This is a
+capacity bound for the stated exact tracking relation. -/
 theorem card_le_of_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S}
     (h : Tracks A B f) (hB : B.Separated) :
     Fintype.card T ≤ Fintype.card S := by
   exact Fintype.card_le_of_injective _ (Tracks.injective h hB)
 
-/-- Mutual faithful tracking forces representational parity: if each of
-two output-separated finite machines tracks the other, their state
-counts are equal. Steering an equal is a different activity from
-steering something smaller. -/
+/-- Mutual exact tracking forces cardinality parity for finite
+output-separated machines. It does not by itself give an isomorphism between
+their transition systems. -/
 theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S} {g : S → T}
     (hf : Tracks A B f) (hg : Tracks B A g)
     (hA : A.Separated) (hB : B.Separated) :
     Fintype.card S = Fintype.card T := by
   exact le_antisymm (card_le_of_tracks hg hA) (card_le_of_tracks hf hB)
+
+/-! Equal state counts are not sufficient for tracking. Ported from the
+Aristotle target `CapacityCaveat`. -/
+
+/-- A Boolean machine that flips at every input. -/
+def flipMachine : Machine Unit Bool Bool where
+  step s _ := !s
+  out s := s
+
+/-- A Boolean machine that never changes state. -/
+def inertMachine : Machine Unit Bool Bool where
+  step s _ := s
+  out s := s
+
+/-- Equal cardinality supplies no dynamical conjugacy. Output preservation
+forces a proposed tracking map here to fix `false`, while transition
+preservation would require the incompatible flip. -/
+theorem same_cardinality_but_no_tracking :
+    Fintype.card Bool = Fintype.card Bool ∧
+      ¬ ∃ f : Bool → Bool, Tracks flipMachine inertMachine f := by
+  constructor
+  · rfl
+  · rintro ⟨f, hf⟩
+    have hfalse := hf.out_eq false
+    have hstep := hf.step_eq false ()
+    simp [flipMachine, inertMachine] at hfalse hstep
 
 end SimBound
 
@@ -158,14 +162,14 @@ theorem traj_mem_reach (G : Set (X → X)) (σ : ℕ → X)
       obtain ⟨g, hg, heq⟩ := hstep n
       exact Reach.tail ih hg heq
 
-/-- A programmed macro over `G`: an effector whose effect is, from every
-state, already reachable with `G`. This is exactly what software over
-the same effectors can implement, including state-dependent dispatch. -/
+/-- Pointwise realizability over `G`: from every state, the image under `g` is
+already reachable with `G`. The definition supplies neither a uniform generator
+word nor a computable dispatcher for the witnessing paths. -/
 def Programmed (G : Set (X → X)) (g : X → X) : Prop :=
   ∀ y : X, Reach G y (g y)
 
-/-- Admitting a programmed macro as a new primitive changes nothing: the
-reachable set is closed under everything software can add. -/
+/-- Inserting a pointwise realizable transformation as a primitive leaves every
+reachability orbit unchanged. -/
 theorem reach_insert_programmed (G : Set (X → X)) {g : X → X}
     (hg : Programmed G g) (x z : X) :
     Reach (insert g G) x z ↔ Reach G x z := by
@@ -184,8 +188,8 @@ theorem reach_insert_programmed (G : Set (X → X)) {g : X → X}
     | tail hy hmem heq ih =>
         exact Reach.tail ih (Set.mem_insert_of_mem g hmem) heq
 
-/-- A genuinely new effector can strictly enlarge reach: the wall
-yields to hardware and to nothing else. -/
+/-- A transformation outside the prior reachability closure can strictly
+enlarge reach in an explicit two-state example. -/
 theorem exists_new_effector_enlarges_reach :
     ∃ (G : Set (Bool → Bool)) (g : Bool → Bool) (x z : Bool),
       Reach (insert g G) x z ∧ ¬ Reach G x z := by
@@ -196,62 +200,4 @@ theorem exists_new_effector_enlarges_reach :
     | tail hy hmem heq => exact hmem.elim
 
 end ProgClosure
-
-
-/-! ### Full observability retires the observer
-
-Ported from the Aristotle target `FullObs`. -/
-
-section FullObs
-variable {S Ω A : Type*}
-
-/-- Observational equivalence through a signal map: two states look
-alike when they emit the same observation. -/
-def ObsEq (obs : S → Ω) (s t : S) : Prop := obs s = obs t
-
-/-- The robust menu at `s`: the actions acceptable in every state that
-looks like `s`. -/
-def robustMenu (obs : S → Ω) (Acc : S → Set A) (s : S) : Set A :=
-  ⋂ t ∈ {t | ObsEq obs s t}, Acc t
-
-/-- Under injective observation, looking alike is being equal. -/
-theorem obsEq_iff_eq_of_injective {obs : S → Ω}
-    (h : Function.Injective obs) (s t : S) :
-    ObsEq obs s t ↔ s = t := by
-  constructor
-  · intro hObs
-    exact h hObs
-  · intro h
-    rw [h]
-    rfl
-
-/-- Under injective observation, the robust menu is the acceptable set
-itself: no acceptable action is lost to ambiguity. -/
-theorem robustMenu_eq_of_injective {obs : S → Ω}
-    (h : Function.Injective obs) (Acc : S → Set A) (s : S) :
-    robustMenu obs Acc s = Acc s := by
-  simp only [robustMenu]
-  have : {t | ObsEq obs s t} = {s} := by
-    ext t
-    simp [obsEq_iff_eq_of_injective h]
-  simp [this]
-
-/-- Decision-critical ambiguity cannot occur under injective
-observation: there are no look-alike states with a nonempty acceptable
-set on one side and disjoint acceptable sets between them. -/
-theorem no_ambiguity_of_injective {obs : S → Ω}
-    (h : Function.Injective obs) (Acc : S → Set A) :
-    ¬ ∃ s t : S, ObsEq obs s t ∧ (Acc s).Nonempty ∧
-      Disjoint (Acc s) (Acc t) := by
-  intro ⟨s, t, hObs, hNS, hDisj⟩
-  have hs : s = t := h (by simpa [ObsEq] using hObs)
-  rw [hs] at hDisj
-  rw [Set.disjoint_iff_inter_eq_empty] at hDisj
-  rw [Set.inter_self] at hDisj
-  obtain ⟨x, hx⟩ := hNS
-  rw [hs] at hx
-  rw [hDisj] at hx
-  exact hx
-
-end FullObs
 end HardProblems

@@ -4,12 +4,18 @@ import Mathlib
 This snippet is about:
 
   Tuned
+  stateRun
+  paramRun
   fixedStep
   stateRun_eq_fst
   paramRun_eq_snd
   card_fixed
+  towerCard
+  towerCard_strictMono
+  towerCard_unbounded
+  card_augment
 
-found at line 594 of 599, near the end of this file.
+found at line 644 of 651, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -18,37 +24,15 @@ this file needs nothing but mathlib. -/
 
 
 /-!
-# Agents as bounded machines
+# Bounded-machine examples
 
-The framework's agents are resource-bounded machines, and this module is
-the reading of the hardness profile that follows from taking that
-literally. Its results are grouped by the claim they discharge:
-
-* representation bounds (`card_le_of_tracks`, `card_eq_of_mutual_tracks`):
-  faithfully tracking a machine costs at least its state count, so a
-  smaller machine cannot represent a larger one and mutual modelling
-  forces parity (book chapter 8);
-* the action wall (`traj_mem_reach`, `reach_insert_programmed`,
-  `exists_new_effector_enlarges_reach`): reachability is a property of
-  the effector set, closed under everything a program can compose from
-  it, and moved only by a new effector (chapter 4);
-* the observation wall's converse (`robustMenu_eq_of_injective`,
-  `no_ambiguity_of_injective`): when the observation map is injective the
-  estimator machinery is vacuous (chapter 3);
-* the scaling diagnostic (`mulLang_not_regular`): no finite-state machine
-  verifies unary multiplication, so a constant-space agent degrades with
-  problem size while nothing structural is wrong;
-* online versus offline (`ascent_from_zero_stalls`, `route_to_max_exists`,
-  `every_route_dips`): on one fixed landscape the neighbour-comparing
-  searcher stalls where the map-holding searcher does not, and the
-  barrier survives both (chapter 6);
-* the ladder collapse (`Tuned.stateRun_eq_fst`, `card_fixed`) and the
-  regress (`towerCard_strictMono`, `towerCard_unbounded`): self-tuning is
-  one fixed machine on a product space, and augmenting against a modelled
-  counterpart never closes (chapter 8).
-
-Every proof in this file was produced by Harmonic's Aristotle prover
-against the statements as written here, and re-checked locally.
+This module contains several independent finite-machine results: exact
+tracking bounds, finite-composition reachability, injective observation, a
+unary nonregularity example, one fixed local-search counterexample, product
+state dynamics, and the growth of one explicitly defined augmentation
+recurrence. Their interpretations remain tied to their individual hypotheses.
+Most proofs were produced by Harmonic's Aristotle prover against the statements
+as written and then checked locally.
 -/
 
 namespace HardProblems
@@ -104,25 +88,50 @@ theorem Tracks.injective {A : Machine I O S} {B : Machine I O T} {f : T → S}
   have eq2 : f (B.run t₂ w) = A.run (f t₂) w := h.run_eq t₂ w
   rw [← h.out_eq (B.run t₁ w), ← h.out_eq (B.run t₂ w), eq1, eq2, hft]
 
-/-- The pigeonhole bound: a finite machine can faithfully track an
-output-separated machine only if it has at least as many states.
-"Something below you on the scale cannot represent you." -/
+/-- The pigeonhole bound: a finite machine can exactly track an
+output-separated machine only if it has at least as many states. This is a
+capacity bound for the stated exact tracking relation. -/
 theorem card_le_of_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S}
     (h : Tracks A B f) (hB : B.Separated) :
     Fintype.card T ≤ Fintype.card S := by
   exact Fintype.card_le_of_injective _ (Tracks.injective h hB)
 
-/-- Mutual faithful tracking forces representational parity: if each of
-two output-separated finite machines tracks the other, their state
-counts are equal. Steering an equal is a different activity from
-steering something smaller. -/
+/-- Mutual exact tracking forces cardinality parity for finite
+output-separated machines. It does not by itself give an isomorphism between
+their transition systems. -/
 theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S} {g : S → T}
     (hf : Tracks A B f) (hg : Tracks B A g)
     (hA : A.Separated) (hB : B.Separated) :
     Fintype.card S = Fintype.card T := by
   exact le_antisymm (card_le_of_tracks hg hA) (card_le_of_tracks hf hB)
+
+/-! Equal state counts are not sufficient for tracking. Ported from the
+Aristotle target `CapacityCaveat`. -/
+
+/-- A Boolean machine that flips at every input. -/
+def flipMachine : Machine Unit Bool Bool where
+  step s _ := !s
+  out s := s
+
+/-- A Boolean machine that never changes state. -/
+def inertMachine : Machine Unit Bool Bool where
+  step s _ := s
+  out s := s
+
+/-- Equal cardinality supplies no dynamical conjugacy. Output preservation
+forces a proposed tracking map here to fix `false`, while transition
+preservation would require the incompatible flip. -/
+theorem same_cardinality_but_no_tracking :
+    Fintype.card Bool = Fintype.card Bool ∧
+      ¬ ∃ f : Bool → Bool, Tracks flipMachine inertMachine f := by
+  constructor
+  · rfl
+  · rintro ⟨f, hf⟩
+    have hfalse := hf.out_eq false
+    have hstep := hf.step_eq false ()
+    simp [flipMachine, inertMachine] at hfalse hstep
 
 end SimBound
 
@@ -159,14 +168,14 @@ theorem traj_mem_reach (G : Set (X → X)) (σ : ℕ → X)
       obtain ⟨g, hg, heq⟩ := hstep n
       exact Reach.tail ih hg heq
 
-/-- A programmed macro over `G`: an effector whose effect is, from every
-state, already reachable with `G`. This is exactly what software over
-the same effectors can implement, including state-dependent dispatch. -/
+/-- Pointwise realizability over `G`: from every state, the image under `g` is
+already reachable with `G`. The definition supplies neither a uniform generator
+word nor a computable dispatcher for the witnessing paths. -/
 def Programmed (G : Set (X → X)) (g : X → X) : Prop :=
   ∀ y : X, Reach G y (g y)
 
-/-- Admitting a programmed macro as a new primitive changes nothing: the
-reachable set is closed under everything software can add. -/
+/-- Inserting a pointwise realizable transformation as a primitive leaves every
+reachability orbit unchanged. -/
 theorem reach_insert_programmed (G : Set (X → X)) {g : X → X}
     (hg : Programmed G g) (x z : X) :
     Reach (insert g G) x z ↔ Reach G x z := by
@@ -185,8 +194,8 @@ theorem reach_insert_programmed (G : Set (X → X)) {g : X → X}
     | tail hy hmem heq ih =>
         exact Reach.tail ih (Set.mem_insert_of_mem g hmem) heq
 
-/-- A genuinely new effector can strictly enlarge reach: the wall
-yields to hardware and to nothing else. -/
+/-- A transformation outside the prior reachability closure can strictly
+enlarge reach in an explicit two-state example. -/
 theorem exists_new_effector_enlarges_reach :
     ∃ (G : Set (Bool → Bool)) (g : Bool → Bool) (x z : Bool),
       Reach (insert g G) x z ∧ ¬ Reach G x z := by
@@ -257,7 +266,7 @@ theorem no_ambiguity_of_injective {obs : S → Ω}
 end FullObs
 
 
-/-! ### Constant space fails multiplication at scale
+/-! ### A unary multiplication language is not finite-state recognizable
 
 Ported from the Aristotle target `RegMult`. -/
 
@@ -275,9 +284,9 @@ accepts exactly it. -/
 def IsRegularLang (L : Language (Fin 3)) : Prop :=
   ∃ (σ : Type) (_ : Fintype σ) (M : DFA (Fin 3) σ), M.accepts = L
 
-/-- No finite-state machine verifies unary multiplication: registers
-must grow with the task, which is the calculator's whole advantage and
-the unaided person's whole deficit. -/
+/-- The unary multiplication-verification language is not regular. This is a
+finite-state recognizability result, not a bound for positional multiplication
+or a claim about any human or register architecture. -/
 theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
   have encoding_unique : ∀ m n p m' n' p' : ℕ,
       List.replicate m (0 : Fin 3) ++ List.replicate n (1 : Fin 3) ++
@@ -314,20 +323,13 @@ theorem mulLang_not_regular : ¬ IsRegularLang mulLang := by
   simp at hu
   exact hkl hu
 
-/-! The bound above says a *finite* machine cannot verify the language. The
-chapter's next sentence claims that paper lifts the bound, which is a different
-and stronger claim: that the task really is doable once scratch space is
-unbounded. An impossibility theorem cannot establish it. So here is the
-procedure, explicitly, with its correctness proved.
+/-! The nonregularity result excludes finite-state recognizers. The definitions
+below instead name an executable decider using natural-number counters and
+multiplication, and prove its correctness. Merely asserting the existence of a
+Boolean characteristic function would not supply a computable procedure. -/
 
-The first attempt at this was vacuous and worth recording. Asking for
-`∃ f, ∀ w, f w = true ↔ w ∈ mulLang` is discharged by classical choice for
-*any* predicate, the halting problem included, since a decision function is
-only asserted to exist and never to be computed. The statement below names the
-procedure instead, so nothing is left for choice to supply. -/
-
-/-- Strip a maximal run of the letter `a`, returning its length and the rest.
-This is the scratch work a person does with pencil and paper. -/
+/-- Strip a maximal run of the letter `a`, returning its length and the
+remaining suffix. -/
 def stripRun (a : Fin 3) : List (Fin 3) → ℕ × List (Fin 3)
   | [] => (0, [])
   | x :: xs =>
@@ -373,9 +375,9 @@ lemma stripRun_replicate_append_of_not_mem (a : Fin 3) (n : ℕ)
     simp [List.replicate_succ, stripRun]
     exact ⟨congr_arg Prod.fst ih, congr_arg Prod.snd ih⟩
 
-/-- The concrete procedure is correct. With unbounded scratch space the task
-is easy, while no fixed finite register set suffices, and that contrast is the
-calculator argument. -/
+/-- The concrete procedure is correct. It uses natural-number counters and
+multiplication, so this computability upper bound is not a finite-memory upper
+bound. -/
 theorem mulDecide_correct : ∀ w : List (Fin 3), mulDecide w = true ↔ w ∈ mulLang := by
   intro w
   constructor
@@ -434,8 +436,8 @@ def pathAdj (i j : Fin 5) : Prop := i.val + 1 = j.val ∨ j.val + 1 = i.val
 maximum at vertex 4, and a dip at vertex 2 between them. -/
 def J : Fin 5 → ℤ := ![0, 2, 1, 3, 5]
 
-/-- A strict-ascent step: move to an adjacent, strictly better vertex.
-Every greedy local searcher takes only such steps. -/
+/-- A strict-ascent local-search step: move to an adjacent, strictly better
+vertex. -/
 def Ascent (u v : Fin 5) : Prop := pathAdj u v ∧ J u < J v
 
 /-- Vertex 1 is a strict local maximum and not the global maximum. -/
@@ -492,10 +494,10 @@ private lemma adjacent_left_without_two (a b : Fin 5)
   fin_cases a <;> fin_cases b <;> simp_all [pathAdj]
 
 private lemma chain_from_left_visits_two (l : List (Fin 5))
-    (hchain : l.Chain' pathAdj) (hhead : l.head? = some 0)
+    (hchain : l.IsChain pathAdj) (hhead : l.head? = some 0)
     (hlast : l.getLast? = some 4) : (2 : Fin 5) ∈ l := by
   by_contra hno
-  have propagate : ∀ (xs : List (Fin 5)), xs.Chain' pathAdj →
+  have propagate : ∀ (xs : List (Fin 5)), xs.IsChain pathAdj →
       (∀ a ∈ xs.head?, a.val ≤ 1) → (2 : Fin 5) ∉ xs →
       ∀ x ∈ xs, x.val ≤ 1 := by
     intro xs hc
@@ -522,16 +524,14 @@ private lemma chain_from_left_visits_two (l : List (Fin 5))
   have := hall 4 (by simp)
   norm_num at this
 
-/-- Every admissible route from 0 to 4 visits vertex 2, whose value
-dips below the lesser peak: holding the map does not remove the
-valley, it makes the valley a priced line item. -/
-theorem every_route_dips (l : List (Fin 5)) (hchain : l.Chain' pathAdj)
+/-- Every admissible route from 0 to 4 visits vertex 2, whose value lies below
+the lesser endpoint value. -/
+theorem every_route_dips (l : List (Fin 5)) (hchain : l.IsChain pathAdj)
     (hhead : l.head? = some 0) (hlast : l.getLast? = some 4) :
     (2 : Fin 5) ∈ l ∧ J 2 < J 1 := by
   constructor
   · exact chain_from_left_visits_two l hchain hhead hlast
-  -- the target used `native_decide`, which adds a compiler-trusting axiom;
-  -- this is a two-value comparison, so evaluate it in the kernel instead
+  -- Kernel reduction suffices for this two-value comparison.
   · simp [J]
 
 end LocalSearch
@@ -561,9 +561,8 @@ def Tuned.paramRun (M : Tuned S Θ I) : S → Θ → List I → Θ
   | _, θ, [] => θ
   | s, θ, i :: w => M.paramRun (M.step θ s i) (M.tune θ s i) w
 
-/-- The tuner as one fixed step function on the product space: no
-parameter is being "learned" anywhere the product machine can see; it
-is ordinary state. -/
+/-- Represent the coupled state and parameter updates as one transition on the
+product space. -/
 def Tuned.fixedStep (M : Tuned S Θ I) : S × Θ → I → S × Θ :=
   fun q i => (M.step q.2 q.1 i, M.tune q.2 q.1 i)
 
@@ -589,11 +588,64 @@ theorem Tuned.paramRun_eq_snd (M : Tuned S Θ I) (s : S) (θ : Θ)
     simp only [Tuned.paramRun, List.foldl]
     exact ih (M.step θ s i) (M.tune θ s i)
 
-/-- The variety bill for the collapse: the fixed machine's state space
-has product cardinality. -/
+/-- The product state space has the product of the two finite cardinalities. -/
 theorem card_fixed (S Θ : Type*) [Fintype S] [Fintype Θ] :
     Fintype.card (S × Θ) = Fintype.card S * Fintype.card Θ := by
   exact Fintype.card_prod S Θ
 
 end Ladder
+
+
+/-! ### The reflexive regress strictly grows state
+
+Ported from the Aristotle target `Regress`. -/
+
+section Regress
+/-- The state count of the k-th augmentation round: start at `s`
+states; each round pairs the current space with the counterpart's
+policies over it (`p` actions). -/
+def towerCard (s p : ℕ) : ℕ → ℕ
+  | 0 => s
+  | k + 1 => towerCard s p k * p ^ towerCard s p k
+
+/-- With a nonempty base and at least two counterpart actions, every
+augmentation round strictly grows the state count. -/
+theorem towerCard_strictMono {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
+    StrictMono (towerCard s p) := by
+  apply strictMono_nat_of_lt_succ
+  intro k
+  rw [towerCard]
+  have hpos : 0 < towerCard s p k := by
+    induction k with
+    -- ported from the v4.28.0 target: `0 < s` no longer simp-normalizes to
+    -- `1 ≤ s` on this toolchain, so convert explicitly
+    | zero => simpa [towerCard] using Nat.lt_of_succ_le hs
+    | succ k ih =>
+      simp only [towerCard]
+      positivity
+  have hpow : 1 < p ^ towerCard s p k :=
+    Nat.one_lt_pow (ne_of_gt hpos) hp
+  nlinarith
+
+/-- The explicitly defined full-policy augmentation recurrence is unbounded.
+This does not rule out compact representations or fixed points for other
+models. -/
+theorem towerCard_unbounded {s p : ℕ} (hs : 1 ≤ s) (hp : 2 ≤ p) :
+    ∀ N : ℕ, ∃ k : ℕ, N < towerCard s p k := by
+  intro N
+  have hmono := towerCard_strictMono hs hp
+  exact
+    ⟨N + 1,
+      lt_of_le_of_lt (hmono.id_le N) (hmono (Nat.lt_succ_self N))⟩
+
+/-- The type-level anchor: one augmentation round takes a finite state
+space `A` to `A × (A → P)`, whose cardinality is the product-and-power
+of the recursion above. -/
+theorem card_augment (A P : Type*) [Fintype A] [Fintype P]
+    [DecidableEq A] :
+    Fintype.card (A × (A → P)) =
+      Fintype.card A * Fintype.card P ^ Fintype.card A := by
+  rw [Fintype.card_prod, Fintype.card_fun]
+
+end Regress
 end HardProblems

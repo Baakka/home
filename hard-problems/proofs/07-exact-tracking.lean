@@ -3,12 +3,16 @@ import Mathlib
 /-!
 This snippet is about:
 
+  Machine
+  run
+  Separated
   Tracks
+  run_eq
   injective
   card_le_of_tracks
   card_eq_of_mutual_tracks
 
-found at line 124 of 127, near the end of this file.
+found at line 105 of 108, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -17,37 +21,15 @@ this file needs nothing but mathlib. -/
 
 
 /-!
-# Agents as bounded machines
+# Bounded-machine examples
 
-The framework's agents are resource-bounded machines, and this module is
-the reading of the hardness profile that follows from taking that
-literally. Its results are grouped by the claim they discharge:
-
-* representation bounds (`card_le_of_tracks`, `card_eq_of_mutual_tracks`):
-  faithfully tracking a machine costs at least its state count, so a
-  smaller machine cannot represent a larger one and mutual modelling
-  forces parity (book chapter 8);
-* the action wall (`traj_mem_reach`, `reach_insert_programmed`,
-  `exists_new_effector_enlarges_reach`): reachability is a property of
-  the effector set, closed under everything a program can compose from
-  it, and moved only by a new effector (chapter 4);
-* the observation wall's converse (`robustMenu_eq_of_injective`,
-  `no_ambiguity_of_injective`): when the observation map is injective the
-  estimator machinery is vacuous (chapter 3);
-* the scaling diagnostic (`mulLang_not_regular`): no finite-state machine
-  verifies unary multiplication, so a constant-space agent degrades with
-  problem size while nothing structural is wrong;
-* online versus offline (`ascent_from_zero_stalls`, `route_to_max_exists`,
-  `every_route_dips`): on one fixed landscape the neighbour-comparing
-  searcher stalls where the map-holding searcher does not, and the
-  barrier survives both (chapter 6);
-* the ladder collapse (`Tuned.stateRun_eq_fst`, `card_fixed`) and the
-  regress (`towerCard_strictMono`, `towerCard_unbounded`): self-tuning is
-  one fixed machine on a product space, and augmenting against a modelled
-  counterpart never closes (chapter 8).
-
-Every proof in this file was produced by Harmonic's Aristotle prover
-against the statements as written here, and re-checked locally.
+This module contains several independent finite-machine results: exact
+tracking bounds, finite-composition reachability, injective observation, a
+unary nonregularity example, one fixed local-search counterexample, product
+state dynamics, and the growth of one explicitly defined augmentation
+recurrence. Their interpretations remain tied to their individual hypotheses.
+Most proofs were produced by Harmonic's Aristotle prover against the statements
+as written and then checked locally.
 -/
 
 namespace HardProblems
@@ -103,19 +85,18 @@ theorem Tracks.injective {A : Machine I O S} {B : Machine I O T} {f : T → S}
   have eq2 : f (B.run t₂ w) = A.run (f t₂) w := h.run_eq t₂ w
   rw [← h.out_eq (B.run t₁ w), ← h.out_eq (B.run t₂ w), eq1, eq2, hft]
 
-/-- The pigeonhole bound: a finite machine can faithfully track an
-output-separated machine only if it has at least as many states.
-"Something below you on the scale cannot represent you." -/
+/-- The pigeonhole bound: a finite machine can exactly track an
+output-separated machine only if it has at least as many states. This is a
+capacity bound for the stated exact tracking relation. -/
 theorem card_le_of_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S}
     (h : Tracks A B f) (hB : B.Separated) :
     Fintype.card T ≤ Fintype.card S := by
   exact Fintype.card_le_of_injective _ (Tracks.injective h hB)
 
-/-- Mutual faithful tracking forces representational parity: if each of
-two output-separated finite machines tracks the other, their state
-counts are equal. Steering an equal is a different activity from
-steering something smaller. -/
+/-- Mutual exact tracking forces cardinality parity for finite
+output-separated machines. It does not by itself give an isomorphism between
+their transition systems. -/
 theorem card_eq_of_mutual_tracks [Fintype S] [Fintype T]
     {A : Machine I O S} {B : Machine I O T} {f : T → S} {g : S → T}
     (hf : Tracks A B f) (hg : Tracks B A g)

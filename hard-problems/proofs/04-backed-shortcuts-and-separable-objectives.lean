@@ -3,9 +3,14 @@ import Mathlib
 /-!
 This snippet is about:
 
+  pathBetween_shortcut_nonempty_iff
+  barrier_shortcut_eq
   exists_shortcut_hiding_valley
+  flipAdj
+  exists_monotone_flipPath
+  barrier_eq_zero_of_separable
 
-found at line 802 of 831, near the end of this file.
+found at line 502 of 531, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -14,300 +19,22 @@ this file needs nothing but mathlib. -/
 
 
 /-!
-# Hard Problems, Chapters 1 and 10: the problem object and the navigation contract
+# Core partially observed system
 
-Formalization of the mathematical core of the book draft
-"Hard Problems: Compositional Navigation in Open, Partially Observable, Adaptive Systems".
-
-Design choices, recorded once and referenced from the review:
-
-* Probability is represented with `PMF` (countably supported distributions).
-  The book allows general measurable spaces; everything here generalizes to
-  `ProbabilityTheory.Kernel` at the price of measurability side conditions that
-  would obscure the decision-theoretic content. This matches the book's own
-  remark in section 0 about finite-dimensional notation.
-* The model class `Θ` is a fixed unknown parameter type. The book writes a
-  time-indexed `θ_t`; see the review (finding on section 1) for why the two
-  readings, epistemic uncertainty versus drift, should be separated.
-* Policies are typed on observation histories. The book's admissible action
-  sets `A_i(s)` depend on the unobserved state, which a history-typed policy
-  cannot check; the review flags this as a gap in the text.
+The companion modules share one small stochastic interface: a state transition
+kernel controlled by an action and an observation kernel on the resulting state
+space. More specialized task, policy, horizon, cost, and resource parameters
+are introduced in the modules that use them.
 -/
 
 namespace HardProblems
 
-set_option linter.checkUnivs false in
-/-- Chapter 1: the hard-problem instance
-`P = (S, {A_i}, {O_i, Z_i}, T_θ, {G_i}, C, {Π_i}, Θ)`. -/
-structure Problem where
-  /-- state space `S` -/
-  S : Type*
-  /-- agent index set `N`; `focal` plays the book's role of agent `0` -/
-  Agent : Type*
-  focal : Agent
-  /-- per-agent action types -/
-  Act : Agent → Type*
-  /-- admissible actions `A_i(s)`; note the dependence on the unobserved state -/
-  adm : ∀ i, S → Set (Act i)
-  /-- per-agent observation spaces `O_i` -/
-  Obs : Agent → Type*
-  /-- the model class `Θ`: epistemic uncertainty over kernels -/
-  Model : Type*
-  /-- observation kernels `Z_{i,θ}(o_i ∣ s)` -/
-  Z : Model → ∀ i, S → PMF (Obs i)
-  /-- transition kernel `T_θ(s' ∣ s, a)`, on joint actions -/
-  T : Model → S → (∀ i, Act i) → PMF S
-  /-- number of objective coordinates `k` -/
-  k : ℕ
-  /-- vector objective `G : S → ℝ^k` (chapter 2) -/
-  G : S → Fin k → ℝ
-  /-- per-agent payoffs `G_i`: the realized rewards `r_i` that drive
-  adaptation in chapter 8. The focal agent's own objective is the
-  vector-valued `G` above; nothing requires the non-focal `G_i` to be known
-  to the focal agent. -/
-  payoff : Agent → S → ℝ
-  /-- safe or feasible set `C ⊆ S` -/
-  C : Set S
-  /-- policy classes `Π_i`, as observation-history policies -/
-  Pol : ∀ i, Set (List (Obs i) → PMF (Act i))
-
-/-- A maintained focal-view model `M = (θ, π₋₀)` (chapter 3). The other agents'
-reactions are folded into single-agent kernels. This folding is sound only when
-the non-focal policies are Markov in the current state; the review discusses
-what breaks otherwise (their internal histories become hidden confounders). -/
+/-- A countably supported partially observed stochastic system. The transition
+kernel is action-indexed; the observation kernel emits a law from each latent
+state. Admissible policy classes and resource bounds are separate parameters. -/
 structure POSystem (S A O : Type*) where
-  /-- marginalized transition kernel `T_{θ,π₋₀}(s' ∣ s, a₀)` -/
   T : S → A → PMF S
-  /-- focal observation kernel `Z_{0,θ}(o ∣ s)` -/
   Z : S → PMF O
-
-/-- Chapter 1.1: the hardness profile `H(P) = (F, O, A, L, Ru, Re, X)`.
-Each coordinate is a diagnostic claim (a proposition to be argued from
-evidence), not a score. Ruggedness lives on the configuration graph and
-evaluation of `Ruggedness.lean`; reversibility is recovery reachability in
-the sense of `Dynamics.lean`'s `Recoverable`. -/
-structure HardnessProfile where
-  formulation : Prop
-  observability : Prop
-  agency : Prop
-  latency : Prop
-  ruggedness : Prop
-  reversibility : Prop
-  reflexivity : Prop
-
-/-- The profile's index. The named tuple above is presentation; the
-underlying object is an indexed family of diagnostic claims, so extending
-the profile means adding an index point, not changing an arity. The
-coordinates are moreover not primitive: agency, reversibility, and
-ruggedness are one diagnostic (constrained reachability) evaluated at three
-re-descriptions of the problem, latency is observability with a clock
-(`obsLag_ne_top_iff`), and reflexivity is observability plus agency on the
-augmented system (`extendStep_fst`). Formulation alone resists absorption:
-it is governance, prior to the system. -/
-inductive HardnessCoord where
-  | formulation
-  | observability
-  | agency
-  | latency
-  | ruggedness
-  | reversibility
-  | reflexivity
-deriving DecidableEq, Repr
-
-/-- The tuple is exactly the evaluation of an indexed family: the profile
-carries no structure beyond its index. -/
-def HardnessProfile.equivFn : HardnessProfile ≃ (HardnessCoord → Prop) where
-  toFun p c :=
-    match c with
-    | .formulation => p.formulation
-    | .observability => p.observability
-    | .agency => p.agency
-    | .latency => p.latency
-    | .ruggedness => p.ruggedness
-    | .reversibility => p.reversibility
-    | .reflexivity => p.reflexivity
-  invFun f :=
-    ⟨f .formulation, f .observability, f .agency, f .latency, f .ruggedness,
-     f .reversibility, f .reflexivity⟩
-  left_inv p := rfl
-  right_inv f := by
-    funext c
-    cases c <;> rfl
-
-/-- The knowns/unknowns matrix as a projection of the profile: a cell
-records only whether the destination is settled (formulation) and whether
-the current state is estimable (observability). The matrix is an on-ramp,
-not a measure; the two theorems below make that precise. -/
-def matrixCell (p : HardnessProfile) : Prop × Prop :=
-  (p.formulation, p.observability)
-
-/-- The matrix cell does not determine the problem: two profiles can share
-a cell and differ in the remaining coordinates. -/
-theorem matrixCell_not_injective :
-    ∃ p q : HardnessProfile, matrixCell p = matrixCell q ∧ p ≠ q := by
-  refine ⟨⟨True, True, True, True, True, True, True⟩,
-    ⟨True, True, True, True, False, True, True⟩, rfl, fun h => ?_⟩
-  have hru : True = False := congrArg HardnessProfile.ruggedness h
-  exact hru ▸ trivial
-
-/-- Every cell is fat: any combination of the five remaining diagnostics
-occurs inside any given cell. A "known to known" problem can still be
-arbitrarily rugged, laggy, irreversible, and reflexive; the cell says where
-to start looking, not what will be found. -/
-theorem matrixCell_fiber_fat (f o a l ru re x : Prop) :
-    ∃ p : HardnessProfile, matrixCell p = (f, o) ∧ p.agency = a ∧
-      p.latency = l ∧ p.ruggedness = ru ∧ p.reversibility = re ∧
-      p.reflexivity = x :=
-  ⟨⟨f, o, a, l, ru, re, x⟩, rfl, rfl, rfl, rfl, rfl, rfl⟩
-
-/-- One row of the model ledger of chapter 1.1. The fields are documentation
-data, not mathematics: the point of the ledger is auditability. -/
-structure LedgerEntry where
-  assumption : String
-  evidence : String
-  competingModels : String
-  damageIfWrong : String
-  nextObservation : String
-
-/-- The model ledger: every load-bearing assumption gets a row. -/
-abbrev ModelLedger := List LedgerEntry
-
-/-! ## Chapter 10: the stopping rule
-
-The book lists four terminal conditions: execute, probe, escalate, exit.
-As stated they are not mutually exclusive (a problem can be feasible for the
-focal agent while the objective choice belongs to another authority), so a
-deterministic stopping rule needs a priority order. We encode the natural one
-and prove the characterizations, which makes the exclusivity explicit. -/
-
-/-- The four verdicts of the chapter 10 stopping rule. -/
-inductive Verdict where
-  | execute
-  | probe
-  | escalate
-  | infeasible
-deriving DecidableEq, Repr
-
-/-- The three findings the stopping rule branches on. -/
-structure Assessment where
-  /-- a policy is feasible and robust enough under the stated model class -/
-  feasibleRobust : Bool
-  /-- uncertainty is decision-critical but reducible within constraints -/
-  reducibleCriticalUncertainty : Bool
-  /-- the required action or objective choice belongs to a different authority -/
-  authorityElsewhere : Bool
-
-/-- The stopping rule, with the priority order execute > probe > escalate.
-`infeasible` is the residual verdict. -/
-def Assessment.verdict (a : Assessment) : Verdict :=
-  if a.feasibleRobust then .execute
-  else if a.reducibleCriticalUncertainty then .probe
-  else if a.authorityElsewhere then .escalate
-  else .infeasible
-
-@[simp] theorem Assessment.verdict_execute_iff (a : Assessment) :
-    a.verdict = .execute ↔ a.feasibleRobust = true := by
-  unfold Assessment.verdict
-  split_ifs <;> simp_all
-
-/-- Infeasibility is exactly the failure of all three positive findings:
-the rule never declares infeasibility while a live option remains. -/
-theorem Assessment.verdict_infeasible_iff (a : Assessment) :
-    a.verdict = .infeasible ↔
-      a.feasibleRobust = false ∧ a.reducibleCriticalUncertainty = false ∧
-        a.authorityElsewhere = false := by
-  unfold Assessment.verdict
-  split_ifs <;> simp_all
-
-/-! The stopping rule, generalized: chapter 10 notes that the priority
-order is itself a governance choice. `verdictOfList` is the rule for an
-arbitrary declared order (an ordered list of findings paired with
-verdicts, and a residual), and the two theorems are what any such rule
-owes its users. (Proofs found by Harmonic's Aristotle; see
-`aristotle/pool/verdict/`.) -/
-
-/-- A stopping rule as an ordered list of findings paired with verdicts,
-and a residual verdict when nothing fires: first match wins. -/
-def verdictOfList {V : Type*} (rules : List (Bool × V)) (residual : V) : V :=
-  match rules with
-  | [] => residual
-  | (b, v) :: rest => if b then v else verdictOfList rest residual
-
-/-- The residual is declared exactly when every finding is negative
-(provided no rule reuses the residual verdict): the rule never declares
-infeasibility while a live option remains, for any declared order. -/
-theorem verdictOfList_eq_residual_iff {V : Type*} (rules : List (Bool × V))
-    (residual : V) (hres : ∀ p ∈ rules, p.2 ≠ residual) :
-    verdictOfList rules residual = residual ↔ ∀ p ∈ rules, p.1 = false := by
-  induction rules with
-  | nil => simp [verdictOfList]
-  | cons p rest ih =>
-    rcases p with ⟨b, v⟩
-    cases b <;> simp_all [verdictOfList]
-
-/-- The first firing finding decides, whatever follows it: priority orders
-mean what they say. -/
-theorem verdictOfList_first_true {V : Type*} (rules₁ rules₂ : List (Bool × V))
-    (v : V) (residual : V) (h₁ : ∀ p ∈ rules₁, p.1 = false) :
-    verdictOfList (rules₁ ++ (true, v) :: rules₂) residual = v := by
-  induction rules₁ with
-  | nil => simp [verdictOfList]
-  | cons p rest ih =>
-    rcases p with ⟨b, w⟩
-    simp_all [verdictOfList]
-
-/-- Chapter 11's declared legitimacy-first order, stated in full as an
-instance of the general rule: escalate over probe over execute, with
-infeasibility residual. -/
-def Assessment.legitimacyFirstVerdict (a : Assessment) : Verdict :=
-  verdictOfList
-    [(a.authorityElsewhere, .escalate),
-     (a.reducibleCriticalUncertainty, .probe),
-     (a.feasibleRobust, .execute)] .infeasible
-
-/-- Under the legitimacy-first order too, infeasibility is residual: it is
-declared only when all three positive findings fail. Inherited from the
-general characterization, as any declared order's guarantee should be. -/
-theorem Assessment.legitimacyFirst_infeasible_iff (a : Assessment) :
-    a.legitimacyFirstVerdict = .infeasible ↔
-      a.authorityElsewhere = false ∧ a.reducibleCriticalUncertainty = false ∧
-        a.feasibleRobust = false := by
-  rw [Assessment.legitimacyFirstVerdict, verdictOfList_eq_residual_iff]
-  · simp
-  · intro p hp
-    fin_cases hp <;> simp
-
-/-- Escalation genuinely outranks everything under the declared order: if
-the authority finding fires, the verdict is escalation regardless of the
-other findings. -/
-theorem Assessment.legitimacyFirst_escalate (a : Assessment)
-    (h : a.authorityElsewhere = true) :
-    a.legitimacyFirstVerdict = .escalate := by
-  have := verdictOfList_first_true ([] : List (Bool × Verdict))
-    [(a.reducibleCriticalUncertainty, .probe), (a.feasibleRobust, .execute)]
-    Verdict.escalate Verdict.infeasible (by simp)
-  simpa [Assessment.legitimacyFirstVerdict, h] using this
-
-/-- Chapter 10: the navigation contract
-`N = (Ĝ, b̂ₜ, Â, τ̂, Ĉ, Π̂, e, σ)`. Fields follow the book's order; the
-mathematical content of each hat lives in the corresponding chapter file. -/
-structure NavigationContract (S A E : Type*) where
-  /-- `Ĝ`: current objective specification and unresolved trade-offs -/
-  objectiveSpec : String
-  /-- `b̂ₜ`: current state estimate, if one is maintained -/
-  belief : Option (PMF S)
-  /-- `Â`: admissible actions currently owned by the focal agent -/
-  admissible : Set A
-  /-- `τ̂`: forecast feedback lag bound (⊤ means no forecast) -/
-  feedbackLag : ℕ∞
-  /-- `Ĉ`: guardrails, as a set the trajectory must not leave -/
-  guardrails : Set S
-  /-- `Π̂`: anticipated adaptations, recorded for audit -/
-  anticipatedAdaptations : String
-  /-- `e`: the next decision-relevant probe, if any -/
-  nextProbe : Option E
-  /-- `σ`: the stopping verdict currently in force -/
-  stopping : Verdict
 
 end HardProblems
 
@@ -316,22 +43,12 @@ end HardProblems
 
 
 /-!
-# Hard Problems, Chapter 6: ruggedness
+# Directed paths and barrier heights
 
-The landscape metaphor made literal: a directed graph of feasible policy
-configurations, a scalar evaluation, local maxima, and barrier heights.
-
-Results proved:
-
-* `exists_dip_of_barrier_pos`: if the barrier from `x` to `y` is positive
-  then *every* admissible path from `x` to `y` passes through a configuration
-  strictly worse than `x`. This is exactly the sentence the book asserts
-  after the definition, and it is what licenses the phrase "crossing the
-  valley" (once mechanism, depth, duration, signal, guardrail, and
-  distribution have been contracted separately).
-* `barrier_eq_top_of_no_path`: when no admissible path exists at all, the
-  barrier is `⊤`. Unreachability and high barriers are different diagnoses
-  (chapter 4 versus chapter 6), and the convention keeps them distinguishable.
+This module gives graph-level definitions of finite paths, local maxima, and
+barriers. A positive barrier forces a dip below the starting value on every
+path. An empty path family gives barrier `⊤`, distinguishing unreachability
+from every finite barrier depth.
 -/
 
 namespace HardProblems
@@ -352,17 +69,16 @@ structure PathBetween (Adj : X → X → Prop) (x y : X) where
 def IsLocalMax (Adj : X → X → Prop) (J : X → ℝ) (x : X) : Prop :=
   ∀ y, Adj x y → J y ≤ J x
 
-/-- Barrier height from `x` to `y`: the least, over admissible paths, of the
+/-- Barrier height from `x` to `y`: the infimum, over admissible paths, of the
 deepest dip below `J x` along the path (dips measured in `ℝ≥0∞`, so paths
 that never dip contribute `0`). Empty infimum is `⊤`: no path, infinite
 barrier. -/
 noncomputable def barrier (Adj : X → X → Prop) (J : X → ℝ) (x y : X) : ℝ≥0∞ :=
   ⨅ γ : PathBetween Adj x y, ⨆ z ∈ γ.points, ENNReal.ofReal (J x - J z)
 
-/-- A positive barrier means every admissible route to `y` first visits a
-configuration strictly worse than the start. This is the formal content of
-"every feasible route to the better state first passes through a
-lower-valued state". -/
+/-- A positive barrier means every admissible route to `y` contains a
+configuration strictly worse than the start. No hypothesis here says that `y`
+is better than the start or that the dip occurs before first reaching `y`. -/
 theorem exists_dip_of_barrier_pos {Adj : X → X → Prop} {J : X → ℝ} {x y : X}
     (h : 0 < barrier Adj J x y) (γ : PathBetween Adj x y) :
     ∃ z ∈ γ.points, J z < J x := by
@@ -374,8 +90,7 @@ theorem exists_dip_of_barrier_pos {Adj : X → X → Prop} {J : X → ℝ} {x y 
   have := ENNReal.ofReal_pos.mp hpos
   linarith
 
-/-- No admissible path at all makes the barrier infinite: an agency problem
-(chapter 4), not a ruggedness problem. -/
+/-- No admissible path at all makes the barrier infinite. -/
 theorem barrier_eq_top_of_no_path {Adj : X → X → Prop} {J : X → ℝ} {x y : X}
     (h : IsEmpty (PathBetween Adj x y)) :
     barrier Adj J x y = ⊤ :=
@@ -392,12 +107,10 @@ theorem barrier_eq_zero_of_monotone_path {Adj : X → X → Prop} {J : X → ℝ
   refine iSup_le fun z => iSup_le fun hz => ?_
   simp [ENNReal.ofReal_eq_zero, hγ z hz]
 
-/-! ### Ruggedness is constrained reachability
+/-! ### Barriers as superlevel reachability
 
-The unification behind the hardness profile's index view (chapter 1.1): the
-barrier sits below a depth exactly when the target is reachable through the
-corresponding superlevel region. Chapter 6's diagnostic is chapter 4's,
-evaluated in configuration space. -/
+The barrier sits below a positive depth exactly when the target is reachable
+through the corresponding strict superlevel region. -/
 
 /-- A supremum of `ENNReal`-valued quantities indexed by membership in a
 `List` is strictly below a positive bound as soon as each member is. -/
@@ -431,18 +144,13 @@ theorem barrier_lt_iff {Adj : X → X → Prop} {J : X → ℝ} {x y : X}
     have hd : 0 < d := lt_of_le_of_lt zero_le (hγ x hx)
     exact lt_of_le_of_lt (iInf_le _ γ) (biSup_list_lt _ hd γ.points hγ)
 
-/-! ### Ontological revision: re-description moves barriers
+/-! ### Forward path transport and changed move relations
 
-Chapter 7's functors are escape hatches from a configuration space where
-the target is unreachable. Three facts pin down when that works: an
-admissibility-respecting re-description transfers reachability forward
-(so emptiness in the image refutes the technique class at the source,
-which is the schema of the complexity-theoretic barrier results); escape
-hatches exist (a barrier can be infinite in one representation and zero
-in another, so unreachability is a property of the representation); and
-an escape is sound only when the re-description reflects the goal. -/
+An edge-preserving map transports concrete paths forward. The separate
+two-adjacency witness below changes the move relation and is therefore an
+action-set extension, not a coordinate change or abstraction theorem. -/
 
-/-- A re-description that respects admissibility maps paths to paths. -/
+/-- An edge-preserving state map sends paths to paths. -/
 def PathBetween.map {X X' : Type*} {Adj : X → X → Prop}
     {Adj' : X' → X' → Prop} (φ : X → X')
     (hφ : ∀ {a b}, Adj a b → Adj' (φ a) (φ b)) {x y : X}
@@ -452,10 +160,9 @@ def PathBetween.map {X X' : Type*} {Adj : X → X → Prop}
   last_eq := by rw [List.getLast?_map, γ.last_eq]; rfl
   admissible := (List.isChain_map φ).mpr (γ.admissible.imp fun _ _ h => hφ h)
 
-/-- The schema of the barrier results: if the re-described target is
-unreachable, no admissible route existed at the source either, for any
-admissibility-respecting re-description. Oracle worlds instantiate this:
-emptiness in the image kills the technique class upstairs. -/
+/-- If the mapped endpoints are unreachable in the target graph, no path
+between the selected source endpoints could have existed. This is only the
+concrete-to-abstract direction. -/
 theorem isEmpty_of_map_isEmpty {X X' : Type*} {Adj : X → X → Prop}
     {Adj' : X' → X' → Prop} (φ : X → X')
     (hφ : ∀ {a b}, Adj a b → Adj' (φ a) (φ b)) {x y : X}
@@ -463,9 +170,9 @@ theorem isEmpty_of_map_isEmpty {X X' : Type*} {Adj : X → X → Prop}
     IsEmpty (PathBetween Adj x y) :=
   ⟨fun γ => h.false (γ.map φ hφ)⟩
 
-/-- Escape hatches exist: the same start, target, and evaluation can carry
-an infinite barrier in one representation and a zero barrier in another.
-Unreachability is a property of the representation, not of the problem. -/
+/-- Changing the move relation can change an infinite barrier to zero even
+when the state type, endpoints, and objective remain fixed. The witness replaces
+the empty adjacency relation with the universal one. -/
 theorem exists_escape_hatch :
     ∃ (Adj Adj' : Bool → Bool → Prop) (J : Bool → ℝ),
       barrier Adj J false true = ⊤ ∧ barrier Adj' J false true = 0 := by
@@ -485,19 +192,16 @@ theorem exists_escape_hatch :
       ⟨[false, true], rfl, rfl, by simp [List.isChain_cons]⟩
       (fun z _ => le_rfl)
 
-/-- A re-description is an escape hatch only when it reflects the goal:
-success in the image must imply success at the source. Without
-reflection, solving the re-described problem proves nothing about the
-original. -/
+/-- Goal reflection: success at the image of a concrete state implies success
+at that concrete state. Path lifting is a separate requirement. -/
 def Reflects {X X' : Type*} (φ : X → X') (P : X → Prop) (P' : X' → Prop) : Prop :=
   ∀ x, P' (φ x) → P x
 
-/-! ### Ruggedness requires interaction (Kauffman)
+/-! ### Zero barrier to a coordinatewise maximizer in the separable model
 
-An additively separable objective on the configuration hypercube has no
-barriers: flip the disagreeing coordinates one at a time toward the
-coordinatewise maximizer and the objective never dips. Ruggedness is a
-property of coupling between coordinates, not of problem size. -/
+An additively separable objective on the configuration hypercube has a
+nondecreasing flip path from every state to a coordinatewise maximizer. This
+does not characterize barriers to other targets or under other move relations. -/
 
 /-- Single-coordinate-flip adjacency on the hypercube. -/
 def flipAdj {V : Type*} [DecidableEq V] (p q : V → Bool) : Prop :=
@@ -559,9 +263,9 @@ theorem exists_monotone_flipPath {V : Type*} [Fintype V] [DecidableEq V]
           · exact le_rfl
           · exact hmono.trans (hγ' z hzt)
 
-/-- An additively separable objective admits a monotone flip path from any
-configuration to the coordinatewise maximizer: the barrier vanishes.
-Ruggedness requires interaction. -/
+/-- An additively separable objective admits a nondecreasing flip path from any
+configuration to the coordinatewise maximizer, so that particular barrier
+vanishes. -/
 theorem barrier_eq_zero_of_separable {V : Type*} [Fintype V] [DecidableEq V]
     (f : V → Bool → ℝ) (x y : V → Bool)
     (hy : ∀ v b, f v b ≤ f v (y v)) :
@@ -575,12 +279,10 @@ theorem barrier_eq_zero_of_separable {V : Type*} [Fintype V] [DecidableEq V]
   simp only [sub_nonpos]
   exact h
 
-/-- Stability is relative to who owns the moves. On the two-coordinate
-hypercube there is an objective and a configuration that no single
-coordinate flip improves, while changing both coordinates at once does:
-stable under every unilaterally admissible move, yet not a local maximum
-once jointly admissible moves count. Whose moves count as "one change" is
-part of the ruggedness finding, not a detail of it. -/
+/-- On the two-coordinate hypercube there is an objective and a configuration
+that no single-coordinate flip improves, while changing both coordinates at
+once does improve it. Local maximality therefore depends on the adjacency
+relation. -/
 theorem exists_unilaterally_stable_not_joint_max :
     ∃ (J : (Fin 2 → Bool) → ℝ) (x : Fin 2 → Bool),
       IsLocalMax flipAdj J x ∧ ¬ IsLocalMax (fun p q => p ≠ q) J x := by
@@ -595,8 +297,7 @@ theorem exists_unilaterally_stable_not_joint_max :
 
 /-- The superlevel reading: for a real depth `d > 0`, the barrier is below
 `d` exactly when some admissible path stays inside the superlevel region
-`{z | J x - d < J z}`. Ruggedness is constrained reachability in
-configuration space. -/
+`{z | J x - d < J z}`. -/
 theorem barrier_lt_iff_superlevel {Adj : X → X → Prop} {J : X → ℝ}
     {x y : X} {d : ℝ} (hd : 0 < d) :
     barrier Adj J x y < ENNReal.ofReal d ↔
@@ -617,13 +318,11 @@ theorem barrier_lt_iff_superlevel {Adj : X → X → Prop} {J : X → ℝ}
 A shortcut relation `S` over the declared move set `Adj` is *backed* when
 every shortcut edge is witnessed by an admissible base path; the strong
 form asks that the witness never dip below the lower of the shortcut's two
-endpoints. Backed shortcuts are the contraction-hierarchy move in route
-planning: they may shorten search, but they can neither manufacture
-reachability nor hide a valley. The `min` hypothesis in the barrier form is
-essential, not decorative: with mere `Nonempty` backing the barrier claim
-is false (on `Fin 3` with the path `0 → 1 → 2`, `J 0 = J 2 = 0`,
-`J 1 = -1`, and the shortcut `S 0 2`, the union barrier is `0` while the
-base barrier is `ENNReal.ofReal 1`). -/
+endpoints. The theorems below show that such shortcuts preserve reachability
+and barrier height. The extra depth hypothesis is substantive: mere `Nonempty`
+backing does not suffice. On `Fin 3`, take the path `0 → 1 → 2`, values
+`J 0 = J 2 = 0` and `J 1 = -1`, and the shortcut `S 0 2`. The union barrier
+is `0` while the base barrier is `ENNReal.ofReal 1`. -/
 
 /-- Appending across a shared junction point: if `l₁` ends at `a` and
 `a :: l₂` ends at `y`, then `l₁ ++ l₂` ends at `y`. -/
@@ -743,9 +442,9 @@ theorem pathBetween_shortcut_nonempty_iff {Adj S : X → X → Prop}
   · rintro ⟨γ⟩
     exact ⟨γ.inl⟩
 
-/-- Barrier form: shortcuts whose witnesses never dip below the lower of
-their endpoints leave every barrier height unchanged. Abstraction is sound
-exactly when its shortcuts are backed. -/
+/-- Sufficient barrier certificate: shortcuts whose witnesses never dip below
+the lower of their endpoints leave every barrier height unchanged. The theorem
+does not claim that this certificate is necessary. -/
 theorem barrier_shortcut_eq {Adj S : X → X → Prop} {J : X → ℝ}
     (hback : ∀ u w, S u w → ∃ γ : PathBetween Adj u w,
       ∀ z ∈ γ.points, min (J u) (J w) ≤ J z) (x y : X) :
@@ -795,10 +494,11 @@ private theorem one_mem_of_path (γ : PathBetween hideAdj 0 2) :
       · exact List.mem_cons_of_mem _ List.mem_cons_self
       · exact absurd h0 (by decide)
 
-/-- The depth clause in `barrier_shortcut_eq` is essential, not decorative:
-with mere `Nonempty` backing, a shortcut can hide a valley. On the
+/-- Mere `Nonempty` backing is insufficient for barrier preservation: a
+shortcut can hide a valley. On the
 two-step chain with a dip in the middle, admitting the backed shortcut
-`0 → 2` drops the barrier from `ENNReal.ofReal 1` to `0`. -/
+`0 → 2` drops the barrier from `ENNReal.ofReal 1` to `0`. This does not show
+that the sufficient depth condition of `barrier_shortcut_eq` is necessary. -/
 theorem exists_shortcut_hiding_valley :
     ∃ (Adj S : Fin 3 → Fin 3 → Prop) (J : Fin 3 → ℝ),
       (∀ u w, S u w → Nonempty (PathBetween Adj u w)) ∧

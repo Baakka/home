@@ -3,66 +3,50 @@ import Mathlib
 /-!
 This snippet is about:
 
-  binMul_needs_n_bits
   RegisterMachine
+  run
+  multiplicationInput
   ComputesMultiplicationAt
+  finalState_injective
+  state_capacity_lower_bound
   linear_bit_lower_bound
   no_constant_register_budget
 
-found at line 379 of 380, near the end of this file.
+found at line 380 of 381, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
 
 /-! Target module: LeanTest/HardProblems/Positional.lean -/
 
-/-
-Positional encoding: what a calculator actually costs.
 
-Chapter 12 claims that a bounded machine cannot multiply, and the companion's
-first pass proved it over a *unary* language (`mulLang` in `BoundedMachines`).
-That is a real theorem about a false subject: nobody writes numbers in unary,
-and the claim as stated is about digits. Three gaps separated the prose from
-what had been checked, and this module closes each one.
+/-!
+# Positional multiplication and finite-state storage
 
-* Encoding. `binMul_needs_exp_states` redoes the lower bound over fixed-width
-  positional notation, the encoding the sentence is actually about. Verifying
-  `n`-digit multiplication takes at least `2 ^ n` states.
+This module separates four claims that use different machine and output
+conventions:
 
-* Verifying versus computing. The bound above is about *recognising* a correct
-  product. `emitter_needs_exp_states` covers the other half: a device that must
-  reproduce an operand needs enough memory to have held it.
+* `binMul_needs_exp_states` is a DFA state lower bound for recognizing the
+  fixed-width positional multiplication language.
+* `emitter_needs_exp_states` is a delayed-production capacity bound.
+* `state_capacity_lower_bound` and `linear_bit_lower_bound` count final
+  register configurations and derive the necessary lower bound of at least
+  `n` bits.
+* `no_constant_register_budget` shows that a fixed finite register capacity
+  fails at some positive width.
 
-* States versus bits, which was a rate error rather than a gap. A machine with
-  `k` states holds only `log k` bits, so an exponential state bound is a
-  *linear* memory bound, and quoting the exponential as if it were the memory
-  cost overstates the case. `linear_bit_lower_bound` states it in the honest
-  unit: `n` digits of input force `n` bits of register, no more.
-
-`no_constant_register_budget` is the conclusion the chapter wants. For any
-fixed register count and range, some width defeats the machine. The transition
-and output maps here are arbitrary functions, not required to be computable,
-which strengthens the impossibility rather than weakening it: even machines
-that cheat at every step cannot escape the counting.
-
-Formalized by Harmonic's Aristotle against Lean v4.28 and checked here against
-this project's toolchain. The statements are its choices, not translations of
-mine; where it declined to state something, `Positional` says so rather than
-substituting a weaker claim that sounds the same. In particular, no
-constant-work-space-implies-regular theorem appears: mathlib's `TM2` keeps its
-input on an ordinary counted stack, so under an honest total-space convention
-every long input already exceeds any constant, and the premise is unsatisfiable.
-A theorem with an impossible hypothesis proves nothing about calculators.
+The unary verification language in `BoundedMachines` is a separate
+recognizability problem. None of these results is a standard time or space
+lower bound for unrestricted multiplication. Returned Aristotle proofs were
+checked against Lean/mathlib v4.28 and then against this repository toolchain.
 -/
 
 namespace HardProblems
 
 /-! ## Verifying a product, in positional notation -/
 
-/-- The `n`-bit positional encoding of `a`, least significant digit first,
-written in the letters 0 and 1 of a three-letter alphabet whose third letter
-`2` is a separator. This is what "n-digit" means in the book's sentence:
-fixed width, positional, not unary. -/
+/-- The fixed-width `n`-bit positional encoding of `a`, least significant digit
+first, in a three-letter alphabet whose third letter `2` is a separator. -/
 def digits (n a : ℕ) : List (Fin 3) :=
   (List.range n).map (fun i => if a / 2 ^ i % 2 = 1 then (1 : Fin 3) else 0)
 
@@ -75,6 +59,30 @@ def binMul (n : ℕ) : Language (Fin 3) :=
 /-- Two words are distinguishable for `L` when some suffix tells them apart. -/
 def Distinguishable {α : Type} (L : Language α) (u v : List α) : Prop :=
   ∃ z : List α, (u ++ z ∈ L) ≠ (v ++ z ∈ L)
+
+/-- A finite family of pairwise suffix-distinguishable words injects into the
+state space of every DFA recognizing the language. This is the generic
+Myhill-Nerode counting lemma used by the concrete positional lower bound. -/
+theorem card_le_of_pairwise_distinguishable
+    {α σ : Type} [Fintype σ] [DecidableEq (List α)]
+    (M : DFA α σ) (L : Language α) (hM : M.accepts = L)
+    (W : Finset (List α))
+    (hW : ∀ u ∈ W, ∀ v ∈ W, u ≠ v → Distinguishable L u v) :
+    W.card ≤ Fintype.card σ := by
+  rw [← Fintype.card_coe]
+  apply Fintype.card_le_of_injective (fun u : ↥W => M.eval u.1)
+  intro u v huv
+  change M.eval u.1 = M.eval v.1 at huv
+  apply Subtype.ext
+  by_contra hne
+  obtain ⟨z, hz⟩ := hW u.1 u.2 v.1 v.2 hne
+  apply hz
+  rw [← hM]
+  change (M.eval (u.1 ++ z) ∈ M.accept) = (M.eval (v.1 ++ z) ∈ M.accept)
+  simp only [DFA.eval, M.evalFrom_of_append]
+  change (M.evalFrom (M.eval u.1) z ∈ M.accept) =
+    (M.evalFrom (M.eval v.1) z ∈ M.accept)
+  rw [huv]
 
 /-- Fixed-width positional encoding is injective below the width's capacity,
 which is what makes distinct operands distinguishable prefixes. -/
@@ -151,9 +159,9 @@ private lemma dfa_same_state_suffix {σ : Type} (M : DFA (Fin 3) σ)
     simpa [DFA.eval] using hstate
   rw [hs]
 
-/-- Any finite-state machine verifying `n`-digit multiplication has at least
-`2 ^ n` states. This is the claim chapter 12 makes, over the encoding the
-claim is about: memory grows with the digit count, not merely without bound. -/
+/-- Any finite-state machine verifying the declared `n`-digit multiplication
+language has at least `2 ^ n` states. The bound is relative to this encoding
+and grows with the digit count. -/
 theorem binMul_needs_exp_states (n : ℕ) :
     ∀ (σ : Type) (_ : Fintype σ) (M : DFA (Fin 3) σ),
       M.accepts = binMul n → 2 ^ n ≤ Fintype.card σ := by
@@ -177,32 +185,25 @@ theorem binMul_needs_exp_states (n : ℕ) :
     exact (binMul_probe_only (a := (a : ℕ)) (b := (b : ℕ)) a.isLt b.isLt
       (by simpa only [z, List.append_assoc] using hb_mem)).symm
 
-/-- The same bound in the honest unit, on the verifying side: a machine whose
-state fits in `s` bits cannot verify `n`-digit products unless `s` is at least
-`n`. One bit per digit.
-
-This is what makes the exponential above readable rather than impressive.
-`2 ^ n` states *is* `n` bits, so the two statements say the same thing, and
-quoting the state count alone invites the reader to hear an exponential cost
-where the cost is linear. Mine, not Aristotle's: the job asking for it ran out
-of budget, and by then it was a two-line corollary of the state bound. -/
+/-- Logarithmic form of the state-count bound: if the verifier's state type has
+`2 ^ s` elements, correctness requires `n ≤ s`. This is a linear lower bound
+on state bits, not a matching upper bound on time or space. -/
 theorem binMul_needs_n_bits (n s : ℕ) (M : DFA (Fin 3) (Fin (2 ^ s)))
     (hM : M.accepts = binMul n) : n ≤ s := by
   have h := binMul_needs_exp_states n (Fin (2 ^ s)) inferInstance M hM
   rw [Fintype.card_fin] at h
   exact (Nat.pow_le_pow_iff_right (by norm_num : 1 < 2)).mp h
 
-/-! ## Computing a product, not merely checking one -/
+/-! ## Exact recovery from a finite code -/
 
-/-- A device that reads an operand into memory and must later emit the product
-with 1, which is the operand itself. -/
+/-- An encoder `mem` into `S` and a decoder `emit` back to natural numbers. No
+input stream or transition semantics is part of this structure. -/
 structure Emitter (S : Type*) where
   mem : ℕ → S
   emit : S → ℕ
 
-/-- Memory must distinguish every operand it might have to reproduce: at least
-`2 ^ n` states for `n`-digit operands. Computing needs the operand held, and a
-constant memory cannot hold it. -/
+/-- Exact recovery of every operand below `2 ^ n` forces the encoder to be
+injective on that range, hence forces at least `2 ^ n` states. -/
 theorem emitter_needs_exp_states {S : Type} [Fintype S] (E : Emitter S)
     (n : ℕ) (h : ∀ a < 2 ^ n, E.emit (E.mem a) = a) :
     2 ^ n ≤ Fintype.card S := by
@@ -215,7 +216,7 @@ theorem emitter_needs_exp_states {S : Type} [Fintype S] (E : Emitter S)
     exact ha.symm.trans ((congrArg E.emit hab).trans hb)
   simpa using Fintype.card_le_of_injective f hf
 
-/-! ## The honest unit: bits of register, not count of states -/
+/-! ## Register-state capacity in bits -/
 
 /-- The `n` little-endian base-`base` digits of a number. -/
 def fixedDigits (base n x : ℕ) [NeZero base] : List (Fin base) :=
@@ -351,9 +352,9 @@ theorem linear_bit_lower_bound {base range k n bits : ℕ} [NeZero base]
   have h4 : 2 ^ n ≤ 2 ^ bits := h3.trans h2
   exact (Nat.pow_le_pow_iff_right (by decide : 1 < 2)).mp h4
 
-/-- For every fixed register count and fixed range, some positive digit width
-cannot be handled.  Thus no constant register budget computes multiplication
-at every width. -/
+/-- For every fixed finite register count and fixed finite value range, some
+positive digit width cannot be handled under `ComputesMultiplicationAt`. Thus
+no fixed finite configuration space satisfies this interface at every width. -/
 theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
     ∃ n > 0, ∀ M : RegisterMachine base range k,
       letI : NeZero base := ⟨by omega⟩
