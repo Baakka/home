@@ -3,14 +3,17 @@ import Mathlib
 /-!
 This snippet is about:
 
+  PathBetween
+  barrier
+  exists_dip_of_barrier_pos
+  barrier_eq_top_of_no_path
+  barrier_eq_zero_of_monotone_path
+  barrier_lt_iff
   pathBetween_shortcut_nonempty_iff
   barrier_shortcut_eq
   exists_shortcut_hiding_valley
-  flipAdj
-  exists_monotone_flipPath
-  barrier_eq_zero_of_separable
 
-found at line 502 of 531, near the end of this file.
+found at line 524 of 534, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/

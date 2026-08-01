@@ -3,6 +3,13 @@ import Mathlib
 /-!
 This snippet is about:
 
+  run
+  Indist
+  run_conj
+  indist_conj_iff
+  reachableSet
+  run_conj
+  image_reachableSet_conj
   PathBetween
   Relabel
   map
@@ -15,7 +22,7 @@ This snippet is about:
   path_nonempty_relabel_iff
   barrier_relabel_eq
 
-found at line 406 of 409, near the end of this file.
+found at line 413 of 416, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/

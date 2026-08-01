@@ -5,6 +5,7 @@ This snippet is about:
 
   ObsEquiv
   obsEquiv_equivalence
+  common_estimate_forces_pairwise_convergence
   DecisionCritical
   RobustAcceptable
   robustSet_eq_iInter
@@ -12,7 +13,7 @@ This snippet is about:
   robustlyInfeasible_iff_iInter_eq_empty
   no_robust_action
 
-found at line 147 of 152, near the end of this file.
+found at line 167 of 172, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -55,6 +56,9 @@ Results proved here:
 * `obsEquiv_equivalence`: observational equivalence (equality of the
   observation-process law under every probing policy and horizon) is an
   equivalence relation.
+* `common_estimate_forces_pairwise_convergence`: if one estimate converges to
+  each of two trajectories, those trajectories converge to one another. This
+  is the metric core of a necessary detectability condition.
 * `robustSet_eq_iInter`: a robust action is exactly a member of the
   intersection of acceptable sets over the equivalence class.
 * `robustlyInfeasible_iff_iInter_eq_empty`: robust choice fails exactly when
@@ -70,7 +74,8 @@ namespace HardProblems
 
 noncomputable section
 
-open scoped ENNReal
+open Filter
+open scoped ENNReal Topology
 
 variable {S A O : Type*}
 
@@ -103,6 +108,21 @@ theorem obsEquiv_equivalence (M : POSystem S A O) : Equivalence (ObsEquiv M) whe
   refl _ := fun _ _ => rfl
   symm h := fun π n => (h π n).symm
   trans h₁ h₂ := fun π n => (h₁ π n).trans (h₂ π n)
+
+/-- A necessary metric condition for asymptotic reconstruction: if the same
+estimate converges to each of two state trajectories, their mutual distance
+converges to zero. To turn this into a detectability theorem, a system-specific
+argument must show that observationally indistinguishable trajectories really
+feed the same estimate. -/
+theorem common_estimate_forces_pairwise_convergence
+    {X : Type*} [PseudoMetricSpace X] (x₁ x₂ xhat : ℕ → X)
+    (h₁ : Tendsto (fun t => dist (x₁ t) (xhat t)) atTop (𝓝 0))
+    (h₂ : Tendsto (fun t => dist (x₂ t) (xhat t)) atTop (𝓝 0)) :
+    Tendsto (fun t => dist (x₁ t) (x₂ t)) atTop (𝓝 0) := by
+  refine squeeze_zero (fun _ => dist_nonneg) (fun t => dist_triangle _ (xhat t) _) ?_
+  have h₂' : Tendsto (fun t => dist (xhat t) (x₂ t)) atTop (𝓝 0) :=
+    h₂.congr' (Eventually.of_forall fun t => dist_comm (x₂ t) (xhat t))
+  simpa only [zero_add] using h₁.add h₂'
 
 /-- Decision-critical ambiguity: two observationally equivalent states whose
 acceptable-action sets `A*_M` are disjoint. -/
