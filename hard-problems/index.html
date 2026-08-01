@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why Problems Are Hard: Representation, feedback, reachability, and resource bounds</title>
-<meta name="description" content="Why Problems Are Hard: Representation, feedback, reachability, and resource bounds.">
+<title>Why Problems Are Hard: The Fibred Order of Difficulty</title>
+<meta name="description" content="Why Problems Are Hard: The Fibred Order of Difficulty.">
 <meta name="color-scheme" content="light dark">
 <style>
 :root{
@@ -200,7 +200,7 @@ details.lean>summary .runlean:hover{opacity:1}
 
 <header class="titlepage">
 <h1 class="booktitle">Why Problems Are Hard</h1>
-<p class="booksub">Representation, feedback, reachability, and resource bounds</p>
+<p class="booksub">The Fibred Order of Difficulty</p>
 <p class="edition">Revised edition</p>
 <p class="editions">Also in <a href="/hard-problems/fa/" hreflang="fa"><span lang="fa" dir="rtl">فارسی</span></a> &middot; Short version: <a href="/hard-problems/short/">English</a> &middot; <a href="/hard-problems/short/fa/" hreflang="fa"><span lang="fa" dir="rtl">فارسی</span></a></p>
 </header>
@@ -243,9 +243,10 @@ details.lean>summary .runlean:hover{opacity:1}
 </ol>
 </li>
 <li>
-<a href="#ch5" data-target="ch5"><span class="toc-num">5</span><span class="toc-text">Complexity is an attainable frontier</span></a>
+<a href="#ch5" data-target="ch5"><span class="toc-num">5</span><span class="toc-text">Complexity and the fibred order</span></a>
 <ol class="toc-sub">
 <li><a href="#ch5-a-bound-needs-a-family-and-a-machine" data-target="ch5-a-bound-needs-a-family-and-a-machine"><span class="toc-text">A bound needs a family and a machine</span></a></li>
+<li><a href="#ch5-the-fibred-order-of-difficulty" data-target="ch5-the-fibred-order-of-difficulty"><span class="toc-text">The fibred order of difficulty</span></a></li>
 <li><a href="#ch5-finite-envelopes-and-missing-algorithms" data-target="ch5-finite-envelopes-and-missing-algorithms"><span class="toc-text">Finite envelopes and missing algorithms</span></a></li>
 <li><a href="#ch5-state-counts-are-information-retention-bounds" data-target="ch5-state-counts-are-information-retention-bounds"><span class="toc-text">State counts are information-retention bounds</span></a></li>
 <li><a href="#ch5-where-cost-is-paid" data-target="ch5-where-cost-is-paid"><span class="toc-text">Where cost is paid</span></a></li>
@@ -269,7 +270,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-behavior-safety-and-coordinate-invariance" data-target="ch7-behavior-safety-and-coordinate-invariance"><span class="toc-text">Behavior, safety, and coordinate invariance</span></a></li>
 <li><a href="#ch7-exact-abstraction-and-path-lifting" data-target="ch7-exact-abstraction-and-path-lifting"><span class="toc-text">Exact abstraction and path lifting</span></a></li>
 <li><a href="#ch7-finite-memory-and-delayed-output" data-target="ch7-finite-memory-and-delayed-output"><span class="toc-text">Finite memory and delayed output</span></a></li>
-<li><a href="#ch7-finite-resource-envelopes" data-target="ch7-finite-resource-envelopes"><span class="toc-text">Finite resource envelopes</span></a></li>
+<li><a href="#ch7-finite-envelopes-and-context-indexed-region-orders" data-target="ch7-finite-envelopes-and-context-indexed-region-orders"><span class="toc-text">Finite envelopes and context-indexed region orders</span></a></li>
 </ol>
 </li>
 <li>
@@ -291,11 +292,12 @@ details.lean>summary .runlean:hover{opacity:1}
 <p>The object has not changed in these comparisons. The encounter with it has.</p>
 <p>This does not make difficulty imaginary. A locked door does not open under a better description. A false conjecture does not become true for a weak prover. Noise can blur distinctions and can sometimes erase them exactly, whether or not an observer understands why. A path that exists may still pass through a forbidden state. The position of this book is relational and realist at once: difficulty depends on a specified relation, and the truth about that relation is not chosen by the agent.</p>
 <p>The relation has three operational boundaries, each evaluated relative to a declared instance, environment, and model-uncertainty class. An information boundary determines which differences can enter a representation. An action boundary determines which states can be reached. A resource boundary determines which attainable performance can be realized in time, memory, communication, precision, or energy. Language matters too, but not as a mysterious fourth substance. A vocabulary changes which tasks and distinctions have been specified in the first place.</p>
-<p>The central claim is therefore conditional:</p>
+<p>The organizing object is therefore not a universal scale but a fibred order. For each comparison context, all subsets of its performance space form an ambient order, while actual encounters realize only a subposet. Performance maps reindex the ambient orders by preimage and permit heterogeneous comparisons of given encounters. They reindex the realized difficulty classes only when a closure theorem says that the preimages are themselves realized.</p>
+<p>The central claim is conditional:</p>
 <blockquote>
-<p>A problem is hard only relative to a success condition, an admissible instance and environment family, and declared boundaries on information, action, and resources. Within those conditions, hardness is the shape of attainable performance.</p>
+<p>A problem is hard only relative to a success condition, an admissible instance and environment family, and declared boundaries on information, action, and resources. Within one comparison context, smaller attainable regions mean greater difficulty. Across contexts, comparing given encounters requires a specified performance translation. Reindexing realized difficulty classes additionally requires preimage closure; choosing transported encounters requires stronger data.</p>
 </blockquote>
-<p>This formulation gives difficulty degrees without pretending that all forms of resistance share one unit. It also separates changes that ordinary speech often confuses. A coordinate change can expose structure while preserving behavior. An abstraction used to return an executable solution can discard structure and therefore owes a return path. A new sensor changes the information boundary. A new actuator changes the action boundary. Discovering a faster algorithm improves achieved performance or our knowledge of the frontier; changing the admitted program class changes the frontier itself. These are different events, even when each is described as making the problem easier.</p>
+<p>This formulation gives difficulty degrees without pretending that all forms of resistance share one unit. It also separates changes that ordinary speech often confuses. A coordinate change can expose structure while preserving behavior. An abstraction used to return an executable solution can discard structure and therefore owes a return path. A new sensor changes the information boundary. A new actuator changes the action boundary. Discovering a faster algorithm improves achieved performance or our knowledge of the frontier; changing the admitted program class changes the frontier itself. These are different events, even when each is described as making the problem easier. They also support different context translations: some are exact, some reindex only ambient performance claims, and some provide no justified transport of actual problems at all.</p>
 <p>The argument proceeds from representation and feedback, through robustness and fault, to reachability, abstraction, and complexity. The mathematics is used locally. No universal datatype is offered for every problem, and no machine-checked theorem is allowed to stand in for the philosophical argument that gives it a reading.</p>
 </section>
 <section class="chapter" id="ch1" aria-labelledby="ch1-h">
@@ -600,7 +602,7 @@ F(C)\subseteq C.
 <p>The same warning applies to compressed paths. Endpoint backing preserves reachability. Pathwise safety requires every hidden intermediate state to be safe, and barrier preservation requires its own score bound. A compressed edge supports only the properties certified by its backing trajectory. The return path is the mathematical content of claiming that an abstract solution solves the original task.</p>
 </section>
 <section class="chapter" id="ch5" aria-labelledby="ch5-h">
-<h2 id="ch5-h"><span class="chaplabel">Chapter 5</span>Complexity is an attainable frontier</h2>
+<h2 id="ch5-h"><span class="chaplabel">Chapter 5</span>Complexity and the fibred order</h2>
 <h3 id="ch5-a-bound-needs-a-family-and-a-machine">A bound needs a family and a machine</h3>
 <p>An asymptotic resource bound concerns a family \(\{\mathcal I_n\}\), an encoding and size parameter \(n\), a machine or access model, a success or loss criterion, and a resource measure. Separately defined instance-level notions, including Kolmogorov and instance complexity, also exist. Time, workspace, queries, samples, communication, random bits, precision, and physical energy are not interchangeable until a conversion model is supplied.</p>
 <p>The missing specifications matter. A one-pass stream and a rereadable array offer different information access. A random-access word machine and a Turing machine charge different primitive operations. Exact production and verification ask different questions. Worst-case, average-case, and smoothed analysis use different input quantifiers or distributions. A large search space by itself is not a lower bound under any of them.</p>
@@ -619,12 +621,91 @@ F(C)\subseteq C.
 \operatorname{Time}(p)\le t,
 \ \operatorname{Loss}(p)\le D\}.
 \]</div>
-<p>If the set is empty, \(\tau(D)=+\infty\). The information lower bound from Chapter 1 is a lower bound on such a slice when observations are the limiting resource. The robust recurrence from Chapter 2 certifies an ultimate tube but, without a matching adversarial lower bound, does not make smaller errors unattainable. Reachability can make the goal loss unattainable regardless of computation. The chapters are therefore different cuts through one frontier, not competing definitions of a hidden scalar.</p>
-<p>Two encounters can be compared only after their coordinates agree. If they share task, loss, and resource axes, inclusion</p>
+<p>If the set is empty, \(\tau(D)=+\infty\). The information lower bound from Chapter 1 is a lower bound on such a slice when observations are the limiting resource. The robust recurrence from Chapter 2 certifies an ultimate tube but, without a matching adversarial lower bound, does not make smaller errors unattainable. Reachability can make the goal loss unattainable regardless of computation. These results constrain different slices of an attainable region when they are assembled in one context. They are not competing definitions of a hidden scalar.</p>
+<h3 id="ch5-the-fibred-order-of-difficulty">The fibred order of difficulty</h3>
+<p>A comparison context \(c\) fixes the common task, instance and environment quantifiers, uncertainty class, admissible programs, information and action interfaces, and resource and loss coordinates. Let \(P_c\) be its ordered performance space. The ambient fibre is the powerset</p>
 <div class="mathblock">\[
-\mathsf{Ach}_1\subseteq\mathsf{Ach}_2
+\mathcal R_c=\mathcal P(P_c),
 \]</div>
-<p>means that encounter 1 attains no performance pair unavailable to encounter 2. It is then weakly harder in this partial order. Frontiers can cross. One model may be faster at coarse accuracy and slower near exactness. A single ranking would require a chosen scalarization, and that choice is extra structure.</p>
+<p>ordered by inclusion. Let \(\operatorname{Enc}(c)\) be the declared encounters to be compared. Attainability is a map</p>
+<div class="mathblock">\[
+\mathsf{Ach}_c:\operatorname{Enc}(c)\longrightarrow\mathcal R_c
+\]</div>
+<p>whose values are upward-closed regions. Within this one context, define</p>
+<div class="mathblock">\[
+E_1\mathrel{\unrhd_c}E_2
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_1)\subseteq\mathsf{Ach}_c(E_2),
+\]</div>
+<p>and read \(E_1\unrhd_c E_2\) as "\(E_1\) is at least as hard as \(E_2\)." The relation is reflexive and transitive, but it need not be antisymmetric on encounters. Two different plants, observation channels, or presentations can have exactly the same attainable region. Quotient by</p>
+<div class="mathblock">\[
+E_1\sim_c E_2
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_1)=\mathsf{Ach}_c(E_2).
+\]</div>
+<p>The quotient is order-isomorphic to the realized image:</p>
+<div class="mathblock">\[
+\operatorname{Enc}(c)/{\sim_c}
+\ \cong\
+\operatorname{im}(\mathsf{Ach}_c)
+\ \subseteq\
+\mathcal R_c.
+\]</div>
+<p>It is generally only a subposet of the ambient fibre. Equality with \(\mathcal R_c\) would claim that every subset of \(P_c\) is the attainable region of some encounter, which has not been assumed and is usually false. The quotient also forgets every distinction that the chosen performance coordinates fail to record; it is not identity of the underlying systems.</p>
+<p>The realized order need not be total. Two encounters are incomparable when neither attainable region includes the other. Crossing Pareto frontiers are a common geometric witness: one encounter may be better at coarse accuracy and worse near exactness. A scalarization is extra structure and can reverse the ranking.</p>
+<p>To relate ambient fibres, choose a category \(\mathcal C\) of contexts. An arrow \(f:c\to d\) includes a performance-point map \(u_f:P_c\to P_d\), compatible with identities and composition. Preimage gives</p>
+<div class="mathblock">\[
+f^*:\mathcal R_d\longrightarrow\mathcal R_c,
+\qquad
+f^*(A)=u_f^{-1}(A).
+\]</div>
+<p>It is monotone and strictly contravariant:</p>
+<div class="mathblock">\[
+(\operatorname{id}_c)^*=\operatorname{id}_{\mathcal R_c},
+\qquad
+(g\circ f)^*=f^*\circ g^*.
+\]</div>
+<p>Thus the ambient data form a strict contravariant indexed poset</p>
+<div class="mathblock">\[
+\mathcal R:\mathcal C^{\mathrm{op}}\longrightarrow\mathbf{Pos}.
+\]</div>
+<p>These are the data underlying a split fibred order. No Grothendieck total category or cartesian universal property is constructed here.</p>
+<p>Preimage always preserves inclusion. It reflects inclusion whenever \(u_f\) is surjective:</p>
+<div class="mathblock">\[
+f^*(A)\subseteq f^*(B)
+\Longrightarrow
+A\subseteq B.
+\]</div>
+<p>A bijection of performance coordinates is sufficient for reflection and gives an order isomorphism between ambient fibres, but bijectivity is stronger than reflection needs.</p>
+<p>Even without closure of realized regions, \(f\) permits a heterogeneous comparison of two given encounters:</p>
+<div class="mathblock">\[
+E_c\mathrel{\unrhd_f}E_d
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_c)
+\subseteq
+u_f^{-1}\bigl(\mathsf{Ach}_d(E_d)\bigr).
+\]</div>
+<p>This comparison does not turn the target encounter into an encounter of the source context.</p>
+<p>Ambient reindexing does not by itself choose a source encounter. The preimage of a realized region in \(d\) also need not lie in \(\operatorname{im}(\mathsf{Ach}_c)\). To restrict \(f^*\) to the realized subposets, the minimal extra condition is preimage closure:</p>
+<div class="mathblock">\[
+A\in\operatorname{im}(\mathsf{Ach}_d)
+\quad\Longrightarrow\quad
+u_f^{-1}(A)\in\operatorname{im}(\mathsf{Ach}_c).
+\]</div>
+<p>One sufficient way to prove this closure and choose source representatives is an encounter transport \(T_f:\operatorname{Enc}(d)\to\operatorname{Enc}(c)\) satisfying</p>
+<div class="mathblock">\[
+\mathsf{Ach}_c(T_fE)
+=u_f^{-1}\bigl(\mathsf{Ach}_d(E)\bigr).
+\]</div>
+<p>The Lean companion packages this stronger witness. At the region level, identity and composition then follow from preimage; equality of the chosen raw encounter witnesses is unnecessary after equal regions have been identified. Without preimage closure, whether proved directly or through encounter transport, only the ambient powersets have been fibred.</p>
+<p>This contravariant preimage must be separated from a lossy direct image. For a many-to-one map \(q:P_c\to P_d\), the covariant operation</p>
+<div class="mathblock">\[
+q_!:\mathcal R_c\longrightarrow\mathcal R_d,
+\qquad
+q_!(A)=\{q(x):x\in A\}
+\]</div>
+<p>is monotone but can send distinct subsets to the same image and therefore fail to reflect inclusion. Noninjectivity causes that collapse. It does not, by itself, make inverse image fail reflection; surjectivity is the relevant condition there.</p>
+<p>There is no canonical category of all contexts in this book. The objects, performance maps, and reindexing laws are part of each claim. A supplied map allows a heterogeneous comparison between given source and target encounters even when its preimage is not realized by another source encounter. A split fibred order on the realized classes requires preimage closure. Chosen transport of particular encounters is stronger data. Nor does <em>fibred</em> assert a topology, a manifold, a locally total order, or a global ranking.</p>
 <h3 id="ch5-finite-envelopes-and-missing-algorithms">Finite envelopes and missing algorithms</h3>
 <p>Let \(E\) be a nonempty finite set of admissible programs and let \(V(p)\) be their value. A maximizer exists because the envelope is finite. If \(E\subseteq F\), the optimum over \(F\) cannot be worse. A strict gap can occur when an excluded program is better than every member of \(E\).</p>
 <p>These elementary facts are useful because they expose a quantifier that is often hidden. An optimum relative to a search envelope is not a global optimum. Expanding the envelope may improve value, but searching the larger envelope may demand more resources. In an infinite envelope, even the existence of a maximizer can fail; the infimum or supremum need not be attained.</p>
@@ -652,7 +733,7 @@ b^n\le r^k.
 <p>The claim that difficulty is relational can be made trivial by allowing the relation to change whenever a conclusion is inconvenient. It becomes substantive only when the comparison class is fixed before the comparison.</p>
 <p>Within a fixed source prior, observation law, and admissible experiment class, mutual information and observational equivalence are objective properties of the model. Within a fixed action system, reachability and barrier depth are objective. Within a fixed machine and encoding, a resource lower bound is objective. Their statements contain relations, but so do velocity, controllability, and statistical sufficiency. Relational does not mean arbitrary.</p>
 <p>Behavioral equality gives an extensional form of objectivity. Once \(T\), \(W\), and the signal boundary are fixed, two presentations with the same \(\mathcal B\) agree on every property stated solely of those trajectories. Exact coordinate equivalence, efficient machine simulations, and objective-preserving graph relabelings are other controlled invariances.</p>
-<p>None supplies a view from nowhere. Hiding a signal, changing the admitted behavior, using a many-to-one abstraction, or adding a sensor, actuator, or predicate changes the claim unless a transfer theorem says otherwise. If the attainable frontier changes, that alteration is real, but it concerns a new relation.</p>
+<p>None supplies a view from nowhere. Hiding a signal, changing the admitted behavior, using a many-to-one abstraction, or adding a sensor, actuator, or predicate changes the claim unless a transfer theorem says otherwise. If the attainable frontier changes, that alteration is real, but it concerns a new relation. Comparing it with the old one requires a declared context map; without one, the proposed ordering is not yet a well-formed claim.</p>
 <h3 id="ch6-four-projections-not-four-substances">Four projections, not four substances</h3>
 <p>Ordinary uses of hard can still be sorted by the boundary they expose:</p>
 <ul>
@@ -666,13 +747,25 @@ b^n\le r^k.
 <h3 id="ch6-no-view-from-nowhere">No view from nowhere</h3>
 <p>There is no model-independent scalar difficulty of a bare problem waiting to be measured before a task and encounter are specified. A scalar becomes legitimate after a comparison class and scalarization are fixed. What can be measured are information rates, error tubes, reachable sets, barrier depths, proof lengths, circuit sizes, query counts, approximation losses, and the tradeoffs among them.</p>
 <p>Nor does the relational view imply that every obstacle yields to a clever representation. Data processing forbids a representation from inventing evidence. Robustness margins bound tolerated mismatch. Reachability forbids inference from becoming action. Complexity lower bounds survive broad classes of algorithms. A more illuminating map can change search without changing the terrain it faithfully represents.</p>
-<p>The book's thesis can now be stated without metaphor:</p>
+<p>The book's thesis can now be stated without metaphor. For each declared context \(c\), actual difficulty occupies a realized subposet of an ambient powerset:</p>
 <div class="mathblock">\[
-\text{difficulty}
-=\text{the boundary of attainable performance}
-\quad\text{under declared conditions}.
+\mathcal R_c=\mathcal P(P_c),
+\qquad
+\operatorname{Enc}(c)/{\sim_c}
+\cong\operatorname{im}(\mathsf{Ach}_c)
+\subseteq\mathcal R_c,
+\qquad
+[E_1]\unrhd_c[E_2]
+\Longleftrightarrow
+\mathsf{Ach}_c(E_1)\subseteq\mathsf{Ach}_c(E_2).
 \]</div>
-<p>The equation is a schema, not a universal numerical identity. Its content lies in the declarations. Once the admissible instance, environment, and uncertainty family, together with the information, action, resource, task, and comparison boundaries, are fixed, the attainable region can be investigated and sometimes proved. Before they are fixed, hard is an invitation to ask what has been left implicit.</p>
+<p>Performance-point maps give the ambient contravariant order</p>
+<div class="mathblock">\[
+f^*(A)=u_f^{-1}(A),
+\qquad
+\mathcal R:\mathcal C^{\mathrm{op}}\to\mathbf{Pos}.
+\]</div>
+<p>The second display permits a heterogeneous comparison of two given encounters, but it does not say that realized difficulty classes reindex. That stronger claim requires closure of realized regions under preimage. Compatible encounter transport is one sufficient witness. These displays are a schema, not a universal construction or numerical identity. Before the context, performance map, and any claimed problem transport are fixed, <em>harder</em> is an invitation to ask which comparison has been left implicit.</p>
 </section>
 <section class="chapter" id="ch7" aria-labelledby="ch7-h">
 <h2 id="ch7-h"><span class="chaplabel">Chapter 7</span>What is machine checked</h2>
@@ -1947,10 +2040,10 @@ theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
         have hcap := state_capacity_lower_bound M hbase hpos hM
         exact (Nat.lt_pow_self hbase1).not_ge hcap⟩</code></pre></details>
 <p><strong>Boundary.</strong> The multiplication argument fixes one operand to one and is a delayed-copy lower bound. It does not establish arithmetic hardness. Equal cardinality is not sufficient for tracking, and approximate task-specific quotients can be smaller.</p>
-<h3 id="ch7-finite-resource-envelopes">Finite resource envelopes</h3>
-<p><strong>Hypotheses.</strong> A program envelope is a nonempty finite set, and each program has a real value. One envelope may be included in another.</p>
-<p><strong>Conclusion.</strong> A value maximizer exists inside every nonempty finite envelope. If one envelope is included in another, an optimum of the larger has value at least that of an optimum of the smaller. There is an explicit finite envelope whose internal optimum is strictly dominated by an excluded program; the excluded program is not claimed to be globally optimal. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-resource-envelopes.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
+<h3 id="ch7-finite-envelopes-and-context-indexed-region-orders">Finite envelopes and context-indexed region orders</h3>
+<p><strong>Hypotheses.</strong> A program envelope is nonempty and finite, and each program has a real value. Separately, a category carries a strict contravariant family of partial orders with monotone reindexing that obeys identity and composition. In the concrete construction, performance-coordinate types form a functor, all subsets are reindexed by preimage, and encounters are assigned regions. For the conditional realized construction, encounter transport is additionally supplied with exact region compatibility.</p>
+<p><strong>Conclusion.</strong> Finite envelopes attain internal optima, and enlarging an envelope cannot worsen its optimum. A finite envelope can have a strict gap to an excluded program. Preimage reindexing is monotone and obeys the stated laws. Inclusion pulled back to encounters is a preorder and is antisymmetric exactly when the encounter-to-region map is injective. Surjective performance maps preserve and reflect ambient inclusion. An explicit non-surjective map shows failure of preimage reflection, while an explicit noninjective direct image shows the separate many-to-one collapse. When encounter transport is supplied with exact region compatibility, the realized-image subposets inherit split preimage reindexing. A counterexample shows that preimage closure can fail without an extra hypothesis. (machine-checked)</p>
+<details class="lean"><summary>Lean proof (FibredOrder.lean, ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap, HardProblems.FibredOrder.SplitIndexedOrder, HardProblems.FibredOrder.SplitIndexedOrder.reindexHom, HardProblems.FibredOrder.SplitIndexedOrder.reindex_id_apply, HardProblems.FibredOrder.SplitIndexedOrder.reindex_comp_apply, HardProblems.FibredOrder.performanceRegions, HardProblems.FibredOrder.CompatibleEncounterRegions, HardProblems.FibredOrder.CompatibleEncounterRegions.RealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.instPartialOrderRealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized_val, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder_reindex_val, HardProblems.FibredOrder.ambient_preimage_can_be_unrealized, HardProblems.FibredOrder.EncounterLE, HardProblems.FibredOrder.encounterLE_refl, HardProblems.FibredOrder.encounterLE_trans, HardProblems.FibredOrder.encounterLE_antisymmetric_iff_injective, HardProblems.FibredOrder.constant_region_not_antisymmetric, HardProblems.FibredOrder.surjective_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_preserves_inclusion, HardProblems.FibredOrder.equiv_preimage_reflects_inclusion, HardProblems.FibredOrder.nonsurjective_preimage_not_order_reflecting, HardProblems.FibredOrder.noninjective_image_not_order_reflecting<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-resourcebounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-fibredorder.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
 /-- A resource envelope specifies which programs are admitted and requires the
 admitted set to be finite. -/
 structure Envelope (P : Type*) where
@@ -1990,8 +2083,289 @@ theorem exists_strict_envelope_gap :
   use fun n =&gt; n
   use 0
   simp
-  exact ⟨1, by norm_num⟩</code></pre></details>
-<p><strong>Boundary.</strong> Finiteness supplies attainment. The theorem does not make the maximizer computable or cheap to find, and it says nothing about an infinite program class without further compactness or order assumptions.</p>
+  exact ⟨1, by norm_num⟩
+
+-- LeanTest/HardProblems/FibredOrder.lean
+
+The pointwise identity and composition equations record a chosen splitting.
+They are the only categorical coherence claimed in this file. -/
+structure SplitIndexedOrder (C : Type u) [Category.{v} C] where
+  /-- The carrier of the ordered fiber over a context. -/
+  Fiber : C → Type w
+  /-- The partial order in each fiber. -/
+  fiberOrder : (c : C) → PartialOrder (Fiber c)
+  /-- Contravariant transport along a context morphism. -/
+  reindex : {c d : C} → (c ⟶ d) → Fiber d → Fiber c
+  /-- Reindexing along an identity is the identity. -/
+  reindex_id : ∀ (c : C) (x : Fiber c), reindex (𝟙 c) x = x
+  /-- Reindexing reverses categorical composition. -/
+  reindex_comp : ∀ {c d e : C} (f : c ⟶ d) (g : d ⟶ e)
+    (x : Fiber e), reindex (f ≫ g) x = reindex f (reindex g x)
+  /-- Every reindexing map is monotone in the fiber orders. -/
+  reindex_mono : ∀ {c d : C} (f : c ⟶ d) {x y : Fiber d},
+    (fiberOrder d).le x y → (fiberOrder c).le (reindex f x) (reindex f y)
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Reindexing as an order homomorphism. -/
+def reindexHom (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) :
+    P.Fiber d →o P.Fiber c where
+  toFun := P.reindex f
+  monotone&#x27; := by
+    intro x y hxy
+    exact P.reindex_mono f hxy
+
+-- LeanTest/HardProblems/FibredOrder.lean
+theorem reindex_id_apply (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) :
+    P.reindex (𝟙 c) x = x :=
+  P.reindex_id c x
+
+-- LeanTest/HardProblems/FibredOrder.lean
+theorem reindex_comp_apply (P : SplitIndexedOrder C) {c d e : C}
+    (f : c ⟶ d) (g : d ⟶ e) (x : P.Fiber e) :
+    P.reindex (f ≫ g) x = P.reindex f (P.reindex g x) :=
+  P.reindex_comp f g x
+
+-- LeanTest/HardProblems/FibredOrder.lean
+induced by a functor of performance-coordinate types. Context morphisms act
+on points by `Perf.map`; candidate regions move in the opposite direction by
+preimage. Realizability by an encounter or program is not part of this data. -/
+def performanceRegions {C : Type u} [Category.{v} C] (Perf : C ⥤ Type w) :
+    SplitIndexedOrder C where
+  Fiber c := Set (Perf.obj c)
+  fiberOrder _ := inferInstance
+  reindex f A := Perf.map f ⁻¹&#x27; A
+  reindex_id c A := by
+    ext x
+    simp
+  reindex_comp f g A := by
+    ext x
+    simp
+  reindex_mono := by
+    intro c d f A B hAB
+    exact Set.preimage_mono hAB
+
+-- LeanTest/HardProblems/FibredOrder.lean
+under contravariant context change.
+
+No identity or composition equation is imposed on `transport` at the level of
+raw encounters. Only its observable effect on regions is stored. That exact
+compatibility is enough to induce split reindexing after duplicate encounter
+witnesses have been forgotten. -/
+structure CompatibleEncounterRegions {C : Type u} [Category.{v} C]
+    (Perf : C ⥤ Type w) where
+  /-- The type of admitted encounters in each context. -/
+  Encounter : C → Type e
+  /-- The candidate region actually realized by an encounter. -/
+  region : (c : C) → Encounter c → Set (Perf.obj c)
+  /-- Contravariant transport of encounters along a context map. -/
+  transport : {c d : C} → (c ⟶ d) → Encounter d → Encounter c
+  /-- Transport realizes exactly the preimage of the target encounter&#x27;s
+  region. -/
+  region_transport : ∀ {c d : C} (f : c ⟶ d) (E : Encounter d),
+    region c (transport f E) = Perf.map f ⁻¹&#x27; region d E
+
+-- LeanTest/HardProblems/FibredOrder.lean
+realizes it. Different encounter witnesses with the same region determine the
+same element of this subtype. -/
+def RealizedRegion (D : CompatibleEncounterRegions Perf) (c : C) :=
+  {A : Set (Perf.obj c) // ∃ E : D.Encounter c, D.region c E = A}
+
+-- LeanTest/HardProblems/FibredOrder.lean
+underlying sets; encounter witnesses do not participate in equality. -/
+instance instPartialOrderRealizedRegion (D : CompatibleEncounterRegions Perf)
+    (c : C) : PartialOrder (D.RealizedRegion c) :=
+  PartialOrder.lift Subtype.val Subtype.val_injective
+
+-- LeanTest/HardProblems/FibredOrder.lean
+encounter witnessing that the resulting region is realized in the source
+context. -/
+def reindexRealized (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) : D.RealizedRegion c :=
+  ⟨Perf.map f ⁻¹&#x27; A.1, by
+    rcases A.2 with ⟨E, hE⟩
+    refine ⟨D.transport f E, ?_⟩
+    rw [D.region_transport, hE]⟩
+
+-- LeanTest/HardProblems/FibredOrder.lean
+ambient preimage. -/
+@[simp]
+theorem reindexRealized_val (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) :
+    (D.reindexRealized f A).1 = Perf.map f ⁻¹&#x27; A.1 :=
+  rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+hold for region values; they do not assert coherent identity or composition
+laws for the chosen raw encounter transports. -/
+def realizedRegionOrder (D : CompatibleEncounterRegions Perf) :
+    SplitIndexedOrder C where
+  Fiber c := D.RealizedRegion c
+  fiberOrder _ := inferInstance
+  reindex := D.reindexRealized
+  reindex_id c A := by
+    apply Subtype.ext
+    ext x
+    simp [reindexRealized]
+  reindex_comp f g A := by
+    apply Subtype.ext
+    ext x
+    simp [reindexRealized]
+  reindex_mono := by
+    intro c d f A B hAB
+    exact Set.preimage_mono hAB
+
+-- LeanTest/HardProblems/FibredOrder.lean
+preimage value as `reindexRealized`. -/
+@[simp]
+theorem realizedRegionOrder_reindex_val
+    (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) :
+    ((D.realizedRegionOrder).reindex f A).1 = Perf.map f ⁻¹&#x27; A.1 :=
+  rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+among the regions declared realized in the source context. Both declared
+families below are nonempty, yet the preimage of the realized target region is
+not a realized source region. -/
+theorem ambient_preimage_can_be_unrealized :
+    let f : Unit → Bool := fun _ ↦ false
+    let sourceRealized : Set (Set Unit) := {∅}
+    let targetRegion : Set Bool := {false}
+    let targetRealized : Set (Set Bool) := {targetRegion}
+    sourceRealized.Nonempty ∧ targetRealized.Nonempty ∧
+      targetRegion ∈ targetRealized ∧
+      f ⁻¹&#x27; targetRegion ∉ sourceRealized := by
+  simp
+
+-- LeanTest/HardProblems/FibredOrder.lean
+pullback of the fiber order along an encounter-to-region map. -/
+def EncounterLE {E : Type u} {P : Type w} (region : E → Set P)
+    (x y : E) : Prop :=
+  region x ⊆ region y
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Region comparison pulled back to encounters is reflexive. -/
+theorem encounterLE_refl {E : Type u} {P : Type w} (region : E → Set P)
+    (x : E) : EncounterLE region x x :=
+  Set.Subset.rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Region comparison pulled back to encounters is transitive. -/
+theorem encounterLE_trans {E : Type u} {P : Type w} (region : E → Set P)
+    {x y z : E} (hxy : EncounterLE region x y)
+    (hyz : EncounterLE region y z) : EncounterLE region x z :=
+  hxy.trans hyz
+
+-- LeanTest/HardProblems/FibredOrder.lean
+encounter-to-region map is injective. Without injectivity it is only a
+preorder on encounters; quotienting encounters by equal regions restores a
+partial order. -/
+theorem encounterLE_antisymmetric_iff_injective {E : Type u} {P : Type w}
+    (region : E → Set P) :
+    (∀ ⦃x y : E⦄, EncounterLE region x y →
+      EncounterLE region y x → x = y) ↔ Function.Injective region := by
+  constructor
+  · intro h x y hxy
+    apply h
+    · simp [EncounterLE, hxy]
+    · simp [EncounterLE, hxy]
+  · intro hinj x y hxy hyx
+    exact hinj (Set.Subset.antisymm hxy hyx)
+
+-- LeanTest/HardProblems/FibredOrder.lean
+antisymmetry. The failure is in the encounter presentation, not in the subset
+order on regions. -/
+theorem constant_region_not_antisymmetric :
+    let region : Bool → Set Unit := fun _ ↦ ∅
+    EncounterLE region false true ∧ EncounterLE region true false ∧
+      false ≠ true := by
+  simp [EncounterLE]
+
+-- LeanTest/HardProblems/FibredOrder.lean
+Bijectivity is therefore sufficient but not necessary for exact comparison
+transport at the level of arbitrary candidate regions. -/
+theorem surjective_preimage_subset_iff {X : Type u} {Y : Type w}
+    (f : X → Y) (hf : Function.Surjective f) (A B : Set Y) :
+    f ⁻¹&#x27; A ⊆ f ⁻¹&#x27; B ↔ A ⊆ B := by
+  constructor
+  · intro h y hy
+    rcases hf y with ⟨x, rfl⟩
+    exact h hy
+  · exact Set.preimage_mono
+
+-- LeanTest/HardProblems/FibredOrder.lean
+contravariant reindexing. Hence an exact relabeling neither creates nor erases
+comparisons between candidate performance regions. -/
+theorem equiv_preimage_subset_iff {X : Type u} {Y : Type w}
+    (e : X ≃ Y) (A B : Set Y) :
+    e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B ↔ A ⊆ B :=
+  surjective_preimage_subset_iff e e.surjective A B
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- The preservation direction of exact coordinate invariance. -/
+theorem equiv_preimage_preserves_inclusion {X : Type u} {Y : Type w}
+    (e : X ≃ Y) {A B : Set Y} (h : A ⊆ B) :
+    e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B :=
+  (equiv_preimage_subset_iff e A B).2 h
+
+-- LeanTest/HardProblems/FibredOrder.lean
+surjectivity and is unavailable for a general non-surjective coordinate map. -/
+theorem equiv_preimage_reflects_inclusion {X : Type u} {Y : Type w}
+    (e : X ≃ Y) {A B : Set Y} (h : e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B) :
+    A ⊆ B :=
+  (equiv_preimage_subset_iff e A B).1 h
+
+-- LeanTest/HardProblems/FibredOrder.lean
+map. The injective constant map `Unit → Bool` misses `true`, so the whole Bool
+region and `{false}` have equal preimages even though the former is not
+contained in the latter. The issue here is failure of surjectivity, not
+many-to-one collapse. -/
+theorem nonsurjective_preimage_not_order_reflecting :
+    let f : Unit → Bool := fun _ ↦ false
+    let A : Set Bool := Set.univ
+    let B : Set Bool := {false}
+    ¬ Function.Surjective f ∧
+      f ⁻¹&#x27; A = f ⁻¹&#x27; B ∧ f ⁻¹&#x27; A ⊆ f ⁻¹&#x27; B ∧ ¬ A ⊆ B := by
+  dsimp
+  constructor
+  · intro hf
+    rcases hf true with ⟨x, hx⟩
+    simp at hx
+  constructor
+  · ext x
+    simp
+  constructor
+  · intro x hx
+    simp
+  · intro h
+    have : true ∈ ({false} : Set Bool) := h (Set.mem_univ true)
+    simp at this
+
+-- LeanTest/HardProblems/FibredOrder.lean
+map. The constant map `Bool → Unit` merges `false` and `true`, so their
+singleton regions have equal direct images although neither singleton is
+contained in the other. This is the separate many-to-one failure mode. -/
+theorem noninjective_image_not_order_reflecting :
+    let f : Bool → Unit := fun _ ↦ ()
+    let A : Set Bool := {false}
+    let B : Set Bool := {true}
+    ¬ Function.Injective f ∧
+      f &#x27;&#x27; A = f &#x27;&#x27; B ∧ f &#x27;&#x27; A ⊆ f &#x27;&#x27; B ∧ ¬ A ⊆ B := by
+  dsimp
+  constructor
+  · intro hf
+    have h : false = true := hf rfl
+    simp at h
+  constructor
+  · ext x
+    simp
+  constructor
+  · intro x hx
+    simp
+  · intro h
+    have : false ∈ ({true} : Set Bool) := h (by simp)
+    simp at this</code></pre></details>
+<p><strong>Boundary.</strong> Finiteness does not make an optimizer computable or cheap. The ambient construction uses all subsets, and the realized construction assumes a sufficient compatible encounter transport and derives closure from it; region-level closure alone would be enough to define reindexing. Neither construction requires or proves upward closure. The formalization constructs neither the quotient of raw encounters nor a Grothendieck total category with cartesian lifts. Coordinate-set invariance does not establish equivalence of programs or systems. The preimage and direct-image failure examples concern different operations and must not be conflated.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">Notes</span>Notes and sources</h2>
@@ -2012,7 +2386,7 @@ theorem exists_strict_envelope_gap :
 <dt>Action boundary</dt>
 <dd>The declared set of primitive transformations, constraints, and policy permissions through which states can change. Better inference inside a fixed action boundary does not create a missing transformation. Adding an actuator changes the boundary rather than merely accelerating an old action.</dd>
 <dt>Attainable region</dt>
-<dd>The set of resource and loss bounds achieved by at least one admitted program under a fixed task and model. Nondominated points, when they exist, record attained tradeoffs; unattained limiting tradeoffs belong to the lower boundary of its closure. It does not define a scalar degree of difficulty unless a scalarization or ordering is added.</dd>
+<dd>The set of resource and loss bounds achieved by at least one admitted program under a fixed task and model. Nondominated points, when they exist, record attained tradeoffs; unattained limiting tradeoffs belong to the lower boundary of its closure. A finite resource envelope can guarantee an internal optimum without providing an algorithm or a global optimum. Quotienting encounters by equality of their regions gives only the realized image inside the ambient powerset, not the whole fibre. A region does not define a scalar degree of difficulty without a scalarization.</dd>
 <dt>Barrier depth</dt>
 <dd>The infimum, over admissible paths, of the greatest drop below the path&#x27;s starting objective value. If no admissible path exists, the barrier is set to \(+\infty\). Barrier depth is a bottleneck statistic, not a general cost, search-time lower bound, path length, or stochastic escape time.</dd>
 <dt>Behavioral system</dt>
@@ -2039,6 +2413,8 @@ theorem exists_strict_envelope_gap :
 <dd>Accommodation retains an estimation, control, or safety guarantee inside a declared fault class. Detection separates faulty behavior from healthy uncertainty. Isolation separates one candidate fault from the others. None implies the other two, and a deterministic threshold does not supply a false-alarm probability without a probability model.</dd>
 <dt>Feedback capacity</dt>
 <dd>An upper bound on task-relevant information entering through one feedback round under a specified policy and channel model. It is not determined by a noise variance alone, and the scalar Lean budget lemma does not prove that a physical channel has that capacity.</dd>
+<dt>Fibred order</dt>
+<dd>Ambient powersets of context-specific performance spaces, reindexed contravariantly by preimage with identity and composition laws. Preimage reflects inclusion under a surjective point map; a bijection of performance points is sufficient but stronger. Realized attainable regions form only subposets and require preimage closure to reindex; compatible encounter transport is one sufficient witness. A many-to-one direct image is a separate covariant operation that may collapse distinctions. The term supplies no canonical category, topology, manifold, or global total ranking.</dd>
 <dt>Forward simulation</dt>
 <dd>A map sending each concrete step to a valid abstract step, hence each concrete path to an abstract path. It supports sound abstraction of concrete behavior. It does not ensure that an abstract step or plan can be realized from a particular concrete representative.</dd>
 <dt>Information boundary</dt>
@@ -2059,8 +2435,6 @@ theorem exists_strict_envelope_gap :
 <dd>The infimum mutual information required by a reconstruction channel to attain a declared expected distortion. It converts an accuracy target into an information requirement. It does not determine a per-round observation capacity or construct an estimator.</dd>
 <dt>Reachability</dt>
 <dd>Membership in the closure generated by finite admissible steps from a starting state. It depends on the action boundary and constraints. Reachability does not measure how hard a path is to find, how long it is, or whether it preserves a pathwise cost.</dd>
-<dt>Resource envelope</dt>
-<dd>The programs admitted by time, memory, query, communication, precision, or other resource bounds. The finite Lean envelope guarantees an internal optimum exists. It does not provide an algorithm to find that optimum or a theorem about an infinite class.</dd>
 <dt>Robust action</dt>
 <dd>One action acceptable for every state in an observation equivalence class. Such actions form the intersection of the statewise acceptable sets. Pairwise intersections do not guarantee that the total intersection is nonempty.</dd>
 <dt>State capacity</dt>

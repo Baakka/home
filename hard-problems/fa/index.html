@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>چرا مسئله‌ها سخت‌اند: بازنمایی، بازخورد، دسترس‌پذیری و کران‌های منابع</title>
-<meta name="description" content="چرا مسئله‌ها سخت‌اند: بازنمایی، بازخورد، دسترس‌پذیری و کران‌های منابع.">
+<title>چرا مسئله‌ها سخت‌اند: ترتیبِ تاربندی‌شدهٔ دشواری</title>
+<meta name="description" content="چرا مسئله‌ها سخت‌اند: ترتیبِ تاربندی‌شدهٔ دشواری.">
 <meta name="color-scheme" content="light dark">
 <style>
 :root{
@@ -209,7 +209,7 @@ details.lean>summary .runlean:hover{opacity:1}
 
 <header class="titlepage">
 <h1 class="booktitle">چرا مسئله‌ها سخت‌اند</h1>
-<p class="booksub">بازنمایی، بازخورد، دسترس‌پذیری و کران‌های منابع</p>
+<p class="booksub">ترتیبِ تاربندی‌شدهٔ دشواری</p>
 <p class="edition">ویرایش بازنگری‌شده</p>
 <p class="editions">همچنین به <a href="/hard-problems/" hreflang="en"><span lang="en" dir="ltr">English</span></a> &middot; ویرایش کوتاه: <a href="/hard-problems/short/fa/" hreflang="fa">فارسی</a> &middot; <a href="/hard-problems/short/" hreflang="en"><span lang="en" dir="ltr">English</span></a></p>
 </header>
@@ -252,9 +252,10 @@ details.lean>summary .runlean:hover{opacity:1}
 </ol>
 </li>
 <li>
-<a href="#ch5" data-target="ch5"><span class="toc-num">5</span><span class="toc-text">پیچیدگی یک مرز دست‌یافتنی است</span></a>
+<a href="#ch5" data-target="ch5"><span class="toc-num">5</span><span class="toc-text">پیچیدگی و ترتیب تاربندی‌شده</span></a>
 <ol class="toc-sub">
 <li><a href="#ch5-a-bound-needs-a-family-and-a-machine" data-target="ch5-a-bound-needs-a-family-and-a-machine"><span class="toc-text">هر کران به یک خانواده و یک ماشین نیاز دارد</span></a></li>
+<li><a href="#ch5-the-fibred-order-of-difficulty" data-target="ch5-the-fibred-order-of-difficulty"><span class="toc-text">ترتیب تاربندی‌شدهٔ دشواری</span></a></li>
 <li><a href="#ch5-finite-envelopes-and-missing-algorithms" data-target="ch5-finite-envelopes-and-missing-algorithms"><span class="toc-text">دامنه‌های متناهی و الگوریتم‌های غایب</span></a></li>
 <li><a href="#ch5-state-counts-are-information-retention-bounds" data-target="ch5-state-counts-are-information-retention-bounds"><span class="toc-text">شمار حالت‌ها کران حفظ اطلاعات است</span></a></li>
 <li><a href="#ch5-where-cost-is-paid" data-target="ch5-where-cost-is-paid"><span class="toc-text">هزینه کجا پرداخت می‌شود</span></a></li>
@@ -278,7 +279,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-behavior-safety-and-coordinate-invariance" data-target="ch7-behavior-safety-and-coordinate-invariance"><span class="toc-text">رفتار، ایمنی و ناوردایی مختصاتی</span></a></li>
 <li><a href="#ch7-exact-abstraction-and-path-lifting" data-target="ch7-exact-abstraction-and-path-lifting"><span class="toc-text">انتزاع دقیق و بالابردن مسیر</span></a></li>
 <li><a href="#ch7-finite-memory-and-delayed-output" data-target="ch7-finite-memory-and-delayed-output"><span class="toc-text">حافظهٔ متناهی و خروجی با تأخیر</span></a></li>
-<li><a href="#ch7-finite-resource-envelopes" data-target="ch7-finite-resource-envelopes"><span class="toc-text">دامنه‌های متناهی منابع</span></a></li>
+<li><a href="#ch7-finite-envelopes-and-context-indexed-region-orders" data-target="ch7-finite-envelopes-and-context-indexed-region-orders"><span class="toc-text">دامنه‌های متناهی و ترتیب‌های ناحیه‌ایِ نمایه‌گذاری‌شده با بافت</span></a></li>
 </ol>
 </li>
 <li>
@@ -300,11 +301,12 @@ details.lean>summary .runlean:hover{opacity:1}
 <p>در این مقایسه‌ها خود موضوع تغییر نکرده است؛ نحوهٔ مواجهه با آن تغییر کرده است.</p>
 <p>این سخن دشواری را خیالی نمی‌کند. در قفل‌شده با توصیفی بهتر باز نمی‌شود. حدس نادرست برای اثباتگری ضعیف درست نمی‌شود. نویز می‌تواند تمایزها را تار کند و گاهی دقیقاً از میان ببرد، خواه مشاهده‌گر علتش را بفهمد یا نه. مسیری موجود ممکن است همچنان از حالتی ممنوع بگذرد. موضع این کتاب هم‌زمان رابطه‌ای و واقع‌گرایانه است: دشواری به رابطه‌ای مشخص وابسته است و حقیقت آن رابطه را عامل انتخاب نمی‌کند.</p>
 <p>این رابطه سه مرز عملیاتی دارد که هر یک نسبت به نمونه، محیط و ردهٔ عدم‌قطعیت مدلِ اعلام‌شده سنجیده می‌شوند. مرز اطلاعات تعیین می‌کند کدام تفاوت‌ها می‌توانند وارد بازنمایی شوند. مرز کنش تعیین می‌کند به کدام حالت‌ها می‌توان رسید. مرز منابع تعیین می‌کند کدام عملکرد دست‌یافتنی را می‌توان با زمان، حافظه، ارتباط، دقت یا انرژی موجود محقق کرد. زبان نیز اهمیت دارد، اما نه همچون جوهری چهارم و رازآلود. واژگان از ابتدا تعیین می‌کند کدام مسئله‌ها و تمایزها صورت‌بندی شده‌اند.</p>
-<p>پس مدعای مرکزی مشروط است:</p>
+<p>پس شیء سازمان‌دهنده نه مقیاسی جهان‌شمول، بلکه ترتیبی تاربندی‌شده است. برای هر بافت مقایسه، همهٔ زیرمجموعه‌های فضای عملکرد آن ترتیبی پیرامونی می‌سازند، حال آنکه رویارویی‌های واقعی فقط زیرترتیبی جزئی را محقق می‌کنند. نگاشت‌های عملکرد، ترتیب‌های پیرامونی را با پیش‌تصویر بازنمایه‌گذاری می‌کنند و مقایسه‌های ناهمگونِ رویارویی‌های داده‌شده را ممکن می‌سازند. رده‌های تحقق‌یافتهٔ دشواری را فقط هنگامی بازنمایه‌گذاری می‌کنند که قضیه‌ای دربارهٔ بسته‌بودن بگوید خود پیش‌تصویرها تحقق یافته‌اند.</p>
+<p>ادعای محوری مشروط است:</p>
 <blockquote>
-<p>مسئله فقط نسبت به شرطی برای موفقیت، خانواده‌ای مجاز از نمونه‌ها و محیط‌ها و مرزهای اعلام‌شده بر اطلاعات، کنش و منابع دشوار است. درون این شرایط، دشواری شکل عملکرد دست‌یافتنی است.</p>
+<p>مسئله فقط نسبت به شرطی برای موفقیت، خانواده‌ای مجاز از نمونه‌ها و محیط‌ها و مرزهای اعلام‌شده بر اطلاعات، کنش و منابع دشوار است. درون یک بافت مقایسه، ناحیهٔ دست‌یافتنی کوچک‌تر یعنی دشواری بیشتر. در میان بافت‌ها، مقایسهٔ رویارویی‌های داده‌شده به ترجمه‌ای مشخص برای عملکرد نیاز دارد. بازنمایه‌گذاری رده‌های تحقق‌یافتهٔ دشواری افزون بر آن به بسته‌بودن زیر پیش‌تصویر نیاز دارد؛ انتخاب رویارویی‌های منتقل‌شده داده‌هایی قوی‌تر می‌خواهد.</p>
 </blockquote>
-<p>این صورت‌بندی به دشواری درجه می‌دهد، بی‌آنکه وانمود کند همهٔ صورت‌های مقاومت واحد سنجش مشترکی دارند. همچنین تغییرهایی را از هم جدا می‌کند که گفتار روزمره اغلب درهم می‌آمیزد. تغییر مختصات می‌تواند ضمن حفظ رفتار، ساختار را آشکار کند. انتزاعی که برای بازگرداندن راه‌حلی اجراشدنی به کار می‌رود می‌تواند ساختار را دور بریزد و ازاین‌رو باید راه بازگشتی داشته باشد. حسگر تازه مرز اطلاعات را تغییر می‌دهد. عملگر تازه مرز کنش را تغییر می‌دهد. کشف الگوریتمی سریع‌تر، عملکرد محقق‌شده یا شناخت ما از مرز را بهتر می‌کند؛ تغییر ردهٔ برنامه‌های مجاز خود مرز را تغییر می‌دهد. این‌ها رخدادهایی متفاوت‌اند، حتی اگر هر یک را آسان‌ترشدن مسئله بنامیم.</p>
+<p>این صورت‌بندی به دشواری درجه می‌دهد، بی‌آنکه وانمود کند همهٔ گونه‌های مقاومت واحدی مشترک دارند. همچنین تغییرهایی را جدا می‌کند که زبان روزمره اغلب یکی می‌گیرد. تغییر مختصات می‌تواند ساختار را آشکار و رفتار را حفظ کند. انتزاعی که برای بازگرداندن راه‌حلی اجراشدنی به کار می‌رود می‌تواند ساختار را دور بریزد و ازاین‌رو مسیر بازگشت بدهکار است. حسگر تازه مرز اطلاعات را تغییر می‌دهد. عملگر تازه مرز کنش را تغییر می‌دهد. کشف الگوریتمی سریع‌تر، عملکرد محقق‌شده یا شناخت ما از مرز را بهبود می‌دهد؛ تغییر کلاس برنامه‌های مجاز خود مرز را عوض می‌کند. این‌ها رویدادهایی متفاوت‌اند، حتی اگر هر یک آسان‌ترکردن مسئله نامیده شود. ترجمه‌های متفاوتی میان بافت‌ها نیز پشتیبانی می‌کنند: برخی دقیق‌اند، برخی فقط ادعاهای عملکرد پیرامونی را بازنمایه‌گذاری می‌کنند و برخی هیچ انتقال موجهی برای مسئله‌های واقعی فراهم نمی‌کنند.</p>
 <p>استدلال از بازنمایی و بازخورد آغاز می‌شود، از مقاومت و خطا می‌گذرد و به دسترس‌پذیری، انتزاع و پیچیدگی می‌رسد. ریاضیات به‌صورت موضعی به کار می‌رود. هیچ نوع‌دادهٔ جهان‌شمولی برای همهٔ مسئله‌ها پیشنهاد نمی‌شود و هیچ قضیهٔ بررسی‌شده با ماشین جای استدلال فلسفی‌ای را نمی‌گیرد که معنای آن قضیه را روشن می‌کند.</p>
 </section>
 <section class="chapter" id="ch1" aria-labelledby="ch1-h">
@@ -609,7 +611,7 @@ F(C)\subseteq C.
 <p>همین هشدار دربارهٔ مسیرهای فشرده برقرار است. پشتوانهٔ نقاط پایانی دسترس‌پذیری را حفظ می‌کند. ایمنی مسیری می‌خواهد هر حالت میانی پنهان امن باشد و حفظ مانع، کران امتیاز جداگانهٔ خود را می‌خواهد. یال فشرده فقط از ویژگی‌هایی پشتیبانی می‌کند که مسیر پشتوانه‌اش گواهی کرده است. مسیر بازگشت محتوای ریاضی ادعای این است که راه‌حل انتزاعی، مسئلهٔ اصلی را حل می‌کند.</p>
 </section>
 <section class="chapter" id="ch5" aria-labelledby="ch5-h">
-<h2 id="ch5-h"><span class="chaplabel">فصل ۵</span>پیچیدگی یک مرز دست‌یافتنی است</h2>
+<h2 id="ch5-h"><span class="chaplabel">فصل ۵</span>پیچیدگی و ترتیب تاربندی‌شده</h2>
 <h3 id="ch5-a-bound-needs-a-family-and-a-machine">هر کران به یک خانواده و یک ماشین نیاز دارد</h3>
 <p>کران مجانبی منابع به خانوادهٔ \(\{\mathcal I_n\}\)، کدگذاری و پارامتر اندازهٔ \(n\)، مدل ماشین یا دسترسی، معیار موفقیت یا زیان و سنجهٔ منابع مربوط است. مفهوم‌های جداگانه‌ای در سطح نمونه، از جمله پیچیدگی کولموگروف و پیچیدگی نمونه، نیز وجود دارند. زمان، فضای کار، پرس‌وجوها، نمونه‌ها، ارتباط، بیت‌های تصادفی، دقت و انرژی فیزیکی تا زمانی که مدل تبدیلی ارائه نشود جایگزین یکدیگر نیستند.</p>
 <p>مشخصات ناگفته اهمیت دارند. جریان یک‌گذره و آرایهٔ بازخواندنی دسترسی اطلاعاتی متفاوتی می‌دهند. ماشین واژه‌ای با دسترسی تصادفی و ماشین تورینگ برای عملیات اولیهٔ متفاوتی هزینه منظور می‌کنند. تولید دقیق و درستی‌سنجی پرسش‌هایی متفاوت‌اند. تحلیل بدترین‌حالت، میانگین و هموارشده از سورها یا توزیع‌های متفاوتی برای ورودی استفاده می‌کنند. فضای جست‌وجوی بزرگ به‌تنهایی در هیچ‌یک از آن‌ها کران پایین نیست.</p>
@@ -628,12 +630,91 @@ F(C)\subseteq C.
 \operatorname{Time}(p)\le t,
 \ \operatorname{Loss}(p)\le D\}.
 \]</div>
-<p>اگر مجموعه تهی باشد، \(\tau(D)=+\infty\). وقتی مشاهده‌ها منبع محدودکننده‌اند، کران پایین اطلاعاتی فصل ۱ کرانی پایین برای چنین برشی است. رابطهٔ بازگشتی مقاوم فصل ۲ لوله‌ای نهایی را گواهی می‌کند، اما بدون کران پایین تخاصمی متناظر، خطاهای کوچک‌تر را دست‌نیافتنی نمی‌سازد. دسترس‌پذیری می‌تواند زیان هدف را مستقل از محاسبه دست‌نیافتنی سازد. پس فصل‌ها برش‌هایی متفاوت از یک مرزند، نه تعریف‌هایی رقیب برای نرده‌ای پنهان.</p>
-<p>دو مواجهه را فقط پس از همسان‌کردن مختصاتشان می‌توان مقایسه کرد. اگر محورهای مسئله، زیان و منابع مشترکی داشته باشند، شمول زیر:</p>
+<p>اگر مجموعه تهی باشد، \(\tau(D)=+\infty\). وقتی مشاهده‌ها منبع محدودکننده‌اند، کران پایین اطلاعاتی فصل ۱ کرانی پایین برای چنین برشی است. رابطهٔ بازگشتی مقاوم فصل ۲ لوله‌ای نهایی را گواهی می‌کند، اما بدون کران پایین تخاصمی متناظر، خطاهای کوچک‌تر را دست‌نیافتنی نمی‌سازد. دسترس‌پذیری می‌تواند زیان هدف را مستقل از محاسبه دست‌نیافتنی سازد. وقتی این نتایج در یک بافت گرد آورده شوند، برش‌های متفاوتی از یک ناحیهٔ دست‌یافتنی را مقید می‌کنند. آن‌ها تعریف‌هایی رقیب برای نرده‌ای پنهان نیستند.</p>
+<h3 id="ch5-the-fibred-order-of-difficulty">ترتیب تاربندی‌شدهٔ دشواری</h3>
+<p>یک بافت مقایسهٔ \(c\)، کار مشترک، سورهای نمونه و محیط، کلاس عدم‌قطعیت، برنامه‌های مجاز، رابط‌های اطلاعات و کنش و مختصات منبع و زیان را ثابت می‌کند. بگذارید \(P_c\) فضای مرتب عملکرد آن باشد. تار پیرامونی مجموعهٔ توانی است</p>
 <div class="mathblock">\[
-\mathsf{Ach}_1\subseteq\mathsf{Ach}_2
+\mathcal R_c=\mathcal P(P_c),
 \]</div>
-<p>یعنی مواجههٔ ۱ به هیچ جفت عملکردی نمی‌رسد که برای مواجههٔ ۲ دست‌نیافتنی باشد. در این صورت در این ترتیب جزئی به‌طور ضعیف دشوارتر است. مرزها ممکن است یکدیگر را قطع کنند. یک مدل می‌تواند در دقت زمخت سریع‌تر و نزدیک دقت کامل کندتر باشد. رتبه‌بندی یگانه به نرده‌ای‌سازی برگزیده‌ای نیاز دارد و این انتخاب ساختاری افزوده است.</p>
+<p>که با شمول مرتب می‌شود. بگذارید \(\operatorname{Enc}(c)\) رویارویی‌های اعلام‌شده برای مقایسه باشد. دست‌یافتنی‌بودن نگاشتی است</p>
+<div class="mathblock">\[
+\mathsf{Ach}_c:\operatorname{Enc}(c)\longrightarrow\mathcal R_c
+\]</div>
+<p>که مقادیرش ناحیه‌های رو به بالا بسته‌اند. درون همین یک بافت، تعریف کنید</p>
+<div class="mathblock">\[
+E_1\mathrel{\unrhd_c}E_2
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_1)\subseteq\mathsf{Ach}_c(E_2),
+\]</div>
+<p>و \(E_1\unrhd_c E_2\) را چنین بخوانید: «\(E_1\) دست‌کم به اندازهٔ \(E_2\) دشوار است.» این رابطه بازتابی و تعدی‌پذیر است، اما روی رویارویی‌ها لزوماً پادتقارنی نیست. دو فرایند، کانال مشاهده یا نحوهٔ نمایش متفاوت می‌توانند دقیقاً ناحیهٔ دست‌یافتنی یکسانی داشته باشند. خارج‌قسمت بگیرید بر حسب</p>
+<div class="mathblock">\[
+E_1\sim_c E_2
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_1)=\mathsf{Ach}_c(E_2).
+\]</div>
+<p>این خارج‌قسمت با تصویر تحقق‌یافته هم‌ترتیب است:</p>
+<div class="mathblock">\[
+\operatorname{Enc}(c)/{\sim_c}
+\ \cong\
+\operatorname{im}(\mathsf{Ach}_c)
+\ \subseteq\
+\mathcal R_c.
+\]</div>
+<p>این تصویر عموماً فقط زیرترتیبی جزئی از تار پیرامونی است. برابری با \(\mathcal R_c\) ادعا می‌کند هر زیرمجموعهٔ \(P_c\) ناحیهٔ دست‌یافتنیِ رویارویی‌ای است، که نه فرض شده و معمولاً نادرست است. خارج‌قسمت همچنین هر تمایزی را فراموش می‌کند که مختصات عملکرد برگزیده ثبت نمی‌کنند؛ این همانیِ سامانه‌های زیربنایی نیست.</p>
+<p>ترتیب تحقق‌یافته لزوماً تام نیست. دو رویارویی هنگامی قیاس‌ناپذیرند که هیچ‌یک از دو ناحیهٔ دست‌یافتنی در دیگری نگنجد. مرزهای متقاطع پارتو شاهدی هندسی و رایج‌اند: یک رویارویی ممکن است در دقت زمخت بهتر و نزدیک دقت کامل بدتر باشد. نرده‌ای‌سازی ساختاری افزوده است و می‌تواند رتبه‌بندی را وارونه کند.</p>
+<p>برای مرتبط‌کردن تارهای پیرامونی، رده‌ای \(\mathcal C\) از بافت‌ها برگزینید. پیکان \(f:c\to d\) نگاشتی از نقاط عملکرد \(u_f:P_c\to P_d\) را دربر دارد که با همانی‌ها و ترکیب سازگار است. پیش‌تصویر می‌دهد</p>
+<div class="mathblock">\[
+f^*:\mathcal R_d\longrightarrow\mathcal R_c,
+\qquad
+f^*(A)=u_f^{-1}(A).
+\]</div>
+<p>این نگاشت یکنوا و اکیداً پادورد است:</p>
+<div class="mathblock">\[
+(\operatorname{id}_c)^*=\operatorname{id}_{\mathcal R_c},
+\qquad
+(g\circ f)^*=f^*\circ g^*.
+\]</div>
+<p>پس داده‌های پیرامونی یک ترتیب جزئیِ نمایه‌گذاری‌شدهٔ اکیداً پادورد می‌سازند</p>
+<div class="mathblock">\[
+\mathcal R:\mathcal C^{\mathrm{op}}\longrightarrow\mathbf{Pos}.
+\]</div>
+<p>این‌ها داده‌های زیربنای یک ترتیب تاربندی‌شدهٔ شکافته‌اند. اینجا نه ردهٔ کل گروتندیک ساخته می‌شود و نه خاصیت جهان‌شمول دکارتی.</p>
+<p>پیش‌تصویر همیشه شمول را حفظ می‌کند. هرگاه \(u_f\) پوشا باشد، شمول را نیز بازتاب می‌دهد:</p>
+<div class="mathblock">\[
+f^*(A)\subseteq f^*(B)
+\Longrightarrow
+A\subseteq B.
+\]</div>
+<p>یک تناظر دوسویهٔ مختصات عملکرد برای بازتاب کافی است و هم‌ریختی ترتیبی میان تارهای پیرامونی می‌دهد، اما دوسویگی از آنچه بازتاب نیاز دارد قوی‌تر است.</p>
+<p>حتی بدون بسته‌بودن ناحیه‌های تحقق‌یافته، \(f\) مقایسهٔ ناهمگون دو رویارویی داده‌شده را ممکن می‌کند:</p>
+<div class="mathblock">\[
+E_c\mathrel{\unrhd_f}E_d
+\quad\Longleftrightarrow\quad
+\mathsf{Ach}_c(E_c)
+\subseteq
+u_f^{-1}\bigl(\mathsf{Ach}_d(E_d)\bigr).
+\]</div>
+<p>این مقایسه رویارویی مقصد را به رویارویی‌ای در بافت مبدأ بدل نمی‌کند.</p>
+<p>بازنمایه‌گذاری پیرامونی به‌خودی‌خود رویارویی‌ای در مبدأ برنمی‌گزیند. پیش‌تصویر ناحیه‌ای تحقق‌یافته در \(d\) نیز لزوماً در \(\operatorname{im}(\mathsf{Ach}_c)\) قرار ندارد. برای محدودکردن \(f^*\) به زیرترتیب‌های جزئی تحقق‌یافته، ضعیف‌ترین شرط افزوده بسته‌بودن زیر پیش‌تصویر است:</p>
+<div class="mathblock">\[
+A\in\operatorname{im}(\mathsf{Ach}_d)
+\quad\Longrightarrow\quad
+u_f^{-1}(A)\in\operatorname{im}(\mathsf{Ach}_c).
+\]</div>
+<p>یکی از راه‌های کافی برای اثبات این بسته‌بودن و انتخاب نمایندگانی در مبدأ، انتقال رویارویی \(T_f:\operatorname{Enc}(d)\to\operatorname{Enc}(c)\) است که برآورده کند</p>
+<div class="mathblock">\[
+\mathsf{Ach}_c(T_fE)
+=u_f^{-1}\bigl(\mathsf{Ach}_d(E)\bigr).
+\]</div>
+<p>ضمیمهٔ Lean این شاهد قوی‌تر را بسته‌بندی می‌کند. در سطح ناحیه، همانی و ترکیب آنگاه از پیش‌تصویر پیروی می‌کنند؛ پس از یکی‌گرفتن ناحیه‌های برابر، لازم نیست شاهدهای خام و برگزیدهٔ رویارویی با هم برابر باشند. بدون بسته‌بودن زیر پیش‌تصویر، چه مستقیم ثابت شود و چه از راه انتقال رویارویی، فقط مجموعه‌های توانی پیرامونی تاربندی شده‌اند.</p>
+<p>این پیش‌تصویر پادورد را باید از تصویر مستقیم و اتلافی جدا کرد. برای نگاشت چندبه‌یک \(q:P_c\to P_d\)، عملیات هم‌ورد</p>
+<div class="mathblock">\[
+q_!:\mathcal R_c\longrightarrow\mathcal R_d,
+\qquad
+q_!(A)=\{q(x):x\in A\}
+\]</div>
+<p>یکنواست، اما می‌تواند زیرمجموعه‌های متفاوت را به یک تصویر بفرستد و ازاین‌رو در بازتاب شمول شکست بخورد. نایک‌به‌یکی موجب این فروپاشی است. این ویژگی به‌خودی‌خود بازتاب پیش‌تصویر را مختل نمی‌کند؛ در آنجا پوشایی شرط مربوط است.</p>
+<p>در این کتاب رده‌ای کانونی از همهٔ بافت‌ها وجود ندارد. اشیا، نگاشت‌های عملکرد و قوانین بازنمایه‌گذاری جزئی از هر ادعا هستند. نگاشت فراهم‌شده امکان مقایسهٔ ناهمگونِ رویارویی‌های داده‌شده در مبدأ و مقصد را می‌دهد، حتی اگر پیش‌تصویرش با رویارویی دیگری در مبدأ تحقق نیابد. ترتیب تاربندی‌شدهٔ شکافته روی رده‌های تحقق‌یافته به بسته‌بودن زیر پیش‌تصویر نیاز دارد. انتقال برگزیدهٔ رویارویی‌های خاص داده‌هایی قوی‌تر است. همچنین <em>تاربندی‌شده</em> نه توپولوژی، نه خمینه، نه ترتیب تام موضعی و نه رتبه‌بندی سراسری را ادعا می‌کند.</p>
 <h3 id="ch5-finite-envelopes-and-missing-algorithms">دامنه‌های متناهی و الگوریتم‌های غایب</h3>
 <p>فرض کنید \(E\) مجموعه‌ای متناهی و ناتهی از برنامه‌های مجاز باشد و \(V(p)\) ارزش آن‌ها را نشان دهد. چون دامنه متناهی است، بیشینه‌کننده‌ای وجود دارد. اگر \(E\subseteq F\) باشد، بهینهٔ روی \(F\) نمی‌تواند بدتر باشد. اگر برنامه‌ای حذف‌شده از همهٔ اعضای \(E\) بهتر باشد، شکافی اکید پدید می‌آید.</p>
 <p>این واقعیت‌های ابتدایی سودمندند، زیرا سوری را آشکار می‌کنند که اغلب پنهان است. بهینه نسبت به دامنهٔ جست‌وجو، بهینهٔ سراسری نیست. گسترش دامنه شاید ارزش را بهتر کند، اما جست‌وجوی دامنهٔ بزرگ‌تر ممکن است منابع بیشتری بخواهد. در دامنه‌ای نامتناهی حتی وجود بیشینه‌کننده می‌تواند شکست بخورد و کوچک‌ترین کران بالا یا بزرگ‌ترین کران پایین الزاماً به دست نمی‌آید.</p>
@@ -661,7 +742,7 @@ b^n\le r^k.
 <p>اگر اجازه دهیم هر زمان نتیجه‌ای ناخوشایند بود رابطه عوض شود، ادعای رابطه‌ای‌بودن دشواری بی‌محتوا می‌شود. این ادعا فقط هنگامی جوهری پیدا می‌کند که ردهٔ مقایسه پیش از مقایسه ثابت شده باشد.</p>
 <p>درون توزیع پیشین منبع، قانون مشاهده و ردهٔ آزمایش مجازِ ثابت، اطلاعات متقابل و هم‌ارزی مشاهداتی ویژگی‌های عینی مدل‌اند. درون سامانهٔ کنش ثابت، دسترس‌پذیری و عمق مانع عینی‌اند. درون ماشین و کدگذاری ثابت، کران پایین منابع عینی است. گزاره‌های آن‌ها شامل رابطه است، همان‌طور که سرعت، کنترل‌پذیری و بسندگی آماری چنین‌اند. رابطه‌ای به معنای دل‌بخواهی نیست.</p>
 <p>برابری رفتاری صورتی برون‌گستر از عینیت می‌دهد. وقتی \(T\)، \(W\) و مرز سیگنال ثابت باشند، دو نحوهٔ نمایش با \(\mathcal B\) یکسان بر سر هر ویژگی‌ای که فقط دربارهٔ آن مسیرها بیان شود توافق دارند. هم‌ارزی دقیق مختصاتی، شبیه‌سازی‌های کارآمد ماشین و بازبرچسب‌گذاری‌های گراف که هدف را حفظ می‌کنند، ناوردایی‌های کنترل‌شدهٔ دیگری‌اند.</p>
-<p>هیچ‌یک نگاهی از ناکجا به دست نمی‌دهد. پنهان‌کردن سیگنال، تغییر رفتار مجاز، استفاده از انتزاع چندبه‌یک یا افزودن حسگر، عملگر یا محمول، ادعا را تغییر می‌دهد مگر قضیه‌ای انتقالی خلاف آن را بگوید. اگر مرز دست‌یافتنی تغییر کند، آن تغییر واقعی است، اما به رابطه‌ای تازه مربوط می‌شود.</p>
+<p>هیچ‌یک نگاهی از ناکجا به دست نمی‌دهد. پنهان‌کردن سیگنال، تغییر رفتار مجاز، استفاده از انتزاع چندبه‌یک یا افزودن حسگر، عملگر یا محمول، ادعا را تغییر می‌دهد مگر قضیه‌ای انتقالی خلاف آن را بگوید. اگر مرز دست‌یافتنی تغییر کند، آن تغییر واقعی است، اما به رابطه‌ای تازه مربوط می‌شود. مقایسه‌اش با رابطهٔ قدیم به نگاشت بافتیِ اعلام‌شده نیاز دارد؛ بدون چنین نگاشتی، ترتیب پیشنهادی هنوز ادعایی درست‌ساخت نیست.</p>
 <h3 id="ch6-four-projections-not-four-substances">چهار تصویر، نه چهار جوهر</h3>
 <p>کاربردهای عادی واژهٔ دشوار را همچنان می‌توان برحسب مرزی که آشکار می‌کنند دسته‌بندی کرد:</p>
 <ul>
@@ -675,13 +756,25 @@ b^n\le r^k.
 <h3 id="ch6-no-view-from-nowhere">هیچ نگاه بی‌جایگاهی در کار نیست</h3>
 <p>پیش از مشخص‌شدن مسئله و مواجهه، هیچ دشواری نرده‌ای و مستقل از مدل برای یک مسئلهٔ برهنه منتظر اندازه‌گیری نیست. یک نرده پس از تثبیت ردهٔ مقایسه و نرده‌ای‌سازی مشروع می‌شود. آنچه می‌توان اندازه گرفت نرخ‌های اطلاعات، لوله‌های خطا، مجموعه‌های دسترس‌پذیر، عمق موانع، طول اثبات‌ها، اندازهٔ مدارها، شمار پرس‌وجوها، زیان‌های تقریب و بده‌بستان میان آن‌هاست.</p>
 <p>دیدگاه رابطه‌ای همچنین نمی‌گوید هر مانعی در برابر بازنمایی هوشمندانه تسلیم می‌شود. پردازش داده اجازه نمی‌دهد بازنمایی شاهد بیافریند. حاشیه‌های مقاومت عدم تطابق قابل‌تحمل را کران می‌زنند. دسترس‌پذیری نمی‌گذارد استنتاج به کنش بدل شود. کران‌های پایین پیچیدگی در رده‌های گسترده‌ای از الگوریتم‌ها باقی می‌مانند. نقشه‌ای روشنگرتر می‌تواند جست‌وجو را تغییر دهد، بی‌آنکه زمینی را که وفادارانه بازمی‌نماید عوض کند.</p>
-<p>اکنون می‌توان تز کتاب را بی‌استعاره بیان کرد:</p>
+<p>اکنون می‌توان تز کتاب را بی‌استعاره بیان کرد. برای هر بافت اعلام‌شدهٔ \(c\)، دشواری واقعی زیرترتیبی جزئی و تحقق‌یافته از یک مجموعهٔ توانی پیرامونی را اشغال می‌کند:</p>
 <div class="mathblock">\[
-\text{difficulty}
-=\text{the boundary of attainable performance}
-\quad\text{under declared conditions}.
+\mathcal R_c=\mathcal P(P_c),
+\qquad
+\operatorname{Enc}(c)/{\sim_c}
+\cong\operatorname{im}(\mathsf{Ach}_c)
+\subseteq\mathcal R_c,
+\qquad
+[E_1]\unrhd_c[E_2]
+\Longleftrightarrow
+\mathsf{Ach}_c(E_1)\subseteq\mathsf{Ach}_c(E_2).
 \]</div>
-<p>این معادله یک شِماست، نه همانی عددی جهان‌شمول. محتوایش در تصریح‌ها نهفته است. وقتی خانوادهٔ مجاز نمونه‌ها، محیط‌ها و عدم‌قطعیت، همراه با مرزهای اطلاعات، کنش، منابع، مسئله و مقایسه ثابت شدند، می‌توان ناحیهٔ دست‌یافتنی را بررسی و گاه اثبات کرد. پیش از تثبیت آن‌ها، واژهٔ دشوار دعوتی است برای پرسیدن اینکه چه چیز ناگفته مانده است.</p>
+<p>نگاشت‌های نقاط عملکرد، ترتیب پیرامونی و پادورد را می‌دهند</p>
+<div class="mathblock">\[
+f^*(A)=u_f^{-1}(A),
+\qquad
+\mathcal R:\mathcal C^{\mathrm{op}}\to\mathbf{Pos}.
+\]</div>
+<p>نمایش دوم مقایسهٔ ناهمگون دو رویارویی داده‌شده را ممکن می‌کند، اما نمی‌گوید رده‌های تحقق‌یافتهٔ دشواری بازنمایه‌گذاری می‌شوند. آن ادعای قوی‌تر به بسته‌بودن ناحیه‌های تحقق‌یافته زیر پیش‌تصویر نیاز دارد. انتقال سازگار رویارویی یکی از شاهدهای کافی است. این نمایش‌ها شِما هستند، نه ساختی جهان‌شمول یا همانی‌ای عددی. پیش از تثبیت بافت، نگاشت عملکرد و هر انتقال ادعاشدهٔ مسئله، واژهٔ <em>دشوارتر</em> دعوتی است برای پرسیدن اینکه کدام مقایسه ناگفته مانده است.</p>
 </section>
 <section class="chapter" id="ch7" aria-labelledby="ch7-h">
 <h2 id="ch7-h"><span class="chaplabel">فصل ۷</span>چه چیز با ماشین بررسی شده است</h2>
@@ -1956,10 +2049,10 @@ theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
         have hcap := state_capacity_lower_bound M hbase hpos hM
         exact (Nat.lt_pow_self hbase1).not_ge hcap⟩</code></pre></details>
 <p><strong>مرز.</strong> استدلال ضرب یک عملوند را روی یک ثابت می‌کند و کران پایین نسخه‌برداری با تأخیر است. دشواری حساب را ثابت نمی‌کند. برابری کاردینالیته برای ردیابی کافی نیست و خارج‌قسمت‌های تقریبی و ویژهٔ مسئله می‌توانند کوچک‌تر باشند.</p>
-<h3 id="ch7-finite-resource-envelopes">دامنه‌های متناهی منابع</h3>
-<p><strong>فرض‌ها.</strong> دامنهٔ برنامه مجموعه‌ای متناهی و ناتهی است و هر برنامه ارزشی حقیقی دارد. یک دامنه می‌تواند زیرمجموعهٔ دیگری باشد.</p>
-<p><strong>نتیجه.</strong> درون هر دامنهٔ متناهی و ناتهی بیشینه‌کنندهٔ ارزش وجود دارد. اگر یک دامنه زیرمجموعهٔ دیگری باشد، یک بهینهٔ دامنهٔ بزرگ‌تر ارزشی دست‌کم برابر با یک بهینهٔ دامنهٔ کوچک‌تر دارد. دامنه‌ای متناهی و صریح وجود دارد که بهینهٔ داخلی‌اش اکیداً مغلوب برنامه‌ای حذف‌شده است؛ ادعا نمی‌شود برنامهٔ حذف‌شده در مقیاس سراسری بهینه باشد. (بررسی‌شده با ماشین)</p>
-<details class="lean"><summary>Lean proof (ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-resource-envelopes.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
+<h3 id="ch7-finite-envelopes-and-context-indexed-region-orders">دامنه‌های متناهی و ترتیب‌های ناحیه‌ایِ نمایه‌گذاری‌شده با بافت</h3>
+<p><strong>فرض‌ها.</strong> دامنهٔ برنامه ناتهی و متناهی است و هر برنامه ارزشی حقیقی دارد. جداگانه، رده‌ای خانواده‌ای اکیداً پادورد از ترتیب‌های جزئی دارد که بازنمایه‌گذاری یکنوای آن از همانی و ترکیب پیروی می‌کند. در ساخت عینی، نوع‌های مختصات عملکرد یک فانکتور می‌سازند، همهٔ زیرمجموعه‌ها با پیش‌تصویر بازنمایه‌گذاری می‌شوند و به رویارویی‌ها ناحیه‌هایی نسبت داده می‌شود. برای ساخت تحقق‌یافتهٔ مشروط، انتقال رویارویی با سازگاری دقیقِ ناحیه‌ای افزون بر آن فراهم می‌شود.</p>
+<p><strong>نتیجه.</strong> دامنه‌های متناهی بهینه‌های درونی خود را محقق می‌کنند و بزرگ‌کردن دامنه نمی‌تواند بهینهٔ آن را بدتر کند. دامنه‌ای متناهی می‌تواند با برنامه‌ای بیرون‌مانده شکافی اکید داشته باشد. بازنمایه‌گذاری با پیش‌تصویر یکنواست و از قوانین گفته‌شده پیروی می‌کند. شمولی که به رویارویی‌ها پس‌کشیده شود پیش‌ترتیب است و دقیقاً هنگامی پادتقارنی است که نگاشت رویارویی به ناحیه یک‌به‌یک باشد. نگاشت‌های پوشای عملکرد شمول پیرامونی را حفظ و بازتاب می‌دهند. نگاشتی صریح و ناپوشا شکست بازتاب پیش‌تصویر را نشان می‌دهد، در حالی که تصویر مستقیمی صریح و نایک‌به‌یک، فروپاشی جداگانهٔ چندبه‌یک را نشان می‌دهد. وقتی انتقال رویارویی با سازگاری دقیقِ ناحیه‌ای فراهم شود، زیرترتیب‌های جزئیِ تصویر تحقق‌یافته بازنمایه‌گذاری شکافتهٔ پیش‌تصویر را به ارث می‌برند. یک مثال نقض نشان می‌دهد که بسته‌بودن زیر پیش‌تصویر بدون فرضی افزوده می‌تواند شکست بخورد. (بررسی‌شده با ماشین)</p>
+<details class="lean"><summary>Lean proof (FibredOrder.lean, ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap, HardProblems.FibredOrder.SplitIndexedOrder, HardProblems.FibredOrder.SplitIndexedOrder.reindexHom, HardProblems.FibredOrder.SplitIndexedOrder.reindex_id_apply, HardProblems.FibredOrder.SplitIndexedOrder.reindex_comp_apply, HardProblems.FibredOrder.performanceRegions, HardProblems.FibredOrder.CompatibleEncounterRegions, HardProblems.FibredOrder.CompatibleEncounterRegions.RealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.instPartialOrderRealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized_val, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder_reindex_val, HardProblems.FibredOrder.ambient_preimage_can_be_unrealized, HardProblems.FibredOrder.EncounterLE, HardProblems.FibredOrder.encounterLE_refl, HardProblems.FibredOrder.encounterLE_trans, HardProblems.FibredOrder.encounterLE_antisymmetric_iff_injective, HardProblems.FibredOrder.constant_region_not_antisymmetric, HardProblems.FibredOrder.surjective_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_preserves_inclusion, HardProblems.FibredOrder.equiv_preimage_reflects_inclusion, HardProblems.FibredOrder.nonsurjective_preimage_not_order_reflecting, HardProblems.FibredOrder.noninjective_image_not_order_reflecting<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-resourcebounds.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-fibredorder.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
 /-- A resource envelope specifies which programs are admitted and requires the
 admitted set to be finite. -/
 structure Envelope (P : Type*) where
@@ -1999,8 +2092,289 @@ theorem exists_strict_envelope_gap :
   use fun n =&gt; n
   use 0
   simp
-  exact ⟨1, by norm_num⟩</code></pre></details>
-<p><strong>مرز.</strong> تناهی دست‌یابی به بیشینه را فراهم می‌کند. قضیه بیشینه‌کننده را محاسبه‌پذیر یا یافتنش را ارزان نمی‌کند و بدون فرض‌های بیشتر دربارهٔ فشردگی یا ترتیب، دربارهٔ ردهٔ نامتناهی برنامه چیزی نمی‌گوید.</p>
+  exact ⟨1, by norm_num⟩
+
+-- LeanTest/HardProblems/FibredOrder.lean
+
+The pointwise identity and composition equations record a chosen splitting.
+They are the only categorical coherence claimed in this file. -/
+structure SplitIndexedOrder (C : Type u) [Category.{v} C] where
+  /-- The carrier of the ordered fiber over a context. -/
+  Fiber : C → Type w
+  /-- The partial order in each fiber. -/
+  fiberOrder : (c : C) → PartialOrder (Fiber c)
+  /-- Contravariant transport along a context morphism. -/
+  reindex : {c d : C} → (c ⟶ d) → Fiber d → Fiber c
+  /-- Reindexing along an identity is the identity. -/
+  reindex_id : ∀ (c : C) (x : Fiber c), reindex (𝟙 c) x = x
+  /-- Reindexing reverses categorical composition. -/
+  reindex_comp : ∀ {c d e : C} (f : c ⟶ d) (g : d ⟶ e)
+    (x : Fiber e), reindex (f ≫ g) x = reindex f (reindex g x)
+  /-- Every reindexing map is monotone in the fiber orders. -/
+  reindex_mono : ∀ {c d : C} (f : c ⟶ d) {x y : Fiber d},
+    (fiberOrder d).le x y → (fiberOrder c).le (reindex f x) (reindex f y)
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Reindexing as an order homomorphism. -/
+def reindexHom (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) :
+    P.Fiber d →o P.Fiber c where
+  toFun := P.reindex f
+  monotone&#x27; := by
+    intro x y hxy
+    exact P.reindex_mono f hxy
+
+-- LeanTest/HardProblems/FibredOrder.lean
+theorem reindex_id_apply (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) :
+    P.reindex (𝟙 c) x = x :=
+  P.reindex_id c x
+
+-- LeanTest/HardProblems/FibredOrder.lean
+theorem reindex_comp_apply (P : SplitIndexedOrder C) {c d e : C}
+    (f : c ⟶ d) (g : d ⟶ e) (x : P.Fiber e) :
+    P.reindex (f ≫ g) x = P.reindex f (P.reindex g x) :=
+  P.reindex_comp f g x
+
+-- LeanTest/HardProblems/FibredOrder.lean
+induced by a functor of performance-coordinate types. Context morphisms act
+on points by `Perf.map`; candidate regions move in the opposite direction by
+preimage. Realizability by an encounter or program is not part of this data. -/
+def performanceRegions {C : Type u} [Category.{v} C] (Perf : C ⥤ Type w) :
+    SplitIndexedOrder C where
+  Fiber c := Set (Perf.obj c)
+  fiberOrder _ := inferInstance
+  reindex f A := Perf.map f ⁻¹&#x27; A
+  reindex_id c A := by
+    ext x
+    simp
+  reindex_comp f g A := by
+    ext x
+    simp
+  reindex_mono := by
+    intro c d f A B hAB
+    exact Set.preimage_mono hAB
+
+-- LeanTest/HardProblems/FibredOrder.lean
+under contravariant context change.
+
+No identity or composition equation is imposed on `transport` at the level of
+raw encounters. Only its observable effect on regions is stored. That exact
+compatibility is enough to induce split reindexing after duplicate encounter
+witnesses have been forgotten. -/
+structure CompatibleEncounterRegions {C : Type u} [Category.{v} C]
+    (Perf : C ⥤ Type w) where
+  /-- The type of admitted encounters in each context. -/
+  Encounter : C → Type e
+  /-- The candidate region actually realized by an encounter. -/
+  region : (c : C) → Encounter c → Set (Perf.obj c)
+  /-- Contravariant transport of encounters along a context map. -/
+  transport : {c d : C} → (c ⟶ d) → Encounter d → Encounter c
+  /-- Transport realizes exactly the preimage of the target encounter&#x27;s
+  region. -/
+  region_transport : ∀ {c d : C} (f : c ⟶ d) (E : Encounter d),
+    region c (transport f E) = Perf.map f ⁻¹&#x27; region d E
+
+-- LeanTest/HardProblems/FibredOrder.lean
+realizes it. Different encounter witnesses with the same region determine the
+same element of this subtype. -/
+def RealizedRegion (D : CompatibleEncounterRegions Perf) (c : C) :=
+  {A : Set (Perf.obj c) // ∃ E : D.Encounter c, D.region c E = A}
+
+-- LeanTest/HardProblems/FibredOrder.lean
+underlying sets; encounter witnesses do not participate in equality. -/
+instance instPartialOrderRealizedRegion (D : CompatibleEncounterRegions Perf)
+    (c : C) : PartialOrder (D.RealizedRegion c) :=
+  PartialOrder.lift Subtype.val Subtype.val_injective
+
+-- LeanTest/HardProblems/FibredOrder.lean
+encounter witnessing that the resulting region is realized in the source
+context. -/
+def reindexRealized (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) : D.RealizedRegion c :=
+  ⟨Perf.map f ⁻¹&#x27; A.1, by
+    rcases A.2 with ⟨E, hE⟩
+    refine ⟨D.transport f E, ?_⟩
+    rw [D.region_transport, hE]⟩
+
+-- LeanTest/HardProblems/FibredOrder.lean
+ambient preimage. -/
+@[simp]
+theorem reindexRealized_val (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) :
+    (D.reindexRealized f A).1 = Perf.map f ⁻¹&#x27; A.1 :=
+  rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+hold for region values; they do not assert coherent identity or composition
+laws for the chosen raw encounter transports. -/
+def realizedRegionOrder (D : CompatibleEncounterRegions Perf) :
+    SplitIndexedOrder C where
+  Fiber c := D.RealizedRegion c
+  fiberOrder _ := inferInstance
+  reindex := D.reindexRealized
+  reindex_id c A := by
+    apply Subtype.ext
+    ext x
+    simp [reindexRealized]
+  reindex_comp f g A := by
+    apply Subtype.ext
+    ext x
+    simp [reindexRealized]
+  reindex_mono := by
+    intro c d f A B hAB
+    exact Set.preimage_mono hAB
+
+-- LeanTest/HardProblems/FibredOrder.lean
+preimage value as `reindexRealized`. -/
+@[simp]
+theorem realizedRegionOrder_reindex_val
+    (D : CompatibleEncounterRegions Perf) {c d : C}
+    (f : c ⟶ d) (A : D.RealizedRegion d) :
+    ((D.realizedRegionOrder).reindex f A).1 = Perf.map f ⁻¹&#x27; A.1 :=
+  rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+among the regions declared realized in the source context. Both declared
+families below are nonempty, yet the preimage of the realized target region is
+not a realized source region. -/
+theorem ambient_preimage_can_be_unrealized :
+    let f : Unit → Bool := fun _ ↦ false
+    let sourceRealized : Set (Set Unit) := {∅}
+    let targetRegion : Set Bool := {false}
+    let targetRealized : Set (Set Bool) := {targetRegion}
+    sourceRealized.Nonempty ∧ targetRealized.Nonempty ∧
+      targetRegion ∈ targetRealized ∧
+      f ⁻¹&#x27; targetRegion ∉ sourceRealized := by
+  simp
+
+-- LeanTest/HardProblems/FibredOrder.lean
+pullback of the fiber order along an encounter-to-region map. -/
+def EncounterLE {E : Type u} {P : Type w} (region : E → Set P)
+    (x y : E) : Prop :=
+  region x ⊆ region y
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Region comparison pulled back to encounters is reflexive. -/
+theorem encounterLE_refl {E : Type u} {P : Type w} (region : E → Set P)
+    (x : E) : EncounterLE region x x :=
+  Set.Subset.rfl
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- Region comparison pulled back to encounters is transitive. -/
+theorem encounterLE_trans {E : Type u} {P : Type w} (region : E → Set P)
+    {x y z : E} (hxy : EncounterLE region x y)
+    (hyz : EncounterLE region y z) : EncounterLE region x z :=
+  hxy.trans hyz
+
+-- LeanTest/HardProblems/FibredOrder.lean
+encounter-to-region map is injective. Without injectivity it is only a
+preorder on encounters; quotienting encounters by equal regions restores a
+partial order. -/
+theorem encounterLE_antisymmetric_iff_injective {E : Type u} {P : Type w}
+    (region : E → Set P) :
+    (∀ ⦃x y : E⦄, EncounterLE region x y →
+      EncounterLE region y x → x = y) ↔ Function.Injective region := by
+  constructor
+  · intro h x y hxy
+    apply h
+    · simp [EncounterLE, hxy]
+    · simp [EncounterLE, hxy]
+  · intro hinj x y hxy hyx
+    exact hinj (Set.Subset.antisymm hxy hyx)
+
+-- LeanTest/HardProblems/FibredOrder.lean
+antisymmetry. The failure is in the encounter presentation, not in the subset
+order on regions. -/
+theorem constant_region_not_antisymmetric :
+    let region : Bool → Set Unit := fun _ ↦ ∅
+    EncounterLE region false true ∧ EncounterLE region true false ∧
+      false ≠ true := by
+  simp [EncounterLE]
+
+-- LeanTest/HardProblems/FibredOrder.lean
+Bijectivity is therefore sufficient but not necessary for exact comparison
+transport at the level of arbitrary candidate regions. -/
+theorem surjective_preimage_subset_iff {X : Type u} {Y : Type w}
+    (f : X → Y) (hf : Function.Surjective f) (A B : Set Y) :
+    f ⁻¹&#x27; A ⊆ f ⁻¹&#x27; B ↔ A ⊆ B := by
+  constructor
+  · intro h y hy
+    rcases hf y with ⟨x, rfl⟩
+    exact h hy
+  · exact Set.preimage_mono
+
+-- LeanTest/HardProblems/FibredOrder.lean
+contravariant reindexing. Hence an exact relabeling neither creates nor erases
+comparisons between candidate performance regions. -/
+theorem equiv_preimage_subset_iff {X : Type u} {Y : Type w}
+    (e : X ≃ Y) (A B : Set Y) :
+    e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B ↔ A ⊆ B :=
+  surjective_preimage_subset_iff e e.surjective A B
+
+-- LeanTest/HardProblems/FibredOrder.lean
+/-- The preservation direction of exact coordinate invariance. -/
+theorem equiv_preimage_preserves_inclusion {X : Type u} {Y : Type w}
+    (e : X ≃ Y) {A B : Set Y} (h : A ⊆ B) :
+    e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B :=
+  (equiv_preimage_subset_iff e A B).2 h
+
+-- LeanTest/HardProblems/FibredOrder.lean
+surjectivity and is unavailable for a general non-surjective coordinate map. -/
+theorem equiv_preimage_reflects_inclusion {X : Type u} {Y : Type w}
+    (e : X ≃ Y) {A B : Set Y} (h : e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B) :
+    A ⊆ B :=
+  (equiv_preimage_subset_iff e A B).1 h
+
+-- LeanTest/HardProblems/FibredOrder.lean
+map. The injective constant map `Unit → Bool` misses `true`, so the whole Bool
+region and `{false}` have equal preimages even though the former is not
+contained in the latter. The issue here is failure of surjectivity, not
+many-to-one collapse. -/
+theorem nonsurjective_preimage_not_order_reflecting :
+    let f : Unit → Bool := fun _ ↦ false
+    let A : Set Bool := Set.univ
+    let B : Set Bool := {false}
+    ¬ Function.Surjective f ∧
+      f ⁻¹&#x27; A = f ⁻¹&#x27; B ∧ f ⁻¹&#x27; A ⊆ f ⁻¹&#x27; B ∧ ¬ A ⊆ B := by
+  dsimp
+  constructor
+  · intro hf
+    rcases hf true with ⟨x, hx⟩
+    simp at hx
+  constructor
+  · ext x
+    simp
+  constructor
+  · intro x hx
+    simp
+  · intro h
+    have : true ∈ ({false} : Set Bool) := h (Set.mem_univ true)
+    simp at this
+
+-- LeanTest/HardProblems/FibredOrder.lean
+map. The constant map `Bool → Unit` merges `false` and `true`, so their
+singleton regions have equal direct images although neither singleton is
+contained in the other. This is the separate many-to-one failure mode. -/
+theorem noninjective_image_not_order_reflecting :
+    let f : Bool → Unit := fun _ ↦ ()
+    let A : Set Bool := {false}
+    let B : Set Bool := {true}
+    ¬ Function.Injective f ∧
+      f &#x27;&#x27; A = f &#x27;&#x27; B ∧ f &#x27;&#x27; A ⊆ f &#x27;&#x27; B ∧ ¬ A ⊆ B := by
+  dsimp
+  constructor
+  · intro hf
+    have h : false = true := hf rfl
+    simp at h
+  constructor
+  · ext x
+    simp
+  constructor
+  · intro x hx
+    simp
+  · intro h
+    have : false ∈ ({true} : Set Bool) := h (by simp)
+    simp at this</code></pre></details>
+<p><strong>مرز.</strong> متناهی‌بودن، بهینه‌ساز را محاسبه‌پذیر یا ارزان نمی‌کند. ساخت پیرامونی همهٔ زیرمجموعه‌ها را به کار می‌برد و ساخت تحقق‌یافته، انتقال سازگار و کافیِ رویارویی را فرض و بسته‌بودن را از آن نتیجه می‌گیرد؛ بسته‌بودن در سطح ناحیه به‌تنهایی برای تعریف بازنمایه‌گذاری کافی است. هیچ‌یک از دو ساخت، بسته‌بودن رو به بالا را لازم ندارد یا ثابت نمی‌کند. صورت‌بندی نه خارج‌قسمت رویارویی‌های خام را می‌سازد و نه ردهٔ کل گروتندیک با بالابری‌های دکارتی را. ناوردایی مجموعه‌های مختصات، هم‌ارزی برنامه‌ها یا سامانه‌ها را ثابت نمی‌کند. مثال‌های شکست پیش‌تصویر و تصویر مستقیم به دو عملیات متفاوت مربوط‌اند و نباید یکی گرفته شوند.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">یادداشت‌ها</span>یادداشت‌ها و منابع</h2>
@@ -2038,12 +2412,12 @@ theorem exists_strict_envelope_gap :
 <dd><span class="field">معنی:</span> اینفیمم اطلاعات متقابل لازم برای آن است که یک کانال بازسازی به اعوجاج مورد انتظار اعلام‌شده برسد. این تابع هدف دقت را به نیاز اطلاعاتی تبدیل می‌کند. ظرفیت مشاهده در هر دور را تعیین نمی‌کند و برآوردگری نمی‌سازد.</dd>
 <dt>تحمل خطا <span class="latin" lang="en" dir="ltr">(Fault tolerance)</span></dt>
 <dd><span class="field">معنی:</span> سازگارسازی تضمین برآورد، کنترل یا ایمنی را درون یک ردهٔ اعلام‌شدهٔ خطا حفظ می‌کند. آشکارسازی رفتار معیوب را از عدم‌قطعیت سالم جدا می‌کند. جداسازی یک خطای نامزد را از خطاهای دیگر جدا می‌کند. هیچ‌یک دو مورد دیگر را نتیجه نمی‌دهد و آستانهٔ قطعی بدون مدل احتمال، احتمال هشدار کاذب به دست نمی‌دهد.</dd>
+<dt>ترتیب تاربندی‌شده <span class="latin" lang="en" dir="ltr">(Fibred order)</span></dt>
+<dd><span class="field">معنی:</span> خانواده‌ای از مجموعه‌های توانی پیرامونیِ فضاهای عملکرد ویژهٔ هر بافت است که به‌وسیلهٔ پیش‌تصویر، به‌شکل پادورد و با قوانین همانی و ترکیب بازنمایه‌گذاری می‌شود. پیش‌تصویر زیر نگاشت پوشای نقاط، شمول را بازتاب می‌دهد؛ تناظر دوسویهٔ نقاط عملکرد کافی اما قوی‌تر از شرط لازم است. ناحیه‌های دست‌یافتنی تحقق‌یافته فقط زیرترتیب‌های جزئی می‌سازند و بازنمایه‌گذاری آن‌ها به بسته‌بودن زیر پیش‌تصویر نیاز دارد؛ انتقال سازگار رویارویی‌ها یکی از شاهدهای کافی است. تصویر مستقیم چندبه‌یک عملیاتی هم‌ورد و جداگانه است که ممکن است تمایزها را فروبپاشد. این اصطلاح رده‌ای کانونی، توپولوژی، خمینه یا رتبه‌بندی تام سراسری به دست نمی‌دهد.</dd>
 <dt>تغییر مختصات <span class="latin" lang="en" dir="ltr">(Coordinate change)</span></dt>
 <dd><span class="field">معنی:</span> بازبرچسب‌گذاری وارون‌پذیری است که هر ساختار نام‌برده در یک ادعا را منتقل می‌کند. مزدوج‌سازی دقیق اجراها، دسترس‌پذیری و رفتار مشاهداتی را حفظ می‌کند و با انتقال مجاورت و هدف، عمق مانع نیز حفظ می‌شود. کشف یا محاسبهٔ این تغییر رایگان نیست.</dd>
 <dt>حاشیهٔ انقباض <span class="latin" lang="en" dir="ltr">(Contraction margin)</span></dt>
 <dd><span class="field">معنی:</span> برای نامساوی مقایسهٔ \(e_{t+1}\le(q_0+\mu)e_t+d\)، شکاف مثبت \(1-q_0-\mu\) است. تا وقتی مثبت باشد از کران هندسی خطا پشتیبانی می‌کند. ازدست‌رفتن این حاشیهٔ کافی، گواهی را نامعتبر می‌کند و واگرایی واقعی را ثابت نمی‌کند.</dd>
-<dt>دامنهٔ منابع <span class="latin" lang="en" dir="ltr">(Resource envelope)</span></dt>
-<dd><span class="field">معنی:</span> مجموعهٔ برنامه‌هایی است که کران‌های زمان، حافظه، پرس‌وجو، ارتباط، دقت یا منابع دیگر می‌پذیرند. دامنهٔ متناهی Lean وجود یک بهینهٔ داخلی را تضمین می‌کند. الگوریتم یافتن آن بهینه یا قضیه‌ای دربارهٔ رده‌ای نامتناهی فراهم نمی‌کند.</dd>
 <dt>دسترس‌پذیری <span class="latin" lang="en" dir="ltr">(Reachability)</span></dt>
 <dd><span class="field">معنی:</span> عضویت در بستی است که گام‌های متناهی و مجاز از یک حالت آغازین پدید می‌آورند. به مرز کنش و قیدها وابسته است. دسترس‌پذیری دشواری یافتن مسیر، طول مسیر یا حفظ هزینه‌ای وابسته به مسیر را اندازه نمی‌گیرد.</dd>
 </dl>
@@ -2085,7 +2459,7 @@ theorem exists_strict_envelope_gap :
 <h3>ن تا ی</h3>
 <dl class="glossary">
 <dt>ناحیهٔ دست‌یافتنی <span class="latin" lang="en" dir="ltr">(Attainable region)</span></dt>
-<dd><span class="field">معنی:</span> مجموعهٔ کران‌های منابع و زیانی است که دست‌کم یک برنامهٔ مجاز زیر مسئله و مدل ثابت به آن‌ها می‌رسد. نقاط دست‌یافتنی نامغلوب آن فقط هنگامی که وجود داشته باشند کمینه‌های پارتو هستند؛ بده‌بستان‌های حدی تحقق‌نیافته روی مرز پایین بست قرار می‌گیرند. تا وقتی نرده‌ای‌سازی یا ترتیبی افزوده نشود، درجه‌ای نرده‌ای از دشواری تعریف نمی‌کند.</dd>
+<dd><span class="field">معنی:</span> مجموعهٔ کران‌های منابع و زیانی است که دست‌کم یک برنامهٔ مجاز زیر کار و مدل ثابت به آن‌ها می‌رسد. نقاط نامغلوب، هرگاه وجود داشته باشند، بده‌بستان‌های محقق‌شده را ثبت می‌کنند؛ بده‌بستان‌های حدیِ تحقق‌نیافته روی مرز پایین بست قرار می‌گیرند. یک دامنهٔ متناهی منابع می‌تواند وجود بهینه‌ای درونی را تضمین کند، بی‌آنکه الگوریتمی یا بهینه‌ای سراسری به دست دهد. خارج‌قسمت‌گرفتن رویارویی‌ها برابری ناحیه‌هایشان فقط تصویر تحقق‌یافتهٔ درون مجموعهٔ توانی پیرامونی را می‌دهد، نه سراسر تار را. ناحیه بدون نرده‌ای‌سازی، درجه‌ای نرده‌ای از دشواری تعریف نمی‌کند.</dd>
 <dt>نامساوی پردازش داده <span class="latin" lang="en" dir="ltr">(Data-processing inequality)</span></dt>
 <dd><span class="field">معنی:</span> اصلی است که می‌گوید اعمال کانال یا آماره بر دادهٔ موجود نمی‌تواند اطلاعات متقابل آن را با مجهول افزایش دهد. بازسازی را کران می‌زند، اما نمی‌گوید قاعدهٔ به‌روزرسانی خاصی همهٔ اطلاعات موجود را حفظ می‌کند.</dd>
 <dt>هم‌ارزی مشاهداتی <span class="latin" lang="en" dir="ltr">(Observational equivalence)</span></dt>
