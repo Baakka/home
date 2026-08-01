@@ -235,11 +235,11 @@ details.lean>summary .runlean:hover{opacity:1}
 </ol>
 </li>
 <li>
-<a href="#ch4" data-target="ch4"><span class="toc-num">4</span><span class="toc-text">An executable abstraction owes a return path</span></a>
+<a href="#ch4" data-target="ch4"><span class="toc-num">4</span><span class="toc-text">Behavior comes before its presentation</span></a>
 <ol class="toc-sub">
-<li><a href="#ch4-relabeling-quotienting-and-extension" data-target="ch4-relabeling-quotienting-and-extension"><span class="toc-text">Relabeling, quotienting, and extension</span></a></li>
+<li><a href="#ch4-systems-as-admitted-trajectories" data-target="ch4-systems-as-admitted-trajectories"><span class="toc-text">Systems as admitted trajectories</span></a></li>
 <li><a href="#ch4-the-two-directions-of-transfer" data-target="ch4-the-two-directions-of-transfer"><span class="toc-text">The two directions of transfer</span></a></li>
-<li><a href="#ch4-backed-shortcuts" data-target="ch4-backed-shortcuts"><span class="toc-text">Backed shortcuts</span></a></li>
+<li><a href="#ch4-local-behavior-and-safety" data-target="ch4-local-behavior-and-safety"><span class="toc-text">Local behavior and safety</span></a></li>
 </ol>
 </li>
 <li>
@@ -266,7 +266,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-robust-error-recurrence" data-target="ch7-robust-error-recurrence"><span class="toc-text">Robust error recurrence</span></a></li>
 <li><a href="#ch7-observational-equivalence-and-robust-action" data-target="ch7-observational-equivalence-and-robust-action"><span class="toc-text">Observational equivalence and robust action</span></a></li>
 <li><a href="#ch7-reachability-barriers-and-backed-shortcuts" data-target="ch7-reachability-barriers-and-backed-shortcuts"><span class="toc-text">Reachability, barriers, and backed shortcuts</span></a></li>
-<li><a href="#ch7-coordinate-invariance" data-target="ch7-coordinate-invariance"><span class="toc-text">Coordinate invariance</span></a></li>
+<li><a href="#ch7-behavior-safety-and-coordinate-invariance" data-target="ch7-behavior-safety-and-coordinate-invariance"><span class="toc-text">Behavior, safety, and coordinate invariance</span></a></li>
 <li><a href="#ch7-exact-abstraction-and-path-lifting" data-target="ch7-exact-abstraction-and-path-lifting"><span class="toc-text">Exact abstraction and path lifting</span></a></li>
 <li><a href="#ch7-finite-memory-and-delayed-output" data-target="ch7-finite-memory-and-delayed-output"><span class="toc-text">Finite memory and delayed output</span></a></li>
 <li><a href="#ch7-finite-resource-envelopes" data-target="ch7-finite-resource-envelopes"><span class="toc-text">Finite resource envelopes</span></a></li>
@@ -522,16 +522,33 @@ B_J(x,G)
 <p>The representation of a path can hide this distinction. An abstract edge may stand for a long concrete route. It preserves reachability if that route exists, but it preserves barrier depth only if the route satisfies an appropriate score bound. This is the point at which abstraction incurs a debt.</p>
 </section>
 <section class="chapter" id="ch4" aria-labelledby="ch4-h">
-<h2 id="ch4-h"><span class="chaplabel">Chapter 4</span>An executable abstraction owes a return path</h2>
-<h3 id="ch4-relabeling-quotienting-and-extension">Relabeling, quotienting, and extension</h3>
-<p>Three operations are often called a new representation, but they have different logical force.</p>
-<p>An exact coordinate change is an equivalence \(e:X\simeq X'\) that transports the dynamics, observations, goals, and any other claimed structure. For a deterministic transition family, conjugacy means</p>
+<h2 id="ch4-h"><span class="chaplabel">Chapter 4</span>Behavior comes before its presentation</h2>
+<h3 id="ch4-systems-as-admitted-trajectories">Systems as admitted trajectories</h3>
+<p>A differential equation, automaton, state-space realization, and input/output split are presentations of a system. The behavioral stance begins instead with a time domain \(T\), a declared signal space \(W\), and a set of admissible trajectories</p>
 <div class="mathblock">\[
-F'_u=e\circ F_u\circ e^{-1}.
+\Sigma=(T,W,\mathcal B),
+\qquad
+\mathcal B\subseteq W^T.
 \]</div>
-<p>Runs correspond in both directions. Reachable sets are images of one another. Observational equivalence is preserved. If adjacency and objective are also transported, barrier depth is preserved. The coordinates may make a proof or algorithm shorter, but the exact behavior has only been renamed.</p>
-<p>An abstraction is usually many-to-one. A map \(\phi:X\to A\) identifies concrete states. It can reduce the represented state space precisely because it discards distinctions. Whether those distinctions were irrelevant depends on the question asked.</p>
-<p>An extension adds structure: a new sensor, actuator, predicate, state coordinate, oracle, or axiom. It can change observability, reachability, or expressibility. Success after extension is success in a new encounter unless a transfer theorem connects it to the old one. Calling extension a mere change of viewpoint hides the changed boundary.</p>
+<p>Equations matter insofar as they characterize \(\mathcal B\). Distinct internal models can present the same behavior at the declared signal boundary, even when one exposes a useful proof or algorithm that another hides. This is representation independence, not model independence: the chosen variables, boundary, and admitted trajectories can still misdescribe the plant.</p>
+<p>When two components constrain the same signal universe, their behavioral interconnection is</p>
+<div class="mathblock">\[
+\mathcal B_1\parallel\mathcal B_2
+=\mathcal B_1\cap\mathcal B_2.
+\]</div>
+<p>If only some variables are shared, composition instead enforces compatibility over that interface, represented by a pullback or fibre product. Hiding a signal through \(\pi:W\to V\) takes the existential image</p>
+<div class="mathblock">\[
+\pi_*\mathcal B
+=\{\pi\circ w:w\in\mathcal B\}.
+\]</div>
+<p>Interconnection removes trajectories; hiding identifies them. The operations do not generally commute:</p>
+<div class="mathblock">\[
+\pi_*(\mathcal B_1\cap\mathcal B_2)
+\subseteq
+\pi_*\mathcal B_1\cap\pi_*\mathcal B_2,
+\]</div>
+<p>and the inclusion can be strict because the two projected memberships may use incompatible hidden witnesses. Two nonempty components can even have an empty interconnection. Composition therefore needs both compatibility and viability, not merely componentwise possibility.</p>
+<p>An exact coordinate change transports a presentation while preserving the admitted behavior. An abstraction is many-to-one and can identify or introduce behavioral possibilities unless transfer conditions are proved. An extension adds a sensor, actuator, predicate, variable, oracle, or axiom and therefore changes the encounter.</p>
 <h3 id="ch4-the-two-directions-of-transfer">The two directions of transfer</h3>
 <p>Let \(x\to_X x'\) and \(a\to_A a'\) be concrete and abstract step relations. Forward simulation requires</p>
 <div class="mathblock">\[
@@ -559,13 +576,28 @@ x\leadsto_X G_X
 \]</div>
 <p>Each premise has distinct work. Forward simulation gives sound abstract images of concrete behavior. Lifting prevents spurious abstract plans. Goal reflection prevents a non-goal concrete state from being declared successful only because its cell contains a goal.</p>
 <p>The conditions are intentionally strong. Approximate abstractions replace equalities with error, simulation, or value bounds. Probabilistic abstractions compare kernels or distributions. Safety, cost, and barrier preservation need their own premises. Reachability equivalence alone proves none of them.</p>
-<h3 id="ch4-backed-shortcuts">Backed shortcuts</h3>
-<p>Suppose an abstract or macro edge \(u\rightsquigarrow w\) abbreviates a concrete path. Existence of some backing path preserves endpoints. A sufficient local certificate for preserving every such barrier value is a backing path that remains above the lower endpoint score. Mere endpoint backing does not suffice in general.</p>
-<p>This yields a general rule without turning it into a universal theorem:</p>
-<blockquote>
-<p>A compressed edge supports only properties for which an appropriate transfer certificate is supplied.</p>
-</blockquote>
-<p>A witness of reachability does not witness safety. A witness of safety does not witness equal cost. A value-preserving quotient does not automatically provide a concrete controller. The return path is not bureaucracy added to abstraction. It is the mathematical content of the claim that an abstract solution solves the original task.</p>
+<h3 id="ch4-local-behavior-and-safety">Local behavior and safety</h3>
+<p>Let \(\mathcal B(U)\) denote trajectories admitted on a region \(U\) of time. Restriction to smaller regions gives presheaf-like data. Raw functions on two regions have a unique function-level glue when they agree on the overlap. For admitted local behaviors to form a sheaf, restrictions must remain admissible and compatible local members must have a unique admissible global glue. That property must be proved; arbitrary local and global constraints need not have it.</p>
+<p>On a chosen site of time regions, sheaves form a topos whose internal logic is generally intuitionistic. This can provide a common semantic language for continuous, discrete, and hybrid behavior after their signal types, time structure, and solution concepts have been defined. Temporal modalities need additional temporal structure. Neither the topos nor its internal language proves a safety assertion merely by expressing it.</p>
+<p>For a state predicate \(C\), define</p>
+<div class="mathblock">\[
+\operatorname{Safe}(C)
+=\{w:\forall t,\ C(w(t))\}.
+\]</div>
+<p>Then the temporal safety claim is simply</p>
+<div class="mathblock">\[
+\mathcal B\models\Box C
+\quad\Longleftrightarrow\quad
+\mathcal B\subseteq\operatorname{Safe}(C).
+\]</div>
+<p>For discrete deterministic dynamics, if \(\mathcal B_C\) contains every run starting in \(C\), then</p>
+<div class="mathblock">\[
+\mathcal B_C\models\Box C
+\quad\Longleftrightarrow\quad
+F(C)\subseteq C.
+\]</div>
+<p>Thus an all-time safety statement reduces to a one-step invariant for this declared behavior. A plant-controller interconnection is safe only when its closed behavior satisfies the inclusion. Nonblocking or viability remains a separate obligation: the empty behavior satisfies every universal safety claim vacuously.</p>
+<p>The same warning applies to compressed paths. Endpoint backing preserves reachability. Pathwise safety requires every hidden intermediate state to be safe, and barrier preservation requires its own score bound. A compressed edge supports only the properties certified by its backing trajectory. The return path is the mathematical content of claiming that an abstract solution solves the original task.</p>
 </section>
 <section class="chapter" id="ch5" aria-labelledby="ch5-h">
 <h2 id="ch5-h"><span class="chaplabel">Chapter 5</span>Complexity is an attainable frontier</h2>
@@ -619,8 +651,8 @@ b^n\le r^k.
 <h3 id="ch6-relational-realism">Relational realism</h3>
 <p>The claim that difficulty is relational can be made trivial by allowing the relation to change whenever a conclusion is inconvenient. It becomes substantive only when the comparison class is fixed before the comparison.</p>
 <p>Within a fixed source prior, observation law, and admissible experiment class, mutual information and observational equivalence are objective properties of the model. Within a fixed action system, reachability and barrier depth are objective. Within a fixed machine and encoding, a resource lower bound is objective. Their statements contain relations, but so do velocity, controllability, and statistical sufficiency. Relational does not mean arbitrary.</p>
-<p>A particularly strong form of objectivity available here is invariance. Exact coordinate equivalence preserves behavior because all relevant structure is transported. Standard complexity models can support the same asymptotic class through efficient simulations. A barrier can survive every relabeling that preserves adjacency and objective. Such results identify what is stable across a declared family of descriptions.</p>
-<p>Invariance has a boundary. A many-to-one abstraction is not an invertible coordinate change. A new sensor is not a relabeling of the old observation map. A new actuator is not a faster program over the old move set. A new predicate may change which task has been stated. When these operations alter the attainable frontier, that alteration is real, but it concerns a new relation.</p>
+<p>Behavioral equality gives an extensional form of objectivity. Once \(T\), \(W\), and the signal boundary are fixed, two presentations with the same \(\mathcal B\) agree on every property stated solely of those trajectories. Exact coordinate equivalence, efficient machine simulations, and objective-preserving graph relabelings are other controlled invariances.</p>
+<p>None supplies a view from nowhere. Hiding a signal, changing the admitted behavior, using a many-to-one abstraction, or adding a sensor, actuator, or predicate changes the claim unless a transfer theorem says otherwise. If the attainable frontier changes, that alteration is real, but it concerns a new relation.</p>
 <h3 id="ch6-four-projections-not-four-substances">Four projections, not four substances</h3>
 <p>Ordinary uses of hard can still be sorted by the boundary they expose:</p>
 <ul>
@@ -1140,10 +1172,282 @@ theorem exists_shortcut_hiding_valley :
     rw [hunion]
     exact lt_of_lt_of_le (ENNReal.ofReal_pos.mpr one_pos) hlow</code></pre></details>
 <p><strong>Boundary.</strong> Pointwise programming need not yield a uniform computable macro. Barrier depth is not search time or total traversal cost. Shortcut preservation holds only for the witnessed path property.</p>
-<h3 id="ch7-coordinate-invariance">Coordinate invariance</h3>
-<p><strong>Hypotheses.</strong> An equivalence of deterministic state spaces conjugates every input-indexed transition and transports outputs. For barriers, the equivalence also transports adjacency and objective.</p>
-<p><strong>Conclusion.</strong> Runs commute with the equivalence. Observational indistinguishability is preserved in both directions, reachable sets correspond exactly, and transported barrier values are equal. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (Representation.lean): HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-coordinate-invariance.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Representation.lean
+<h3 id="ch7-behavior-safety-and-coordinate-invariance">Behavior, safety, and coordinate invariance</h3>
+<p><strong>Hypotheses.</strong> A behavior is a set of trajectories on a declared signal space. Interconnection is intersection after component interfaces have been aligned, and hiding is direct image under a signal map. Discrete runs obey a deterministic step map. Local signal functions agree on overlaps. Separately, an equivalence of deterministic state spaces conjugates every input-indexed transition and transports outputs, adjacency, and objective where required.</p>
+<p><strong>Conclusion.</strong> Hiding an interconnection is contained in interconnecting the hidden behaviors, and an explicit finite example makes the inclusion strict. Visible safety after hiding is exactly safety of the pulled-back predicate. For the behavior generated from a safe set, all-time safety is equivalent to one-step invariance. The empty behavior is safe but not viable. Compatible raw functions have a unique glue, but an explicit nonempty admissibility constraint can reject it. Under exact coordinate equivalence, runs commute, observational indistinguishability is preserved, reachable sets correspond, and transported barrier values are equal. (machine-checked)</p>
+<details class="lean"><summary>Lean proof (Behavioral.lean, Representation.lean): HardProblems.Behavioral.Trajectory, HardProblems.Behavioral.Behavior, HardProblems.Behavioral.mapTrajectory, HardProblems.Behavioral.hide, HardProblems.Behavioral.interconnect, HardProblems.Behavioral.hide_interconnect_subset, HardProblems.Behavioral.hide_interconnect_strict_counterexample, HardProblems.Behavioral.hide_equiv_symm, HardProblems.Behavioral.IsSafe, HardProblems.Behavioral.IsViable, HardProblems.Behavioral.empty_behavior_safe, HardProblems.Behavioral.empty_behavior_not_viable, HardProblems.Behavioral.isSafe_mono, HardProblems.Behavioral.isSafe_hide_iff, HardProblems.Behavioral.isSafe_hide, HardProblems.Behavioral.IsRun, HardProblems.Behavioral.generatedBehavior, HardProblems.Behavioral.generatedBehavior_safe_of_invariant, HardProblems.Behavioral.generatedBehavior_safe_iff_invariant, HardProblems.Behavioral.restrict, HardProblems.Behavioral.Compatible, HardProblems.Behavioral.existsUnique_glue, HardProblems.Behavioral.admissible_glue_counterexample, HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-behavioral.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-representation.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Behavioral.lean
+/-- A complete signal trajectory on time domain `T`. -/
+abbrev Trajectory (T : Type u) (W : Type v) := T → W
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A behavior is the set of trajectories admitted by a system model. -/
+abbrev Behavior (T : Type u) (W : Type v) := Set (Trajectory T W)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Apply a signal map pointwise to a trajectory. -/
+def mapTrajectory {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (x : Trajectory T W) : Trajectory T V :=
+  f ∘ x
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hide or relabel signal coordinates by taking the direct image of a
+behavior under the pointwise signal map. -/
+def hide {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B : Behavior T W) : Behavior T V :=
+  mapTrajectory f &#x27;&#x27; B
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- On one already aligned signal boundary, behavioral interconnection imposes
+both component constraints. -/
+def interconnect {T : Type u} {W : Type v}
+    (B₁ B₂ : Behavior T W) : Behavior T W :=
+  B₁ ∩ B₂
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hiding after interconnection is contained in interconnecting after hiding.
+The reverse inclusion can fail because the two projected witnesses need not be
+the same hidden trajectory. -/
+theorem hide_interconnect_subset {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B₁ B₂ : Behavior T W) :
+    hide f (interconnect B₁ B₂) ⊆
+      interconnect (hide f B₁) (hide f B₂) := by
+  rintro _ ⟨x, ⟨hx₁, hx₂⟩, rfl⟩
+  exact ⟨⟨x, hx₁, rfl⟩, ⟨x, hx₂, rfl⟩⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Explicit strictness witness: each component admits a different hidden Bool
+trajectory with the same visible projection. The components are individually
+viable, their interconnection is empty, but their visible projections have a
+nonempty interconnection. -/
+theorem hide_interconnect_strict_counterexample :
+    let f : Bool × Bool → Bool := Prod.fst
+    let x₀ : Trajectory Unit (Bool × Bool) := fun _ ↦ (false, false)
+    let x₁ : Trajectory Unit (Bool × Bool) := fun _ ↦ (false, true)
+    let B₀ : Behavior Unit (Bool × Bool) := {x₀}
+    let B₁ : Behavior Unit (Bool × Bool) := {x₁}
+    B₀.Nonempty ∧ B₁.Nonempty ∧ interconnect B₀ B₁ = ∅ ∧
+      hide f (interconnect B₀ B₁) ⊂
+        interconnect (hide f B₀) (hide f B₁) := by
+  dsimp
+  refine ⟨Set.singleton_nonempty _, Set.singleton_nonempty _, ?_⟩
+  have hEmpty :
+      interconnect ({fun _ : Unit ↦ (false, false)} :
+        Behavior Unit (Bool × Bool)) {fun _ : Unit ↦ (false, true)} = ∅ := by
+    apply Set.eq_empty_iff_forall_notMem.mpr
+    rintro z ⟨hz₀, hz₁⟩
+    rw [Set.mem_singleton_iff] at hz₀ hz₁
+    have hEq : (fun _ : Unit ↦ (false, false)) =
+        fun _ : Unit ↦ (false, true) := hz₀.symm.trans hz₁
+    have := congrFun hEq ()
+    simp at this
+  refine ⟨hEmpty, ?_⟩
+  refine Set.ssubset_iff_subset_ne.mpr
+    ⟨hide_interconnect_subset _ _ _, ?_⟩
+  intro hEq
+  have hVisible : (fun _ : Unit ↦ false) ∈
+      interconnect
+        (hide Prod.fst ({fun _ : Unit ↦ (false, false)} :
+          Behavior Unit (Bool × Bool)))
+        (hide Prod.fst ({fun _ : Unit ↦ (false, true)} :
+          Behavior Unit (Bool × Bool))) := by
+    exact ⟨⟨_, rfl, rfl⟩, ⟨_, rfl, rfl⟩⟩
+  have hImpossible : (fun _ : Unit ↦ false) ∈
+      hide Prod.fst
+        (interconnect ({fun _ : Unit ↦ (false, false)} :
+          Behavior Unit (Bool × Bool)) {fun _ : Unit ↦ (false, true)}) := by
+    rw [hEq]
+    exact hVisible
+  rw [hEmpty] at hImpossible
+  rcases hImpossible with ⟨_, hmem, _⟩
+  exact hmem
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Exact relabeling by an equivalence loses no behavior. -/
+theorem hide_equiv_symm {T : Type u} {W : Type v} {V : Type w}
+    (e : W ≃ V) (B : Behavior T W) :
+    hide e.symm (hide e B) = B := by
+  ext x
+  constructor
+  · rintro ⟨_, ⟨z, hz, rfl⟩, hzx⟩
+    have hzx&#x27; : z = x := by
+      simpa [mapTrajectory, Function.comp_def] using hzx
+    simpa [← hzx&#x27;] using hz
+  · intro hx
+    refine ⟨mapTrajectory e x, ⟨x, hx, rfl⟩, ?_⟩
+    funext t
+    simp [mapTrajectory, Function.comp_def]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A temporal safety predicate holds at every time on every admitted
+trajectory. -/
+def IsSafe {T : Type u} {W : Type v}
+    (B : Behavior T W) (Safe : W → Prop) : Prop :=
+  ∀ x ∈ B, ∀ t, Safe (x t)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A behavior is viable when it admits at least one trajectory. -/
+def IsViable {T : Type u} {W : Type v} (B : Behavior T W) : Prop :=
+  B.Nonempty
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Universal safety is vacuous on the empty behavior. -/
+theorem empty_behavior_safe {T : Type u} {W : Type v} {Safe : W → Prop} :
+    IsSafe (∅ : Behavior T W) Safe := by
+  simp [IsSafe]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- The empty behavior is not viable. -/
+theorem empty_behavior_not_viable {T : Type u} {W : Type v} :
+    ¬ IsViable (∅ : Behavior T W) := by
+  simp [IsViable]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Refining a behavior preserves every universal safety property. -/
+theorem isSafe_mono {T : Type u} {W : Type v}
+    {B B&#x27; : Behavior T W} {Safe : W → Prop}
+    (hsub : B&#x27; ⊆ B) (h : IsSafe B Safe) : IsSafe B&#x27; Safe := by
+  intro x hx t
+  exact h x (hsub hx) t
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Direct-image hiding has an exact safety semantics: a visible predicate
+holds on every projected trajectory exactly when its pullback holds on every
+original trajectory. This says nothing about predicates on discarded signal
+coordinates. -/
+theorem isSafe_hide_iff {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B : Behavior T W) (SafeV : V → Prop) :
+    IsSafe (hide f B) SafeV ↔ IsSafe B (SafeV ∘ f) := by
+  constructor
+  · intro h x hx t
+    simpa [mapTrajectory, Function.comp_def] using
+      h (mapTrajectory f x) ⟨x, hx, rfl⟩ t
+  · rintro h _ ⟨x, hx, rfl⟩ t
+    simpa [mapTrajectory, Function.comp_def] using h x hx t
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hiding preserves a safety property only when the signal map carries the
+declared internal safe set into the external one. -/
+theorem isSafe_hide {T : Type u} {W : Type v} {V : Type w}
+    {B : Behavior T W} {SafeW : W → Prop} {SafeV : V → Prop}
+    (f : W → V) (hB : IsSafe B SafeW)
+    (hmap : ∀ w, SafeW w → SafeV (f w)) :
+    IsSafe (hide f B) SafeV := by
+  rintro _ ⟨x, hx, rfl⟩ t
+  exact hmap (x t) (hB x hx t)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A discrete trajectory follows `step` at every successor time. -/
+def IsRun {S : Type u} (step : S → S) (x : Trajectory ℕ S) : Prop :=
+  ∀ n, x (n + 1) = step (x n)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- All runs whose initial state lies in `Init`. -/
+def generatedBehavior {S : Type u} (step : S → S) (Init : Set S) :
+    Behavior ℕ S :=
+  {x | x 0 ∈ Init ∧ IsRun step x}
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Forward invariance gives all-time safety for every generated run. -/
+theorem generatedBehavior_safe_of_invariant {S : Type u}
+    {step : S → S} {Init Safe : Set S}
+    (hInit : Init ⊆ Safe) (hInv : Set.MapsTo step Safe Safe) :
+    IsSafe (generatedBehavior step Init) Safe := by
+  rintro x ⟨hx₀, hrun⟩ n
+  induction n with
+  | zero =&gt; exact hInit hx₀
+  | succ n ih =&gt;
+      rw [hrun n]
+      exact hInv ih
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- For the behavior generated from every state in `Safe`, temporal safety is
+equivalent to one-step forward invariance. -/
+theorem generatedBehavior_safe_iff_invariant {S : Type u}
+    (step : S → S) (Safe : Set S) :
+    IsSafe (generatedBehavior step Safe) Safe ↔
+      Set.MapsTo step Safe Safe := by
+  constructor
+  · intro h s hs
+    let x : Trajectory ℕ S := fun n ↦ Nat.rec s (fun _ current ↦ step current) n
+    have hrun : IsRun step x := by
+      intro n
+      simp [x]
+    have hx : x ∈ generatedBehavior step Safe := by
+      exact ⟨by simpa [x] using hs, hrun⟩
+    have hs₁ := h x hx 1
+    change x 1 ∈ Safe at hs₁
+    simpa [x] using hs₁
+  · intro hInv
+    exact generatedBehavior_safe_of_invariant (by exact fun _ h ↦ h) hInv
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Restrict a local trajectory from `I` to a smaller time domain `J`. -/
+def restrict {T : Type u} {W : Type v} {I J : Set T}
+    (hJI : J ⊆ I) (x : I → W) : J → W :=
+  fun t ↦ x ⟨t.1, hJI t.2⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Two local trajectories agree wherever their time domains overlap. -/
+def Compatible {T : Type u} {W : Type v} {I J : Set T}
+    (x : I → W) (y : J → W) : Prop :=
+  ∀ (t : T) (htI : t ∈ I) (htJ : t ∈ J),
+    x ⟨t, htI⟩ = y ⟨t, htJ⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Compatible functions on two time domains have a unique global function on
+their union with the prescribed restrictions. -/
+theorem existsUnique_glue {T : Type u} {W : Type v} {I J : Set T}
+    (x : I → W) (y : J → W) (hxy : Compatible x y) :
+    ∃! z : ↥(I ∪ J) → W,
+      restrict Set.subset_union_left z = x ∧
+      restrict Set.subset_union_right z = y := by
+  classical
+  let z : ↥(I ∪ J) → W := fun t ↦
+    if htI : (t : T) ∈ I then x ⟨t, htI⟩
+    else y ⟨t, t.property.resolve_left htI⟩
+  have hzI : restrict Set.subset_union_left z = x := by
+    funext t
+    simp [restrict, z]
+  have hzJ : restrict Set.subset_union_right z = y := by
+    funext t
+    by_cases htI : (t : T) ∈ I
+    · simpa [restrict, z, htI] using hxy t htI t.property
+    · simp [restrict, z, htI]
+  refine ⟨z, ⟨hzI, hzJ⟩, ?_⟩
+  intro z&#x27; hz&#x27;
+  funext t
+  by_cases htI : (t : T) ∈ I
+  · have h := congrFun hz&#x27;.1 (⟨t, htI⟩ : I)
+    simpa [restrict, z, htI] using h
+  · have htJ : (t : T) ∈ J := t.property.resolve_left htI
+    have h := congrFun hz&#x27;.2 (⟨t, htJ⟩ : J)
+    simpa [restrict, z, htI] using h
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Raw compatible functions glue, but a nonempty declared set of admissible
+global trajectories need not contain that glue. Thus arbitrary local/global
+admissibility data do not acquire the sheaf property for free. -/
+theorem admissible_glue_counterexample :
+    let I : Set Bool := {false}
+    let J : Set Bool := {true}
+    let x : I → Bool := fun _ ↦ false
+    let y : J → Bool := fun _ ↦ true
+    let G : Set (↥(I ∪ J) → Bool) := {fun _ ↦ false}
+    Compatible x y ∧ G.Nonempty ∧
+      ¬ ∃ z ∈ G,
+        restrict Set.subset_union_left z = x ∧
+        restrict Set.subset_union_right z = y := by
+  dsimp
+  refine ⟨?_, Set.singleton_nonempty _, ?_⟩
+  · intro t htI htJ
+    rw [Set.mem_singleton_iff] at htI htJ
+    exact Bool.noConfusion (htI.symm.trans htJ)
+  · rintro ⟨z, hz, ⟨_, hzJ⟩⟩
+    subst z
+    have h := congrFun hzJ (⟨true, by simp⟩ : (↑({true} : Set Bool)))
+    simp [restrict] at h
+
+-- LeanTest/HardProblems/Representation.lean
 /-- Drive deterministic dynamics with a finite input word, applying its
 leftmost input first. -/
 def run {U X : Type*} (step : U → X → X) : List U → X → X
@@ -1336,7 +1640,7 @@ theorem barrier_relabel_eq {X : Type u} {Y : Type v}
   · refine le_iInf fun γ =&gt; ?_
     exact iInf_le_of_le (γ.unrelabel e)
       (le_of_eq (pathDepth_unrelabel e J γ))</code></pre></details>
-<p><strong>Boundary.</strong> Discovering or computing the equivalence is not free. The theorem is about exact invertible relabeling, not lossy abstraction. Costs and constraints absent from the transported structure are not preserved.</p>
+<p><strong>Boundary.</strong> Intersection presupposes an aligned signal space. Function-level gluing does not prove that admitted behaviors form a sheaf. The finite failure example uses disjoint regions, so its compatibility premise is vacuous even though rejection of the unique raw glue is not. Universal safety can hold vacuously for an empty behavior, so viability is separate. The formal predicate covers the all-time safety fragment, not temporal logic in general; no site, topos, internal logic, hybrid model, or verification algorithm is formalized. Discovering an exact coordinate equivalence is not free, and lossy abstraction requires additional transfer proofs.</p>
 <h3 id="ch7-exact-abstraction-and-path-lifting">Exact abstraction and path lifting</h3>
 <p><strong>Hypotheses.</strong> A map from a concrete transition system to an abstract one has forward simulation, local step lifting from each concrete representative, and goal preservation and reflection.</p>
 <p><strong>Conclusion.</strong> Concrete paths map to abstract paths, abstract paths lift from the stated concrete start, and reachability of the corresponding goals is equivalent. Exact abstractions compose. A finite counterexample shows that forward simulation without lifting does not justify the reverse direction. (machine-checked)</p>
@@ -1697,6 +2001,7 @@ theorem exists_strict_envelope_gap :
 <p>The nonlinear observer discussion is a comparison-system argument related to input-to-state robustness. Rajamani studies observers for Lipschitz nonlinear systems. Andrieu and Praly establish conditions for nonlinear Kazantzis-Kravaris/Luenberger observers. Shim and Liberzon formulate observer robustness to measurement disturbances in an ISS-like sense. The book's scalar recurrence is narrower than those observer-design results.</p>
 <p>The residual-set distinction among accommodation, detection, and isolation is standard in model-based fault diagnosis. The \(2\rho\) threshold follows from deterministic norm-ball geometry and is only a worst-case sufficient separation condition. Patton and Chen discuss robust observer-based fault detection and isolation in a broader setting.</p>
 <p>The finite-state arguments belong to the Myhill-Nerode tradition: behaviorally distinguishable histories require distinct states. The abstraction conditions are elementary path versions of simulation and lifting ideas used in abstract interpretation and state abstraction. The formal theorems are intentionally smaller than those general theories.</p>
+<p>Willems's behavioral approach treats a system as its admitted trajectories rather than privileging an input/output or state-space presentation. The book's Lean module checks only the set-theoretic core: intersection, projection, universal safety, discrete invariance, and binary function gluing. Schultz and Spivak construct a substantially richer temporal type theory in a topos of sheaves. That work motivates the local semantics here; it does not make the book's elementary formalization a topos model.</p>
 </section>
 <section class="chapter" id="glossary-en" aria-labelledby="glossary-en-h">
 <h2 id="glossary-en-h"><span class="chaplabel">Appendix. </span>Glossary</h2>
@@ -1710,6 +2015,8 @@ theorem exists_strict_envelope_gap :
 <dd>The set of resource and loss bounds achieved by at least one admitted program under a fixed task and model. Nondominated points, when they exist, record attained tradeoffs; unattained limiting tradeoffs belong to the lower boundary of its closure. It does not define a scalar degree of difficulty unless a scalarization or ordering is added.</dd>
 <dt>Barrier depth</dt>
 <dd>The infimum, over admissible paths, of the greatest drop below the path&#x27;s starting objective value. If no admissible path exists, the barrier is set to \(+\infty\). Barrier depth is a bottleneck statistic, not a general cost, search-time lower bound, path length, or stochastic escape time.</dd>
+<dt>Behavioral system</dt>
+<dd>A declared time domain, signal space, and set of admissible trajectories. Equations, state variables, and input/output partitions are presentations of that behavior. Interconnection and hiding require declared interfaces, and an arbitrary family of local behaviors need not satisfy sheaf gluing. Universal safety may hold vacuously when the admitted behavior is empty.</dd>
 <dt>Comparison class</dt>
 <dd>The descriptions, machines, interfaces, or coordinate changes across which a claim is intended to remain stable. Relational objectivity comes from invariance over a declared class. Changing the class after seeing the result does not establish robustness.</dd>
 <dt>Contraction margin</dt>
@@ -1756,8 +2063,6 @@ theorem exists_strict_envelope_gap :
 <dd>The programs admitted by time, memory, query, communication, precision, or other resource bounds. The finite Lean envelope guarantees an internal optimum exists. It does not provide an algorithm to find that optimum or a theorem about an infinite class.</dd>
 <dt>Robust action</dt>
 <dd>One action acceptable for every state in an observation equivalence class. Such actions form the intersection of the statewise acceptable sets. Pairwise intersections do not guarantee that the total intersection is nonempty.</dd>
-<dt>Shortcut</dt>
-<dd>An added edge representing a path in a base transition graph. Endpoint backing preserves reachability. Barrier, safety, cost, and length are preserved only when the backing witness certifies those properties.</dd>
 <dt>State capacity</dt>
 <dd>The number of distinct internal configurations available to a finite machine, often converted to bits by a logarithm. A state count of \(2^s\) represents \(s\) bits, not \(2^s\) bits. Equal capacity does not establish compatible dynamics or exact tracking.</dd>
 <dt>Task-relevant information</dt>
@@ -1781,6 +2086,8 @@ theorem exists_strict_envelope_gap :
 <li>Shannon, C. E. "Coding Theorems for a Discrete Source with a Fidelity Criterion." <em>IRE National Convention Record</em> 4, 1959.</li>
 <li>Shim, H., and Liberzon, D. "Nonlinear Observers Robust to Measurement Disturbances in an ISS Sense." <em>IEEE Transactions on Automatic Control</em> 61(1), 2016. <a href="https://doi.org/10.1109/TAC.2015.2423911">DOI</a>.</li>
 <li>Sontag, E. D., and Wang, Y. "Output-to-State Stability and Detectability of Nonlinear Systems." <em>Systems &amp; Control Letters</em> 29(5), 1997. <a href="https://doi.org/10.1016/S0167-6911%2897%2990013-X">DOI</a>.</li>
+<li>Schultz, P., and Spivak, D. I. <em>Temporal Type Theory: A Topos-Theoretic Approach to Systems and Behavior.</em> 2017. <a href="https://arxiv.org/abs/1710.10258">arXiv</a>.</li>
+<li>Willems, J. C. "The Behavioral Approach to Systems and Control." <em>Journal of the Society of Instrument and Control Engineers</em> 34(8), 1995. <a href="https://doi.org/10.11499/sicejl1962.34.8_603">DOI</a>.</li>
 </ul>
 </section>
 <section class="chapter" id="formal-companion" aria-labelledby="formal-companion-h">

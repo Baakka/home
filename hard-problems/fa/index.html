@@ -244,11 +244,11 @@ details.lean>summary .runlean:hover{opacity:1}
 </ol>
 </li>
 <li>
-<a href="#ch4" data-target="ch4"><span class="toc-num">4</span><span class="toc-text">انتزاع اجراشدنی باید راه بازگشت داشته باشد</span></a>
+<a href="#ch4" data-target="ch4"><span class="toc-num">4</span><span class="toc-text">رفتار بر نحوهٔ نمایش آن مقدم است</span></a>
 <ol class="toc-sub">
-<li><a href="#ch4-relabeling-quotienting-and-extension" data-target="ch4-relabeling-quotienting-and-extension"><span class="toc-text">بازبرچسب‌گذاری، خارج‌قسمت‌گیری و بسط</span></a></li>
+<li><a href="#ch4-systems-as-admitted-trajectories" data-target="ch4-systems-as-admitted-trajectories"><span class="toc-text">سامانه‌ها به‌مثابه مسیرهای مجاز</span></a></li>
 <li><a href="#ch4-the-two-directions-of-transfer" data-target="ch4-the-two-directions-of-transfer"><span class="toc-text">دو جهت انتقال</span></a></li>
-<li><a href="#ch4-backed-shortcuts" data-target="ch4-backed-shortcuts"><span class="toc-text">میان‌برهای پشتوانه‌دار</span></a></li>
+<li><a href="#ch4-local-behavior-and-safety" data-target="ch4-local-behavior-and-safety"><span class="toc-text">رفتار محلی و ایمنی</span></a></li>
 </ol>
 </li>
 <li>
@@ -275,7 +275,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-robust-error-recurrence" data-target="ch7-robust-error-recurrence"><span class="toc-text">رابطهٔ بازگشتی خطای مقاوم</span></a></li>
 <li><a href="#ch7-observational-equivalence-and-robust-action" data-target="ch7-observational-equivalence-and-robust-action"><span class="toc-text">هم‌ارزی مشاهداتی و کنش مقاوم</span></a></li>
 <li><a href="#ch7-reachability-barriers-and-backed-shortcuts" data-target="ch7-reachability-barriers-and-backed-shortcuts"><span class="toc-text">دسترس‌پذیری، موانع و میان‌برهای پشتوانه‌دار</span></a></li>
-<li><a href="#ch7-coordinate-invariance" data-target="ch7-coordinate-invariance"><span class="toc-text">ناوردایی مختصاتی</span></a></li>
+<li><a href="#ch7-behavior-safety-and-coordinate-invariance" data-target="ch7-behavior-safety-and-coordinate-invariance"><span class="toc-text">رفتار، ایمنی و ناوردایی مختصاتی</span></a></li>
 <li><a href="#ch7-exact-abstraction-and-path-lifting" data-target="ch7-exact-abstraction-and-path-lifting"><span class="toc-text">انتزاع دقیق و بالابردن مسیر</span></a></li>
 <li><a href="#ch7-finite-memory-and-delayed-output" data-target="ch7-finite-memory-and-delayed-output"><span class="toc-text">حافظهٔ متناهی و خروجی با تأخیر</span></a></li>
 <li><a href="#ch7-finite-resource-envelopes" data-target="ch7-finite-resource-envelopes"><span class="toc-text">دامنه‌های متناهی منابع</span></a></li>
@@ -531,16 +531,33 @@ B_J(x,G)
 <p>بازنمایی مسیر می‌تواند این تمایز را پنهان کند. یالی انتزاعی ممکن است نمایندهٔ مسیری عینی و طولانی باشد. اگر آن مسیر وجود داشته باشد، یال دسترس‌پذیری را حفظ می‌کند؛ اما فقط زمانی عمق مانع را حفظ می‌کند که مسیر کران امتیاز مناسبی داشته باشد. انتزاع در همین نقطه بدهکار می‌شود.</p>
 </section>
 <section class="chapter" id="ch4" aria-labelledby="ch4-h">
-<h2 id="ch4-h"><span class="chaplabel">فصل ۴</span>انتزاع اجراشدنی باید راه بازگشت داشته باشد</h2>
-<h3 id="ch4-relabeling-quotienting-and-extension">بازبرچسب‌گذاری، خارج‌قسمت‌گیری و بسط</h3>
-<p>سه عملیات را اغلب بازنمایی تازه می‌نامند، اما نیروی منطقی آن‌ها متفاوت است.</p>
-<p>تغییر مختصات دقیق، هم‌ارزی \(e:X\simeq X'\) است که پویایی، مشاهده‌ها، هدف‌ها و هر ساختار ادعاشدهٔ دیگری را منتقل می‌کند. برای خانواده‌ای از گذارهای قطعی، مزدوج‌بودن یعنی:</p>
+<h2 id="ch4-h"><span class="chaplabel">فصل ۴</span>رفتار بر نحوهٔ نمایش آن مقدم است</h2>
+<h3 id="ch4-systems-as-admitted-trajectories">سامانه‌ها به‌مثابه مسیرهای مجاز</h3>
+<p>معادلهٔ دیفرانسیل، ماشین خودکار، تحقق فضای حالت و جداسازی ورودی و خروجی، همگی نحوه‌هایی برای نمایش یک سامانه‌اند. دیدگاه رفتاری در عوض از دامنهٔ زمانی \(T\)، فضای سیگنال اعلام‌شدهٔ \(W\) و مجموعه‌ای از مسیرهای مجاز آغاز می‌کند</p>
 <div class="mathblock">\[
-F'_u=e\circ F_u\circ e^{-1}.
+\Sigma=(T,W,\mathcal B),
+\qquad
+\mathcal B\subseteq W^T.
 \]</div>
-<p>اجراها در هر دو جهت متناظرند. مجموعه‌های دسترس‌پذیر تصویر یکدیگرند. هم‌ارزی مشاهداتی حفظ می‌شود. اگر مجاورت و هدف نیز منتقل شوند، عمق مانع حفظ می‌شود. مختصات ممکن است اثبات یا الگوریتمی را کوتاه‌تر کند، اما رفتار دقیق فقط نامی تازه گرفته است.</p>
-<p>انتزاع معمولاً چندبه‌یک است. نگاشت \(\phi:X\to A\) حالت‌های عینی را یکی می‌گیرد. دقیقاً به این دلیل که تمایزها را دور می‌ریزد می‌تواند فضای حالت بازنمایی‌شده را کوچک کند. نامربوط‌بودن آن تمایزها به پرسشی وابسته است که طرح شده است.</p>
-<p>بسط ساختار می‌افزاید: حسگر، عملگر، محمول، مختصهٔ حالت، اوراکل یا اصل موضوع تازه. بسط می‌تواند مشاهده‌پذیری، دسترس‌پذیری یا بیان‌پذیری را تغییر دهد. موفقیت پس از بسط، موفقیت در مواجهه‌ای تازه است، مگر آنکه قضیه‌ای انتقالی آن را به مواجههٔ پیشین پیوند دهد. نامیدن بسط به‌عنوان صرفاً تغییر دیدگاه، مرز تغییریافته را پنهان می‌کند.</p>
+<p>معادله‌ها تا آنجا اهمیت دارند که \(\mathcal B\) را مشخص کنند. مدل‌های درونی متفاوت می‌توانند رفتار یکسانی را در مرز سیگنال اعلام‌شده نمایش دهند، حتی وقتی یکی اثبات یا الگوریتم سودمندی را آشکار می‌کند که دیگری پنهان می‌سازد. این استقلال از بازنمایی است، نه استقلال از مدل: متغیرها، مرز و مسیرهای مجاز برگزیده همچنان ممکن است فرایند واقعی را نادرست توصیف کنند.</p>
+<p>وقتی دو مؤلفه جهان سیگنال یکسانی را مقید می‌کنند، اتصال متقابل رفتاری آن‌ها چنین است</p>
+<div class="mathblock">\[
+\mathcal B_1\parallel\mathcal B_2
+=\mathcal B_1\cap\mathcal B_2.
+\]</div>
+<p>اگر فقط بعضی متغیرها مشترک باشند، ترکیب در عوض سازگاری روی آن رابط را تحمیل می‌کند که با پس‌کش یا حاصل‌ضرب تاری نمایش داده می‌شود. پنهان‌کردن یک سیگنال از راه \(\pi:W\to V\) تصویر وجودی زیر را می‌گیرد</p>
+<div class="mathblock">\[
+\pi_*\mathcal B
+=\{\pi\circ w:w\in\mathcal B\}.
+\]</div>
+<p>اتصال متقابل مسیرها را حذف می‌کند؛ پنهان‌سازی آن‌ها را همسان می‌کند. این عملیات عموماً جابه‌جاپذیر نیستند:</p>
+<div class="mathblock">\[
+\pi_*(\mathcal B_1\cap\mathcal B_2)
+\subseteq
+\pi_*\mathcal B_1\cap\pi_*\mathcal B_2,
+\]</div>
+<p>و شمول می‌تواند اکید باشد، زیرا دو عضویت تصویرشده شاید از شاهدهای پنهان ناسازگار استفاده کنند. حتی دو مؤلفهٔ ناتهی می‌توانند اتصال متقابلی تهی داشته باشند. پس ترکیب، هم سازگاری و هم زیست‌پذیری می‌خواهد، نه فقط امکان‌پذیری تک‌تک مؤلفه‌ها.</p>
+<p>تغییر مختصات دقیق، نحوهٔ نمایش را با حفظ رفتار مجاز منتقل می‌کند. انتزاع چندبه‌یک است و ممکن است امکان‌های رفتاری را یکی کند یا بیفزاید، مگر آنکه شرط‌های انتقال اثبات شوند. بسط، حسگر، عملگر، محمول، متغیر، اوراکل یا اصل موضوع تازه‌ای می‌افزاید و در نتیجه رویارویی را تغییر می‌دهد.</p>
 <h3 id="ch4-the-two-directions-of-transfer">دو جهت انتقال</h3>
 <p>فرض کنید \(x\to_X x'\) و \(a\to_A a'\) به‌ترتیب روابط گام عینی و انتزاعی باشند. شبیه‌سازی پیشرو مستلزم این است:</p>
 <div class="mathblock">\[
@@ -568,13 +585,28 @@ x\leadsto_X G_X
 \]</div>
 <p>هر مقدمه کار جداگانه‌ای انجام می‌دهد. شبیه‌سازی پیشرو تصویرهای انتزاعی معتبر از رفتار عینی می‌دهد. بالابردن از برنامه‌های انتزاعی کاذب جلوگیری می‌کند. بازتاب هدف نمی‌گذارد حالتی عینی و ناهدف فقط به این دلیل موفق اعلام شود که سلولش هدفی را در خود دارد.</p>
 <p>این شرایط آگاهانه قوی‌اند. انتزاع‌های تقریبی تساوی‌ها را با کران‌های خطا، شبیه‌سازی یا ارزش جایگزین می‌کنند. انتزاع‌های احتمالی هسته‌ها یا توزیع‌ها را می‌سنجند. حفظ ایمنی، هزینه و مانع به مقدمات خاص خود نیاز دارد. هم‌ارزی دسترس‌پذیری به‌تنهایی هیچ‌یک را ثابت نمی‌کند.</p>
-<h3 id="ch4-backed-shortcuts">میان‌برهای پشتوانه‌دار</h3>
-<p>فرض کنید یال انتزاعی یا کلان \(u\rightsquigarrow w\) مسیر عینی‌ای را کوتاه‌نویسی کند. وجود یک مسیر پشتوانه، نقاط پایانی را حفظ می‌کند. یک گواهی موضعی کافی برای حفظ همهٔ این مقادیر مانع، مسیر پشتوانه‌ای است که بالاتر از امتیاز کمترِ دو نقطهٔ پایانی بماند. صرف پشتوانهٔ نقاط پایانی در حالت کلی کافی نیست.</p>
-<p>از اینجا قاعده‌ای کلی به دست می‌آید، بی‌آنکه به قضیه‌ای جهان‌شمول تبدیل شود:</p>
-<blockquote>
-<p>یال فشرده فقط از ویژگی‌هایی پشتیبانی می‌کند که برای آن‌ها گواهی انتقال مناسبی فراهم شده باشد.</p>
-</blockquote>
-<p>شاهد دسترس‌پذیری، شاهد ایمنی نیست. شاهد ایمنی، برابری هزینه را گواهی نمی‌کند. خارج‌قسمتی که ارزش را حفظ می‌کند خودبه‌خود کنترل‌کننده‌ای عینی فراهم نمی‌آورد. راه بازگشت تشریفاتی تحمیل‌شده بر انتزاع نیست؛ محتوای ریاضی این ادعاست که راه‌حل انتزاعی مسئلهٔ اصلی را حل می‌کند.</p>
+<h3 id="ch4-local-behavior-and-safety">رفتار محلی و ایمنی</h3>
+<p>بگذارید \(\mathcal B(U)\) مسیرهای مجاز روی ناحیهٔ زمانی \(U\) را نشان دهد. محدودکردن به ناحیه‌های کوچک‌تر داده‌ای پیش‌شیف‌مانند می‌دهد. وقتی توابع خام روی دو ناحیه در اشتراک توافق دارند، در سطح تابع چسبانش یکتایی دارند. برای آنکه رفتارهای محلی مجاز یک شیف بسازند، محدودسازی‌ها باید همچنان مجاز بمانند و اعضای محلی سازگار باید چسبانش سراسری مجاز یکتایی داشته باشند. این ویژگی باید اثبات شود؛ قیدهای دلخواه محلی و سراسری لزوماً آن را ندارند.</p>
+<p>روی یک سایت برگزیده از ناحیه‌های زمانی، شیف‌ها توپوسی می‌سازند که منطق درونی‌اش عموماً شهودگرایانه است. پس از تعریف نوع‌های سیگنال، ساختار زمانی و مفهوم‌های حل، این چارچوب می‌تواند زبان معناشناختی مشترکی برای رفتار پیوسته، گسسته و هیبریدی فراهم کند. وجه‌های زمانی به ساختار زمانی بیشتری نیاز دارند. نه توپوس و نه زبان درونی آن صرفاً با بیان یک ادعای ایمنی، آن را اثبات نمی‌کنند.</p>
+<p>برای یک محمول حالت \(C\)، تعریف کنید</p>
+<div class="mathblock">\[
+\operatorname{Safe}(C)
+=\{w:\forall t,\ C(w(t))\}.
+\]</div>
+<p>آنگاه ادعای ایمنی زمانی به‌سادگی چنین است</p>
+<div class="mathblock">\[
+\mathcal B\models\Box C
+\quad\Longleftrightarrow\quad
+\mathcal B\subseteq\operatorname{Safe}(C).
+\]</div>
+<p>برای دینامیک قطعی گسسته، اگر \(\mathcal B_C\) همهٔ اجراهای آغازشده در \(C\) را در بر گیرد، آنگاه</p>
+<div class="mathblock">\[
+\mathcal B_C\models\Box C
+\quad\Longleftrightarrow\quad
+F(C)\subseteq C.
+\]</div>
+<p>پس ادعای ایمنی در همهٔ زمان‌ها، برای این رفتار اعلام‌شده، به یک ناوردای یک‌گامی فروکاسته می‌شود. اتصال متقابل فرایند و کنترل‌گر فقط هنگامی امن است که رفتار بستهٔ آن شمول را برآورده کند. بی‌بن‌بستی یا زیست‌پذیری تعهدی جدا می‌ماند: رفتار تهی هر ادعای ایمنی همگانی را به‌طور تهی‌صدق برآورده می‌کند.</p>
+<p>همین هشدار دربارهٔ مسیرهای فشرده برقرار است. پشتوانهٔ نقاط پایانی دسترس‌پذیری را حفظ می‌کند. ایمنی مسیری می‌خواهد هر حالت میانی پنهان امن باشد و حفظ مانع، کران امتیاز جداگانهٔ خود را می‌خواهد. یال فشرده فقط از ویژگی‌هایی پشتیبانی می‌کند که مسیر پشتوانه‌اش گواهی کرده است. مسیر بازگشت محتوای ریاضی ادعای این است که راه‌حل انتزاعی، مسئلهٔ اصلی را حل می‌کند.</p>
 </section>
 <section class="chapter" id="ch5" aria-labelledby="ch5-h">
 <h2 id="ch5-h"><span class="chaplabel">فصل ۵</span>پیچیدگی یک مرز دست‌یافتنی است</h2>
@@ -628,8 +660,8 @@ b^n\le r^k.
 <h3 id="ch6-relational-realism">واقع‌گرایی رابطه‌ای</h3>
 <p>اگر اجازه دهیم هر زمان نتیجه‌ای ناخوشایند بود رابطه عوض شود، ادعای رابطه‌ای‌بودن دشواری بی‌محتوا می‌شود. این ادعا فقط هنگامی جوهری پیدا می‌کند که ردهٔ مقایسه پیش از مقایسه ثابت شده باشد.</p>
 <p>درون توزیع پیشین منبع، قانون مشاهده و ردهٔ آزمایش مجازِ ثابت، اطلاعات متقابل و هم‌ارزی مشاهداتی ویژگی‌های عینی مدل‌اند. درون سامانهٔ کنش ثابت، دسترس‌پذیری و عمق مانع عینی‌اند. درون ماشین و کدگذاری ثابت، کران پایین منابع عینی است. گزاره‌های آن‌ها شامل رابطه است، همان‌طور که سرعت، کنترل‌پذیری و بسندگی آماری چنین‌اند. رابطه‌ای به معنای دل‌بخواهی نیست.</p>
-<p>یکی از صورت‌های به‌ویژه نیرومند عینیت در اینجا ناوردایی است. هم‌ارزی دقیق مختصاتی رفتار را حفظ می‌کند، زیرا همهٔ ساختار مربوط منتقل می‌شود. مدل‌های استاندارد پیچیدگی می‌توانند از راه شبیه‌سازی‌های کارآمد ردهٔ مجانبی یکسانی را پشتیبانی کنند. مانع می‌تواند زیر هر بازبرچسب‌گذاری حافظ مجاورت و هدف باقی بماند. چنین نتایجی آنچه را در خانواده‌ای اعلام‌شده از توصیف‌ها پایدار است مشخص می‌کنند.</p>
-<p>ناوردایی مرزی دارد. انتزاع چندبه‌یک تغییر مختصات وارون‌پذیر نیست. حسگر تازه بازبرچسب‌گذاری نگاشت مشاهدهٔ قدیمی نیست. عملگر تازه برنامه‌ای سریع‌تر روی مجموعه‌حرکت پیشین نیست. محمول تازه ممکن است مسئلهٔ صورت‌بندی‌شده را تغییر دهد. وقتی این عملیات مرز دست‌یافتنی را تغییر می‌دهند، آن تغییر واقعی است، اما به رابطه‌ای تازه مربوط می‌شود.</p>
+<p>برابری رفتاری صورتی برون‌گستر از عینیت می‌دهد. وقتی \(T\)، \(W\) و مرز سیگنال ثابت باشند، دو نحوهٔ نمایش با \(\mathcal B\) یکسان بر سر هر ویژگی‌ای که فقط دربارهٔ آن مسیرها بیان شود توافق دارند. هم‌ارزی دقیق مختصاتی، شبیه‌سازی‌های کارآمد ماشین و بازبرچسب‌گذاری‌های گراف که هدف را حفظ می‌کنند، ناوردایی‌های کنترل‌شدهٔ دیگری‌اند.</p>
+<p>هیچ‌یک نگاهی از ناکجا به دست نمی‌دهد. پنهان‌کردن سیگنال، تغییر رفتار مجاز، استفاده از انتزاع چندبه‌یک یا افزودن حسگر، عملگر یا محمول، ادعا را تغییر می‌دهد مگر قضیه‌ای انتقالی خلاف آن را بگوید. اگر مرز دست‌یافتنی تغییر کند، آن تغییر واقعی است، اما به رابطه‌ای تازه مربوط می‌شود.</p>
 <h3 id="ch6-four-projections-not-four-substances">چهار تصویر، نه چهار جوهر</h3>
 <p>کاربردهای عادی واژهٔ دشوار را همچنان می‌توان برحسب مرزی که آشکار می‌کنند دسته‌بندی کرد:</p>
 <ul>
@@ -1149,10 +1181,282 @@ theorem exists_shortcut_hiding_valley :
     rw [hunion]
     exact lt_of_lt_of_le (ENNReal.ofReal_pos.mpr one_pos) hlow</code></pre></details>
 <p><strong>مرز.</strong> برنامه‌ریزی نقطه‌به‌نقطه الزاماً کلان‌دستوری یکنواخت و محاسبه‌پذیر نمی‌دهد. عمق مانع زمان جست‌وجو یا هزینهٔ کل پیمایش نیست. حفظ میان‌بر فقط برای ویژگی مسیری برقرار است که شاهد شده است.</p>
-<h3 id="ch7-coordinate-invariance">ناوردایی مختصاتی</h3>
-<p><strong>فرض‌ها.</strong> هم‌ارزی فضاهای حالت قطعی، هر گذار نمایه‌گذاری‌شده با ورودی را مزدوج و خروجی‌ها را منتقل می‌کند. برای موانع، هم‌ارزی مجاورت و هدف را نیز منتقل می‌کند.</p>
-<p><strong>نتیجه.</strong> اجراها با هم‌ارزی جابه‌جاپذیرند. تمایزناپذیری مشاهداتی در هر دو جهت حفظ می‌شود، مجموعه‌های دسترس‌پذیر دقیقاً متناظرند و مقادیر منتقل‌شدهٔ مانع برابرند. (بررسی‌شده با ماشین)</p>
-<details class="lean"><summary>Lean proof (Representation.lean): HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-coordinate-invariance.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Representation.lean
+<h3 id="ch7-behavior-safety-and-coordinate-invariance">رفتار، ایمنی و ناوردایی مختصاتی</h3>
+<p><strong>فرض‌ها.</strong> رفتار مجموعه‌ای از مسیرها روی فضای سیگنال اعلام‌شده است. پس از هم‌ترازشدن رابط مؤلفه‌ها، اتصال متقابل همان اشتراک است و پنهان‌سازی تصویر مستقیم زیر یک نگاشت سیگنال است. اجراهای گسسته از نگاشت گام قطعی پیروی می‌کنند. توابع سیگنال محلی روی هم‌پوشانی‌ها توافق دارند. جداگانه، هم‌ارزی فضاهای حالت قطعی هر گذار نمایه‌گذاری‌شده با ورودی را مزدوج می‌کند و هرجا لازم باشد خروجی‌ها، مجاورت و هدف را منتقل می‌کند.</p>
+<p><strong>نتیجه.</strong> پنهان‌سازی یک اتصال متقابل زیرمجموعهٔ اتصال متقابل رفتارهای پنهان‌شده است و یک مثال متناهی صریح شمول را اکید می‌کند. ایمنی دیدنی پس از پنهان‌سازی دقیقاً همان ایمنی محمول پس‌کشیده است. برای رفتاری که از یک مجموعهٔ امن تولید می‌شود، ایمنی در همهٔ زمان‌ها با ناوردایی یک‌گامی هم‌ارز است. رفتار تهی امن است اما زیست‌پذیر نیست. توابع خام سازگار چسبانش یکتایی دارند، اما یک قید صریح و ناتهی پذیرش می‌تواند آن را رد کند. زیر هم‌ارزی دقیق مختصاتی، اجراها جابه‌جا می‌شوند، تمایزناپذیری مشاهداتی حفظ می‌شود، مجموعه‌های دسترس‌پذیر متناظرند و مقادیر منتقل‌شدهٔ مانع برابرند. (بررسی‌شده با ماشین)</p>
+<details class="lean"><summary>Lean proof (Behavioral.lean, Representation.lean): HardProblems.Behavioral.Trajectory, HardProblems.Behavioral.Behavior, HardProblems.Behavioral.mapTrajectory, HardProblems.Behavioral.hide, HardProblems.Behavioral.interconnect, HardProblems.Behavioral.hide_interconnect_subset, HardProblems.Behavioral.hide_interconnect_strict_counterexample, HardProblems.Behavioral.hide_equiv_symm, HardProblems.Behavioral.IsSafe, HardProblems.Behavioral.IsViable, HardProblems.Behavioral.empty_behavior_safe, HardProblems.Behavioral.empty_behavior_not_viable, HardProblems.Behavioral.isSafe_mono, HardProblems.Behavioral.isSafe_hide_iff, HardProblems.Behavioral.isSafe_hide, HardProblems.Behavioral.IsRun, HardProblems.Behavioral.generatedBehavior, HardProblems.Behavioral.generatedBehavior_safe_of_invariant, HardProblems.Behavioral.generatedBehavior_safe_iff_invariant, HardProblems.Behavioral.restrict, HardProblems.Behavioral.Compatible, HardProblems.Behavioral.existsUnique_glue, HardProblems.Behavioral.admissible_glue_counterexample, HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-behavioral.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-representation.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/Behavioral.lean
+/-- A complete signal trajectory on time domain `T`. -/
+abbrev Trajectory (T : Type u) (W : Type v) := T → W
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A behavior is the set of trajectories admitted by a system model. -/
+abbrev Behavior (T : Type u) (W : Type v) := Set (Trajectory T W)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Apply a signal map pointwise to a trajectory. -/
+def mapTrajectory {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (x : Trajectory T W) : Trajectory T V :=
+  f ∘ x
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hide or relabel signal coordinates by taking the direct image of a
+behavior under the pointwise signal map. -/
+def hide {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B : Behavior T W) : Behavior T V :=
+  mapTrajectory f &#x27;&#x27; B
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- On one already aligned signal boundary, behavioral interconnection imposes
+both component constraints. -/
+def interconnect {T : Type u} {W : Type v}
+    (B₁ B₂ : Behavior T W) : Behavior T W :=
+  B₁ ∩ B₂
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hiding after interconnection is contained in interconnecting after hiding.
+The reverse inclusion can fail because the two projected witnesses need not be
+the same hidden trajectory. -/
+theorem hide_interconnect_subset {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B₁ B₂ : Behavior T W) :
+    hide f (interconnect B₁ B₂) ⊆
+      interconnect (hide f B₁) (hide f B₂) := by
+  rintro _ ⟨x, ⟨hx₁, hx₂⟩, rfl⟩
+  exact ⟨⟨x, hx₁, rfl⟩, ⟨x, hx₂, rfl⟩⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Explicit strictness witness: each component admits a different hidden Bool
+trajectory with the same visible projection. The components are individually
+viable, their interconnection is empty, but their visible projections have a
+nonempty interconnection. -/
+theorem hide_interconnect_strict_counterexample :
+    let f : Bool × Bool → Bool := Prod.fst
+    let x₀ : Trajectory Unit (Bool × Bool) := fun _ ↦ (false, false)
+    let x₁ : Trajectory Unit (Bool × Bool) := fun _ ↦ (false, true)
+    let B₀ : Behavior Unit (Bool × Bool) := {x₀}
+    let B₁ : Behavior Unit (Bool × Bool) := {x₁}
+    B₀.Nonempty ∧ B₁.Nonempty ∧ interconnect B₀ B₁ = ∅ ∧
+      hide f (interconnect B₀ B₁) ⊂
+        interconnect (hide f B₀) (hide f B₁) := by
+  dsimp
+  refine ⟨Set.singleton_nonempty _, Set.singleton_nonempty _, ?_⟩
+  have hEmpty :
+      interconnect ({fun _ : Unit ↦ (false, false)} :
+        Behavior Unit (Bool × Bool)) {fun _ : Unit ↦ (false, true)} = ∅ := by
+    apply Set.eq_empty_iff_forall_notMem.mpr
+    rintro z ⟨hz₀, hz₁⟩
+    rw [Set.mem_singleton_iff] at hz₀ hz₁
+    have hEq : (fun _ : Unit ↦ (false, false)) =
+        fun _ : Unit ↦ (false, true) := hz₀.symm.trans hz₁
+    have := congrFun hEq ()
+    simp at this
+  refine ⟨hEmpty, ?_⟩
+  refine Set.ssubset_iff_subset_ne.mpr
+    ⟨hide_interconnect_subset _ _ _, ?_⟩
+  intro hEq
+  have hVisible : (fun _ : Unit ↦ false) ∈
+      interconnect
+        (hide Prod.fst ({fun _ : Unit ↦ (false, false)} :
+          Behavior Unit (Bool × Bool)))
+        (hide Prod.fst ({fun _ : Unit ↦ (false, true)} :
+          Behavior Unit (Bool × Bool))) := by
+    exact ⟨⟨_, rfl, rfl⟩, ⟨_, rfl, rfl⟩⟩
+  have hImpossible : (fun _ : Unit ↦ false) ∈
+      hide Prod.fst
+        (interconnect ({fun _ : Unit ↦ (false, false)} :
+          Behavior Unit (Bool × Bool)) {fun _ : Unit ↦ (false, true)}) := by
+    rw [hEq]
+    exact hVisible
+  rw [hEmpty] at hImpossible
+  rcases hImpossible with ⟨_, hmem, _⟩
+  exact hmem
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Exact relabeling by an equivalence loses no behavior. -/
+theorem hide_equiv_symm {T : Type u} {W : Type v} {V : Type w}
+    (e : W ≃ V) (B : Behavior T W) :
+    hide e.symm (hide e B) = B := by
+  ext x
+  constructor
+  · rintro ⟨_, ⟨z, hz, rfl⟩, hzx⟩
+    have hzx&#x27; : z = x := by
+      simpa [mapTrajectory, Function.comp_def] using hzx
+    simpa [← hzx&#x27;] using hz
+  · intro hx
+    refine ⟨mapTrajectory e x, ⟨x, hx, rfl⟩, ?_⟩
+    funext t
+    simp [mapTrajectory, Function.comp_def]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A temporal safety predicate holds at every time on every admitted
+trajectory. -/
+def IsSafe {T : Type u} {W : Type v}
+    (B : Behavior T W) (Safe : W → Prop) : Prop :=
+  ∀ x ∈ B, ∀ t, Safe (x t)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A behavior is viable when it admits at least one trajectory. -/
+def IsViable {T : Type u} {W : Type v} (B : Behavior T W) : Prop :=
+  B.Nonempty
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Universal safety is vacuous on the empty behavior. -/
+theorem empty_behavior_safe {T : Type u} {W : Type v} {Safe : W → Prop} :
+    IsSafe (∅ : Behavior T W) Safe := by
+  simp [IsSafe]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- The empty behavior is not viable. -/
+theorem empty_behavior_not_viable {T : Type u} {W : Type v} :
+    ¬ IsViable (∅ : Behavior T W) := by
+  simp [IsViable]
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Refining a behavior preserves every universal safety property. -/
+theorem isSafe_mono {T : Type u} {W : Type v}
+    {B B&#x27; : Behavior T W} {Safe : W → Prop}
+    (hsub : B&#x27; ⊆ B) (h : IsSafe B Safe) : IsSafe B&#x27; Safe := by
+  intro x hx t
+  exact h x (hsub hx) t
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Direct-image hiding has an exact safety semantics: a visible predicate
+holds on every projected trajectory exactly when its pullback holds on every
+original trajectory. This says nothing about predicates on discarded signal
+coordinates. -/
+theorem isSafe_hide_iff {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B : Behavior T W) (SafeV : V → Prop) :
+    IsSafe (hide f B) SafeV ↔ IsSafe B (SafeV ∘ f) := by
+  constructor
+  · intro h x hx t
+    simpa [mapTrajectory, Function.comp_def] using
+      h (mapTrajectory f x) ⟨x, hx, rfl⟩ t
+  · rintro h _ ⟨x, hx, rfl⟩ t
+    simpa [mapTrajectory, Function.comp_def] using h x hx t
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Hiding preserves a safety property only when the signal map carries the
+declared internal safe set into the external one. -/
+theorem isSafe_hide {T : Type u} {W : Type v} {V : Type w}
+    {B : Behavior T W} {SafeW : W → Prop} {SafeV : V → Prop}
+    (f : W → V) (hB : IsSafe B SafeW)
+    (hmap : ∀ w, SafeW w → SafeV (f w)) :
+    IsSafe (hide f B) SafeV := by
+  rintro _ ⟨x, hx, rfl⟩ t
+  exact hmap (x t) (hB x hx t)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- A discrete trajectory follows `step` at every successor time. -/
+def IsRun {S : Type u} (step : S → S) (x : Trajectory ℕ S) : Prop :=
+  ∀ n, x (n + 1) = step (x n)
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- All runs whose initial state lies in `Init`. -/
+def generatedBehavior {S : Type u} (step : S → S) (Init : Set S) :
+    Behavior ℕ S :=
+  {x | x 0 ∈ Init ∧ IsRun step x}
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Forward invariance gives all-time safety for every generated run. -/
+theorem generatedBehavior_safe_of_invariant {S : Type u}
+    {step : S → S} {Init Safe : Set S}
+    (hInit : Init ⊆ Safe) (hInv : Set.MapsTo step Safe Safe) :
+    IsSafe (generatedBehavior step Init) Safe := by
+  rintro x ⟨hx₀, hrun⟩ n
+  induction n with
+  | zero =&gt; exact hInit hx₀
+  | succ n ih =&gt;
+      rw [hrun n]
+      exact hInv ih
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- For the behavior generated from every state in `Safe`, temporal safety is
+equivalent to one-step forward invariance. -/
+theorem generatedBehavior_safe_iff_invariant {S : Type u}
+    (step : S → S) (Safe : Set S) :
+    IsSafe (generatedBehavior step Safe) Safe ↔
+      Set.MapsTo step Safe Safe := by
+  constructor
+  · intro h s hs
+    let x : Trajectory ℕ S := fun n ↦ Nat.rec s (fun _ current ↦ step current) n
+    have hrun : IsRun step x := by
+      intro n
+      simp [x]
+    have hx : x ∈ generatedBehavior step Safe := by
+      exact ⟨by simpa [x] using hs, hrun⟩
+    have hs₁ := h x hx 1
+    change x 1 ∈ Safe at hs₁
+    simpa [x] using hs₁
+  · intro hInv
+    exact generatedBehavior_safe_of_invariant (by exact fun _ h ↦ h) hInv
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Restrict a local trajectory from `I` to a smaller time domain `J`. -/
+def restrict {T : Type u} {W : Type v} {I J : Set T}
+    (hJI : J ⊆ I) (x : I → W) : J → W :=
+  fun t ↦ x ⟨t.1, hJI t.2⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Two local trajectories agree wherever their time domains overlap. -/
+def Compatible {T : Type u} {W : Type v} {I J : Set T}
+    (x : I → W) (y : J → W) : Prop :=
+  ∀ (t : T) (htI : t ∈ I) (htJ : t ∈ J),
+    x ⟨t, htI⟩ = y ⟨t, htJ⟩
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Compatible functions on two time domains have a unique global function on
+their union with the prescribed restrictions. -/
+theorem existsUnique_glue {T : Type u} {W : Type v} {I J : Set T}
+    (x : I → W) (y : J → W) (hxy : Compatible x y) :
+    ∃! z : ↥(I ∪ J) → W,
+      restrict Set.subset_union_left z = x ∧
+      restrict Set.subset_union_right z = y := by
+  classical
+  let z : ↥(I ∪ J) → W := fun t ↦
+    if htI : (t : T) ∈ I then x ⟨t, htI⟩
+    else y ⟨t, t.property.resolve_left htI⟩
+  have hzI : restrict Set.subset_union_left z = x := by
+    funext t
+    simp [restrict, z]
+  have hzJ : restrict Set.subset_union_right z = y := by
+    funext t
+    by_cases htI : (t : T) ∈ I
+    · simpa [restrict, z, htI] using hxy t htI t.property
+    · simp [restrict, z, htI]
+  refine ⟨z, ⟨hzI, hzJ⟩, ?_⟩
+  intro z&#x27; hz&#x27;
+  funext t
+  by_cases htI : (t : T) ∈ I
+  · have h := congrFun hz&#x27;.1 (⟨t, htI⟩ : I)
+    simpa [restrict, z, htI] using h
+  · have htJ : (t : T) ∈ J := t.property.resolve_left htI
+    have h := congrFun hz&#x27;.2 (⟨t, htJ⟩ : J)
+    simpa [restrict, z, htI] using h
+
+-- LeanTest/HardProblems/Behavioral.lean
+/-- Raw compatible functions glue, but a nonempty declared set of admissible
+global trajectories need not contain that glue. Thus arbitrary local/global
+admissibility data do not acquire the sheaf property for free. -/
+theorem admissible_glue_counterexample :
+    let I : Set Bool := {false}
+    let J : Set Bool := {true}
+    let x : I → Bool := fun _ ↦ false
+    let y : J → Bool := fun _ ↦ true
+    let G : Set (↥(I ∪ J) → Bool) := {fun _ ↦ false}
+    Compatible x y ∧ G.Nonempty ∧
+      ¬ ∃ z ∈ G,
+        restrict Set.subset_union_left z = x ∧
+        restrict Set.subset_union_right z = y := by
+  dsimp
+  refine ⟨?_, Set.singleton_nonempty _, ?_⟩
+  · intro t htI htJ
+    rw [Set.mem_singleton_iff] at htI htJ
+    exact Bool.noConfusion (htI.symm.trans htJ)
+  · rintro ⟨z, hz, ⟨_, hzJ⟩⟩
+    subst z
+    have h := congrFun hzJ (⟨true, by simp⟩ : (↑({true} : Set Bool)))
+    simp [restrict] at h
+
+-- LeanTest/HardProblems/Representation.lean
 /-- Drive deterministic dynamics with a finite input word, applying its
 leftmost input first. -/
 def run {U X : Type*} (step : U → X → X) : List U → X → X
@@ -1345,7 +1649,7 @@ theorem barrier_relabel_eq {X : Type u} {Y : Type v}
   · refine le_iInf fun γ =&gt; ?_
     exact iInf_le_of_le (γ.unrelabel e)
       (le_of_eq (pathDepth_unrelabel e J γ))</code></pre></details>
-<p><strong>مرز.</strong> کشف یا محاسبهٔ هم‌ارزی رایگان نیست. قضیه دربارهٔ بازبرچسب‌گذاری دقیق و وارون‌پذیر است، نه انتزاع اتلافی. هزینه‌ها و قیدهایی که در ساختار منتقل‌شده حضور ندارند حفظ نمی‌شوند.</p>
+<p><strong>مرز.</strong> اشتراک، فضای سیگنال هم‌تراز را پیش‌فرض می‌گیرد. چسبانش در سطح تابع ثابت نمی‌کند که رفتارهای مجاز یک شیف می‌سازند. مثال متناهیِ شکست از ناحیه‌های مجزا استفاده می‌کند، پس فرض سازگاری‌اش به‌طور تهی‌صدق برقرار است، هرچند ردشدن چسبانش خام یکتا تهی‌صدق نیست. ایمنی همگانی می‌تواند برای رفتار تهی به‌طور تهی‌صدق برقرار باشد، پس زیست‌پذیری جداست. محمول صوری فقط قطعهٔ ایمنی در همهٔ زمان‌ها را پوشش می‌دهد، نه منطق زمانی به‌طور کلی؛ هیچ سایت، توپوس، منطق درونی، مدل هیبریدی یا الگوریتم وارسی صوری نشده است. کشف هم‌ارزی دقیق مختصاتی رایگان نیست و انتزاع اتلافی اثبات‌های انتقال بیشتری می‌خواهد.</p>
 <h3 id="ch7-exact-abstraction-and-path-lifting">انتزاع دقیق و بالابردن مسیر</h3>
 <p><strong>فرض‌ها.</strong> نگاشتی از سامانهٔ گذار عینی به سامانه‌ای انتزاعی دارای شبیه‌سازی پیشرو، بالابردن موضعی گام از هر نمایندهٔ عینی و حفظ و بازتاب هدف است.</p>
 <p><strong>نتیجه.</strong> مسیرهای عینی به مسیرهای انتزاعی نگاشت می‌شوند، مسیرهای انتزاعی از مبدأ عینی بیان‌شده بالا برده می‌شوند و دسترس‌پذیری هدف‌های متناظر هم‌ارز است. انتزاع‌های دقیق با هم ترکیب می‌شوند. مثالی نقض متناهی نشان می‌دهد شبیه‌سازی پیشرو بدون بالابردن، جهت معکوس را توجیه نمی‌کند. (بررسی‌شده با ماشین)</p>
@@ -1706,6 +2010,7 @@ theorem exists_strict_envelope_gap :
 <p>بحث مشاهده‌گر غیرخطی استدلالی مبتنی بر سامانهٔ مقایسه و مرتبط با مقاومت ورودی به حالت است. راجامانی مشاهده‌گرهای سامانه‌های غیرخطی لیپشیتس را بررسی می‌کند. آندریو و پرالی شرایط مشاهده‌گرهای غیرخطی کازانتزیس، کراواریس و لوئنبرگر را به دست می‌دهند. شیم و لیبرزون مقاومت مشاهده‌گر در برابر اغتشاش اندازه‌گیری را به معنایی شبیه ISS صورت‌بندی می‌کنند. رابطهٔ بازگشتی نرده‌ای کتاب از این نتایج طراحی مشاهده‌گر محدودتر است.</p>
 <p>تمایز مجموعه‌های باقیمانده میان سازگارسازی، آشکارسازی و جداسازی در تشخیص خطای مبتنی بر مدل استاندارد است. آستانهٔ \(2\rho\) از هندسهٔ قطعی گوی نرم به دست می‌آید و فقط شرط کافی جدایی در بدترین حالت است. پتن و چن آشکارسازی و جداسازی مقاوم خطا بر پایهٔ مشاهده‌گر را در چارچوبی گسترده‌تر بررسی می‌کنند.</p>
 <p>استدلال‌های حالت متناهی به سنت مای‌هیل و نرود تعلق دارند: تاریخچه‌هایی که از نظر رفتاری تمایزپذیرند به حالت‌هایی جدا نیاز دارند. شرایط انتزاع نسخه‌های ابتدایی و مسیری ایده‌های شبیه‌سازی و بالابردن در تفسیر انتزاعی و انتزاع حالت‌اند. قضیه‌های صوری آگاهانه از آن نظریه‌های عمومی کوچک‌ترند.</p>
+<p>رویکرد رفتاری ویلمس، سامانه را مسیرهای مجاز آن می‌داند و به نحوهٔ نمایش ورودی و خروجی یا فضای حالت امتیاز ویژه نمی‌دهد. پیمانهٔ Lean کتاب فقط هستهٔ مجموعه‌نظری را بررسی می‌کند: اشتراک، تصویر، ایمنی همگانی، ناوردایی گسسته و چسبانش دوتایی توابع. شولتس و اسپیواک نظریهٔ نوع زمانی بسیار غنی‌تری را در توپوسی از شیف‌ها می‌سازند. آن کار انگیزهٔ معناشناسی محلی اینجا را فراهم می‌کند؛ صورت‌بندی ابتدایی کتاب را به یک مدل توپوسی بدل نمی‌کند.</p>
 </section>
 <section class="chapter" id="glossary" aria-labelledby="glossary-h">
 <h2 id="glossary-h"><span class="chaplabel">پیوست</span>واژه‌نامه</h2>
@@ -1748,6 +2053,8 @@ theorem exists_strict_envelope_gap :
 <dd><span class="field">معنی:</span> رویه‌های منفعل و فعالی است که هنگام مقایسهٔ حالت‌ها یا مدل‌ها روی آن‌ها سور گذاشته می‌شود. هم‌ارزی مشاهداتی با این رده نمایه‌گذاری می‌شود. هم‌ارزی زیر آزمایش‌های کران‌دار و امکان‌پذیر الزاماً با هم‌ارزی زیر هر سیاست تابع‌گونه یکی نیست.</dd>
 <dt>ردهٔ مقایسه <span class="latin" lang="en" dir="ltr">(Comparison class)</span></dt>
 <dd><span class="field">معنی:</span> توصیف‌ها، ماشین‌ها، رابط‌ها یا تغییرهای مختصاتی است که ادعا باید در میان آن‌ها پایدار بماند. عینیت رابطه‌ای از ناوردایی روی رده‌ای اعلام‌شده می‌آید. تغییر رده پس از دیدن نتیجه، مقاومت را ثابت نمی‌کند.</dd>
+<dt>سامانهٔ رفتاری <span class="latin" lang="en" dir="ltr">(Behavioral system)</span></dt>
+<dd><span class="field">معنی:</span> سامانه‌ای است با دامنهٔ زمانی و فضای سیگنال اعلام‌شده و مجموعه‌ای از مسیرهای مجاز. معادله‌ها، متغیرهای حالت و بخش‌بندی ورودی و خروجی، نحوه‌های ارائهٔ آن رفتارند. اتصال متقابل و پنهان‌سازی به رابط‌های اعلام‌شده نیاز دارند و خانواده‌ای دلخواه از رفتارهای محلی لزوماً شرط چسبانش شیفی را برآورده نمی‌کند. وقتی رفتار مجاز تهی باشد، ایمنی همگانی ممکن است به‌طور تهی‌صدق برقرار باشد.</dd>
 <dt>شبیه‌سازی پیشرو <span class="latin" lang="en" dir="ltr">(Forward simulation)</span></dt>
 <dd><span class="field">معنی:</span> نگاشتی است که هر گام عینی را به گامی انتزاعی و در نتیجه هر مسیر عینی را به مسیری انتزاعی می‌فرستد. از انتزاع معتبر رفتار عینی پشتیبانی می‌کند. تضمین نمی‌کند گام یا برنامهٔ انتزاعی از یک نمایندهٔ عینی مشخص اجراشدنی باشد.</dd>
 <dt>ظرفیت بازخورد <span class="latin" lang="en" dir="ltr">(Feedback capacity)</span></dt>
@@ -1774,8 +2081,6 @@ theorem exists_strict_envelope_gap :
 <dd><span class="field">معنی:</span> مشاهده‌ها، ردهٔ آزمایش، حالت پیشین و محدودیت‌های کانال است که تعیین می‌کنند کدام تمایزها وارد بازنمایی شوند. محاسبه روی گزارش حاصل نمی‌تواند تمایزی را بازیابد که در این مرز غایب بوده است.</dd>
 <dt>مرز کنش <span class="latin" lang="en" dir="ltr">(Action boundary)</span></dt>
 <dd><span class="field">معنی:</span> مجموعهٔ اعلام‌شدهٔ تبدیل‌های اولیه، قیدها و اجازه‌های سیاست است که حالت‌ها از راه آن‌ها تغییر می‌کنند. استنتاج بهتر درون مرز کنش ثابت، تبدیل غایبی نمی‌سازد. افزودن عملگر مرز را عوض می‌کند، نه اینکه صرفاً کنشی قدیمی را سریع‌تر سازد.</dd>
-<dt>میان‌بر <span class="latin" lang="en" dir="ltr">(Shortcut)</span></dt>
-<dd><span class="field">معنی:</span> یالی افزوده‌شده است که نمایندهٔ مسیری در گراف گذار پایه است. پشتوانهٔ نقاط پایانی دسترس‌پذیری را حفظ می‌کند. مانع، ایمنی، هزینه و طول فقط هنگامی حفظ می‌شوند که شاهد پشتوانه همان ویژگی‌ها را گواهی کند.</dd>
 </dl>
 <h3>ن تا ی</h3>
 <dl class="glossary">
@@ -1806,6 +2111,8 @@ theorem exists_strict_envelope_gap :
 <li>Shannon, C. E. "Coding Theorems for a Discrete Source with a Fidelity Criterion." <em>IRE National Convention Record</em> 4, 1959.</li>
 <li>Shim, H., and Liberzon, D. "Nonlinear Observers Robust to Measurement Disturbances in an ISS Sense." <em>IEEE Transactions on Automatic Control</em> 61(1), 2016. <a href="https://doi.org/10.1109/TAC.2015.2423911">DOI</a>.</li>
 <li>Sontag, E. D., and Wang, Y. "Output-to-State Stability and Detectability of Nonlinear Systems." <em>Systems &amp; Control Letters</em> 29(5), 1997. <a href="https://doi.org/10.1016/S0167-6911%2897%2990013-X">DOI</a>.</li>
+<li>Schultz, P., and Spivak, D. I. <em>Temporal Type Theory: A Topos-Theoretic Approach to Systems and Behavior.</em> 2017. <a href="https://arxiv.org/abs/1710.10258">arXiv</a>.</li>
+<li>Willems, J. C. "The Behavioral Approach to Systems and Control." <em>Journal of the Society of Instrument and Control Engineers</em> 34(8), 1995. <a href="https://doi.org/10.11499/sicejl1962.34.8_603">DOI</a>.</li>
 </ul>
 </section>
 <section class="chapter" id="formal-companion" aria-labelledby="formal-companion-h">
