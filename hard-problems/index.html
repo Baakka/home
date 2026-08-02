@@ -257,20 +257,23 @@ details.lean>summary .runlean:hover{opacity:1}
 <ol class="toc-sub">
 <li><a href="#ch6-relational-realism" data-target="ch6-relational-realism"><span class="toc-text">Relational realism</span></a></li>
 <li><a href="#ch6-four-projections-not-four-substances" data-target="ch6-four-projections-not-four-substances"><span class="toc-text">Four projections, not four substances</span></a></li>
+<li><a href="#ch6-one-shape-behind-three-boundaries" data-target="ch6-one-shape-behind-three-boundaries"><span class="toc-text">One shape behind three boundaries</span></a></li>
 <li><a href="#ch6-no-view-from-nowhere" data-target="ch6-no-view-from-nowhere"><span class="toc-text">No view from nowhere</span></a></li>
 </ol>
 </li>
 <li>
 <a href="#ch7" data-target="ch7"><span class="toc-num">7</span><span class="toc-text">What is machine checked</span></a>
 <ol class="toc-sub">
-<li><a href="#ch7-information-budgets-and-scalar-reconstruction" data-target="ch7-information-budgets-and-scalar-reconstruction"><span class="toc-text">Information budgets and scalar reconstruction</span></a></li>
-<li><a href="#ch7-robust-error-recurrence" data-target="ch7-robust-error-recurrence"><span class="toc-text">Robust error recurrence</span></a></li>
+<li><a href="#ch7-deterministic-information-preorder-budgets-and-scalar-reconstruction" data-target="ch7-deterministic-information-preorder-budgets-and-scalar-reconstruction"><span class="toc-text">Deterministic information preorder, budgets, and scalar reconstruction</span></a></li>
+<li><a href="#ch7-robust-recurrence-switching-and-fault-margins" data-target="ch7-robust-recurrence-switching-and-fault-margins"><span class="toc-text">Robust recurrence, switching, and fault margins</span></a></li>
 <li><a href="#ch7-observational-equivalence-and-robust-action" data-target="ch7-observational-equivalence-and-robust-action"><span class="toc-text">Observational equivalence and robust action</span></a></li>
 <li><a href="#ch7-reachability-barriers-and-backed-shortcuts" data-target="ch7-reachability-barriers-and-backed-shortcuts"><span class="toc-text">Reachability, barriers, and backed shortcuts</span></a></li>
 <li><a href="#ch7-behavior-safety-and-coordinate-invariance" data-target="ch7-behavior-safety-and-coordinate-invariance"><span class="toc-text">Behavior, safety, and coordinate invariance</span></a></li>
 <li><a href="#ch7-exact-abstraction-and-path-lifting" data-target="ch7-exact-abstraction-and-path-lifting"><span class="toc-text">Exact abstraction and path lifting</span></a></li>
 <li><a href="#ch7-finite-memory-and-delayed-output" data-target="ch7-finite-memory-and-delayed-output"><span class="toc-text">Finite memory and delayed output</span></a></li>
 <li><a href="#ch7-finite-envelopes-and-context-indexed-region-orders" data-target="ch7-finite-envelopes-and-context-indexed-region-orders"><span class="toc-text">Finite envelopes and context-indexed region orders</span></a></li>
+<li><a href="#ch7-the-total-category-and-its-cartesian-lifts" data-target="ch7-the-total-category-and-its-cartesian-lifts"><span class="toc-text">The total category and its cartesian lifts</span></a></li>
+<li><a href="#ch7-boundaries-as-closure-operators" data-target="ch7-boundaries-as-closure-operators"><span class="toc-text">Boundaries as closure operators</span></a></li>
 </ol>
 </li>
 <li>
@@ -314,6 +317,7 @@ Z_t=q_t(H_0,Y_1,\ldots,Y_t).
 \]</div>
 <p>and an action can be chosen as \(A_t=\pi_t(H_0,Y_{&lt;t})\). The random tape does not initially supply information about the unknown, but it must remain in the history. Once it selects sensing actions, discarding it from a conditional mutual-information expression can make the expression false.</p>
 <p>This formulation separates representation quality from the amount of prose used to describe it. A large state can preserve irrelevant distinctions. A small sufficient statistic can preserve exactly those needed by one loss function. Compression is therefore task-relative: the same quotient can be exact for one decision and destructive for another.</p>
+<p>There is already a preorder here before probability enters. A deterministic experiment \(o_f\) refines \(o_c\) when \(o_c=k\circ o_f\) for some post-processing map \(k\). Equality of fine reports then forces equality of coarse reports, so the fine compatibility class is smaller. Consequently, every action robust under the coarse report remains robust under the fine one. Mutual factorization preserves the compatibility classes and every robust action set. A two-state quotient can make the inclusion strict by merging states that require different actions. Distinct relabelings can occupy the same position, so antisymmetry requires identifying mutually factoring reports. This deterministic refinement preorder is not the Shannon data-processing inequality used below.</p>
 <h3 id="ch1-feedback-cannot-invent-information">Feedback cannot invent information</h3>
 <p>Because \(Z_t\) is constructed from the initial state and the transcript, the data-processing inequality gives</p>
 <div class="mathblock">\[
@@ -483,12 +487,12 @@ r_t=y_t-\widehat h_t(\widehat x_t).
 <div class="mathblock">\[
 \lVert f\rVert-\rho&gt;\eta.
 \]</div>
-<p>At the smallest no-false-alarm threshold \(\eta=\rho\), the familiar condition is</p>
+<p>At the smallest threshold certified from this radius bound alone, \(\eta=\rho\), the familiar condition is</p>
 <div class="mathblock">\[
 \lVert f\rVert&gt;2\rho.
 \]</div>
 <p>This factor of two is a worst-case separation of uncertainty tubes. It can be conservative when healthy residuals occupy a smaller or asymmetric set, and it is not a probabilistic false-alarm guarantee unless a probability model is added.</p>
-<p><strong>Isolation</strong> asks which fault occurred. It requires the residual sets of candidate faults to be separated from one another, not merely from the healthy set. A fault may be detectable and still indistinguishable from another fault. The same geometry that governs task-relevant representation returns here: diagnosis is possible only when the observation interface preserves the distinctions the diagnosis is asked to make.</p>
+<p><strong>Isolation</strong> asks which fault occurred. It requires the residual sets of candidate faults to be separated from one another, not merely from the healthy set. A fault may be detectable and still indistinguishable from another fault. If candidate \(i\) produces residuals in a closed ball of radius \(\rho\) around a signature \(f_i\), then \(\lVert f_i-f_j\rVert&gt;2\rho\) makes the two candidate balls disjoint. This is a sufficient deterministic isolation margin, not an exhaustive diagnosis model. The same geometry that governs task-relevant representation returns here: diagnosis is possible only when the observation interface preserves the distinctions the diagnosis is asked to make.</p>
 <p>Robust reconstruction therefore has an informational boundary and a dynamical boundary. Observability determines which distinctions can enter the output, and information rate limits how quickly recoverable uncertainty can contract. Detectability asks whether the remaining ambiguity decays; stability margin limits how much mismatch and disturbance that contraction can tolerate. Neither boundary can be replaced by confidence reported from inside the maintained model.</p>
 </section>
 <section class="chapter" id="ch3" aria-labelledby="ch3-h">
@@ -581,6 +585,7 @@ x\leadsto_X G_X
 <h3 id="ch4-local-behavior-and-safety">Local behavior and safety</h3>
 <p>Let \(\mathcal B(U)\) denote trajectories admitted on a region \(U\) of time. Restriction to smaller regions gives presheaf-like data. Raw functions on two regions have a unique function-level glue when they agree on the overlap. For admitted local behaviors to form a sheaf, restrictions must remain admissible and compatible local members must have a unique admissible global glue. That property must be proved; arbitrary local and global constraints need not have it.</p>
 <p>On a chosen site of time regions, sheaves form a topos whose internal logic is generally intuitionistic. This can provide a common semantic language for continuous, discrete, and hybrid behavior after their signal types, time structure, and solution concepts have been defined. Temporal modalities need additional temporal structure. Neither the topos nor its internal language proves a safety assertion merely by expressing it.</p>
+<p>This logical geometry has named ancestors in the fibred order of difficulty. A tripos, in the sense of Hyland, Johnstone, and Pitts, is a fibred preorder with enough structure to build models of intuitionistic logic, which is a fibred order put to constructive work. And the subtopos classification theorem of Lawvere and Tierney shows that, inside a topos, the admissible closure operators on its logic correspond exactly to its subtoposes, the strongest classical instance of boundaries being classified by closure. The analogy is directional, not established: the closure operators of section 6 act on possibility sets, not on a subobject classifier, and no theorem here classifies difficulty classes by topologies of a fibred space. The resemblance locates the tradition; it does not borrow its proofs.</p>
 <p>For a state predicate \(C\), define</p>
 <div class="mathblock">\[
 \operatorname{Safe}(C)
@@ -669,7 +674,7 @@ f^*(A)=u_f^{-1}(A).
 <div class="mathblock">\[
 \mathcal R:\mathcal C^{\mathrm{op}}\longrightarrow\mathbf{Pos}.
 \]</div>
-<p>These are the data underlying a split fibred order. No Grothendieck total category or cartesian universal property is constructed here.</p>
+<p>These are the data underlying a split fibred order. The ambient data construct the Grothendieck total category over the contexts, and the chosen splitting supplies the cartesian lifts that satisfy its universal property.</p>
 <p>Preimage always preserves inclusion. It reflects inclusion whenever \(u_f\) is surjective:</p>
 <div class="mathblock">\[
 f^*(A)\subseteq f^*(B)
@@ -744,6 +749,11 @@ b^n\le r^k.
 </ul>
 <p>These are projections of an encounter, not an exhaustive ontology. A changed model can create several at once. A missing state variable can appear as prediction error, poor control, and inefficient search. Conversely, one intervention can trade one obstruction for another: a richer representation can reduce online computation while increasing acquisition and storage cost.</p>
 <p>Expressive limitation is the least amenable to a fixed formal test. For a declared finite vocabulary, definability can be studied through the partition it induces. But inventing a useful new predicate is not captured by adding the target predicate by fiat. The latter proves only that a language becomes more expressive when it is explicitly extended.</p>
+<h3 id="ch6-one-shape-behind-three-boundaries">One shape behind three boundaries</h3>
+<p>The information, action, and behavior boundaries share an algebraic shape, and it is checked rather than suggestive. Each induces a closure operator on a poset of possibilities: reachable-set formation for the action boundary, observational saturation for the information boundary, and hiding followed by pullback for the behavior boundary. Extensivity, monotonicity, and idempotence hold in all three cases, in the standard sense of the order-theoretic literature rather than a private one.</p>
+<p>Idempotence is the content of several results that earlier chapters proved separately. A transformation that is already pointwise reachable adds nothing when adjoined as a primitive. A statistic computed from an existing report separates no additional states. Both say the closure of a closure is the closure. In the other direction, a genuinely new primitive can strictly enlarge the closure, and a finer experiment never enlarges a saturation, so extension and refinement act on the closure itself rather than on effort inside it.</p>
+<p>The unification has proved limits, and they carry information. Hiding preserves interconnection only up to a strict inclusion, so the behavioral closure is not a lattice homomorphism, and reasoning that silently commutes the two operations is unsound. And a closure operator given fibrewise need not commute with reindexing between contexts: the transport of a closure can differ from the closure of the transport, so a verdict computed in one context need not be the verdict of the transported problem. That failure is the closure-operator face of the earlier finding that realized regions need preimage closure before they reindex. What transports is the shape of the operator, not its verdicts.</p>
+<p>This shape has classical ancestors, and the resemblance is precedent rather than authority. Lawvere and Tierney classified the subtoposes of a topos by exactly the closure operators on its subobject structure that respect the ambient logic, so "which boundaries can be drawn" became an order-theoretic question there too. Tripos theory builds models of logic from indexed preorders with structure, a fibred order put to constructive work. The companion checks none of that machinery; the citations locate the pattern, not the proofs.</p>
 <h3 id="ch6-no-view-from-nowhere">No view from nowhere</h3>
 <p>There is no model-independent scalar difficulty of a bare problem waiting to be measured before a task and encounter are specified. A scalar becomes legitimate after a comparison class and scalarization are fixed. What can be measured are information rates, error tubes, reachable sets, barrier depths, proof lengths, circuit sizes, query counts, approximation losses, and the tradeoffs among them.</p>
 <p>Nor does the relational view imply that every obstacle yields to a clever representation. Data processing forbids a representation from inventing evidence. Robustness margins bound tolerated mismatch. Reachability forbids inference from becoming action. Complexity lower bounds survive broad classes of algorithms. A more illuminating map can change search without changing the terrain it faithfully represents.</p>
@@ -770,10 +780,153 @@ f^*(A)=u_f^{-1}(A),
 <section class="chapter" id="ch7" aria-labelledby="ch7-h">
 <h2 id="ch7-h"><span class="chaplabel">Chapter 7</span>What is machine checked</h2>
 <p>The Lean companion proves consequences of explicit finite, algebraic, and order-theoretic definitions. It does not contain a theorem called difficulty. The cards below state the hypotheses, conclusion, and boundary of each checked fragment. This avoids a misleading transfer from kernel verification to model adequacy. A theorem can be valid while its hypotheses fail to describe a physical observer, an admissible experiment, or the intended cost.</p>
-<h3 id="ch7-information-budgets-and-scalar-reconstruction">Information budgets and scalar reconstruction</h3>
-<p><strong>Hypotheses.</strong> A real-valued accumulated quantity starts below \(I_0\), grows by at most \(C\) per natural-number round, and has reached a required level \(R_*\) by round \(n\). Separately, a positive scalar prior variance \(P_0\) and positive measurement variance \(R\) are inserted into the algebraic posterior formula \(P_n=(P_0^{-1}+nR^{-1})^{-1}\).</p>
-<p><strong>Conclusion.</strong> The accumulated quantity is at most \(I_0+nC\). For \(C&gt;0\), the natural ceiling of \((R_*-I_0)/C\) is at most \(n\). If the scalar posterior variance is at most a positive \(D\), then \(R(D^{-1}-P_0^{-1})\le n\), and this lower bound is positive when \(D&lt;P_0\). (machine-checked)</p>
-<details class="lean"><summary>Lean proof (FeedbackBounds.lean, InformationBudget.lean): HardProblems.InformationBudget.accumulated_le_initial_add_rounds_mul, HardProblems.InformationBudget.required_excess_le_rounds_mul, HardProblems.InformationBudget.required_excess_div_capacity_le_rounds, HardProblems.InformationBudget.required_rounds_ceiling_le, HardProblems.ScalarGaussian.posteriorVariance, HardProblems.ScalarGaussian.posteriorVariance_pos, HardProblems.ScalarGaussian.target_accuracy_requires_observations, HardProblems.ScalarGaussian.target_accuracy_nontrivial_bound<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-information-budgets-and-scalar-reconstruction-informationbudget.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-information-budgets-and-scalar-reconstruction-feedbackbounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/InformationBudget.lean
+<h3 id="ch7-deterministic-information-preorder-budgets-and-scalar-reconstruction">Deterministic information preorder, budgets, and scalar reconstruction</h3>
+<p><strong>Hypotheses.</strong> A deterministic coarse report is obtained from a fine report by a post-processing map, and acceptable actions are declared state by state. Separately, a real-valued accumulated quantity starts below \(I_0\), grows by at most \(C\) per natural-number round, and has reached a required level \(R_*\) by round \(n\). A positive scalar prior variance \(P_0\) and positive measurement variance \(R\) are inserted into the algebraic posterior formula \(P_n=(P_0^{-1}+nR^{-1})^{-1}\).</p>
+<p><strong>Conclusion.</strong> Deterministic refinement is reflexive and transitive. Equality of fine reports forces equality of coarse reports, and every action robust for the coarse compatibility class remains robust for the fine class. Mutual factorization preserves the induced classes and robust action sets. An explicit two-state quotient makes the robust-action inclusion strict. More generally, any deterministic decision rule based on a statistic that merges two states with disjoint acceptable sets fails at one of them. The accumulated quantity is at most \(I_0+nC\), and for \(C&gt;0\) the natural ceiling of \((R_*-I_0)/C\) is at most \(n\). If the scalar posterior variance is at most a positive \(D\), then \(R(D^{-1}-P_0^{-1})\le n\), with a positive lower bound when \(D&lt;P_0\). (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (FeedbackBounds.lean, InformationBudget.lean, InformationOrder.lean, SystemsTheory.lean): HardProblems.InformationOrder.Indist, HardProblems.InformationOrder.indist_equivalence, HardProblems.InformationOrder.ExperimentRefines, HardProblems.InformationOrder.experimentRefines_refl, HardProblems.InformationOrder.experimentRefines_trans, HardProblems.InformationOrder.ExperimentRefines.indist, HardProblems.InformationOrder.RobustActions, HardProblems.InformationOrder.ExperimentRefines.robustActions_mono, HardProblems.InformationOrder.indist_iff_of_mutual_refinement, HardProblems.InformationOrder.robustActions_eq_of_mutual_refinement, HardProblems.InformationOrder.quotient_strict_decision_loss, HardProblems.statistic_based_rule_fails&#x27;, HardProblems.InformationBudget.accumulated_le_initial_add_rounds_mul, HardProblems.InformationBudget.required_excess_le_rounds_mul, HardProblems.InformationBudget.required_excess_div_capacity_le_rounds, HardProblems.InformationBudget.required_rounds_ceiling_le, HardProblems.ScalarGaussian.posteriorVariance, HardProblems.ScalarGaussian.posteriorVariance_pos, HardProblems.ScalarGaussian.target_accuracy_requires_observations, HardProblems.ScalarGaussian.target_accuracy_nontrivial_bound<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-informationorder.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-systemstheory.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-informationbudget.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-feedbackbounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/InformationOrder.lean
+/-- States are indistinguishable under an observation map when they produce
+the same report. -/
+def Indist {S : Type u} {O : Type v} (observe : S → O) (x y : S) : Prop :=
+  observe x = observe y
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Equality of reports induces an equivalence relation on states. -/
+theorem indist_equivalence {S : Type u} {O : Type v} (observe : S → O) :
+    Equivalence (Indist observe) where
+  refl _ := rfl
+  symm h := h.symm
+  trans hxy hyz := hxy.trans hyz
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- `fine` refines `coarse` when the coarse report is obtained by deterministic
+post-processing of the fine report. This orients the existing
+`HardProblems.FactorsThrough` relation as an information preorder; it does not
+introduce a second notion of factorization. -/
+def ExperimentRefines {S : Type u} {F : Type v} {C : Type w}
+    (fine : S → F) (coarse : S → C) : Prop :=
+  FactorsThrough coarse fine
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Every experiment refines itself. -/
+theorem experimentRefines_refl {S : Type u} {O : Type v}
+    (observe : S → O) : ExperimentRefines observe observe := by
+  exact ⟨id, by funext x; rfl⟩
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Deterministic experiment refinement is transitive. -/
+theorem experimentRefines_trans {S : Type u} {A : Type v} {B : Type w}
+    {C : Type z} {first : S → A} {second : S → B} {third : S → C}
+    (h₁ : ExperimentRefines first second)
+    (h₂ : ExperimentRefines second third) :
+    ExperimentRefines first third := by
+  rcases h₁ with ⟨post₁, rfl⟩
+  rcases h₂ with ⟨post₂, rfl⟩
+  exact ⟨post₂ ∘ post₁, by funext x; rfl⟩
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Refinement reverses inclusion of indistinguishability classes: equality of
+fine reports forces equality of coarse reports. -/
+theorem ExperimentRefines.indist {S : Type u} {F : Type v} {C : Type w}
+    {fine : S → F} {coarse : S → C}
+    (h : ExperimentRefines fine coarse) {x y : S}
+    (hxy : Indist fine x y) : Indist coarse x y := by
+  exact (show FactorsThrough coarse fine from h).eq_of_eq hxy
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Actions acceptable at every state compatible with the current report.
+The acceptable-action predicate is part of the task, rather than part of the
+observation alone. -/
+def RobustActions {S : Type u} {O : Type v} {A : Type w}
+    (observe : S → O) (Acceptable : S → A → Prop) (x : S) : Set A :=
+  {a | ∀ y, Indist observe x y → Acceptable y a}
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- A finer experiment weakly enlarges the set of robust acceptable actions.
+The result is task-relevant but deterministic: it compares compatibility
+classes, not probabilities or average information. -/
+theorem ExperimentRefines.robustActions_mono
+    {S : Type u} {F : Type v} {C : Type w} {A : Type z}
+    {fine : S → F} {coarse : S → C}
+    (h : ExperimentRefines fine coarse) (Acceptable : S → A → Prop) (x : S) :
+    RobustActions coarse Acceptable x ⊆ RobustActions fine Acceptable x := by
+  intro a ha y hxy
+  exact ha y (h.indist hxy)
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Mutual deterministic factorization gives exactly the same induced
+indistinguishability relation. The report types and report values themselves
+need not be equal. -/
+theorem indist_iff_of_mutual_refinement
+    {S : Type u} {O₁ : Type v} {O₂ : Type w}
+    {first : S → O₁} {second : S → O₂}
+    (h₁₂ : ExperimentRefines first second)
+    (h₂₁ : ExperimentRefines second first) (x y : S) :
+    Indist first x y ↔ Indist second x y :=
+  ⟨h₁₂.indist, h₂₁.indist⟩
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- Mutual deterministic factorization preserves every robust action set for
+every task predicate. -/
+theorem robustActions_eq_of_mutual_refinement
+    {S : Type u} {O₁ : Type v} {O₂ : Type w} {A : Type z}
+    {first : S → O₁} {second : S → O₂}
+    (h₁₂ : ExperimentRefines first second)
+    (h₂₁ : ExperimentRefines second first)
+    (Acceptable : S → A → Prop) (x : S) :
+    RobustActions first Acceptable x = RobustActions second Acceptable x := by
+  apply Set.Subset.antisymm
+  · exact h₂₁.robustActions_mono Acceptable x
+  · exact h₁₂.robustActions_mono Acceptable x
+
+-- LeanTest/HardProblems/InformationOrder.lean
+/-- A strict finite decision loss. The identity experiment separates the two
+Bool states, while the quotient to `Unit` merges them. An action is acceptable
+exactly when it names the true state. At state `false`, the fine report permits
+the robust action `false`; the coarse report permits no robust action. -/
+theorem quotient_strict_decision_loss :
+    let fine : Bool → Bool := id
+    let coarse : Bool → Unit := fun _ ↦ ()
+    let Acceptable : Bool → Bool → Prop := fun state action ↦ state = action
+    ExperimentRefines fine coarse ∧
+      ¬ Indist fine false true ∧ Indist coarse false true ∧
+      RobustActions coarse Acceptable false = ∅ ∧
+      RobustActions fine Acceptable false = {false} ∧
+      RobustActions coarse Acceptable false ⊂
+        RobustActions fine Acceptable false := by
+  dsimp
+  refine ⟨⟨fun _ ↦ (), rfl⟩, by simp [Indist], by simp [Indist], ?_⟩
+  have hCoarse : RobustActions (fun _ : Bool ↦ ())
+      (fun state action : Bool ↦ state = action) false = ∅ := by
+    ext action
+    constructor
+    · intro ha
+      have hFalse := ha false (by rfl)
+      have hTrue := ha true (by rfl)
+      simp only [Set.mem_empty_iff_false]
+      cases action &lt;;&gt; simp_all
+    · simp
+  have hFine : RobustActions id
+      (fun state action : Bool ↦ state = action) false = {false} := by
+    ext action
+    simp [RobustActions, Indist]
+  refine ⟨hCoarse, hFine, ?_⟩
+  rw [hCoarse, hFine]
+  exact Set.empty_ssubset.mpr (Set.singleton_nonempty false)
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- The statistic-factorization obstruction with an arbitrary statistic
+codomain; nothing in the argument uses the real numbers. -/
+theorem statistic_based_rule_fails&#x27; {Y : Type*} {m : S → Y} (Astar : S → Set A)
+    {s s&#x27; : S} (hm : m s = m s&#x27;) (hdisj : Disjoint (Astar s) (Astar s&#x27;))
+    (α : Y → A) :
+    α (m s) ∉ Astar s ∨ α (m s&#x27;) ∉ Astar s&#x27; := by
+  by_contra hc
+  push Not at hc
+  obtain ⟨h1, h2⟩ := hc
+  rw [hm] at h1
+  exact Set.disjoint_left.mp hdisj h1 h2
+
+-- LeanTest/HardProblems/InformationBudget.lean
 /-- An accumulated real-valued quantity with initial upper bound `I₀` and
 one-round increment bounded above by `C` is at most `I₀ + n * C` after `n`
 rounds.
@@ -898,11 +1051,11 @@ theorem target_accuracy_nontrivial_bound {P₀ R D : ℝ} {n : ℕ}
   constructor
   · exact mul_pos hR (sub_pos.mpr (one_div_lt_one_div_of_lt hD hDlt))
   · exact target_accuracy_requires_observations hP₀ hR hD hacc</code></pre></details>
-<p><strong>Boundary.</strong> The first theorem is scalar arithmetic. It does not define mutual information, prove data processing, or derive a rate-distortion premise. The second packages the scalar Gaussian posterior algebra; it does not formalize a probability space, independence, Kalman optimality, process noise, or observability.</p>
-<h3 id="ch7-robust-error-recurrence">Robust error recurrence</h3>
-<p><strong>Hypotheses.</strong> A real sequence obeys \(e_{n+1}\le(q_0+\mu)e_n+d\), with nonnegative \(q_0\) and \(\mu\), and \(q_0+\mu&lt;1\).</p>
-<p><strong>Conclusion.</strong> The mismatch satisfies \(\mu&lt;1-q_0\), and every finite-time error obeys the geometric transient plus disturbance-tube upper bound. A separate theorem proves forward invariance of the radius \(d/(1-q)\) when \(d\ge0\) and the initial error is already inside it. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (FeedbackBounds.lean): HardProblems.RobustFeedback.error_le_geometric_sum, HardProblems.RobustFeedback.error_le_tube_transient, HardProblems.RobustFeedback.error_le_tube, HardProblems.RobustFeedback.mismatch_le_margin_and_error_bound<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F02-robust-error-recurrence.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/FeedbackBounds.lean
+<p><strong>Boundary.</strong> The refinement results concern deterministic partitions, not entropy, mutual information, statistical sufficiency, or stochastic channels. The information-budget result is scalar arithmetic: it does not prove data processing or a rate-distortion premise. The posterior result packages scalar Gaussian algebra; it does not formalize a probability space, independence, Kalman optimality, process noise, or observability.</p>
+<h3 id="ch7-robust-recurrence-switching-and-fault-margins">Robust recurrence, switching, and fault margins</h3>
+<p><strong>Hypotheses.</strong> A real sequence obeys \(e_{n+1}\le(q_0+\mu)e_n+d\), with nonnegative \(q_0\), \(\mu\), and \(d\), and \(q_0+\mu&lt;1\). In a second scalar recurrence, each nonnegative error is multiplied by a possibly changing factor between zero and a common \(q_{\max}&lt;1\), with the same additive bound. Separately, a faulted residual is the sum \(r^f=r^h+f\) of a healthy residual with norm at most \(\rho\) and an additive fault signature. Alarms use a strict threshold \(\eta\), and candidate signatures are centers of closed norm balls with nonnegative radius \(\rho\).</p>
+<p><strong>Conclusion.</strong> The mismatch satisfies \(\mu&lt;1-q_0\), and every finite-time error obeys the geometric transient plus disturbance-tube upper bound. A separate theorem proves forward invariance of the radius \(d/(1-q)\) when \(d\ge0\) and the initial error is already inside it. Under arbitrary changes of the scalar factor, the common upper factor gives the corresponding finite geometric sum and, when it is strictly below one, the same closed-form tube transient. A threshold at least \(\rho\) raises no alarm on any admitted healthy residual; a fault norm greater than \(\eta+\rho\) guarantees an alarm, giving the \(2\rho\) condition at \(\eta=\rho\). Each admitted additive faulted residual lies in the closed ball centered at its fault signature. Candidate balls whose centers are more than \(2\rho\) apart are disjoint. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (FaultMargins.lean, FeedbackBounds.lean): HardProblems.RobustFeedback.error_le_geometric_sum, HardProblems.RobustFeedback.error_le_tube_transient, HardProblems.RobustFeedback.error_le_tube, HardProblems.RobustFeedback.mismatch_le_margin_and_error_bound, HardProblems.FaultMargins.Alarm, HardProblems.FaultMargins.healthy_residual_not_alarm, HardProblems.FaultMargins.alarm_of_fault_norm_gt_threshold_add_radius, HardProblems.FaultMargins.alarm_of_fault_norm_gt_two_mul_radius, HardProblems.FaultMargins.faulted_residual_mem_closedBall, HardProblems.FaultMargins.closedBall_disjoint_of_norm_sub_gt_two_mul_radius, HardProblems.UniformSwitching.error_le_uniform_geometric_sum, HardProblems.UniformSwitching.error_le_uniform_tube_transient<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F02-robust-recurrence-switching-and-fault-margins-feedbackbounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F02-robust-recurrence-switching-and-fault-margins-faultmargins.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/FeedbackBounds.lean
 /-- Iterating a scalar robust contraction gives a geometric finite-time bound.
 The error need not be generated by any particular observer, but nonnegativity
 of `q` is needed to propagate the upper inequality. -/
@@ -974,12 +1127,185 @@ theorem mismatch_le_margin_and_error_bound (e : ℕ → ℝ) (q₀ μ d : ℝ)
   · linarith
   · have hq : 0 ≤ q₀ + μ := add_nonneg hq₀ hμ
     simpa [sub_sub] using
-      error_le_tube_transient e (q₀ + μ) d hq hmargin hstep n</code></pre></details>
-<p><strong>Boundary.</strong> The theorem does not construct a nonlinear observer or prove its one-step inequality. It does not supply a universal mismatch norm. Crossing the sufficient margin removes this certificate; it does not prove divergence. The tube is an upper guarantee, not a lower accuracy bound or an optimality claim.</p>
+      error_le_tube_transient e (q₀ + μ) d hq hmargin hstep n
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- A strict deterministic threshold test on a residual. Equality with the
+threshold does not raise an alarm. -/
+def Alarm (η : ℝ) (residual : E) : Prop :=
+  η &lt; ‖residual‖
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- A residual certified inside the healthy radius cannot cross a threshold
+that is at least that radius. This is a pointwise deterministic statement, not
+a probabilistic false-alarm guarantee. -/
+theorem healthy_residual_not_alarm {healthy : E} {ρ η : ℝ}
+    (hhealthy : ‖healthy‖ ≤ ρ) (hthreshold : ρ ≤ η) :
+    ¬ Alarm η healthy := by
+  exact not_lt_of_ge (hhealthy.trans hthreshold)
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- Reverse-triangle geometry for an additive fault: if the fault norm exceeds
+the threshold plus the healthy-radius allowance, every admitted healthy
+residual forces an alarm. The condition is sufficient, not necessary. -/
+theorem alarm_of_fault_norm_gt_threshold_add_radius
+    {healthy fault : E} {ρ η : ℝ}
+    (hhealthy : ‖healthy‖ ≤ ρ) (hfault : η + ρ &lt; ‖fault‖) :
+    Alarm η (healthy + fault) := by
+  have hreverse : ‖fault‖ ≤ ‖healthy + fault‖ + ‖healthy‖ := by
+    calc
+      ‖fault‖ = ‖(healthy + fault) - healthy‖ := by
+        congr 1
+        abel
+      _ ≤ ‖healthy + fault‖ + ‖healthy‖ := norm_sub_le _ _
+  unfold Alarm
+  linarith
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- At the smallest threshold certified from the declared healthy-radius bound
+alone, `η = ρ`, the familiar separation condition is
+`2 * ρ &lt; ‖fault‖`. It still asserts only guaranteed detection under that
+deterministic radius. -/
+theorem alarm_of_fault_norm_gt_two_mul_radius
+    {healthy fault : E} {ρ : ℝ}
+    (hhealthy : ‖healthy‖ ≤ ρ) (hfault : 2 * ρ &lt; ‖fault‖) :
+    Alarm ρ (healthy + fault) := by
+  apply alarm_of_fault_norm_gt_threshold_add_radius hhealthy
+  simpa [two_mul] using hfault
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- An additive faulted residual lies in the closed residual ball centered at
+its fault signature whenever the healthy component lies inside the declared
+radius. -/
+theorem faulted_residual_mem_closedBall {healthy fault : E} {ρ : ℝ}
+    (hhealthy : ‖healthy‖ ≤ ρ) :
+    healthy + fault ∈ Metric.closedBall fault ρ := by
+  rw [Metric.mem_closedBall, dist_eq_norm]
+  simpa [add_sub_cancel_right]
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- Closed candidate residual balls of common radius are disjoint when their
+fault centers are separated by more than twice that radius. This supplies a
+deterministic isolation margin for these two declared candidates; it does not
+show that the candidate list is exhaustive or statistically identifiable.
+The explicit nonnegativity hypothesis rules out vacuous negative-radius
+balls. -/
+theorem closedBall_disjoint_of_norm_sub_gt_two_mul_radius
+    {fault₁ fault₂ : E} {ρ : ℝ}
+    (hρ : 0 ≤ ρ) (hseparated : 2 * ρ &lt; ‖fault₁ - fault₂‖) :
+    Disjoint (Metric.closedBall fault₁ ρ) (Metric.closedBall fault₂ ρ) := by
+  rw [Set.disjoint_left]
+  intro residual hmem₁ hmem₂
+  have h₁ : dist fault₁ residual ≤ ρ := by
+    simpa [dist_comm] using (Metric.mem_closedBall.mp hmem₁)
+  have h₂ : dist residual fault₂ ≤ ρ :=
+    Metric.mem_closedBall.mp hmem₂
+  have htriangle : dist fault₁ fault₂ ≤ dist fault₁ residual + dist residual fault₂ :=
+    dist_triangle _ _ _
+  have h₁max : dist fault₁ residual ≤ max ρ 0 :=
+    h₁.trans (le_max_left _ _)
+  have h₂max : dist residual fault₂ ≤ max ρ 0 :=
+    h₂.trans (le_max_left _ _)
+  have hcentersMax : ‖fault₁ - fault₂‖ ≤ 2 * max ρ 0 := by
+    rw [← dist_eq_norm]
+    linarith
+  have hcenters : ‖fault₁ - fault₂‖ ≤ 2 * ρ := by
+    simpa [max_eq_left hρ] using hcentersMax
+  linarith
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- A scalar recurrence may switch its nonnegative contraction factor at every
+step and still obey the constant geometric bound for a declared uniform upper
+factor. Nonnegativity of the error is what permits replacing each active factor
+by the uniform upper bound.
+
+This extends the constant-factor recurrence in `RobustFeedback`; it does not
+establish that a switched observer or plant satisfies the scalar hypotheses. -/
+theorem error_le_uniform_geometric_sum
+    (e q : ℕ → ℝ) (qMax d : ℝ)
+    (hqMax : 0 ≤ qMax)
+    (hq : ∀ n, 0 ≤ q n ∧ q n ≤ qMax)
+    (he : ∀ n, 0 ≤ e n)
+    (hstep : ∀ n, e (n + 1) ≤ q n * e n + d)
+    (n : ℕ) :
+    e n ≤ qMax ^ n * e 0 + d * ∑ k ∈ Finset.range n, qMax ^ k := by
+  apply RobustFeedback.error_le_geometric_sum e qMax d hqMax
+  intro k
+  calc
+    e (k + 1) ≤ q k * e k + d := hstep k
+    _ ≤ qMax * e k + d :=
+      add_le_add (mul_le_mul_of_nonneg_right (hq k).2 (he k)) le_rfl
+
+-- LeanTest/HardProblems/FaultMargins.lean
+/-- Under a strict uniform contraction bound, arbitrary switching obeys the
+same closed-form disturbance-tube transient as the constant-factor recurrence.
+The theorem gives an upper certificate under uniform scalar hypotheses; it
+does not establish those hypotheses for a particular switched system. -/
+theorem error_le_uniform_tube_transient
+    (e q : ℕ → ℝ) (qMax d : ℝ)
+    (hqMax0 : 0 ≤ qMax) (hqMax1 : qMax &lt; 1)
+    (hq : ∀ n, 0 ≤ q n ∧ q n ≤ qMax)
+    (he : ∀ n, 0 ≤ e n)
+    (hstep : ∀ n, e (n + 1) ≤ q n * e n + d)
+    (n : ℕ) :
+    e n ≤ qMax ^ n * (e 0 - d / (1 - qMax)) + d / (1 - qMax) := by
+  apply RobustFeedback.error_le_tube_transient e qMax d hqMax0 hqMax1
+  intro k
+  calc
+    e (k + 1) ≤ q k * e k + d := hstep k
+    _ ≤ qMax * e k + d :=
+      add_le_add (mul_le_mul_of_nonneg_right (hq k).2 (he k)) le_rfl</code></pre></details>
+<p><strong>Boundary.</strong> These are scalar comparison theorems and deterministic norm geometry. They do not construct a nonlinear observer, establish its one-step inequality, or supply a common Lyapunov metric for a switched plant. They do not prove probabilistic false-alarm rates, necessary detection limits, completeness of a fault catalogue, or a diagnosis algorithm. Crossing a sufficient margin removes the certificate; it does not prove divergence. The tube is an upper guarantee, not a lower accuracy bound or an optimality claim.</p>
 <h3 id="ch7-observational-equivalence-and-robust-action">Observational equivalence and robust action</h3>
 <p><strong>Hypotheses.</strong> A partially observed stochastic system has transition and observation kernels. Policies map finite observation histories to action distributions. Two initial states are equivalent when every such policy and finite horizon induce the same law of observation histories. Each state has a set of acceptable actions. Separately, one trajectory estimate in a pseudometric state space converges to each of two state trajectories.</p>
-<p><strong>Conclusion.</strong> Observational equivalence is an equivalence relation. The robustly acceptable actions at a state are the intersection of acceptable sets over its equivalence class. Robust action is infeasible exactly when that total intersection is empty; a disjoint pair is a sufficient witness. If one estimate converges to both state trajectories, their mutual distance converges to zero. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (Observability.lean): HardProblems.ObsEquiv, HardProblems.obsEquiv_equivalence, HardProblems.common_estimate_forces_pairwise_convergence, HardProblems.DecisionCritical, HardProblems.RobustAcceptable, HardProblems.robustSet_eq_iInter, HardProblems.RobustlyInfeasible, HardProblems.robustlyInfeasible_iff_iInter_eq_empty, HardProblems.DecisionCritical.no_robust_action<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F03-observational-equivalence-and-robust-action.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Observability.lean
+<p><strong>Conclusion.</strong> Observational equivalence is an equivalence relation. The robustly acceptable actions at a state are the intersection of acceptable sets over its equivalence class. Robust action is infeasible exactly when that total intersection is empty; a disjoint pair is a sufficient witness. If one estimate converges to both state trajectories, their mutual distance converges to zero. A constant-action experiment is a special case of an adaptive probe, and an explicit pair of Boolean models agrees under one passive action at every horizon but is separated by an admitted probe. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (Observability.lean, SystemsTheory.lean): HardProblems.PassivelyDistinguishable, HardProblems.ProbeDistinguishable, HardProblems.passively_imp_probe, HardProblems.exists_probe_only_distinguishable, HardProblems.ObsEquiv, HardProblems.obsEquiv_equivalence, HardProblems.common_estimate_forces_pairwise_convergence, HardProblems.DecisionCritical, HardProblems.RobustAcceptable, HardProblems.robustSet_eq_iInter, HardProblems.RobustlyInfeasible, HardProblems.robustlyInfeasible_iff_iInter_eq_empty, HardProblems.DecisionCritical.no_robust_action<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F03-observational-equivalence-and-robust-action-systemstheory.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F03-observational-equivalence-and-robust-action-observability.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/SystemsTheory.lean
+/-- Two models are distinguishable from `s` under the constant action `a₀`
+when their observation-history laws differ at some horizon. The type does not
+assert that `a₀` is inert; that interpretation is supplied by an application. -/
+def PassivelyDistinguishable (M₁ M₂ : POSystem S A O) (a₀ : A) (s : S) : Prop :=
+  ∃ n, obsProcess M₁ (fun _ =&gt; PMF.pure a₀) n s [] ≠
+        obsProcess M₂ (fun _ =&gt; PMF.pure a₀) n s []
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- Two models are probe distinguishable from `s` when some policy of the
+declared function type separates their observation-history laws. -/
+def ProbeDistinguishable (M₁ M₂ : POSystem S A O) (s : S) : Prop :=
+  ∃ (π : List O → PMF A) (n : ℕ),
+    obsProcess M₁ π n s [] ≠ obsProcess M₂ π n s []
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- A constant-action policy is a special case of an observation-dependent
+policy. -/
+theorem passively_imp_probe {M₁ M₂ : POSystem S A O} {a₀ : A} {s : S}
+    (h : PassivelyDistinguishable M₁ M₂ a₀ s) : ProbeDistinguishable M₁ M₂ s :=
+  let ⟨n, hn⟩ := h
+  ⟨fun _ =&gt; PMF.pure a₀, n, hn⟩
+
+-- LeanTest/HardProblems/SystemsTheory.lean
+/-- There are two Boolean models whose laws agree under the constant action
+`false` at every horizon but differ under the constant action `true`. In these
+witness models, `false` is inert and `true` changes one model only. -/
+theorem exists_probe_only_distinguishable :
+    ∃ (M₁ M₂ : POSystem Bool Bool Bool) (s : Bool),
+      ¬ PassivelyDistinguishable M₁ M₂ false s ∧ ProbeDistinguishable M₁ M₂ s := by
+  refine ⟨flipModel, inertModel, false, ?_, ?_⟩
+  · rintro ⟨n, hn⟩
+    exact hn (obsProcess_congr_null flipModel inertModel false rfl
+      (fun s =&gt; by simp [flipModel, inertModel]) n false [])
+  · refine ⟨fun _ =&gt; PMF.pure true, 2, ?_⟩
+    have h₁ : obsProcess flipModel (fun _ =&gt; PMF.pure true) 2 false [] =
+        PMF.pure [false, true] := by
+      simp [obsProcess, flipModel, PMF.pure_bind]
+    have h₂ : obsProcess inertModel (fun _ =&gt; PMF.pure true) 2 false [] =
+        PMF.pure [false, false] := by
+      simp [obsProcess, inertModel, PMF.pure_bind]
+    rw [h₁, h₂]
+    intro hcontra
+    have := congrArg (fun p =&gt; p [false, true]) hcontra
+    simp [PMF.pure_apply] at this
+
+-- LeanTest/HardProblems/Observability.lean
 /-- Observational equivalence: no policy of the declared function type
 distinguishes the two states at any finite horizon. -/
 def ObsEquiv (M : POSystem S A O) (s s&#x27; : S) : Prop :=
@@ -1058,11 +1384,11 @@ theorem DecisionCritical.no_robust_action
   have h₁ : a ∈ Astar s := ha s ((obsEquiv_equivalence M).refl s)
   have h₂ : a ∈ Astar s&#x27; := ha s&#x27; h.1
   exact Set.disjoint_left.mp h.2 h₁ h₂</code></pre></details>
-<p><strong>Boundary.</strong> The formal policy space contains every function of the stated type, not only efficiently implementable experiments. Pairwise intersections need not imply a nonempty total intersection. The theorem assumes the kernels are the relevant model. The metric result is only a necessary condition for a common asymptotically correct observer. It does not connect smooth output histories to the formal stochastic equivalence or prove that such an observer exists.</p>
+<p><strong>Boundary.</strong> The formal policy space contains every function of the stated type, not only efficiently implementable experiments. Pairwise intersections need not imply a nonempty total intersection. The theorem assumes the kernels are the relevant model. The metric result is only a necessary condition for a common asymptotically correct observer. It does not connect smooth output histories to the formal stochastic equivalence or prove that such an observer exists. The active-probe counterexample compares two models and does not solve probe design or establish a minimal informative experiment.</p>
 <h3 id="ch7-reachability-barriers-and-backed-shortcuts">Reachability, barriers, and backed shortcuts</h3>
 <p><strong>Hypotheses.</strong> Deterministic effectors generate finite-composition reachability. A directed adjacency relation and real objective define finite path depth and its infimum barrier. A shortcut relation is backed by original paths whose score does not fall below the required endpoint bound.</p>
 <p><strong>Conclusion.</strong> Adding a pointwise programmed transformation leaves reachable sets unchanged, while a genuinely new transformation can enlarge one in an explicit finite example. Absence of any path gives infinite barrier; a monotone path gives zero barrier; positive barrier forces a dip along every available path. Properly backed shortcuts preserve barrier depth, while mere endpoint backing can fail. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean, Ruggedness.lean): HardProblems.Reach, HardProblems.traj_mem_reach, HardProblems.Programmed, HardProblems.reach_insert_programmed, HardProblems.exists_new_effector_enlarges_reach, HardProblems.PathBetween, HardProblems.barrier, HardProblems.exists_dip_of_barrier_pos, HardProblems.barrier_eq_top_of_no_path, HardProblems.barrier_eq_zero_of_monotone_path, HardProblems.barrier_lt_iff, HardProblems.pathBetween_shortcut_nonempty_iff, HardProblems.barrier_shortcut_eq, HardProblems.exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F04-reachability-barriers-and-backed-shortcuts-boundedmachines.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F04-reachability-barriers-and-backed-shortcuts-ruggedness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean declarations and proofs (BoundedMachines.lean, Ruggedness.lean): HardProblems.Reach, HardProblems.traj_mem_reach, HardProblems.Programmed, HardProblems.reach_insert_programmed, HardProblems.exists_new_effector_enlarges_reach, HardProblems.PathBetween, HardProblems.barrier, HardProblems.exists_dip_of_barrier_pos, HardProblems.barrier_eq_top_of_no_path, HardProblems.barrier_eq_zero_of_monotone_path, HardProblems.barrier_lt_iff, HardProblems.pathBetween_shortcut_nonempty_iff, HardProblems.barrier_shortcut_eq, HardProblems.exists_shortcut_hiding_valley<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F04-reachability-barriers-and-backed-shortcuts-boundedmachines.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F04-reachability-barriers-and-backed-shortcuts-ruggedness.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- Finite-composition reachability: `y` is reachable from `x` by
 applying effectors drawn from `G`. -/
 inductive Reach (G : Set (X → X)) (x : X) : X → Prop
@@ -1268,7 +1594,7 @@ theorem exists_shortcut_hiding_valley :
 <h3 id="ch7-behavior-safety-and-coordinate-invariance">Behavior, safety, and coordinate invariance</h3>
 <p><strong>Hypotheses.</strong> A behavior is a set of trajectories on a declared signal space. Interconnection is intersection after component interfaces have been aligned, and hiding is direct image under a signal map. Discrete runs obey a deterministic step map. Local signal functions agree on overlaps. Separately, an equivalence of deterministic state spaces conjugates every input-indexed transition and transports outputs, adjacency, and objective where required.</p>
 <p><strong>Conclusion.</strong> Hiding an interconnection is contained in interconnecting the hidden behaviors, and an explicit finite example makes the inclusion strict. Visible safety after hiding is exactly safety of the pulled-back predicate. For the behavior generated from a safe set, all-time safety is equivalent to one-step invariance. The empty behavior is safe but not viable. Compatible raw functions have a unique glue, but an explicit nonempty admissibility constraint can reject it. Under exact coordinate equivalence, runs commute, observational indistinguishability is preserved, reachable sets correspond, and transported barrier values are equal. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (Behavioral.lean, Representation.lean): HardProblems.Behavioral.Trajectory, HardProblems.Behavioral.Behavior, HardProblems.Behavioral.mapTrajectory, HardProblems.Behavioral.hide, HardProblems.Behavioral.interconnect, HardProblems.Behavioral.hide_interconnect_subset, HardProblems.Behavioral.hide_interconnect_strict_counterexample, HardProblems.Behavioral.hide_equiv_symm, HardProblems.Behavioral.IsSafe, HardProblems.Behavioral.IsViable, HardProblems.Behavioral.empty_behavior_safe, HardProblems.Behavioral.empty_behavior_not_viable, HardProblems.Behavioral.isSafe_mono, HardProblems.Behavioral.isSafe_hide_iff, HardProblems.Behavioral.isSafe_hide, HardProblems.Behavioral.IsRun, HardProblems.Behavioral.generatedBehavior, HardProblems.Behavioral.generatedBehavior_safe_of_invariant, HardProblems.Behavioral.generatedBehavior_safe_iff_invariant, HardProblems.Behavioral.restrict, HardProblems.Behavioral.Compatible, HardProblems.Behavioral.existsUnique_glue, HardProblems.Behavioral.admissible_glue_counterexample, HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-behavioral.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-representation.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Behavioral.lean
+<details class="lean"><summary>Lean declarations and proofs (Behavioral.lean, Representation.lean): HardProblems.Behavioral.Trajectory, HardProblems.Behavioral.Behavior, HardProblems.Behavioral.mapTrajectory, HardProblems.Behavioral.hide, HardProblems.Behavioral.interconnect, HardProblems.Behavioral.hide_interconnect_subset, HardProblems.Behavioral.hide_interconnect_strict_counterexample, HardProblems.Behavioral.hide_equiv_symm, HardProblems.Behavioral.IsSafe, HardProblems.Behavioral.IsViable, HardProblems.Behavioral.empty_behavior_safe, HardProblems.Behavioral.empty_behavior_not_viable, HardProblems.Behavioral.isSafe_mono, HardProblems.Behavioral.isSafe_hide_iff, HardProblems.Behavioral.isSafe_hide, HardProblems.Behavioral.IsRun, HardProblems.Behavioral.generatedBehavior, HardProblems.Behavioral.generatedBehavior_safe_of_invariant, HardProblems.Behavioral.generatedBehavior_safe_iff_invariant, HardProblems.Behavioral.restrict, HardProblems.Behavioral.Compatible, HardProblems.Behavioral.existsUnique_glue, HardProblems.Behavioral.admissible_glue_counterexample, HardProblems.Representation.run, HardProblems.CoordinateObservation.Indist, HardProblems.CoordinateObservation.run_conj, HardProblems.CoordinateObservation.indist_conj_iff, HardProblems.CoordinateReach.reachableSet, HardProblems.CoordinateReach.run_conj, HardProblems.CoordinateReach.image_reachableSet_conj, HardProblems.CoordinateBarrier.PathBetween, HardProblems.CoordinateBarrier.Relabel, HardProblems.CoordinateBarrier.PathBetween.map, HardProblems.CoordinateBarrier.PathBetween.relabel, HardProblems.CoordinateBarrier.PathBetween.unrelabel, HardProblems.CoordinateBarrier.pathDepth, HardProblems.CoordinateBarrier.barrier, HardProblems.CoordinateBarrier.pathDepth_relabel, HardProblems.CoordinateBarrier.pathDepth_unrelabel, HardProblems.CoordinateBarrier.path_nonempty_relabel_iff, HardProblems.CoordinateBarrier.barrier_relabel_eq<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-behavioral.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F05-behavior-safety-and-coordinate-invariance-representation.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Behavioral.lean
 /-- A complete signal trajectory on time domain `T`. -/
 abbrev Trajectory (T : Type u) (W : Type v) := T → W
 
@@ -1737,7 +2063,7 @@ theorem barrier_relabel_eq {X : Type u} {Y : Type v}
 <h3 id="ch7-exact-abstraction-and-path-lifting">Exact abstraction and path lifting</h3>
 <p><strong>Hypotheses.</strong> A map from a concrete transition system to an abstract one has forward simulation, local step lifting from each concrete representative, and goal preservation and reflection.</p>
 <p><strong>Conclusion.</strong> Concrete paths map to abstract paths, abstract paths lift from the stated concrete start, and reachability of the corresponding goals is equivalent. Exact abstractions compose. A finite counterexample shows that forward simulation without lifting does not justify the reverse direction. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (Representation.lean): HardProblems.SolutionTransfer.Reach, HardProblems.SolutionTransfer.Reach.map, HardProblems.SolutionTransfer.ReachTo, HardProblems.SolutionTransfer.ForwardSimulation, HardProblems.SolutionTransfer.StepLifting, HardProblems.SolutionTransfer.concrete_reach_maps, HardProblems.SolutionTransfer.lift_reach, HardProblems.SolutionTransfer.abstract_reach_lifts, HardProblems.SolutionTransfer.ExactAbstraction, HardProblems.SolutionTransfer.ExactAbstraction.reachTo_iff, HardProblems.SolutionTransfer.ExactAbstraction.comp, HardProblems.SolutionTransfer.forward_without_lifting_counterexample<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F06-exact-abstraction-and-path-lifting.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Representation.lean
+<details class="lean"><summary>Lean declarations and proofs (Representation.lean): HardProblems.SolutionTransfer.Reach, HardProblems.SolutionTransfer.Reach.map, HardProblems.SolutionTransfer.ReachTo, HardProblems.SolutionTransfer.ForwardSimulation, HardProblems.SolutionTransfer.StepLifting, HardProblems.SolutionTransfer.concrete_reach_maps, HardProblems.SolutionTransfer.lift_reach, HardProblems.SolutionTransfer.abstract_reach_lifts, HardProblems.SolutionTransfer.ExactAbstraction, HardProblems.SolutionTransfer.ExactAbstraction.reachTo_iff, HardProblems.SolutionTransfer.ExactAbstraction.comp, HardProblems.SolutionTransfer.forward_without_lifting_counterexample<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F06-exact-abstraction-and-path-lifting.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/Representation.lean
 /-- Finite reflexive-transitive reachability generated by `Adj`. -/
 inductive Reach {X : Type u} (Adj : X → X → Prop) (x : X) : X → Prop
   | refl : Reach Adj x x
@@ -1874,7 +2200,7 @@ theorem forward_without_lifting_counterexample :
 <h3 id="ch7-finite-memory-and-delayed-output">Finite memory and delayed output</h3>
 <p><strong>Hypotheses.</strong> An exact tracker intertwines transitions and outputs of an output-separated finite machine. Separately, with \(2\le b\) and \(0&lt;n\), a one-pass register machine must emit the exact product of two fixed-width base-\(b\) operands from its final finite configuration.</p>
 <p><strong>Conclusion.</strong> The tracking map is injective, so the tracker has at least as many states as the tracked machine. The register machine needs at least \(b^n\) final configurations for \(n\)-digit base-\(b\) inputs; a bit budget therefore grows at least linearly with \(n\). (machine-checked)</p>
-<details class="lean"><summary>Lean proof (BoundedMachines.lean, Positional.lean): HardProblems.Machine, HardProblems.Machine.run, HardProblems.Machine.Separated, HardProblems.Tracks, HardProblems.Tracks.run_eq, HardProblems.Tracks.injective, HardProblems.card_le_of_tracks, HardProblems.card_eq_of_mutual_tracks, HardProblems.RegisterMachine, HardProblems.RegisterMachine.run, HardProblems.RegisterMachine.multiplicationInput, HardProblems.RegisterMachine.ComputesMultiplicationAt, HardProblems.RegisterMachine.finalState_injective, HardProblems.RegisterMachine.state_capacity_lower_bound, HardProblems.RegisterMachine.linear_bit_lower_bound, HardProblems.RegisterMachine.no_constant_register_budget<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F07-finite-memory-and-delayed-output-boundedmachines.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F07-finite-memory-and-delayed-output-positional.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
+<details class="lean"><summary>Lean declarations and proofs (BoundedMachines.lean, Positional.lean): HardProblems.Machine, HardProblems.Machine.run, HardProblems.Machine.Separated, HardProblems.Tracks, HardProblems.Tracks.run_eq, HardProblems.Tracks.injective, HardProblems.card_le_of_tracks, HardProblems.card_eq_of_mutual_tracks, HardProblems.RegisterMachine, HardProblems.RegisterMachine.run, HardProblems.RegisterMachine.multiplicationInput, HardProblems.RegisterMachine.ComputesMultiplicationAt, HardProblems.RegisterMachine.finalState_injective, HardProblems.RegisterMachine.state_capacity_lower_bound, HardProblems.RegisterMachine.linear_bit_lower_bound, HardProblems.RegisterMachine.no_constant_register_budget<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F07-finite-memory-and-delayed-output-boundedmachines.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F07-finite-memory-and-delayed-output-positional.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundedMachines.lean
 /-- A deterministic machine with inputs `I`, outputs `O`, and state
 space `S`: a step function and an output map. -/
 structure Machine (I O S : Type*) where
@@ -2043,7 +2369,7 @@ theorem no_constant_register_budget (base range k : ℕ) (hbase : 2 ≤ base) :
 <h3 id="ch7-finite-envelopes-and-context-indexed-region-orders">Finite envelopes and context-indexed region orders</h3>
 <p><strong>Hypotheses.</strong> A program envelope is nonempty and finite, and each program has a real value. Separately, a category carries a strict contravariant family of partial orders with monotone reindexing that obeys identity and composition. In the concrete construction, performance-coordinate types form a functor, all subsets are reindexed by preimage, and encounters are assigned regions. For the conditional realized construction, encounter transport is additionally supplied with exact region compatibility.</p>
 <p><strong>Conclusion.</strong> Finite envelopes attain internal optima, and enlarging an envelope cannot worsen its optimum. A finite envelope can have a strict gap to an excluded program. Preimage reindexing is monotone and obeys the stated laws. Inclusion pulled back to encounters is a preorder and is antisymmetric exactly when the encounter-to-region map is injective. Surjective performance maps preserve and reflect ambient inclusion. An explicit non-surjective map shows failure of preimage reflection, while an explicit noninjective direct image shows the separate many-to-one collapse. When encounter transport is supplied with exact region compatibility, the realized-image subposets inherit split preimage reindexing. A counterexample shows that preimage closure can fail without an extra hypothesis. (machine-checked)</p>
-<details class="lean"><summary>Lean proof (FibredOrder.lean, ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap, HardProblems.FibredOrder.SplitIndexedOrder, HardProblems.FibredOrder.SplitIndexedOrder.reindexHom, HardProblems.FibredOrder.SplitIndexedOrder.reindex_id_apply, HardProblems.FibredOrder.SplitIndexedOrder.reindex_comp_apply, HardProblems.FibredOrder.performanceRegions, HardProblems.FibredOrder.CompatibleEncounterRegions, HardProblems.FibredOrder.CompatibleEncounterRegions.RealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.instPartialOrderRealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized_val, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder_reindex_val, HardProblems.FibredOrder.ambient_preimage_can_be_unrealized, HardProblems.FibredOrder.EncounterLE, HardProblems.FibredOrder.encounterLE_refl, HardProblems.FibredOrder.encounterLE_trans, HardProblems.FibredOrder.encounterLE_antisymmetric_iff_injective, HardProblems.FibredOrder.constant_region_not_antisymmetric, HardProblems.FibredOrder.surjective_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_preserves_inclusion, HardProblems.FibredOrder.equiv_preimage_reflects_inclusion, HardProblems.FibredOrder.nonsurjective_preimage_not_order_reflecting, HardProblems.FibredOrder.noninjective_image_not_order_reflecting<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-resourcebounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-fibredorder.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
+<details class="lean"><summary>Lean declarations and proofs (FibredOrder.lean, ResourceBounds.lean): HardProblems.Envelope, HardProblems.exists_bounded_optimum, HardProblems.bounded_optimum_mono, HardProblems.exists_strict_envelope_gap, HardProblems.FibredOrder.SplitIndexedOrder, HardProblems.FibredOrder.SplitIndexedOrder.reindexHom, HardProblems.FibredOrder.SplitIndexedOrder.reindex_id_apply, HardProblems.FibredOrder.SplitIndexedOrder.reindex_comp_apply, HardProblems.FibredOrder.performanceRegions, HardProblems.FibredOrder.CompatibleEncounterRegions, HardProblems.FibredOrder.CompatibleEncounterRegions.RealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.instPartialOrderRealizedRegion, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized, HardProblems.FibredOrder.CompatibleEncounterRegions.reindexRealized_val, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder, HardProblems.FibredOrder.CompatibleEncounterRegions.realizedRegionOrder_reindex_val, HardProblems.FibredOrder.ambient_preimage_can_be_unrealized, HardProblems.FibredOrder.EncounterLE, HardProblems.FibredOrder.encounterLE_refl, HardProblems.FibredOrder.encounterLE_trans, HardProblems.FibredOrder.encounterLE_antisymmetric_iff_injective, HardProblems.FibredOrder.constant_region_not_antisymmetric, HardProblems.FibredOrder.surjective_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_subset_iff, HardProblems.FibredOrder.equiv_preimage_preserves_inclusion, HardProblems.FibredOrder.equiv_preimage_reflects_inclusion, HardProblems.FibredOrder.nonsurjective_preimage_not_order_reflecting, HardProblems.FibredOrder.noninjective_image_not_order_reflecting<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-resourcebounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F08-finite-envelopes-and-context-indexed-region-orders-fibredorder.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/ResourceBounds.lean
 /-- A resource envelope specifies which programs are admitted and requires the
 admitted set to be finite. -/
 structure Envelope (P : Type*) where
@@ -2086,6 +2412,7 @@ theorem exists_strict_envelope_gap :
   exact ⟨1, by norm_num⟩
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- A strict contravariant family of partial orders over a category.
 
 The pointwise identity and composition equations record a chosen splitting.
 They are the only categorical coherence claimed in this file. -/
@@ -2115,17 +2442,20 @@ def reindexHom (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) :
     exact P.reindex_mono f hxy
 
 -- LeanTest/HardProblems/FibredOrder.lean
+@[simp]
 theorem reindex_id_apply (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) :
     P.reindex (𝟙 c) x = x :=
   P.reindex_id c x
 
 -- LeanTest/HardProblems/FibredOrder.lean
+@[simp]
 theorem reindex_comp_apply (P : SplitIndexedOrder C) {c d e : C}
     (f : c ⟶ d) (g : d ⟶ e) (x : P.Fiber e) :
     P.reindex (f ≫ g) x = P.reindex f (P.reindex g x) :=
   P.reindex_comp f g x
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- The context-indexed partial order of all candidate performance regions
 induced by a functor of performance-coordinate types. Context morphisms act
 on points by `Perf.map`; candidate regions move in the opposite direction by
 preimage. Realizability by an encounter or program is not part of this data. -/
@@ -2145,6 +2475,7 @@ def performanceRegions {C : Type u} [Category.{v} C] (Perf : C ⥤ Type w) :
     exact Set.preimage_mono hAB
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Encounter data sufficient to make realized performance regions stable
 under contravariant context change.
 
 No identity or composition equation is imposed on `transport` at the level of
@@ -2165,18 +2496,21 @@ structure CompatibleEncounterRegions {C : Type u} [Category.{v} C]
     region c (transport f E) = Perf.map f ⁻¹&#x27; region d E
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- A region together with the proposition that some admitted encounter
 realizes it. Different encounter witnesses with the same region determine the
 same element of this subtype. -/
 def RealizedRegion (D : CompatibleEncounterRegions Perf) (c : C) :=
   {A : Set (Perf.obj c) // ∃ E : D.Encounter c, D.region c E = A}
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Realized regions inherit the antisymmetric subset order from their
 underlying sets; encounter witnesses do not participate in equality. -/
 instance instPartialOrderRealizedRegion (D : CompatibleEncounterRegions Perf)
     (c : C) : PartialOrder (D.RealizedRegion c) :=
   PartialOrder.lift Subtype.val Subtype.val_injective
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Reindex a realized region by preimage. Compatibility supplies a transported
 encounter witnessing that the resulting region is realized in the source
 context. -/
 def reindexRealized (D : CompatibleEncounterRegions Perf) {c d : C}
@@ -2187,6 +2521,7 @@ def reindexRealized (D : CompatibleEncounterRegions Perf) {c d : C}
     rw [D.region_transport, hE]⟩
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- The underlying set of a reindexed realized region is transparently the
 ambient preimage. -/
 @[simp]
 theorem reindexRealized_val (D : CompatibleEncounterRegions Perf) {c d : C}
@@ -2195,6 +2530,7 @@ theorem reindexRealized_val (D : CompatibleEncounterRegions Perf) {c d : C}
   rfl
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Realized regions form a split context-indexed partial order. The split laws
 hold for region values; they do not assert coherent identity or composition
 laws for the chosen raw encounter transports. -/
 def realizedRegionOrder (D : CompatibleEncounterRegions Perf) :
@@ -2215,6 +2551,7 @@ def realizedRegionOrder (D : CompatibleEncounterRegions Perf) :
     exact Set.preimage_mono hAB
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- The reindexing stored in `realizedRegionOrder` has the same transparent
 preimage value as `reindexRealized`. -/
 @[simp]
 theorem realizedRegionOrder_reindex_val
@@ -2224,6 +2561,7 @@ theorem realizedRegionOrder_reindex_val
   rfl
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Without compatible encounter transport, an ambient preimage need not be
 among the regions declared realized in the source context. Both declared
 families below are nonempty, yet the preimage of the realized target region is
 not a realized source region. -/
@@ -2238,6 +2576,7 @@ theorem ambient_preimage_can_be_unrealized :
   simp
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Compare encounters by inclusion of their attainable regions. This is the
 pullback of the fiber order along an encounter-to-region map. -/
 def EncounterLE {E : Type u} {P : Type w} (region : E → Set P)
     (x y : E) : Prop :=
@@ -2257,6 +2596,7 @@ theorem encounterLE_trans {E : Type u} {P : Type w} (region : E → Set P)
   hxy.trans hyz
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- The pulled-back comparison is antisymmetric exactly when the
 encounter-to-region map is injective. Without injectivity it is only a
 preorder on encounters; quotienting encounters by equal regions restores a
 partial order. -/
@@ -2273,6 +2613,7 @@ theorem encounterLE_antisymmetric_iff_injective {E : Type u} {P : Type w}
     exact hinj (Set.Subset.antisymm hxy hyx)
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Two distinct encounters assigned the same region witness the failure of
 antisymmetry. The failure is in the encounter presentation, not in the subset
 order on regions. -/
 theorem constant_region_not_antisymmetric :
@@ -2282,6 +2623,7 @@ theorem constant_region_not_antisymmetric :
   simp [EncounterLE]
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Preimage along a surjective point map preserves and reflects inclusion.
 Bijectivity is therefore sufficient but not necessary for exact comparison
 transport at the level of arbitrary candidate regions. -/
 theorem surjective_preimage_subset_iff {X : Type u} {Y : Type w}
@@ -2294,6 +2636,7 @@ theorem surjective_preimage_subset_iff {X : Type u} {Y : Type w}
   · exact Set.preimage_mono
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- A bijective coordinate change preserves and reflects inclusion after
 contravariant reindexing. Hence an exact relabeling neither creates nor erases
 comparisons between candidate performance regions. -/
 theorem equiv_preimage_subset_iff {X : Type u} {Y : Type w}
@@ -2309,6 +2652,7 @@ theorem equiv_preimage_preserves_inclusion {X : Type u} {Y : Type w}
   (equiv_preimage_subset_iff e A B).2 h
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- The reflection direction of exact coordinate invariance. It depends on
 surjectivity and is unavailable for a general non-surjective coordinate map. -/
 theorem equiv_preimage_reflects_inclusion {X : Type u} {Y : Type w}
     (e : X ≃ Y) {A B : Set Y} (h : e ⁻¹&#x27; A ⊆ e ⁻¹&#x27; B) :
@@ -2316,6 +2660,7 @@ theorem equiv_preimage_reflects_inclusion {X : Type u} {Y : Type w}
   (equiv_preimage_subset_iff e A B).1 h
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Explicit failure of preimage order reflection for a non-surjective point
 map. The injective constant map `Unit → Bool` misses `true`, so the whole Bool
 region and `{false}` have equal preimages even though the former is not
 contained in the latter. The issue here is failure of surjectivity, not
@@ -2342,6 +2687,7 @@ theorem nonsurjective_preimage_not_order_reflecting :
     simp at this
 
 -- LeanTest/HardProblems/FibredOrder.lean
+/-- Explicit failure of direct-image order reflection for a noninjective point
 map. The constant map `Bool → Unit` merges `false` and `true`, so their
 singleton regions have equal direct images although neither singleton is
 contained in the other. This is the separate many-to-one failure mode. -/
@@ -2365,17 +2711,403 @@ theorem noninjective_image_not_order_reflecting :
   · intro h
     have : false ∈ ({true} : Set Bool) := h (by simp)
     simp at this</code></pre></details>
-<p><strong>Boundary.</strong> Finiteness does not make an optimizer computable or cheap. The ambient construction uses all subsets, and the realized construction assumes a sufficient compatible encounter transport and derives closure from it; region-level closure alone would be enough to define reindexing. Neither construction requires or proves upward closure. The formalization constructs neither the quotient of raw encounters nor a Grothendieck total category with cartesian lifts. Coordinate-set invariance does not establish equivalence of programs or systems. The preimage and direct-image failure examples concern different operations and must not be conflated.</p>
+<p><strong>Boundary.</strong> Finiteness does not make an optimizer computable or cheap. The ambient construction uses all subsets, and the realized construction assumes a sufficient compatible encounter transport and derives closure from it; region-level closure alone would be enough to define reindexing. Neither construction requires or proves upward closure. The formalization constructs the Grothendieck total category and its cartesian lifts, but it does not construct the quotient of raw encounters. Coordinate-set invariance does not establish equivalence of programs or systems. The preimage and direct-image failure examples concern different operations and must not be conflated.</p>
+<h3 id="ch7-the-total-category-and-its-cartesian-lifts">The total category and its cartesian lifts</h3>
+<p><strong>Hypotheses.</strong> A split indexed order over a base category of contexts: a partial order in each fibre, contravariant monotone reindexing, and pointwise identity and composition laws.</p>
+<p><strong>Conclusion.</strong> The indexed data package as a contravariant functor into categories, and mathlib's contravariant Grothendieck construction yields a total category with a projection to the base. The projection is a fibration in the standard sense. The transport supplied as data is exactly the domain of the canonical cartesian lift, and each fibre poset is equivalent to the standard fibre category of the projection. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (GrothendieckFibration.lean): HardProblems.FibredOrder.reindexFunctor, HardProblems.FibredOrder.toCatFunctor, HardProblems.FibredOrder.toCatPseudofunctor, HardProblems.FibredOrder.total, HardProblems.FibredOrder.projection, HardProblems.FibredOrder.totalObj, HardProblems.FibredOrder.cartesianLift, HardProblems.FibredOrder.cartesianLift_isStronglyCartesian, HardProblems.FibredOrder.projection_isFibered, HardProblems.FibredOrder.reindex_is_cartesian_lift, HardProblems.FibredOrder.fiberFunctor, HardProblems.FibredOrder.fiberFunctor_isEquivalence, HardProblems.FibredOrder.fiberEquiv<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F09-the-total-category-and-its-cartesian-lifts.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- Reindexing along one arrow, regarded as a functor between thin categories. -/
+def reindexFunctor (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) :
+    P.Fiber d ⥤ P.Fiber c where
+  obj := P.reindex f
+  map h := homOfLE (P.reindex_mono f h.le)
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- Package the indexed poset as a genuine contravariant functor into `Cat`. -/
+def toCatFunctor (P : SplitIndexedOrder C) : Cᵒᵖ ⥤ Cat.{w, w} where
+  obj c := Cat.of (P.Fiber c.unop)
+  map f := (reindexFunctor P f.unop).toCatHom
+  map_id c := by
+    apply Cat.Hom.ext
+    apply CategoryTheory.Functor.ext (fun x =&gt; P.reindex_id c.unop x)
+  map_comp f g := by
+    apply Cat.Hom.ext
+    apply CategoryTheory.Functor.ext (fun x =&gt; P.reindex_comp g.unop f.unop x)
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The strict functor, promoted to the pseudofunctor expected by mathlib&#x27;s
+contravariant Grothendieck construction. -/
+abbrev toCatPseudofunctor (P : SplitIndexedOrder C) :
+    Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{w, w} :=
+  (toCatFunctor P).toPseudoFunctor&#x27;
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The total category of the indexed order. -/
+abbrev total (P : SplitIndexedOrder C) : Type _ :=
+  Pseudofunctor.CoGrothendieck (toCatPseudofunctor P)
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- Projection of the total category to the original base. -/
+abbrev projection (P : SplitIndexedOrder C) : total P ⥤ C :=
+  Pseudofunctor.CoGrothendieck.forget (toCatPseudofunctor P)
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The total object represented by `x` in the fiber over `c`. -/
+abbrev totalObj (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) : total P :=
+  { base := c, fiber := x }
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The canonical arrow from the reindexed object to the original object. -/
+def cartesianLift (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    totalObj P c (P.reindex f x) ⟶ totalObj P d x where
+  base := f
+  fiber := 𝟙 _
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The canonical reindexing arrow is strongly cartesian. -/
+theorem cartesianLift_isStronglyCartesian (P : SplitIndexedOrder C)
+    {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    (projection P).IsStronglyCartesian f (cartesianLift P f x) := by
+  change (projection P).IsStronglyCartesian f
+    (Pseudofunctor.CoGrothendieck.cartesianLift (F := toCatPseudofunctor P) x f)
+  exact Pseudofunctor.CoGrothendieck.isStronglyCartesian_homCartesianLift
+    (F := toCatPseudofunctor P) x f
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The projection is a fibration over the original base category. -/
+theorem projection_isFibered (P : SplitIndexedOrder C) :
+    (projection P).IsFibered := by
+  infer_instance
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The chosen transport is exactly the domain of the canonical cartesian lift,
+and that lift satisfies mathlib&#x27;s cartesian universal property. -/
+theorem reindex_is_cartesian_lift (P : SplitIndexedOrder C)
+    {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    (projection P).IsCartesian f (cartesianLift P f x) ∧
+      Pseudofunctor.CoGrothendieck.domainCartesianLift
+        (F := toCatPseudofunctor P) x f = totalObj P c (P.reindex f x) := by
+  constructor
+  · letI : (projection P).IsStronglyCartesian f (cartesianLift P f x) :=
+      cartesianLift_isStronglyCartesian P f x
+    exact Functor.IsStronglyCartesian.isCartesian_of_isStronglyCartesian
+      (projection P) f (cartesianLift P f x)
+  · rfl
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The original thin category maps to the standard fiber of the projection. -/
+abbrev fiberFunctor (P : SplitIndexedOrder C) (c : C) :
+    P.Fiber c ⥤ (projection P).Fiber c :=
+  CategoryTheory.Functor.Fiber.inducedFunctor
+    (Pseudofunctor.CoGrothendieck.comp_const (toCatPseudofunctor P) c)
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- The standard fiber category of the projection is equivalent to the original
+partial order regarded as a thin category. -/
+theorem fiberFunctor_isEquivalence (P : SplitIndexedOrder C) (c : C) :
+    (fiberFunctor P c).IsEquivalence := by
+  exact HasFibers.equiv c
+
+-- LeanTest/HardProblems/GrothendieckFibration.lean
+/-- Goal 4 in explicit categorical form. -/
+noncomputable def fiberEquiv (P : SplitIndexedOrder C) (c : C) :
+    P.Fiber c ≌ (projection P).Fiber c := by
+  letI : (fiberFunctor P c).IsEquivalence := fiberFunctor_isEquivalence P c
+  exact (fiberFunctor P c).asEquivalence</code></pre></details>
+<p><strong>Boundary.</strong> The data are used to construct a fibration and nothing more. An opfibration would need covariant transport, that is, left adjoints to reindexing, which the structure does not supply; none is constructed, and none is refuted. Thinness of the fibres makes uniqueness of fibrewise factorizations automatic, but the cartesian property itself is inherited from the general construction and does not depend on the fibres being posets. Nothing identifies objects of unrelated fibres without a supplied context morphism.</p>
+<h3 id="ch7-boundaries-as-closure-operators">Boundaries as closure operators</h3>
+<p><strong>Hypotheses.</strong> A set of primitive transformations on a state space; an observation map on states; behaviors with hiding along a signal projection; and, separately, two ordered sets of possibilities related by a monotone reindexing map, each carrying a closure operator.</p>
+<p><strong>Conclusion.</strong> Reachable-set formation, observational saturation, and hiding followed by pullback along the projection are closure operators in mathlib's sense: extensive, monotone, and idempotent. Inserting a transformation that is already pointwise reachable leaves the reachable set fixed, and refining the observation map never enlarges any saturation. Adjoining the constant-true move to the empty move set over the Booleans strictly enlarges the reach of one starting state, with the witness in the statement rather than behind an existential. Hiding preserves interconnection only up to inclusion, and an explicit example makes the inclusion strict. An explicit finite example shows a closure operator need not commute with a monotone reindexing map, which is how the fibrewise reading fails. Every local copy of a borrowed definition appearing in a statement here is pinned to its home-module original by an agreement lemma, so the statements cannot drift from what the rest of the companion proves. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (BoundaryClosures.lean): HardProblems.ClosureUnification.reachSet, HardProblems.ClosureUnification.reachClosure, HardProblems.ClosureUnification.reachSet_insert_programmed, HardProblems.ClosureUnification.exists_strict_enlargement, HardProblems.ClosureUnification.indistSaturation, HardProblems.ClosureUnification.indistClosure, HardProblems.ClosureUnification.indistClosure_le_of_refines, HardProblems.ClosureUnification.behavioralClosure, HardProblems.ClosureUnification.hide_interconnect_subset_and_strict, HardProblems.ClosureUnification.ReindexCommutes, HardProblems.ClosureUnification.addFalseClosure, HardProblems.ClosureUnification.reindex_closure_need_not_commute, HardProblems.ClosureUnification.reachSet_insert_const_true_strict, HardProblems.ClosureUnification.reach_agrees, HardProblems.ClosureUnification.indist_agrees, HardProblems.ClosureUnification.hide_agrees, HardProblems.ClosureUnification.programmed_agrees, HardProblems.ClosureUnification.robustActions_agrees, HardProblems.ClosureUnification.interconnect_agrees<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F10-boundaries-as-closure-operators.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The set of states reachable from a set of starting states. -/
+def reachSet {X : Type u} (G : Set (X → X)) (S : Set X) : Set X :=
+  {z | ∃ x ∈ S, Reach G x z}
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 1. `reachSet G` is a closure operator on `Set X`. -/
+def reachClosure {X : Type u} (G : Set (X → X)) : ClosureOperator (Set X) where
+  toFun := reachSet G
+  monotone&#x27; := by
+    intro S T hST z hz
+    rcases hz with ⟨x, hxS, hxz⟩
+    exact ⟨x, hST hxS, hxz⟩
+  le_closure&#x27; := by
+    intro S x hx
+    exact ⟨x, hx, .refl⟩
+  idempotent&#x27; := by
+    intro S
+    apply Set.Subset.antisymm
+    · rintro z ⟨y, ⟨x, hx, hxy⟩, hyz⟩
+      exact ⟨x, hx, hxy.trans hyz⟩
+    · rintro z hz
+      exact ⟨z, hz, .refl⟩
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 2. A programmed transformation adds no reachability. -/
+theorem reachSet_insert_programmed {X : Type u} (G : Set (X → X))
+    {g : X → X} (hg : Programmed G g) (S : Set X) :
+    reachSet (insert g G) S = reachSet G S := by
+  apply Set.Subset.antisymm
+  · rintro z ⟨x, hx, hreach⟩
+    exact ⟨x, hx, hreach.insert_programmed hg⟩
+  · rintro z ⟨x, hx, hreach⟩
+    exact ⟨x, hx, by
+      induction hreach with
+      | refl =&gt; exact .refl
+      | tail hstep hmem hz ih =&gt; exact .tail ih (Set.mem_insert_of_mem _ hmem) hz⟩
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 3. The concrete two-state system `Bool`, with no old primitives,
+initial state `false`, and the new constant-`true` primitive, strictly enlarges
+reachable closure. -/
+theorem exists_strict_enlargement :
+    ∃ (X : Type) (G : Set (X → X)) (g : X → X) (S : Set X),
+      reachSet G S ⊂ reachSet (insert g G) S := by
+  refine ⟨Bool, ∅, (fun _ =&gt; true), {false}, ?_⟩
+  constructor
+  · rintro z ⟨x, hx, hreach⟩
+    exact ⟨x, hx, by
+      induction hreach with
+      | refl =&gt; exact .refl
+      | tail hstep hmem hz =&gt; exact False.elim hmem⟩
+  · intro hreverse
+    have htrue : true ∈ reachSet (insert (fun _ : Bool =&gt; true) ∅) {false} :=
+      ⟨false, by simp,
+        Reach.tail (g := fun _ : Bool =&gt; true) Reach.refl (by simp) rfl⟩
+    have hold : true ∈ reachSet (∅ : Set (Bool → Bool)) {false} := hreverse htrue
+    rcases hold with ⟨x, hx, hreach⟩
+    have hxfalse : x = false := by simpa using hx
+    subst x
+    have hempty : ∀ z : Bool, Reach (∅ : Set (Bool → Bool)) false z → z = false := by
+      intro z hz
+      induction hz with
+      | refl =&gt; rfl
+      | tail hstep hmem heq =&gt; exact False.elim hmem
+    have : true = false := hempty true hreach
+    cases this
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Saturation of states under equality of observations. -/
+def indistSaturation {S : Type u} {O : Type v} (observe : S → O)
+    (T : Set S) : Set S :=
+  {y | ∃ x ∈ T, Indist observe x y}
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 4. Saturation under observational indistinguishability is a closure
+operator on `Set S`. -/
+def indistClosure {S : Type u} {O : Type v} (observe : S → O) :
+    ClosureOperator (Set S) where
+  toFun := indistSaturation observe
+  monotone&#x27; := by
+    rintro A B h y ⟨x, hx, hxy⟩
+    exact ⟨x, h hx, hxy⟩
+  le_closure&#x27; := by
+    intro A x hx
+    exact ⟨x, hx, rfl⟩
+  idempotent&#x27; := by
+    intro A
+    apply Set.Subset.antisymm
+    · rintro y ⟨x, ⟨z, hz, hzx⟩, hxy⟩
+      exact ⟨z, hz, hzx.trans hxy⟩
+    · intro y hy
+      exact ⟨y, hy, rfl⟩
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 4&#x27;. If `coarse = k ∘ fine`, fine observational saturation is contained
+in coarse observational saturation: a finer experiment separates at least as
+many states. -/
+theorem indistClosure_le_of_refines {S : Type u} {F : Type v} {Cc : Type w}
+    (fine : S → F) (coarse : S → Cc) (k : F → Cc) (hk : coarse = k ∘ fine) :
+    ∀ T : Set S, indistClosure fine T ⊆ indistClosure coarse T := by
+  intro T y hy
+  rcases hy with ⟨x, hx, hxy⟩
+  refine ⟨x, hx, ?_⟩
+  show coarse x = coarse y
+  rw [hk]
+  exact congrArg k hxy
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Pulling a hidden behavior back along the trajectory projection gives a
+closure operator on behaviors. -/
+def behavioralClosure {T : Type u} {W : Type v} {V : Type w} (f : W → V) :
+    ClosureOperator (Behavior T W) where
+  toFun B := {w | f ∘ w ∈ hide f B}
+  monotone&#x27; := by
+    rintro B C h w ⟨w&#x27;, hw&#x27;, heq⟩
+    exact ⟨w&#x27;, h hw&#x27;, heq⟩
+  le_closure&#x27; := by
+    intro B w hw
+    exact ⟨w, hw, rfl⟩
+  idempotent&#x27; := by
+    intro B
+    apply Set.Subset.antisymm
+    · rintro w ⟨w&#x27;, ⟨w&#x27;&#x27;, hw&#x27;&#x27;, heq&#x27;⟩, heq⟩
+      exact ⟨w&#x27;&#x27;, hw&#x27;&#x27;, heq&#x27;.trans heq⟩
+    · intro w hw
+      exact ⟨w, hw, rfl⟩
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Goal 5. Hiding after interconnection is always contained in interconnecting
+after hiding. The displayed `Bool`/`Unit` example makes this inclusion strict,
+so hiding is not a meet (lattice) homomorphism. -/
+theorem hide_interconnect_subset_and_strict :
+    (∀ {T W V : Type} (f : W → V) (B₁ B₂ : Behavior T W),
+      hide f (interconnect B₁ B₂) ⊆ interconnect (hide f B₁) (hide f B₂)) ∧
+    (let B₁ : Behavior Unit Bool := {w | w () = false}
+     let B₂ : Behavior Unit Bool := {w | w () = true}
+     hide (fun _ : Bool =&gt; ()) (interconnect B₁ B₂) ⊂
+       interconnect (hide (fun _ : Bool =&gt; ()) B₁)
+         (hide (fun _ : Bool =&gt; ()) B₂)) := by
+  constructor
+  · intro T W V f B₁ B₂ v hv
+    rcases hv with ⟨w, ⟨hw₁, hw₂⟩, rfl⟩
+    exact ⟨⟨w, hw₁, rfl⟩, ⟨w, hw₂, rfl⟩⟩
+  · dsimp
+    constructor
+    · intro v hv
+      rcases hv with ⟨w, ⟨hw₁, hw₂⟩, rfl⟩
+      exact ⟨⟨w, hw₁, rfl⟩, ⟨w, hw₂, rfl⟩⟩
+    · intro hreverse
+      let v : Unit → Unit := fun _ =&gt; ()
+      have hv : v ∈ interconnect
+          (hide (fun _ : Bool =&gt; ()) {w : Unit → Bool | w () = false})
+          (hide (fun _ : Bool =&gt; ()) {w : Unit → Bool | w () = true}) := by
+        constructor
+        · exact ⟨(fun _ =&gt; false), rfl, rfl⟩
+        · exact ⟨(fun _ =&gt; true), rfl, rfl⟩
+      have hv&#x27; := hreverse hv
+      rcases hv&#x27; with ⟨w, ⟨hwf, hwt⟩, _⟩
+      simp only [Set.mem_setOf_eq] at hwf hwt
+      rw [hwf] at hwt
+      contradiction
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- A reindexing order homomorphism commutes with two fiberwise closures when
+the two possible composites agree pointwise. -/
+def ReindexCommutes {P : Type u} {Q : Type v} [Preorder P] [Preorder Q]
+    (r : Q →o P) (cQ : ClosureOperator Q) (cP : ClosureOperator P) : Prop :=
+  ∀ x, r (cQ x) = cP (r x)
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The closure on `Set Bool` that adjoins `false`. -/
+def addFalseClosure : ClosureOperator (Set Bool) where
+  toFun S := S ∪ {false}
+  monotone&#x27; := by
+    intro A B h x hx
+    exact hx.elim (fun hxA =&gt; Or.inl (h hxA)) Or.inr
+  le_closure&#x27; := by
+    intro A x hx
+    exact Or.inl hx
+  idempotent&#x27; := by
+    intro A
+    ext x
+    simp only [Set.mem_union, Set.mem_singleton_iff]
+    tauto
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- Reindexing by inverse image along the map `Unit → Bool` selecting `false`
+does not commute with `addFalseClosure` and the identity closure on `Set Unit`.
+Both carriers are nonempty, nontrivial finite posets. -/
+theorem reindex_closure_need_not_commute :
+    let r : Set Bool →o Set Unit :=
+      { toFun := Set.preimage (fun _ : Unit =&gt; false)
+        monotone&#x27; := by intro A B h; exact Set.preimage_mono h }
+    ¬ ReindexCommutes r addFalseClosure (ClosureOperator.id (Set Unit)) := by
+  intro r h
+  have heq := h (∅ : Set Bool)
+  have hunit : () ∈ r (addFalseClosure (∅ : Set Bool)) := Or.inr rfl
+  rw [heq] at hunit
+  exact hunit
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The strict enlargement of Goal 3, restated with its witness in the
+statement rather than behind an existential: adjoining the constant-`true`
+move to the empty move set strictly enlarges what is reachable from
+`{false}`. -/
+theorem reachSet_insert_const_true_strict :
+    reachSet (∅ : Set (Bool → Bool)) {false} ⊂
+      reachSet (insert (fun _ =&gt; true) (∅ : Set (Bool → Bool))) {false} := by
+  constructor
+  · rintro z ⟨x, hx, h⟩
+    refine ⟨x, hx, ?_⟩
+    induction h with
+    | refl =&gt; exact Reach.refl
+    | tail _ hg hz ih =&gt; exact Reach.tail ih (Set.mem_insert_of_mem _ hg) hz
+  · intro hrev
+    have htrue : true ∈
+        reachSet (insert (fun _ =&gt; true) (∅ : Set (Bool → Bool))) {false} :=
+      ⟨false, rfl, Reach.tail Reach.refl (Set.mem_insert _ _) rfl⟩
+    rcases hrev htrue with ⟨x, hx, h⟩
+    cases h with
+    | refl =&gt; simp at hx
+    | tail _ hg _ =&gt; simp at hg
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `Reach` is the project&#x27;s `Reach`, definitionally. -/
+theorem reach_agrees {X : Type u} (G : Set (X → X)) (x z : X) :
+    ClosureUnification.Reach G x z ↔ HardProblems.Reach G x z := by
+  constructor
+  · intro h
+    induction h with
+    | refl =&gt; exact HardProblems.Reach.refl
+    | tail hxy hg hz ih =&gt; exact HardProblems.Reach.tail ih hg hz
+  · intro h
+    induction h with
+    | refl =&gt; exact ClosureUnification.Reach.refl
+    | tail hxy hg hz ih =&gt; exact ClosureUnification.Reach.tail ih hg hz
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `Indist` is `InformationOrder.Indist`, definitionally. -/
+theorem indist_agrees {S : Type u} {O : Type v} (observe : S → O) (x y : S) :
+    ClosureUnification.Indist observe x y ↔
+      InformationOrder.Indist observe x y :=
+  Iff.rfl
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `hide` is `Behavioral.hide`, definitionally. -/
+theorem hide_agrees {T : Type u} {W : Type v} {V : Type w}
+    (f : W → V) (B : ClosureUnification.Behavior T W) :
+    ClosureUnification.hide f B = Behavioral.hide f B := by
+  rfl
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `Programmed` is the project&#x27;s `Programmed`: both quantify the
+respective `Reach`, and `reach_agrees` bridges those. -/
+theorem programmed_agrees {X : Type u} (G : Set (X → X)) (g : X → X) :
+    ClosureUnification.Programmed G g ↔ HardProblems.Programmed G g := by
+  constructor
+  · intro h y
+    exact (reach_agrees G y (g y)).mp (h y)
+  · intro h y
+    exact (reach_agrees G y (g y)).mpr (h y)
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `RobustActions` is `InformationOrder.RobustActions`,
+definitionally. -/
+theorem robustActions_agrees {S : Type u} {O : Type v} {A : Type w}
+    (observe : S → O) (Acceptable : S → A → Prop) (x : S) :
+    ClosureUnification.RobustActions observe Acceptable x =
+      InformationOrder.RobustActions observe Acceptable x :=
+  rfl
+
+-- LeanTest/HardProblems/BoundaryClosures.lean
+/-- The local `interconnect` is `Behavioral.interconnect`, definitionally. -/
+theorem interconnect_agrees {T : Type u} {W : Type v}
+    (B₁ B₂ : ClosureUnification.Behavior T W) :
+    ClosureUnification.interconnect B₁ B₂ = Behavioral.interconnect B₁ B₂ :=
+  rfl</code></pre></details>
+<p><strong>Boundary.</strong> The closure operators act on possibility sets induced by the information, action, and behavior boundaries; no claim is made that every operator in the book has this shape, and the attainable-region map of the resource boundary is not among them. The lattice-homomorphism strengthening is refuted, not merely left open. Commutation with reindexing is an extra condition to be supplied for each context pair; the counterexample shows it does not follow from the closure laws alone.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">Notes</span>Notes and sources</h2>
-<p>The information argument uses the data-processing inequality, the chain rule for mutual information, and Shannon's rate-distortion function. The Lean companion checks only the final scalar accumulation lemma. It does not yet formalize measure-theoretic mutual information or Shannon's coding theorem.</p>
+<p>The information argument uses the data-processing inequality, the chain rule for mutual information, and Shannon's rate-distortion function. The Lean companion checks the deterministic refinement preorder, its robust-decision consequences, and the final scalar accumulation lemma. It does not yet formalize measure-theoretic mutual information, a stochastic data-processing inequality, or Shannon's coding theorem.</p>
 <p>The scalar posterior formula is the conjugate update for repeated independent measurements of one fixed Gaussian state. Kalman's 1960 filtering paper treats dynamic linear estimation through covariance recursions. Nair and Evans give a different, control-specific use of information rate: a lower data rate for stochastic stabilization. Neither result licenses replacing all feedback limits by one channel-capacity number.</p>
 <p>Hermann and Krener construct the nonlinear observation space from iterated Lie derivatives and prove the full-rank implication to local weak observability. Their constant-rank analysis also explains why hidden directions are local leaves rather than, in general, a linear subspace or a well-behaved global quotient. Sontag and Wang's output-to-state formulation makes zero input and zero output imply asymptotic state decay, while nonzero input or output magnitudes produce corresponding state bounds. Interpreting those signals as observer disturbances requires a declared error-system model. The book does not formalize these differential-geometric results in Lean.</p>
 <p>The nonlinear observer discussion is a comparison-system argument related to input-to-state robustness. Rajamani studies observers for Lipschitz nonlinear systems. Andrieu and Praly establish conditions for nonlinear Kazantzis-Kravaris/Luenberger observers. Shim and Liberzon formulate observer robustness to measurement disturbances in an ISS-like sense. The book's scalar recurrence is narrower than those observer-design results.</p>
 <p>The residual-set distinction among accommodation, detection, and isolation is standard in model-based fault diagnosis. The \(2\rho\) threshold follows from deterministic norm-ball geometry and is only a worst-case sufficient separation condition. Patton and Chen discuss robust observer-based fault detection and isolation in a broader setting.</p>
 <p>The finite-state arguments belong to the Myhill-Nerode tradition: behaviorally distinguishable histories require distinct states. The abstraction conditions are elementary path versions of simulation and lifting ideas used in abstract interpretation and state abstraction. The formal theorems are intentionally smaller than those general theories.</p>
 <p>Willems's behavioral approach treats a system as its admitted trajectories rather than privileging an input/output or state-space presentation. The book's Lean module checks only the set-theoretic core: intersection, projection, universal safety, discrete invariance, and binary function gluing. Schultz and Spivak construct a substantially richer temporal type theory in a topos of sheaves. That work motivates the local semantics here; it does not make the book's elementary formalization a topos model.</p>
+<p>The closure-operator reading of boundaries has classical precedents that fix its vocabulary. Grothendieck introduced fibred categories and their cartesian lifts; the split indexed presentation and the total-category construction the companion checks descend from that work. Lawvere and Tierney showed that the subtoposes of a topos correspond exactly to certain closure operators on its subobject structure, the strongest historical instance of boundaries being classified by closure. Tripos theory, after Hyland, Johnstone, and Pitts, builds models of intuitionistic logic from indexed preorders with structure, which is a fibred order made to carry logic. Jacobs's monograph develops fibred preorders as the general semantics of logic over a base. None of these results is formalized in the companion; they are cited as the tradition the constructions belong to.</p>
 </section>
 <section class="chapter" id="glossary-en" aria-labelledby="glossary-en-h">
 <h2 id="glossary-en-h"><span class="chaplabel">Appendix. </span>Glossary</h2>
@@ -2393,6 +3125,8 @@ theorem noninjective_image_not_order_reflecting :
 <dd>A declared time domain, signal space, and set of admissible trajectories. Equations, state variables, and input/output partitions are presentations of that behavior. Interconnection and hiding require declared interfaces, and an arbitrary family of local behaviors need not satisfy sheaf gluing. Universal safety may hold vacuously when the admitted behavior is empty.</dd>
 <dt>Comparison class</dt>
 <dd>The descriptions, machines, interfaces, or coordinate changes across which a claim is intended to remain stable. Relational objectivity comes from invariance over a declared class. Changing the class after seeing the result does not establish robustness.</dd>
+<dt>Closure operator</dt>
+<dd>An extensive, monotone, idempotent map on a poset of possibilities. Reachable-set formation, observational saturation, and hiding followed by pullback are proved instances; idempotence is why programmed moves and post-processed statistics add nothing. Not every operator in the book has this shape, hiding is not a lattice homomorphism, and a fibrewise closure need not commute with reindexing between contexts.</dd>
 <dt>Contraction margin</dt>
 <dd>For a comparison inequality \(e_{t+1}\le(q_0+\mu)e_t+d\), the positive gap \(1-q_0-\mu\). It supports a geometric error bound while positive. Losing this sufficient margin invalidates the certificate; it does not prove actual divergence.</dd>
 <dt>Coordinate change</dt>
@@ -2414,7 +3148,7 @@ theorem noninjective_image_not_order_reflecting :
 <dt>Feedback capacity</dt>
 <dd>An upper bound on task-relevant information entering through one feedback round under a specified policy and channel model. It is not determined by a noise variance alone, and the scalar Lean budget lemma does not prove that a physical channel has that capacity.</dd>
 <dt>Fibred order</dt>
-<dd>Ambient powersets of context-specific performance spaces, reindexed contravariantly by preimage with identity and composition laws. Preimage reflects inclusion under a surjective point map; a bijection of performance points is sufficient but stronger. Realized attainable regions form only subposets and require preimage closure to reindex; compatible encounter transport is one sufficient witness. A many-to-one direct image is a separate covariant operation that may collapse distinctions. The term supplies no canonical category, topology, manifold, or global total ranking.</dd>
+<dd>Ambient powersets of context-specific performance spaces, reindexed contravariantly by preimage with identity and composition laws. Preimage reflects inclusion under a surjective point map; a bijection of performance points is sufficient but stronger. Realized attainable regions form only subposets and require preimage closure to reindex; compatible encounter transport is one sufficient witness. A many-to-one direct image is a separate covariant operation that may collapse distinctions. The total category and its cartesian lifts are constructed, and the projection is a fibration in the standard sense; the term still supplies no canonical topology, manifold, or global total ranking, and no comparison of unrelated fibres without a supplied context morphism.</dd>
 <dt>Forward simulation</dt>
 <dd>A map sending each concrete step to a valid abstract step, hence each concrete path to an abstract path. It supports sound abstraction of concrete behavior. It does not ensure that an abstract step or plan can be realized from a particular concrete representative.</dd>
 <dt>Information boundary</dt>
@@ -2448,10 +3182,14 @@ theorem noninjective_image_not_order_reflecting :
 <ul class="bib">
 <li>Andrieu, V., and Praly, L. "On the Existence of a Kazantzis-Kravaris/Luenberger Observer." <em>SIAM Journal on Control and Optimization</em> 45(2), 2006. <a href="https://doi.org/10.1137/040617066">DOI</a>.</li>
 <li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em> 24(2), 1953.</li>
+<li>Grothendieck, A. "Categories fibrees et descente." In <em>SGA 1: Revetements etales et groupe fondamental</em>, Expose VI. Springer Lecture Notes in Mathematics 224, 1971.</li>
+<li>Hyland, J. M. E., Johnstone, P. T., and Pitts, A. M. "Tripos Theory." <em>Mathematical Proceedings of the Cambridge Philosophical Society</em> 88(2), 1980. <a href="https://doi.org/10.1017/S0305004100057534">DOI</a>.</li>
+<li>Jacobs, B. <em>Categorical Logic and Type Theory.</em> Studies in Logic and the Foundations of Mathematics 141, North-Holland, 1999.</li>
 <li>Cousot, P., and Cousot, R. "Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints." <em>POPL</em>, 1977.</li>
 <li>Hermann, R., and Krener, A. J. "Nonlinear Controllability and Observability." <em>IEEE Transactions on Automatic Control</em> 22(5), 1977. <a href="https://doi.org/10.1109/TAC.1977.1101601">DOI</a>.</li>
 <li>Kalman, R. E. "A New Approach to Linear Filtering and Prediction Problems." <em>Journal of Basic Engineering</em> 82(1), 1960. <a href="https://doi.org/10.1115/1.3662552">DOI</a>.</li>
 <li>Li, L., Walsh, T. J., and Littman, M. L. "Towards a Unified Theory of State Abstraction for MDPs." <em>ISAIM</em>, 2006.</li>
+<li>Mac Lane, S., and Moerdijk, I. <em>Sheaves in Geometry and Logic: A First Introduction to Topos Theory.</em> Springer, 1992.</li>
 <li>Myhill, J. "Finite Automata and the Representation of Events." Wright Air Development Center Technical Report, 1957.</li>
 <li>Nair, G. N., and Evans, R. J. "Stabilizability of Stochastic Linear Systems with Finite Feedback Data Rates." <em>SIAM Journal on Control and Optimization</em> 43(2), 2004. <a href="https://doi.org/10.1137/S0363012902402116">DOI</a>.</li>
 <li>Nerode, A. "Linear Automaton Transformations." <em>Proceedings of the American Mathematical Society</em> 9(4), 1958.</li>
@@ -2466,7 +3204,7 @@ theorem noninjective_image_not_order_reflecting :
 </section>
 <section class="chapter" id="formal-companion" aria-labelledby="formal-companion-h">
 <h2 id="formal-companion-h"><span class="chaplabel">Companion</span>Formal companion</h2>
-<p>The Lean source is organized by mathematical subject. The two feedback modules distinguish arithmetic verification from the information-theoretic and observer-design premises supplied in prose. Older modules remain in the source tree for independent results, but the book no longer treats every formalizable fragment as part of its conceptual spine.</p>
+<p>The Lean source is organized by mathematical subject. The representation and feedback modules distinguish deterministic information preorder, scalar recurrences, and residual geometry from the stochastic information theory, differential geometry, and observer-design premises supplied in prose. Older modules remain in the source tree for independent results, but the book no longer treats every formalizable fragment as part of its conceptual spine.</p>
 <p>Proofs are checked on the repository's pinned Lean 4 toolchain with no <code>sorry</code>, <code>admit</code>, or <code>native_decide</code>. Difficult new claims are also submitted to Aristotle under its pinned Lean and mathlib version. Returned proofs are rebuilt locally, audited, and their statements compared with the companion; the repository proof may be an independent equivalent proof. Kernel verification establishes derivability from formal hypotheses. It does not establish that those hypotheses are empirically adequate or philosophically exhaustive.</p>
 </section>
 </main>

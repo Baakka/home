@@ -3,37 +3,26 @@ import Mathlib
 /-!
 This snippet is about:
 
-  SplitIndexedOrder
-  reindexHom
-  reindex_id_apply
-  reindex_comp_apply
-  performanceRegions
-  CompatibleEncounterRegions
-  RealizedRegion
-  instPartialOrderRealizedRegion
-  reindexRealized
-  reindexRealized_val
-  realizedRegionOrder
-  realizedRegionOrder_reindex_val
-  ambient_preimage_can_be_unrealized
-  EncounterLE
-  encounterLE_refl
-  encounterLE_trans
-  encounterLE_antisymmetric_iff_injective
-  constant_region_not_antisymmetric
-  surjective_preimage_subset_iff
-  equiv_preimage_subset_iff
-  equiv_preimage_preserves_inclusion
-  equiv_preimage_reflects_inclusion
-  nonsurjective_preimage_not_order_reflecting
-  noninjective_image_not_order_reflecting
+  reindexFunctor
+  toCatFunctor
+  toCatPseudofunctor
+  total
+  projection
+  totalObj
+  cartesianLift
+  cartesianLift_isStronglyCartesian
+  projection_isFibered
+  reindex_is_cartesian_lift
+  fiberFunctor
+  fiberFunctor_isEquivalence
+  fiberEquiv
 
-found at line 355 of 377, near the end of this file.
+found at line 501 of 505, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
 
-/-! Target module: LeanTest/HardProblems/FibredOrder.lean -/
+/-! Inlined dependency: LeanTest/HardProblems/FibredOrder.lean -/
 
 
 /-!
@@ -373,5 +362,144 @@ theorem noninjective_image_not_order_reflecting :
     have : false ∈ ({true} : Set Bool) := h (by simp)
     simp at this
 
+end FibredOrder
+end HardProblems
+
+
+/-! Target module: LeanTest/HardProblems/GrothendieckFibration.lean -/
+
+
+/-!
+# The fibred order is a Grothendieck fibration
+
+Aristotle-verified construction, ported from mathlib v4.28: the split indexed
+order of `FibredOrder` generates a total category via mathlib's contravariant
+`Pseudofunctor.CoGrothendieck`, the projection to the base is a fibration in
+the standard `Functor.IsFibered` sense, the chosen transport `P.reindex f` is
+exactly the domain of the canonical cartesian lift, and each fiber poset is
+equivalent to the standard fiber category of the projection.
+
+Variance, resolved rather than assumed: an *op*fibration over the base would
+need covariant pushforward along context morphisms, that is, left adjoints to
+reindexing, which `SplitIndexedOrder` does not supply. The fibration below is
+the honest orientation, and the only one the data supports.
+
+Thinness earns less than it appears to: mathlib proves the cartesian property
+for the CoGrothendieck of a general category-valued pseudofunctor, so the
+result does not depend on the fibers being posets. What thinness does make
+automatic is uniqueness of fiberwise factorizations, not their existence.
+-/
+
+universe v u w
+
+open CategoryTheory
+open CategoryTheory.Functor
+
+namespace HardProblems
+namespace FibredOrder
+
+-- Our module registers the same instance as `instPartialOrder`; this direct
+-- registration is kept because the ported proofs resolve through it.
+attribute [instance] SplitIndexedOrder.fiberOrder
+
+variable {C : Type u} [Category.{v} C]
+
+/-- Reindexing along one arrow, regarded as a functor between thin categories. -/
+def reindexFunctor (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) :
+    P.Fiber d ⥤ P.Fiber c where
+  obj := P.reindex f
+  map h := homOfLE (P.reindex_mono f h.le)
+
+/-- Package the indexed poset as a genuine contravariant functor into `Cat`. -/
+def toCatFunctor (P : SplitIndexedOrder C) : Cᵒᵖ ⥤ Cat.{w, w} where
+  obj c := Cat.of (P.Fiber c.unop)
+  map f := (reindexFunctor P f.unop).toCatHom
+  map_id c := by
+    apply Cat.Hom.ext
+    apply CategoryTheory.Functor.ext (fun x => P.reindex_id c.unop x)
+  map_comp f g := by
+    apply Cat.Hom.ext
+    apply CategoryTheory.Functor.ext (fun x => P.reindex_comp g.unop f.unop x)
+
+/-- The strict functor, promoted to the pseudofunctor expected by mathlib's
+contravariant Grothendieck construction. -/
+abbrev toCatPseudofunctor (P : SplitIndexedOrder C) :
+    Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{w, w} :=
+  (toCatFunctor P).toPseudoFunctor'
+
+/-- The total category of the indexed order. -/
+abbrev total (P : SplitIndexedOrder C) : Type _ :=
+  Pseudofunctor.CoGrothendieck (toCatPseudofunctor P)
+
+/-- Projection of the total category to the original base. -/
+abbrev projection (P : SplitIndexedOrder C) : total P ⥤ C :=
+  Pseudofunctor.CoGrothendieck.forget (toCatPseudofunctor P)
+
+/-- The total object represented by `x` in the fiber over `c`. -/
+abbrev totalObj (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) : total P :=
+  { base := c, fiber := x }
+
+@[simp] theorem projection_totalObj (P : SplitIndexedOrder C) (c : C) (x : P.Fiber c) :
+    (projection P).obj (totalObj P c x) = c := rfl
+
+/-- The canonical arrow from the reindexed object to the original object. -/
+def cartesianLift (P : SplitIndexedOrder C) {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    totalObj P c (P.reindex f x) ⟶ totalObj P d x where
+  base := f
+  fiber := 𝟙 _
+
+@[simp] theorem projection_cartesianLift (P : SplitIndexedOrder C)
+    {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    (projection P).map (cartesianLift P f x) = f := rfl
+
+/-- The canonical reindexing arrow is strongly cartesian. -/
+theorem cartesianLift_isStronglyCartesian (P : SplitIndexedOrder C)
+    {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    (projection P).IsStronglyCartesian f (cartesianLift P f x) := by
+  change (projection P).IsStronglyCartesian f
+    (Pseudofunctor.CoGrothendieck.cartesianLift (F := toCatPseudofunctor P) x f)
+  exact Pseudofunctor.CoGrothendieck.isStronglyCartesian_homCartesianLift
+    (F := toCatPseudofunctor P) x f
+
+/-- The projection is a fibration over the original base category. -/
+theorem projection_isFibered (P : SplitIndexedOrder C) :
+    (projection P).IsFibered := by
+  infer_instance
+
+/-- The chosen transport is exactly the domain of the canonical cartesian lift,
+and that lift satisfies mathlib's cartesian universal property. -/
+theorem reindex_is_cartesian_lift (P : SplitIndexedOrder C)
+    {c d : C} (f : c ⟶ d) (x : P.Fiber d) :
+    (projection P).IsCartesian f (cartesianLift P f x) ∧
+      Pseudofunctor.CoGrothendieck.domainCartesianLift
+        (F := toCatPseudofunctor P) x f = totalObj P c (P.reindex f x) := by
+  constructor
+  · letI : (projection P).IsStronglyCartesian f (cartesianLift P f x) :=
+      cartesianLift_isStronglyCartesian P f x
+    exact Functor.IsStronglyCartesian.isCartesian_of_isStronglyCartesian
+      (projection P) f (cartesianLift P f x)
+  · rfl
+
+/-- The original thin category maps to the standard fiber of the projection. -/
+abbrev fiberFunctor (P : SplitIndexedOrder C) (c : C) :
+    P.Fiber c ⥤ (projection P).Fiber c :=
+  CategoryTheory.Functor.Fiber.inducedFunctor
+    (Pseudofunctor.CoGrothendieck.comp_const (toCatPseudofunctor P) c)
+
+noncomputable section FiberEquivalence
+
+/-- The standard fiber category of the projection is equivalent to the original
+partial order regarded as a thin category. -/
+theorem fiberFunctor_isEquivalence (P : SplitIndexedOrder C) (c : C) :
+    (fiberFunctor P c).IsEquivalence := by
+  exact HasFibers.equiv c
+
+/-- Goal 4 in explicit categorical form. -/
+noncomputable def fiberEquiv (P : SplitIndexedOrder C) (c : C) :
+    P.Fiber c ≌ (projection P).Fiber c := by
+  letI : (fiberFunctor P c).IsEquivalence := fiberFunctor_isEquivalence P c
+  exact (fiberFunctor P c).asEquivalence
+
+end FiberEquivalence
 end FibredOrder
 end HardProblems
