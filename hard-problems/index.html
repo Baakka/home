@@ -274,6 +274,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-finite-envelopes-and-context-indexed-region-orders" data-target="ch7-finite-envelopes-and-context-indexed-region-orders"><span class="toc-text">Finite envelopes and context-indexed region orders</span></a></li>
 <li><a href="#ch7-the-total-category-and-its-cartesian-lifts" data-target="ch7-the-total-category-and-its-cartesian-lifts"><span class="toc-text">The total category and its cartesian lifts</span></a></li>
 <li><a href="#ch7-boundaries-as-closure-operators" data-target="ch7-boundaries-as-closure-operators"><span class="toc-text">Boundaries as closure operators</span></a></li>
+<li><a href="#ch7-group-completion-forgets-the-order" data-target="ch7-group-completion-forgets-the-order"><span class="toc-text">Group completion forgets the order</span></a></li>
 </ol>
 </li>
 <li>
@@ -711,6 +712,7 @@ q_!(A)=\{q(x):x\in A\}
 \]</div>
 <p>is monotone but can send distinct subsets to the same image and therefore fail to reflect inclusion. Noninjectivity causes that collapse. It does not, by itself, make inverse image fail reflection; surjectivity is the relevant condition there.</p>
 <p>There is no canonical category of all contexts in this book. The objects, performance maps, and reindexing laws are part of each claim. A supplied map allows a heterogeneous comparison between given source and target encounters even when its preimage is not realized by another source encounter. A split fibred order on the realized classes requires preimage closure. Chosen transport of particular encounters is stronger data. Nor does <em>fibred</em> assert a topology, a manifold, a locally total order, or a global ranking.</p>
+<p>One decategorification deserves a verdict rather than a temptation. Group completion sends a commutative monoid of difficulty classes to its Grothendieck group, and the result forgets everything the order carried. Attainable regions compose by union, union is idempotent, and the Grothendieck group of any commutative idempotent monoid is trivial, so the K-group of the region monoid over every performance space collapses to one element. The canonical map identifies two classes exactly when some common factor multiplies both into agreement, and the factors that do the interesting identifying are precisely the non-cancellable ones. Completion is injective on cancellative cost scales such as exact resource counts, and lossy where this chapter's subject matter lives: the saturating budget scale with an absorbing top has trivial completion too. A group-valued invariant obtained this way cannot distinguish any two difficulty classes at all, which is why the book keeps the order and does not pass to its K-theory.</p>
 <h3 id="ch5-finite-envelopes-and-missing-algorithms">Finite envelopes and missing algorithms</h3>
 <p>Let \(E\) be a nonempty finite set of admissible programs and let \(V(p)\) be their value. A maximizer exists because the envelope is finite. If \(E\subseteq F\), the optimum over \(F\) cannot be worse. A strict gap can occur when an excluded program is better than every member of \(E\).</p>
 <p>These elementary facts are useful because they expose a quantifier that is often hidden. An optimum relative to a search envelope is not a global optimum. Expanding the envelope may improve value, but searching the larger envelope may demand more resources. In an infinite envelope, even the existence of a maximizer can fail; the infimum or supremum need not be attained.</p>
@@ -3097,6 +3099,130 @@ theorem interconnect_agrees {T : Type u} {W : Type v}
     ClosureUnification.interconnect B₁ B₂ = Behavioral.interconnect B₁ B₂ :=
   rfl</code></pre></details>
 <p><strong>Boundary.</strong> The closure operators act on possibility sets induced by the information, action, and behavior boundaries; no claim is made that every operator in the book has this shape, and the attainable-region map of the resource boundary is not among them. The lattice-homomorphism strengthening is refuted, not merely left open. Commutation with reindexing is an extra condition to be supplied for each context pair; the counterexample shows it does not follow from the closure laws alone.</p>
+<h3 id="ch7-group-completion-forgets-the-order">Group completion forgets the order</h3>
+<p><strong>Hypotheses.</strong> Difficulty classes form a commutative monoid; the concrete instances are subsets of a performance space under union, and the saturating cost scale obtained by adjoining an absorbing top element to the naturals.</p>
+<p><strong>Conclusion.</strong> The Grothendieck group of every commutative idempotent monoid is a one-element group, with no finiteness or nonemptiness assumption, so the region monoid over every performance space has trivial completion, and the distinct regions containing exactly true and exactly false collapse to the same element. The canonical map identifies two classes exactly when a common factor cancels them into agreement, and it is injective on every cancellative commutative monoid. The saturating cost scale also has trivial additive completion. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (KTheoryCollapse.lean): HardProblems.KTheoryCollapse.RegionMonoid, HardProblems.KTheoryCollapse.grothendieckGroup_subsingleton_of_idempotent, HardProblems.KTheoryCollapse.grothendieckGroup_regionMonoid_subsingleton, HardProblems.KTheoryCollapse.grothendieckGroup_of_eq_iff, HardProblems.KTheoryCollapse.toGrothendieckGroup_injective_of_cancel, HardProblems.KTheoryCollapse.concrete_regions_collapse, HardProblems.KTheoryCollapse.withTop_cost_top_add_image, HardProblems.KTheoryCollapse.saturating_costs_grothendieckAddGroup_subsingleton<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F11-group-completion-forgets-the-order.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Attainable-performance regions over a performance space `P`, composing by
+union. -/
+abbrev RegionMonoid (P : Type u) := Set P
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 1&#x27;: the Grothendieck group of every commutative idempotent monoid is
+trivial. -/
+theorem grothendieckGroup_subsingleton_of_idempotent
+    (M : Type u) [CommMonoid M] (hidem : ∀ a : M, a * a = a) :
+    Subsingleton (GrothendieckGroup M) := by
+  refine ⟨fun x y =&gt; ?_⟩
+  -- We&#x27;ll show all elements equal GrothendieckGroup.of 1
+  suffices ∀ z : GrothendieckGroup M, z = GrothendieckGroup.of 1 by rw [this x, this y]
+  intro z
+  -- Use Quot.induction_on to work with representatives
+  induction z using Quot.induction_on with
+  | h p =&gt; 
+    -- p : M × ⊤, need to show Quot.mk oreEqv p = 1
+    let ⟨a, b⟩ := p
+    -- Need to show Quot.mk oreEqv (a, b) = GrothendieckGroup.of 1
+    -- First show GrothendieckGroup.of 1 = Quot.mk oreEqv (1, 1)
+    have of_one_eq : GrothendieckGroup.of 1 = Quot.mk (OreLocalization.oreEqv ⊤ M) (1, 1) := by
+      rfl
+    rw [of_one_eq]
+    -- Now use Quot.eq
+    apply Quot.sound
+    unfold OreLocalization.oreEqv
+    -- Need ∃ u v, u • (1,1).1 = v • (a,b).1 ∧ u * (1,1).2 = v * (a,b).2
+    -- i.e., ∃ u v, u = v * a ∧ u = v * b
+    -- Take v = a * b, u = a * b
+    refine ⟨⟨a * b, ?_⟩, a * b, ?_⟩
+    · simp
+    · constructor
+      · -- ⟨a * ↑b, _⟩ • 1 = (a * ↑b) • a
+        simp only [Submonoid.mk_smul, smul_eq_mul]
+        rw [mul_one]
+        conv_rhs =&gt; rw [mul_assoc, mul_comm, mul_assoc, hidem]
+        rw [mul_comm]
+      · -- ↑⟨a * ↑b, _⟩ * ↑(1,1).2 = a * ↑b * ↑(a,b).2
+        simp [mul_one]
+        rw [mul_assoc, hidem]
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 1: the Grothendieck group of the region monoid is trivial, for every
+performance type `P` (including the empty type). -/
+theorem grothendieckGroup_regionMonoid_subsingleton (P : Type u) :
+    Subsingleton (GrothendieckGroup (RegionMonoid P)) := by
+  apply grothendieckGroup_subsingleton_of_idempotent
+  exact Set.union_self
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 2: canonical images are equal exactly when the two elements become
+equal after multiplying by a common slack element. -/
+theorem grothendieckGroup_of_eq_iff (M : Type u) [CommMonoid M] (a b : M) :
+    GrothendieckGroup.of a = GrothendieckGroup.of b ↔
+      ∃ c : M, a * c = b * c := by
+  change Localization.mk a 1 = Localization.mk b 1 ↔ _
+  rw [Localization.mk_eq_mk_iff, Localization.r_iff_exists]
+  simp only [Submonoid.coe_one, one_mul]
+  constructor
+  · rintro ⟨c, hc⟩
+    exact ⟨c, by simpa [mul_comm] using hc⟩
+  · rintro ⟨c, hc⟩
+    exact ⟨⟨c, Submonoid.mem_top c⟩, by simpa [mul_comm] using hc⟩
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 3: for a cancellative cost monoid, the canonical map is injective. -/
+theorem toGrothendieckGroup_injective_of_cancel
+    (M : Type u) [CancelCommMonoid M] :
+    Function.Injective (GrothendieckGroup.of : M → GrothendieckGroup M) := by
+  exact GrothendieckGroup.of_injective
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 4: the concrete regions `{true}` and `{false}` are distinct but have
+the same image in the Grothendieck group. -/
+theorem concrete_regions_collapse :
+    ({true} : RegionMonoid Bool) ≠ {false} ∧
+      GrothendieckGroup.of ({true} : RegionMonoid Bool) =
+        GrothendieckGroup.of ({false} : RegionMonoid Bool) := by
+  haveI : Subsingleton (GrothendieckGroup (RegionMonoid Bool)) :=
+    grothendieckGroup_regionMonoid_subsingleton Bool
+  refine ⟨?_, Subsingleton.elim _ _⟩
+  simp [Set.eq_singleton_iff_unique_mem]
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 5a: adding any cost to the absorbing overflow value does not change
+its canonical image. -/
+theorem withTop_cost_top_add_image (a : WithTop ℕ) :
+    GrothendieckAddGroup.of (⊤ + a) =
+      GrothendieckAddGroup.of (⊤ : WithTop ℕ) := by
+  simp
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 5: because `⊤` is absorbing, the entire Grothendieck group of
+`WithTop ℕ` is trivial, not merely the part at or above the cap. -/
+theorem saturating_costs_grothendieckAddGroup_subsingleton :
+    Subsingleton (GrothendieckAddGroup (WithTop ℕ)) := by
+  have hof : ∀ a : WithTop ℕ, GrothendieckAddGroup.of a = 0 := by
+    intro a
+    apply add_right_cancel (b := GrothendieckAddGroup.of (⊤ : WithTop ℕ))
+    rw [← map_add]
+    simp
+  constructor
+  intro x y
+  suffices ∀ z : GrothendieckAddGroup (WithTop ℕ), z = 0 by rw [this x, this y]
+  intro z
+  induction z using AddLocalization.induction_on with
+  | _ p =&gt;
+    have h : AddLocalization.mk p.1 p.2 +
+        GrothendieckAddGroup.of (p.2 : WithTop ℕ) =
+        GrothendieckAddGroup.of p.1 := by
+      change AddLocalization.mk p.1 p.2 +
+          AddLocalization.mk (p.2 : WithTop ℕ) 0 = AddLocalization.mk p.1 0
+      rw [AddLocalization.mk_add, AddLocalization.mk_eq_mk_iff,
+        AddLocalization.r_iff_exists]
+      use 0
+      simp [add_comm]
+    rw [hof _, hof _] at h
+    simpa using h</code></pre></details>
+<p><strong>Boundary.</strong> These results concern one decategorification, group completion of the composition monoid. They do not bar every group-valued or scalar invariant, only those factoring through this completion. Nothing here computes higher K-groups, and nothing identifies the composition operation with the only interesting one; a different monoid structure on encounters could complete differently. The collapse justifies keeping the order; it does not prove the order is the unique alternative.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">Notes</span>Notes and sources</h2>
@@ -3151,6 +3277,8 @@ theorem interconnect_agrees {T : Type u} {W : Type v}
 <dd>Ambient powersets of context-specific performance spaces, reindexed contravariantly by preimage with identity and composition laws. Preimage reflects inclusion under a surjective point map; a bijection of performance points is sufficient but stronger. Realized attainable regions form only subposets and require preimage closure to reindex; compatible encounter transport is one sufficient witness. A many-to-one direct image is a separate covariant operation that may collapse distinctions. The total category and its cartesian lifts are constructed, and the projection is a fibration in the standard sense; the term still supplies no canonical topology, manifold, or global total ranking, and no comparison of unrelated fibres without a supplied context morphism.</dd>
 <dt>Forward simulation</dt>
 <dd>A map sending each concrete step to a valid abstract step, hence each concrete path to an abstract path. It supports sound abstraction of concrete behavior. It does not ensure that an abstract step or plan can be realized from a particular concrete representative.</dd>
+<dt>Group completion</dt>
+<dd>The universal way to turn a commutative monoid of difficulty classes into a group, mathlib&#x27;s Grothendieck group. It identifies two classes whenever some common factor multiplies both into agreement, so the identifying factors are the non-cancellable ones. It is injective on cancellative scales and trivial for idempotent composition such as regions under union. Triviality here rules out invariants factoring through this completion; it does not rule out every numerical summary.</dd>
 <dt>Information boundary</dt>
 <dd>The observations, experiment class, prior state, and channel restrictions governing which distinctions can enter a representation. Computation on the resulting transcript cannot recover a distinction absent from this boundary.</dd>
 <dt>Local step lifting</dt>
@@ -3199,6 +3327,7 @@ theorem interconnect_agrees {T : Type u} {W : Type v}
 <li>Shim, H., and Liberzon, D. "Nonlinear Observers Robust to Measurement Disturbances in an ISS Sense." <em>IEEE Transactions on Automatic Control</em> 61(1), 2016. <a href="https://doi.org/10.1109/TAC.2015.2423911">DOI</a>.</li>
 <li>Sontag, E. D., and Wang, Y. "Output-to-State Stability and Detectability of Nonlinear Systems." <em>Systems &amp; Control Letters</em> 29(5), 1997. <a href="https://doi.org/10.1016/S0167-6911%2897%2990013-X">DOI</a>.</li>
 <li>Schultz, P., and Spivak, D. I. <em>Temporal Type Theory: A Topos-Theoretic Approach to Systems and Behavior.</em> 2017. <a href="https://arxiv.org/abs/1710.10258">arXiv</a>.</li>
+<li>Weibel, C. A. <em>The K-book: An Introduction to Algebraic K-theory.</em> Graduate Studies in Mathematics 145, AMS, 2013.</li>
 <li>Willems, J. C. "The Behavioral Approach to Systems and Control." <em>Journal of the Society of Instrument and Control Engineers</em> 34(8), 1995. <a href="https://doi.org/10.11499/sicejl1962.34.8_603">DOI</a>.</li>
 </ul>
 </section>

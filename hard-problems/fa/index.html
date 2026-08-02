@@ -283,6 +283,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-finite-envelopes-and-context-indexed-region-orders" data-target="ch7-finite-envelopes-and-context-indexed-region-orders"><span class="toc-text">دامنه‌های متناهی و ترتیب‌های ناحیه‌ایِ نمایه‌گذاری‌شده با بافت</span></a></li>
 <li><a href="#ch7-the-total-category-and-its-cartesian-lifts" data-target="ch7-the-total-category-and-its-cartesian-lifts"><span class="toc-text">مقولهٔ کل و لیفت‌های دکارتی‌اش</span></a></li>
 <li><a href="#ch7-boundaries-as-closure-operators" data-target="ch7-boundaries-as-closure-operators"><span class="toc-text">مرزها به‌عنوان عملگرهای بستار</span></a></li>
+<li><a href="#ch7-group-completion-forgets-the-order" data-target="ch7-group-completion-forgets-the-order"><span class="toc-text">تکمیلِ گروهی ترتیب را از یاد می‌برد</span></a></li>
 </ol>
 </li>
 <li>
@@ -720,6 +721,7 @@ q_!(A)=\{q(x):x\in A\}
 \]</div>
 <p>یکنواست، اما می‌تواند زیرمجموعه‌های متفاوت را به یک تصویر بفرستد و ازاین‌رو در بازتاب شمول شکست بخورد. نایک‌به‌یکی موجب این فروپاشی است. این ویژگی به‌خودی‌خود بازتاب پیش‌تصویر را مختل نمی‌کند؛ در آنجا پوشایی شرط مربوط است.</p>
 <p>در این کتاب رده‌ای کانونی از همهٔ بافت‌ها وجود ندارد. اشیا، نگاشت‌های عملکرد و قوانین بازنمایه‌گذاری جزئی از هر ادعا هستند. نگاشت فراهم‌شده امکان مقایسهٔ ناهمگونِ رویارویی‌های داده‌شده در مبدأ و مقصد را می‌دهد، حتی اگر پیش‌تصویرش با رویارویی دیگری در مبدأ تحقق نیابد. ترتیب تاربندی‌شدهٔ شکافته روی رده‌های تحقق‌یافته به بسته‌بودن زیر پیش‌تصویر نیاز دارد. انتقال برگزیدهٔ رویارویی‌های خاص داده‌هایی قوی‌تر است. همچنین <em>تاربندی‌شده</em> نه توپولوژی، نه خمینه، نه ترتیب تام موضعی و نه رتبه‌بندی سراسری را ادعا می‌کند.</p>
+<p>یک مقوله‌زدایی سزاوارِ حکم است، نه وسوسه. تکمیلِ گروهی یک مونوئیدِ جابه‌جاییِ رده‌های دشواری را به گروهِ گروتندیکش می‌برد، و حاصل هر چه ترتیب حمل می‌کرد از یاد می‌برد. ناحیه‌های دست‌یافتنی با اجتماع ترکیب می‌شوند، اجتماع خودتوان است، و گروهِ گروتندیکِ هر مونوئیدِ جابه‌جاییِ خودتوان بدیهی است؛ پس K-گروهِ مونوئیدِ ناحیه‌ها بر هر فضای عملکردی به یک عنصر فرومی‌ریزد. نگاشتِ کانونی دو رده را دقیقاً وقتی یکی می‌گیرد که عاملی مشترک، ضرب‌شده در هر دو، آن‌ها را به توافق برساند؛ و عامل‌هایی که چیزِ تازه‌ای را یکی می‌گیرند دقیقاً همان حذف‌ناپذیرهایند. تکمیل بر مقیاس‌های هزینهٔ حذف‌پذیر مانند شمارش‌های دقیقِ منابع یک‌به‌یک است، و همان‌جا اتلاف‌گر است که موضوعِ این فصل زندگی می‌کند: مقیاسِ بودجهٔ اشباع‌شونده با بیشینهٔ جاذب هم تکمیلِ بدیهی دارد. ناوردایی گروه‌مقدار که از این راه به دست آید نمی‌تواند هیچ دو ردهٔ دشواری را از هم جدا کند، و همین است که کتاب ترتیب را نگه می‌دارد و به K-نظریهٔ آن گذر نمی‌کند.</p>
 <h3 id="ch5-finite-envelopes-and-missing-algorithms">دامنه‌های متناهی و الگوریتم‌های غایب</h3>
 <p>فرض کنید \(E\) مجموعه‌ای متناهی و ناتهی از برنامه‌های مجاز باشد و \(V(p)\) ارزش آن‌ها را نشان دهد. چون دامنه متناهی است، بیشینه‌کننده‌ای وجود دارد. اگر \(E\subseteq F\) باشد، بهینهٔ روی \(F\) نمی‌تواند بدتر باشد. اگر برنامه‌ای حذف‌شده از همهٔ اعضای \(E\) بهتر باشد، شکافی اکید پدید می‌آید.</p>
 <p>این واقعیت‌های ابتدایی سودمندند، زیرا سوری را آشکار می‌کنند که اغلب پنهان است. بهینه نسبت به دامنهٔ جست‌وجو، بهینهٔ سراسری نیست. گسترش دامنه شاید ارزش را بهتر کند، اما جست‌وجوی دامنهٔ بزرگ‌تر ممکن است منابع بیشتری بخواهد. در دامنه‌ای نامتناهی حتی وجود بیشینه‌کننده می‌تواند شکست بخورد و کوچک‌ترین کران بالا یا بزرگ‌ترین کران پایین الزاماً به دست نمی‌آید.</p>
@@ -3106,6 +3108,130 @@ theorem interconnect_agrees {T : Type u} {W : Type v}
     ClosureUnification.interconnect B₁ B₂ = Behavioral.interconnect B₁ B₂ :=
   rfl</code></pre></details>
 <p><strong>مرز.</strong> این عملگرهای بستار بر مجموعه‌های امکانی عمل می‌کنند که مرزهای اطلاعات، کنش و رفتار القا کرده‌اند؛ ادعا نشده که هر عملگرِ کتاب این شکل را دارد، و نگاشتِ ناحیهٔ دست‌یافتنیِ مرزِ منابع در میان آن‌ها نیست. تقویتِ همریختیِ مشبکه‌ای رد شده است، نه صرفاً باز گذاشته شده. جابه‌جایی با بازنمایه‌گذاری شرطی اضافه است که باید برای هر جفتِ بافت عرضه شود؛ مثالِ نقض نشان می‌دهد از قانون‌های بستار به‌تنهایی نتیجه نمی‌شود.</p>
+<h3 id="ch7-group-completion-forgets-the-order">تکمیلِ گروهی ترتیب را از یاد می‌برد</h3>
+<p><strong>فرض‌ها.</strong> رده‌های دشواری یک مونوئیدِ جابه‌جایی می‌سازند؛ نمونه‌های عینی، زیرمجموعه‌های یک فضای عملکردی زیر اجتماع‌اند، و مقیاسِ هزینهٔ اشباع‌شونده‌ای که از افزودنِ یک عنصرِ بیشینهٔ جاذب به اعداد طبیعی به دست می‌آید.</p>
+<p><strong>نتیجه.</strong> گروهِ گروتندیکِ هر مونوئیدِ جابه‌جاییِ خودتوان گروهی یک‌عنصری است، بدون هیچ فرضِ متناهی‌بودن یا ناتهی‌بودن؛ پس مونوئیدِ ناحیه‌ها بر هر فضای عملکردی تکمیلِ بدیهی دارد، و دو ناحیهٔ متمایزی که یکی دقیقاً درست و دیگری دقیقاً نادرست را دربردارد به یک عنصر فرومی‌ریزند. نگاشتِ کانونی دو رده را دقیقاً وقتی یکی می‌گیرد که عاملی مشترک، ضرب‌شده در هر دو، آن‌ها را به توافق برساند، و بر هر مونوئیدِ جابه‌جاییِ حذف‌پذیر یک‌به‌یک است. مقیاسِ هزینهٔ اشباع‌شونده نیز تکمیلِ جمعیِ بدیهی دارد. (بررسی‌شده با ماشین)</p>
+<details class="lean"><summary>Lean declarations and proofs (KTheoryCollapse.lean): HardProblems.KTheoryCollapse.RegionMonoid, HardProblems.KTheoryCollapse.grothendieckGroup_subsingleton_of_idempotent, HardProblems.KTheoryCollapse.grothendieckGroup_regionMonoid_subsingleton, HardProblems.KTheoryCollapse.grothendieckGroup_of_eq_iff, HardProblems.KTheoryCollapse.toGrothendieckGroup_injective_of_cancel, HardProblems.KTheoryCollapse.concrete_regions_collapse, HardProblems.KTheoryCollapse.withTop_cost_top_add_image, HardProblems.KTheoryCollapse.saturating_costs_grothendieckAddGroup_subsingleton<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F11-group-completion-forgets-the-order.lean" target="_blank" rel="noopener" title="این اثبات را در ویرایشگر وب Lean 4 باز می‌کند، که آن را در برابر آخرین نسخهٔ mathlib وارسی می‌کند. این همراه به زنجیرابزاری قدیمی‌تر سنجاق شده، پس شکست در آنجا می‌تواند اختلاف نسخه باشد نه اثباتی خراب.">اجرا</a></summary><pre><code>-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Attainable-performance regions over a performance space `P`, composing by
+union. -/
+abbrev RegionMonoid (P : Type u) := Set P
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 1&#x27;: the Grothendieck group of every commutative idempotent monoid is
+trivial. -/
+theorem grothendieckGroup_subsingleton_of_idempotent
+    (M : Type u) [CommMonoid M] (hidem : ∀ a : M, a * a = a) :
+    Subsingleton (GrothendieckGroup M) := by
+  refine ⟨fun x y =&gt; ?_⟩
+  -- We&#x27;ll show all elements equal GrothendieckGroup.of 1
+  suffices ∀ z : GrothendieckGroup M, z = GrothendieckGroup.of 1 by rw [this x, this y]
+  intro z
+  -- Use Quot.induction_on to work with representatives
+  induction z using Quot.induction_on with
+  | h p =&gt; 
+    -- p : M × ⊤, need to show Quot.mk oreEqv p = 1
+    let ⟨a, b⟩ := p
+    -- Need to show Quot.mk oreEqv (a, b) = GrothendieckGroup.of 1
+    -- First show GrothendieckGroup.of 1 = Quot.mk oreEqv (1, 1)
+    have of_one_eq : GrothendieckGroup.of 1 = Quot.mk (OreLocalization.oreEqv ⊤ M) (1, 1) := by
+      rfl
+    rw [of_one_eq]
+    -- Now use Quot.eq
+    apply Quot.sound
+    unfold OreLocalization.oreEqv
+    -- Need ∃ u v, u • (1,1).1 = v • (a,b).1 ∧ u * (1,1).2 = v * (a,b).2
+    -- i.e., ∃ u v, u = v * a ∧ u = v * b
+    -- Take v = a * b, u = a * b
+    refine ⟨⟨a * b, ?_⟩, a * b, ?_⟩
+    · simp
+    · constructor
+      · -- ⟨a * ↑b, _⟩ • 1 = (a * ↑b) • a
+        simp only [Submonoid.mk_smul, smul_eq_mul]
+        rw [mul_one]
+        conv_rhs =&gt; rw [mul_assoc, mul_comm, mul_assoc, hidem]
+        rw [mul_comm]
+      · -- ↑⟨a * ↑b, _⟩ * ↑(1,1).2 = a * ↑b * ↑(a,b).2
+        simp [mul_one]
+        rw [mul_assoc, hidem]
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 1: the Grothendieck group of the region monoid is trivial, for every
+performance type `P` (including the empty type). -/
+theorem grothendieckGroup_regionMonoid_subsingleton (P : Type u) :
+    Subsingleton (GrothendieckGroup (RegionMonoid P)) := by
+  apply grothendieckGroup_subsingleton_of_idempotent
+  exact Set.union_self
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 2: canonical images are equal exactly when the two elements become
+equal after multiplying by a common slack element. -/
+theorem grothendieckGroup_of_eq_iff (M : Type u) [CommMonoid M] (a b : M) :
+    GrothendieckGroup.of a = GrothendieckGroup.of b ↔
+      ∃ c : M, a * c = b * c := by
+  change Localization.mk a 1 = Localization.mk b 1 ↔ _
+  rw [Localization.mk_eq_mk_iff, Localization.r_iff_exists]
+  simp only [Submonoid.coe_one, one_mul]
+  constructor
+  · rintro ⟨c, hc⟩
+    exact ⟨c, by simpa [mul_comm] using hc⟩
+  · rintro ⟨c, hc⟩
+    exact ⟨⟨c, Submonoid.mem_top c⟩, by simpa [mul_comm] using hc⟩
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 3: for a cancellative cost monoid, the canonical map is injective. -/
+theorem toGrothendieckGroup_injective_of_cancel
+    (M : Type u) [CancelCommMonoid M] :
+    Function.Injective (GrothendieckGroup.of : M → GrothendieckGroup M) := by
+  exact GrothendieckGroup.of_injective
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 4: the concrete regions `{true}` and `{false}` are distinct but have
+the same image in the Grothendieck group. -/
+theorem concrete_regions_collapse :
+    ({true} : RegionMonoid Bool) ≠ {false} ∧
+      GrothendieckGroup.of ({true} : RegionMonoid Bool) =
+        GrothendieckGroup.of ({false} : RegionMonoid Bool) := by
+  haveI : Subsingleton (GrothendieckGroup (RegionMonoid Bool)) :=
+    grothendieckGroup_regionMonoid_subsingleton Bool
+  refine ⟨?_, Subsingleton.elim _ _⟩
+  simp [Set.eq_singleton_iff_unique_mem]
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 5a: adding any cost to the absorbing overflow value does not change
+its canonical image. -/
+theorem withTop_cost_top_add_image (a : WithTop ℕ) :
+    GrothendieckAddGroup.of (⊤ + a) =
+      GrothendieckAddGroup.of (⊤ : WithTop ℕ) := by
+  simp
+
+-- LeanTest/HardProblems/KTheoryCollapse.lean
+/-- Goal 5: because `⊤` is absorbing, the entire Grothendieck group of
+`WithTop ℕ` is trivial, not merely the part at or above the cap. -/
+theorem saturating_costs_grothendieckAddGroup_subsingleton :
+    Subsingleton (GrothendieckAddGroup (WithTop ℕ)) := by
+  have hof : ∀ a : WithTop ℕ, GrothendieckAddGroup.of a = 0 := by
+    intro a
+    apply add_right_cancel (b := GrothendieckAddGroup.of (⊤ : WithTop ℕ))
+    rw [← map_add]
+    simp
+  constructor
+  intro x y
+  suffices ∀ z : GrothendieckAddGroup (WithTop ℕ), z = 0 by rw [this x, this y]
+  intro z
+  induction z using AddLocalization.induction_on with
+  | _ p =&gt;
+    have h : AddLocalization.mk p.1 p.2 +
+        GrothendieckAddGroup.of (p.2 : WithTop ℕ) =
+        GrothendieckAddGroup.of p.1 := by
+      change AddLocalization.mk p.1 p.2 +
+          AddLocalization.mk (p.2 : WithTop ℕ) 0 = AddLocalization.mk p.1 0
+      rw [AddLocalization.mk_add, AddLocalization.mk_eq_mk_iff,
+        AddLocalization.r_iff_exists]
+      use 0
+      simp [add_comm]
+    rw [hof _, hof _] at h
+    simpa using h</code></pre></details>
+<p><strong>مرز.</strong> این نتیجه‌ها به یک مقوله‌زدایی مربوط‌اند: تکمیلِ گروهیِ مونوئیدِ ترکیب. هر ناوردایی گروه‌مقدار یا عددی را رد نمی‌کنند، فقط آن‌هایی را که از این تکمیل می‌گذرند. اینجا هیچ K-گروهِ بالاتری محاسبه نمی‌شود، و هیچ چیزی عملِ ترکیب را یگانه عملِ جالب نمی‌گیرد؛ ساختارِ مونوئیدیِ دیگری بر مواجهه‌ها می‌توانست تکمیلی متفاوت بدهد. این فروریختن نگه‌داشتنِ ترتیب را موجه می‌کند؛ ثابت نمی‌کند ترتیب یگانه گزینه است.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">یادداشت‌ها</span>یادداشت‌ها و منابع</h2>
@@ -3222,6 +3348,7 @@ theorem interconnect_agrees {T : Type u} {W : Type v}
 <li>Shim, H., and Liberzon, D. "Nonlinear Observers Robust to Measurement Disturbances in an ISS Sense." <em>IEEE Transactions on Automatic Control</em> 61(1), 2016. <a href="https://doi.org/10.1109/TAC.2015.2423911">DOI</a>.</li>
 <li>Sontag, E. D., and Wang, Y. "Output-to-State Stability and Detectability of Nonlinear Systems." <em>Systems &amp; Control Letters</em> 29(5), 1997. <a href="https://doi.org/10.1016/S0167-6911%2897%2990013-X">DOI</a>.</li>
 <li>Schultz, P., and Spivak, D. I. <em>Temporal Type Theory: A Topos-Theoretic Approach to Systems and Behavior.</em> 2017. <a href="https://arxiv.org/abs/1710.10258">arXiv</a>.</li>
+<li>Weibel, C. A. <em>The K-book: An Introduction to Algebraic K-theory.</em> Graduate Studies in Mathematics 145, AMS, 2013.</li>
 <li>Willems, J. C. "The Behavioral Approach to Systems and Control." <em>Journal of the Society of Instrument and Control Engineers</em> 34(8), 1995. <a href="https://doi.org/10.11499/sicejl1962.34.8_603">DOI</a>.</li>
 </ul>
 </section>
