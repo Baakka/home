@@ -3,21 +3,26 @@ import Mathlib
 /-!
 This snippet is about:
 
-  reindexFunctor
-  toCatFunctor
-  toCatPseudofunctor
-  total
-  projection
-  totalObj
-  cartesianLift
-  cartesianLift_isStronglyCartesian
-  projection_isFibered
-  reindex_is_cartesian_lift
-  fiberFunctor
-  fiberFunctor_isEquivalence
-  fiberEquiv
+  map_id_eq_of_thin_skeletal
+  map_comp_eq_of_thin_skeletal
+  mapComp_eqToIso_of_thin_skeletal
+  twoCocycle
+  twoCocycle_isCocycle
+  twoCocycle_not_coboundary
+  twistElementIso
+  twistNatIso
+  twistIdHom
+  twistComparison
+  twistedPseudofunctor
+  twistedPseudofunctor_mapComp
+  twist_is_essential
+  mapId_eqToIso_of_thin_skeletal
+  toCatPseudofunctor_fibre_thin
+  toCatPseudofunctor_fibre_skeletal
+  splitIndexedOrder_mapComp_eqToIso
+  splitIndexedOrder_mapId_eqToIso
 
-found at line 500 of 504, near the end of this file.
+found at line 825 of 829, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -366,7 +371,7 @@ end FibredOrder
 end HardProblems
 
 
-/-! Target module: LeanTest/HardProblems/GrothendieckFibration.lean -/
+/-! Inlined dependency: LeanTest/HardProblems/GrothendieckFibration.lean -/
 
 
 /-!
@@ -500,5 +505,325 @@ noncomputable def fiberEquiv (P : SplitIndexedOrder C) (c : C) :
   exact (fiberFunctor P c).asEquivalence
 
 end FiberEquivalence
+
+#print axioms toCatFunctor
+#print axioms total
+#print axioms projection
+#print axioms cartesianLift_isStronglyCartesian
+#print axioms projection_isFibered
+#print axioms reindex_is_cartesian_lift
+#print axioms fiberFunctor_isEquivalence
+#print axioms fiberEquiv
+
 end FibredOrder
+end HardProblems
+
+
+/-! Target module: LeanTest/HardProblems/TwistObstruction.lean -/
+
+
+/-!
+# No twist at the order level, and where one becomes possible
+
+Aristotle-verified, ported from mathlib v4.28. Two halves of one honest
+answer about twisting the fibred order.
+
+**Posets admit no twist.** A pseudofunctor from a locally discrete base
+whose values are thin skeletal categories is strict on the nose: identities
+and composition are preserved as equalities of functors, and every
+comparison isomorphism is an `eqToIso`. Thinness makes parallel comparison
+2-cells unique; skeletality turns comparison isomorphisms into equalities.
+So the split structure of `FibredOrder.SplitIndexedOrder` is not a modeling
+convenience: at the order level nothing non-split was possible.
+
+**With non-thin fibres a genuine twist exists.** Over the one-object base on
+the group Z/2, with fibre the one-object groupoid on Z/2, identity
+reindexing functors, and comparison cells whose distinguished component is
+literally the cup-product cocycle, the data assemble into a pseudofunctor
+whose coherence is the cocycle identity. The cocycle is not a coboundary
+(`twoCocycle_not_coboundary`, a kernel-decided finite check), so no
+re-choice of comparison coefficients flattens the presentation
+(`twist_is_essential`).
+
+Statement discipline: by the general strictification theorem every
+pseudofunctor is equivalent to a strict 2-functor, so nothing here claims
+inequivalence. The claim is presentation-level: this indexed structure, with
+these fibres, cannot be split by re-choosing its comparison components. The
+re-choices are quantified as coefficient functions `ZMod 2 → ZMod 2`; their
+identification with automorphisms of the identity functor is by the
+construction `twistNatIso`, not by a proved equivalence of groups.
+-/
+
+
+open CategoryTheory
+
+namespace HardProblems
+namespace Twist
+
+/-! ## Half A: poset-valued pseudofunctors are strict on the nose -/
+
+section Strictness
+
+variable {C : Type u} [Category.{v} C]
+
+/-- Goal A1. If every value category of a pseudofunctor from a locally
+discrete base is thin and skeletal, then the pseudofunctor preserves
+identities on the nose: the underlying functor of `F.map (id)` equals the
+identity functor. State with whatever locally-discrete encoding of the base
+1-category `C` mathlib's `Pseudofunctor` needs. -/
+theorem map_id_eq_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩)) (c : C) :
+    F.map (𝟙 ⟨c⟩) = 𝟙 (F.obj ⟨c⟩) := by
+  letI := hthin c
+  apply Cat.Hom.ext
+  exact Functor.eq_of_iso (hskel c) (Cat.Hom.toNatIso (F.mapId ⟨c⟩))
+
+/-- Goal A2. Same hypotheses: composition is preserved on the nose. -/
+theorem map_comp_eq_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩))
+    {a b c : C} (f : a ⟶ b) (g : b ⟶ c) :
+    F.map (⟨f⟩ ≫ ⟨g⟩ : (⟨a⟩ : LocallyDiscrete C) ⟶ ⟨c⟩) =
+      F.map ⟨f⟩ ≫ F.map ⟨g⟩ := by
+  letI := hthin c
+  apply Cat.Hom.ext
+  exact Functor.eq_of_iso (hskel c) (Cat.Hom.toNatIso (F.mapComp ⟨f⟩ ⟨g⟩))
+
+/-- Goal A3. The comparison isomorphisms themselves are the identity
+2-cells modulo the equalities above: each `mapComp` component is an
+`eqToIso`. State the cleanest correct version; if a different phrasing of
+"the comparison data is trivial" is more natural in mathlib's API, prove
+that and rename. -/
+theorem mapComp_eqToIso_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩))
+    {a b c : C} (f : a ⟶ b) (g : b ⟶ c) :
+    F.mapComp ⟨f⟩ ⟨g⟩ =
+      eqToIso (map_comp_eq_of_thin_skeletal F hthin hskel f g) := by
+  ext X
+  have thin := hthin c
+  exact Subsingleton.elim _ _
+
+/-- The identity comparison is also equality-induced, completing the pair:
+with thin skeletal values, both comparison isomorphisms of a pseudofunctor
+are `eqToIso`, which is the full content of "strict on the nose". -/
+theorem mapId_eqToIso_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩)) (c : C) :
+    F.mapId ⟨c⟩ = eqToIso (map_id_eq_of_thin_skeletal F hthin hskel c) := by
+  ext X
+  have thin := hthin c
+  exact Subsingleton.elim _ _
+
+end Strictness
+
+/-! ## The bridge: strictness instantiated at the book's own structure
+
+The general theorems above quantify over any poset-valued pseudofunctor; the
+lemmas below apply them to `FibredOrder.toCatPseudofunctor`, so "the
+splitting was forced, not chosen" is a checked statement about the book's
+split indexed order itself, not an unformalized inference. -/
+
+section SplitIndexedOrderBridge
+
+open FibredOrder
+
+variable {C : Type u} [Category.{v} C]
+
+/-- Fibres of the book's indexed order are thin: their homs are proofs. -/
+theorem toCatPseudofunctor_fibre_thin (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) : Quiver.IsThin ((toCatPseudofunctor P).obj ⟨c⟩) := by
+  show Quiver.IsThin (P.Fiber c.unop)
+  intro X Y
+  exact ⟨fun f g => Subsingleton.elim f g⟩
+
+/-- Fibres of the book's indexed order are skeletal: an isomorphism gives
+inequalities both ways, and antisymmetry finishes. -/
+theorem toCatPseudofunctor_fibre_skeletal (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) : Skeletal ((toCatPseudofunctor P).obj ⟨c⟩) := by
+  show Skeletal (P.Fiber c.unop)
+  rintro X Y ⟨i⟩
+  exact le_antisymm (leOfHom i.hom) (leOfHom i.inv)
+
+/-- The splitting of the book's indexed order was forced: its composition
+comparison is equality-induced. -/
+theorem splitIndexedOrder_mapComp_eqToIso (P : SplitIndexedOrder.{v, u, w} C)
+    {a b c : Cᵒᵖ} (f : a ⟶ b) (g : b ⟶ c) :
+    (toCatPseudofunctor P).mapComp ⟨f⟩ ⟨g⟩ =
+      eqToIso (map_comp_eq_of_thin_skeletal (toCatPseudofunctor P)
+        (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P)
+        f g) :=
+  mapComp_eqToIso_of_thin_skeletal (toCatPseudofunctor P)
+    (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P) f g
+
+/-- And its identity comparison likewise. -/
+theorem splitIndexedOrder_mapId_eqToIso (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) :
+    (toCatPseudofunctor P).mapId ⟨c⟩ =
+      eqToIso (map_id_eq_of_thin_skeletal (toCatPseudofunctor P)
+        (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P)
+        c) :=
+  mapId_eqToIso_of_thin_skeletal (toCatPseudofunctor P)
+    (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P) c
+
+end SplitIndexedOrderBridge
+
+/-! ## Half B: a genuine 2-cocycle twist over non-thin fibres
+
+The algebra first, self-contained: `twoCocycle` is the cup-product cocycle
+on Z/2 with Z/2 coefficients and trivial action. It satisfies the cocycle
+identity and is not a coboundary. Then the geometry: it assembles into a
+pseudofunctor with one-object-groupoid fibres whose comparison data realize
+the cocycle. -/
+
+section Cocycle
+
+/-- The cup-product 2-cocycle on `ZMod 2`: `c h h' = h * h'`. Its class
+generates the degree-2 cohomology of Z/2 with Z/2 coefficients, and is the
+obstruction separating the two extensions of Z/2 by Z/2. -/
+def twoCocycle (h h' : ZMod 2) : ZMod 2 := h * h'
+
+/-- Goal B1. The cocycle identity, with trivial action:
+`c(h',h'') - c(h+h',h'') + c(h,h'+h'') - c(h,h') = 0`. -/
+theorem twoCocycle_isCocycle (h h' h'' : ZMod 2) :
+    twoCocycle h' h'' - twoCocycle (h + h') h''
+      + twoCocycle h (h' + h'') - twoCocycle h h' = 0 := by
+  simp only [twoCocycle]
+  ring
+
+/-- Goal B2. Not a coboundary: no 1-cochain `φ` has
+`c(h,h') = φ h' - φ (h+h') + φ h` everywhere. This is the precise sense in
+which the comparison data below cannot be normalized away. -/
+theorem twoCocycle_not_coboundary :
+    ¬ ∃ φ : ZMod 2 → ZMod 2,
+      ∀ h h', twoCocycle h h' = φ h' - φ (h + h') + φ h := by
+  decide
+
+end Cocycle
+
+section TwistedPseudofunctor
+
+/-- Goal B3. The twisted assembly. Construct a pseudofunctor from the
+one-object bicategory on the group Z/2 (choose mathlib's most convenient
+encoding of B(Z/2) as a base: `LocallyDiscrete (SingleObj ..)` is WRONG
+because the twist needs the base morphisms to compose 1-categorically while
+the comparison lives in the fibre; the base should be the locally discrete
+bicategory on the one-object category of the group, and the fibre
+`Cat`-object the one-object groupoid on Z/2). Requirements, which are the
+content:
+
+* every 1-cell of the base maps to the identity functor on the fibre;
+* the `mapComp` comparison for a composable pair `(h, h')` is the natural
+  automorphism of the identity functor given by the central element
+  `twoCocycle h h'`;
+* the pseudofunctor coherence fields reduce to, and are discharged by,
+  `twoCocycle_isCocycle` and the normalization `twoCocycle 0 h = 0`.
+
+If the definition cannot be assembled with mapComp literally equal to that
+automorphism, state and prove the closest faithful version and explain the
+gap in the summary. Do not silently weaken it to a strict pseudofunctor. -/
+abbrev TwistGroup := Multiplicative (ZMod 2)
+abbrev TwistBase := SingleObj TwistGroup
+abbrev TwistFibre := SingleObj TwistGroup
+
+def twistElementIso (x : ZMod 2) :
+    (SingleObj.star TwistGroup : TwistFibre) ≅ SingleObj.star TwistGroup :=
+  Iso.mk (Multiplicative.ofAdd x) (Multiplicative.ofAdd (-x))
+    (by change -x + x = 0; exact neg_add_cancel x)
+    (by change x + -x = 0; exact add_neg_cancel x)
+
+def twistNatIso (x : ZMod 2) : 𝟭 TwistFibre ≅ 𝟭 TwistFibre :=
+  NatIso.ofComponents (fun _ => twistElementIso x) (by
+    intro X Y f
+    cases X
+    cases Y
+    first
+      | exact mul_comm f (Multiplicative.ofAdd x)
+      | exact mul_comm (Multiplicative.ofAdd x) f)
+
+def twistIdHom : (Cat.of TwistFibre) ⟶ Cat.of TwistFibre :=
+  (𝟭 TwistFibre).toCatHom
+
+/-- The comparison 2-isomorphism whose distinguished component is literally
+`twoCocycle h h'`.  The right-unitor only reconciles the wrapper used by
+`Cat` for the composite of two identity functors. -/
+def twistComparison (h h' : ZMod 2) :
+    twistIdHom ≅ twistIdHom ≫ twistIdHom :=
+  Cat.Hom.isoMk
+    (twistNatIso (twoCocycle h h') ≪≫ (Functor.rightUnitor (𝟭 TwistFibre)).symm)
+
+noncomputable def twistedPseudofunctor :
+    Pseudofunctor (LocallyDiscrete TwistBase) Cat :=
+  LocallyDiscrete.mkPseudofunctor
+    (fun _ => Cat.of TwistFibre)
+    (fun _ => twistIdHom)
+    (fun _ => Cat.Hom.isoMk (Iso.refl _))
+    (fun f g => by
+      cases ‹TwistBase›
+      cases ‹TwistBase›
+      cases ‹TwistBase›
+      change TwistGroup at f g
+      exact twistComparison (Multiplicative.toAdd f) (Multiplicative.toAdd g))
+    (by
+      intros b₀ b₁ b₂ b₃ f g h
+      cases b₀; cases b₁; cases b₂; cases b₃
+      show _
+      simp only [Cat.of]
+      show _
+      change Multiplicative (ZMod 2) at f g h
+      have hc := twoCocycle_isCocycle
+        (Multiplicative.toAdd f) (Multiplicative.toAdd g) (Multiplicative.toAdd h)
+      fin_cases f <;> fin_cases g <;> fin_cases h <;> simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents, Functor.rightUnitor, Bicategory.associator] <;>
+        ext <;> simp_all [twistIdHom, twoCocycle] <;> norm_cast
+      all_goals rename_i X
+      all_goals cases X
+      all_goals change (_ : TwistGroup) = _
+      all_goals rfl)
+    (by
+      intros b₀ b₁ f
+      cases b₀; cases b₁
+      change Multiplicative (ZMod 2) at f
+      fin_cases f <;> simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents] <;>
+        ext <;> simp_all [twistIdHom, twoCocycle] <;> norm_cast)
+    (by
+      intros b₀ b₁ f
+      cases b₀; cases b₁
+      change Multiplicative (ZMod 2) at f
+      fin_cases f <;> simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents, Functor.rightUnitor] <;>
+        ext <;> simp_all [twistIdHom, twoCocycle] <;> norm_cast)
+
+/-- The comparison of `twistedPseudofunctor` is the cocycle comparison by
+construction. -/
+theorem twistedPseudofunctor_mapComp (h h' : TwistGroup) :
+    twistedPseudofunctor.mapComp
+        (⟨h⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶ ⟨SingleObj.star TwistGroup⟩)
+        (⟨h'⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶ ⟨SingleObj.star TwistGroup⟩) =
+      twistComparison (Multiplicative.toAdd h) (Multiplicative.toAdd h') := by
+  rfl
+
+/-- Goal B4. No re-choice of comparison components has coboundary equal to
+(the negative of, equivalently in `ZMod 2`, equal to) the coefficients of the
+actual comparison cells of `twistedPseudofunctor`. -/
+theorem twist_is_essential :
+    (∀ h h' : TwistGroup,
+      twistedPseudofunctor.mapComp
+          (⟨h⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶
+            ⟨SingleObj.star TwistGroup⟩)
+          (⟨h'⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶
+            ⟨SingleObj.star TwistGroup⟩) =
+        twistComparison (Multiplicative.toAdd h) (Multiplicative.toAdd h')) ∧
+    ¬ ∃ φ : ZMod 2 → ZMod 2,
+      ∀ h h', twoCocycle h h' = φ h' - φ (h + h') + φ h := by
+  exact ⟨twistedPseudofunctor_mapComp, twoCocycle_not_coboundary⟩
+
+end TwistedPseudofunctor
+end Twist
 end HardProblems

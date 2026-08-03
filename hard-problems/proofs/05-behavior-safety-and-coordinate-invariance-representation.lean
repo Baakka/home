@@ -22,7 +22,7 @@ This snippet is about:
   path_nonempty_relabel_iff
   barrier_relabel_eq
 
-found at line 413 of 416, near the end of this file.
+found at line 412 of 415, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -286,7 +286,6 @@ unchanged, was checked under Lean/mathlib v4.28, and was then ported here.
 
 open scoped ENNReal
 
-universe u v
 
 /-- A finite path including both endpoints. -/
 structure PathBetween {X : Type u} (Adj : X → X → Prop) (x y : X) where

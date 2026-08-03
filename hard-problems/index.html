@@ -275,6 +275,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch7-the-total-category-and-its-cartesian-lifts" data-target="ch7-the-total-category-and-its-cartesian-lifts"><span class="toc-text">The total category and its cartesian lifts</span></a></li>
 <li><a href="#ch7-boundaries-as-closure-operators" data-target="ch7-boundaries-as-closure-operators"><span class="toc-text">Boundaries as closure operators</span></a></li>
 <li><a href="#ch7-group-completion-forgets-the-order" data-target="ch7-group-completion-forgets-the-order"><span class="toc-text">Group completion forgets the order</span></a></li>
+<li><a href="#ch7-no-twist-at-the-order-level" data-target="ch7-no-twist-at-the-order-level"><span class="toc-text">No twist at the order level</span></a></li>
 </ol>
 </li>
 <li>
@@ -713,6 +714,7 @@ q_!(A)=\{q(x):x\in A\}
 <p>is monotone but can send distinct subsets to the same image and therefore fail to reflect inclusion. Noninjectivity causes that collapse. It does not, by itself, make inverse image fail reflection; surjectivity is the relevant condition there.</p>
 <p>There is no canonical category of all contexts in this book. The objects, performance maps, and reindexing laws are part of each claim. A supplied map allows a heterogeneous comparison between given source and target encounters even when its preimage is not realized by another source encounter. A split fibred order on the realized classes requires preimage closure. Chosen transport of particular encounters is stronger data. Nor does <em>fibred</em> assert a topology, a manifold, a locally total order, or a global ranking.</p>
 <p>One decategorification deserves a verdict rather than a temptation. Group completion sends a commutative monoid of difficulty classes to its Grothendieck group, and the result forgets everything the order carried. Attainable regions compose by union, union is idempotent, and the Grothendieck group of any commutative idempotent monoid is trivial, so the K-group of the region monoid over every performance space collapses to one element. The canonical map identifies two classes exactly when some common factor multiplies both into agreement, and the factors that do the interesting identifying are precisely the non-cancellable ones. Completion is injective on cancellative cost scales such as exact resource counts, and lossy where this chapter's subject matter lives: the saturating budget scale with an absorbing top has trivial completion too. A group-valued invariant obtained this way cannot distinguish any two difficulty classes at all, which is why the book keeps the order and does not pass to its K-theory.</p>
+<p>A second decategorification temptation is the twist. In twisted K-theory, local invariants that fail to glue globally are governed by a cocycle, and the twist class measures the failure of any consistent global identification. The fibred order is in the gluing situation, and path-dependent performance translations, conversions between contexts that fail to compose on the nose, would be exactly such a cocycle. Both routes to a twist are closed here, and both closures are checked. The fibres are posets, and poset-valued indexed structures are strict on the nose, so there is no comparison data for a twist to live in. The coefficient K-groups are trivial by the collapse above, so a twist would in any case have nothing to act on. The moment the fibres carry genuine automorphisms the obstruction becomes real: a two-element-group example carries comparison data given by a cocycle that no re-choice of coefficients can flatten. A twisted theory of difficulty would need exactly that, fibres that remember more than the order, and coefficients drawn from the cancellative part where completion is faithful.</p>
 <h3 id="ch5-finite-envelopes-and-missing-algorithms">Finite envelopes and missing algorithms</h3>
 <p>Let \(E\) be a nonempty finite set of admissible programs and let \(V(p)\) be their value. A maximizer exists because the envelope is finite. If \(E\subseteq F\), the optimum over \(F\) cannot be worse. A strict gap can occur when an excluded program is better than every member of \(E\).</p>
 <p>These elementary facts are useful because they expose a quantifier that is often hidden. An optimum relative to a search envelope is not a global optimum. Expanding the envelope may improve value, but searching the larger envelope may demand more resources. In an infinite envelope, even the existence of a maximizer can fail; the infimum or supremum need not be attained.</p>
@@ -2816,7 +2818,7 @@ noncomputable def fiberEquiv (P : SplitIndexedOrder C) (c : C) :
     P.Fiber c ≌ (projection P).Fiber c := by
   letI : (fiberFunctor P c).IsEquivalence := fiberFunctor_isEquivalence P c
   exact (fiberFunctor P c).asEquivalence</code></pre></details>
-<p><strong>Boundary.</strong> The data are used to construct a fibration and nothing more. An opfibration would need covariant transport, that is, left adjoints to reindexing, which the structure does not supply; none is constructed, and none is refuted. Thinness of the fibres makes uniqueness of fibrewise factorizations automatic, but the cartesian property itself is inherited from the general construction and does not depend on the fibres being posets. Nothing identifies objects of unrelated fibres without a supplied context morphism.</p>
+<p><strong>Boundary.</strong> The data are used to construct a fibration and nothing more. An opfibration would need covariant transport, that is, left adjoints to reindexing, which the structure does not supply; none is constructed, and none is refuted. A later card shows the splitting itself was forced rather than chosen: with poset fibres, no non-split presentation exists. Thinness of the fibres makes uniqueness of fibrewise factorizations automatic, but the cartesian property itself is inherited from the general construction and does not depend on the fibres being posets. Nothing identifies objects of unrelated fibres without a supplied context morphism.</p>
 <h3 id="ch7-boundaries-as-closure-operators">Boundaries as closure operators</h3>
 <p><strong>Hypotheses.</strong> A set of primitive transformations on a state space; an observation map on states; behaviors with hiding along a signal projection; and, separately, two ordered sets of possibilities related by a monotone reindexing map, each carrying a closure operator.</p>
 <p><strong>Conclusion.</strong> Reachable-set formation, observational saturation, and hiding followed by pullback along the projection are closure operators in mathlib's sense: extensive, monotone, and idempotent. Inserting a transformation that is already pointwise reachable leaves the reachable set fixed, and refining the observation map never enlarges any saturation. Adjoining the constant-true move to the empty move set over the Booleans strictly enlarges the reach of one starting state, with the witness in the statement rather than behind an existential. Hiding preserves interconnection only up to inclusion, and an explicit example makes the inclusion strict. An explicit finite example shows a closure operator need not commute with a monotone reindexing map, which is how the fibrewise reading fails. Every local copy of a borrowed definition appearing in a statement here is pinned to its home-module original by an agreement lemma, so the statements cannot drift from what the rest of the companion proves. (machine-checked)</p>
@@ -3223,6 +3225,231 @@ theorem saturating_costs_grothendieckAddGroup_subsingleton :
     rw [hof _, hof _] at h
     simpa using h</code></pre></details>
 <p><strong>Boundary.</strong> These results concern one decategorification, group completion of the composition monoid. They do not bar every group-valued or scalar invariant, only those factoring through this completion. Nothing here computes higher K-groups, and nothing identifies the composition operation with the only interesting one; a different monoid structure on encounters could complete differently. The collapse justifies keeping the order; it does not prove the order is the unique alternative.</p>
+<h3 id="ch7-no-twist-at-the-order-level">No twist at the order level</h3>
+<p><strong>Hypotheses.</strong> A pseudofunctor from a locally discrete base category whose value categories are thin and skeletal, that is, posets. Separately, the one-object base on the two-element group, with fibre the one-object groupoid on the same group and comparison cells built from the cup-product cocycle.</p>
+<p><strong>Conclusion.</strong> Poset-valued pseudofunctors are strict on the nose: identities and composition are preserved as equalities of functors, and every comparison isomorphism is an equality-induced isomorphism. The split indexed order was therefore forced, not chosen. Over the non-thin fibre the cocycle data assemble into a genuine pseudofunctor whose coherence proof is the cocycle identity, its comparison cells are the cocycle comparisons by definitional equality, and no re-choice of coefficients has coboundary matching them, because the cup-product cocycle is not a coboundary, by a kernel-decided finite check. The strictness half is also instantiated at the book's own split indexed order: its fibres are proved thin and skeletal, and both of its comparison isomorphisms are equality-induced. (machine-checked)</p>
+<details class="lean"><summary>Lean declarations and proofs (TwistObstruction.lean): HardProblems.Twist.map_id_eq_of_thin_skeletal, HardProblems.Twist.map_comp_eq_of_thin_skeletal, HardProblems.Twist.mapComp_eqToIso_of_thin_skeletal, HardProblems.Twist.twoCocycle, HardProblems.Twist.twoCocycle_isCocycle, HardProblems.Twist.twoCocycle_not_coboundary, HardProblems.Twist.twistElementIso, HardProblems.Twist.twistNatIso, HardProblems.Twist.twistIdHom, HardProblems.Twist.twistComparison, HardProblems.Twist.twistedPseudofunctor, HardProblems.Twist.twistedPseudofunctor_mapComp, HardProblems.Twist.twist_is_essential, HardProblems.Twist.mapId_eqToIso_of_thin_skeletal, HardProblems.Twist.toCatPseudofunctor_fibre_thin, HardProblems.Twist.toCatPseudofunctor_fibre_skeletal, HardProblems.Twist.splitIndexedOrder_mapComp_eqToIso, HardProblems.Twist.splitIndexedOrder_mapId_eqToIso<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F12-no-twist-at-the-order-level.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><pre><code>-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal A1. If every value category of a pseudofunctor from a locally
+discrete base is thin and skeletal, then the pseudofunctor preserves
+identities on the nose: the underlying functor of `F.map (id)` equals the
+identity functor. State with whatever locally-discrete encoding of the base
+1-category `C` mathlib&#x27;s `Pseudofunctor` needs. -/
+theorem map_id_eq_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩)) (c : C) :
+    F.map (𝟙 ⟨c⟩) = 𝟙 (F.obj ⟨c⟩) := by
+  letI := hthin c
+  apply Cat.Hom.ext
+  exact Functor.eq_of_iso (hskel c) (Cat.Hom.toNatIso (F.mapId ⟨c⟩))
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal A2. Same hypotheses: composition is preserved on the nose. -/
+theorem map_comp_eq_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩))
+    {a b c : C} (f : a ⟶ b) (g : b ⟶ c) :
+    F.map (⟨f⟩ ≫ ⟨g⟩ : (⟨a⟩ : LocallyDiscrete C) ⟶ ⟨c⟩) =
+      F.map ⟨f⟩ ≫ F.map ⟨g⟩ := by
+  letI := hthin c
+  apply Cat.Hom.ext
+  exact Functor.eq_of_iso (hskel c) (Cat.Hom.toNatIso (F.mapComp ⟨f⟩ ⟨g⟩))
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal A3. The comparison isomorphisms themselves are the identity
+2-cells modulo the equalities above: each `mapComp` component is an
+`eqToIso`. State the cleanest correct version; if a different phrasing of
+&quot;the comparison data is trivial&quot; is more natural in mathlib&#x27;s API, prove
+that and rename. -/
+theorem mapComp_eqToIso_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩))
+    {a b c : C} (f : a ⟶ b) (g : b ⟶ c) :
+    F.mapComp ⟨f⟩ ⟨g⟩ =
+      eqToIso (map_comp_eq_of_thin_skeletal F hthin hskel f g) := by
+  ext X
+  have thin := hthin c
+  exact Subsingleton.elim _ _
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- The cup-product 2-cocycle on `ZMod 2`: `c h h&#x27; = h * h&#x27;`. Its class
+generates the degree-2 cohomology of Z/2 with Z/2 coefficients, and is the
+obstruction separating the two extensions of Z/2 by Z/2. -/
+def twoCocycle (h h&#x27; : ZMod 2) : ZMod 2 := h * h&#x27;
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal B1. The cocycle identity, with trivial action:
+`c(h&#x27;,h&#x27;&#x27;) - c(h+h&#x27;,h&#x27;&#x27;) + c(h,h&#x27;+h&#x27;&#x27;) - c(h,h&#x27;) = 0`. -/
+theorem twoCocycle_isCocycle (h h&#x27; h&#x27;&#x27; : ZMod 2) :
+    twoCocycle h&#x27; h&#x27;&#x27; - twoCocycle (h + h&#x27;) h&#x27;&#x27;
+      + twoCocycle h (h&#x27; + h&#x27;&#x27;) - twoCocycle h h&#x27; = 0 := by
+  simp only [twoCocycle]
+  ring
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal B2. Not a coboundary: no 1-cochain `φ` has
+`c(h,h&#x27;) = φ h&#x27; - φ (h+h&#x27;) + φ h` everywhere. This is the precise sense in
+which the comparison data below cannot be normalized away. -/
+theorem twoCocycle_not_coboundary :
+    ¬ ∃ φ : ZMod 2 → ZMod 2,
+      ∀ h h&#x27;, twoCocycle h h&#x27; = φ h&#x27; - φ (h + h&#x27;) + φ h := by
+  decide
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+def twistElementIso (x : ZMod 2) :
+    (SingleObj.star TwistGroup : TwistFibre) ≅ SingleObj.star TwistGroup :=
+  Iso.mk (Multiplicative.ofAdd x) (Multiplicative.ofAdd (-x))
+    (by change -x + x = 0; exact neg_add_cancel x)
+    (by change x + -x = 0; exact add_neg_cancel x)
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+def twistNatIso (x : ZMod 2) : 𝟭 TwistFibre ≅ 𝟭 TwistFibre :=
+  NatIso.ofComponents (fun _ =&gt; twistElementIso x) (by
+    intro X Y f
+    cases X
+    cases Y
+    first
+      | exact mul_comm f (Multiplicative.ofAdd x)
+      | exact mul_comm (Multiplicative.ofAdd x) f)
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+def twistIdHom : (Cat.of TwistFibre) ⟶ Cat.of TwistFibre :=
+  (𝟭 TwistFibre).toCatHom
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- The comparison 2-isomorphism whose distinguished component is literally
+`twoCocycle h h&#x27;`.  The right-unitor only reconciles the wrapper used by
+`Cat` for the composite of two identity functors. -/
+def twistComparison (h h&#x27; : ZMod 2) :
+    twistIdHom ≅ twistIdHom ≫ twistIdHom :=
+  Cat.Hom.isoMk
+    (twistNatIso (twoCocycle h h&#x27;) ≪≫ (Functor.rightUnitor (𝟭 TwistFibre)).symm)
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+noncomputable def twistedPseudofunctor :
+    Pseudofunctor (LocallyDiscrete TwistBase) Cat :=
+  LocallyDiscrete.mkPseudofunctor
+    (fun _ =&gt; Cat.of TwistFibre)
+    (fun _ =&gt; twistIdHom)
+    (fun _ =&gt; Cat.Hom.isoMk (Iso.refl _))
+    (fun f g =&gt; by
+      cases ‹TwistBase›
+      cases ‹TwistBase›
+      cases ‹TwistBase›
+      change TwistGroup at f g
+      exact twistComparison (Multiplicative.toAdd f) (Multiplicative.toAdd g))
+    (by
+      intros b₀ b₁ b₂ b₃ f g h
+      cases b₀; cases b₁; cases b₂; cases b₃
+      show _
+      simp only [Cat.of]
+      show _
+      change Multiplicative (ZMod 2) at f g h
+      have hc := twoCocycle_isCocycle
+        (Multiplicative.toAdd f) (Multiplicative.toAdd g) (Multiplicative.toAdd h)
+      fin_cases f &lt;;&gt; fin_cases g &lt;;&gt; fin_cases h &lt;;&gt; simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents, Functor.rightUnitor, Bicategory.associator] &lt;;&gt;
+        ext &lt;;&gt; simp_all [twistIdHom, twoCocycle] &lt;;&gt; norm_cast
+      all_goals rename_i X
+      all_goals cases X
+      all_goals change (_ : TwistGroup) = _
+      all_goals rfl)
+    (by
+      intros b₀ b₁ f
+      cases b₀; cases b₁
+      change Multiplicative (ZMod 2) at f
+      fin_cases f &lt;;&gt; simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents] &lt;;&gt;
+        ext &lt;;&gt; simp_all [twistIdHom, twoCocycle] &lt;;&gt; norm_cast)
+    (by
+      intros b₀ b₁ f
+      cases b₀; cases b₁
+      change Multiplicative (ZMod 2) at f
+      fin_cases f &lt;;&gt; simp_all [twistComparison, twistNatIso,
+        twistElementIso, NatIso.ofComponents, Functor.rightUnitor] &lt;;&gt;
+        ext &lt;;&gt; simp_all [twistIdHom, twoCocycle] &lt;;&gt; norm_cast)
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- The comparison of `twistedPseudofunctor` is the cocycle comparison by
+construction. -/
+theorem twistedPseudofunctor_mapComp (h h&#x27; : TwistGroup) :
+    twistedPseudofunctor.mapComp
+        (⟨h⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶ ⟨SingleObj.star TwistGroup⟩)
+        (⟨h&#x27;⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶ ⟨SingleObj.star TwistGroup⟩) =
+      twistComparison (Multiplicative.toAdd h) (Multiplicative.toAdd h&#x27;) := by
+  rfl
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Goal B4. No re-choice of comparison components has coboundary equal to
+(the negative of, equivalently in `ZMod 2`, equal to) the coefficients of the
+actual comparison cells of `twistedPseudofunctor`. -/
+theorem twist_is_essential :
+    (∀ h h&#x27; : TwistGroup,
+      twistedPseudofunctor.mapComp
+          (⟨h⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶
+            ⟨SingleObj.star TwistGroup⟩)
+          (⟨h&#x27;⟩ : (⟨SingleObj.star TwistGroup⟩ : LocallyDiscrete TwistBase) ⟶
+            ⟨SingleObj.star TwistGroup⟩) =
+        twistComparison (Multiplicative.toAdd h) (Multiplicative.toAdd h&#x27;)) ∧
+    ¬ ∃ φ : ZMod 2 → ZMod 2,
+      ∀ h h&#x27;, twoCocycle h h&#x27; = φ h&#x27; - φ (h + h&#x27;) + φ h := by
+  exact ⟨twistedPseudofunctor_mapComp, twoCocycle_not_coboundary⟩
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- The identity comparison is also equality-induced, completing the pair:
+with thin skeletal values, both comparison isomorphisms of a pseudofunctor
+are `eqToIso`, which is the full content of &quot;strict on the nose&quot;. -/
+theorem mapId_eqToIso_of_thin_skeletal
+    (F : Pseudofunctor (LocallyDiscrete C) Cat.{w, w})
+    (hthin : ∀ c : C, Quiver.IsThin (F.obj ⟨c⟩))
+    (hskel : ∀ c : C, Skeletal (F.obj ⟨c⟩)) (c : C) :
+    F.mapId ⟨c⟩ = eqToIso (map_id_eq_of_thin_skeletal F hthin hskel c) := by
+  ext X
+  have thin := hthin c
+  exact Subsingleton.elim _ _
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Fibres of the book&#x27;s indexed order are thin: their homs are proofs. -/
+theorem toCatPseudofunctor_fibre_thin (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) : Quiver.IsThin ((toCatPseudofunctor P).obj ⟨c⟩) := by
+  show Quiver.IsThin (P.Fiber c.unop)
+  intro X Y
+  exact ⟨fun f g =&gt; Subsingleton.elim f g⟩
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- Fibres of the book&#x27;s indexed order are skeletal: an isomorphism gives
+inequalities both ways, and antisymmetry finishes. -/
+theorem toCatPseudofunctor_fibre_skeletal (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) : Skeletal ((toCatPseudofunctor P).obj ⟨c⟩) := by
+  show Skeletal (P.Fiber c.unop)
+  rintro X Y ⟨i⟩
+  exact le_antisymm (leOfHom i.hom) (leOfHom i.inv)
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- The splitting of the book&#x27;s indexed order was forced: its composition
+comparison is equality-induced. -/
+theorem splitIndexedOrder_mapComp_eqToIso (P : SplitIndexedOrder.{v, u, w} C)
+    {a b c : Cᵒᵖ} (f : a ⟶ b) (g : b ⟶ c) :
+    (toCatPseudofunctor P).mapComp ⟨f⟩ ⟨g⟩ =
+      eqToIso (map_comp_eq_of_thin_skeletal (toCatPseudofunctor P)
+        (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P)
+        f g) :=
+  mapComp_eqToIso_of_thin_skeletal (toCatPseudofunctor P)
+    (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P) f g
+
+-- LeanTest/HardProblems/TwistObstruction.lean
+/-- And its identity comparison likewise. -/
+theorem splitIndexedOrder_mapId_eqToIso (P : SplitIndexedOrder.{v, u, w} C)
+    (c : Cᵒᵖ) :
+    (toCatPseudofunctor P).mapId ⟨c⟩ =
+      eqToIso (map_id_eq_of_thin_skeletal (toCatPseudofunctor P)
+        (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P)
+        c) :=
+  mapId_eqToIso_of_thin_skeletal (toCatPseudofunctor P)
+    (toCatPseudofunctor_fibre_thin P) (toCatPseudofunctor_fibre_skeletal P) c</code></pre></details>
+<p><strong>Boundary.</strong> By general strictification every pseudofunctor is equivalent to some strict 2-functor, so no inequivalence is claimed; the result is about this presentation. The re-choices are quantified as coefficient functions on the group, and their identification with automorphisms of the identity functor is by construction rather than by a proved group isomorphism. Nothing here defines a twisted K-theory of difficulty: with poset fibres there is no twist to act, with the collapsed coefficients of the previous card there is nothing to act on, and the analogy is closed at the obstruction, in both directions, rather than developed.</p>
 </section>
 <section class="chapter" id="notes" aria-labelledby="notes-h">
 <h2 id="notes-h"><span class="chaplabel">Notes</span>Notes and sources</h2>
@@ -3233,7 +3460,7 @@ theorem saturating_costs_grothendieckAddGroup_subsingleton :
 <p>The residual-set distinction among accommodation, detection, and isolation is standard in model-based fault diagnosis. The \(2\rho\) threshold follows from deterministic norm-ball geometry and is only a worst-case sufficient separation condition. Patton and Chen discuss robust observer-based fault detection and isolation in a broader setting.</p>
 <p>The finite-state arguments belong to the Myhill-Nerode tradition: behaviorally distinguishable histories require distinct states. The abstraction conditions are elementary path versions of simulation and lifting ideas used in abstract interpretation and state abstraction. The formal theorems are intentionally smaller than those general theories.</p>
 <p>Willems's behavioral approach treats a system as its admitted trajectories rather than privileging an input/output or state-space presentation. The book's Lean module checks only the set-theoretic core: intersection, projection, universal safety, discrete invariance, and binary function gluing. Schultz and Spivak construct a substantially richer temporal type theory in a topos of sheaves. That work motivates the local semantics here; it does not make the book's elementary formalization a topos model.</p>
-<p>The closure-operator reading of boundaries has classical precedents that fix its vocabulary. Grothendieck introduced fibred categories and their cartesian lifts; the split indexed presentation and the total-category construction the companion checks descend from that work. Lawvere and Tierney showed that the subtoposes of a topos correspond exactly to certain closure operators on its subobject structure, the strongest historical instance of boundaries being classified by closure. Tripos theory, after Hyland, Johnstone, and Pitts, builds models of intuitionistic logic from indexed preorders with structure, which is a fibred order made to carry logic. Jacobs's monograph develops fibred preorders as the general semantics of logic over a base. None of these results is formalized in the companion; they are cited as the tradition the constructions belong to.</p>
+<p>The closure-operator reading of boundaries has classical precedents that fix its vocabulary. Grothendieck introduced fibred categories and their cartesian lifts; the split indexed presentation and the total-category construction the companion checks descend from that work. Lawvere and Tierney showed that the subtoposes of a topos correspond exactly to certain closure operators on its subobject structure, the strongest historical instance of boundaries being classified by closure. Tripos theory, after Hyland, Johnstone, and Pitts, builds models of intuitionistic logic from indexed preorders with structure, which is a fibred order made to carry logic. Jacobs's monograph develops fibred preorders as the general semantics of logic over a base. The twist vocabulary follows Donovan and Karoubi and Atiyah and Segal, where K-groups defined locally over a base fail to glue and the failure is measured by a cohomology class; here both routes to such a twist are proved closed, at the order level by strictness and at the coefficient level by the collapse. None of these external results is formalized in the companion; they are cited as the tradition the constructions belong to.</p>
 </section>
 <section class="chapter" id="glossary-en" aria-labelledby="glossary-en-h">
 <h2 id="glossary-en-h"><span class="chaplabel">Appendix. </span>Glossary</h2>
@@ -3303,6 +3530,8 @@ theorem saturating_costs_grothendieckAddGroup_subsingleton :
 <dd>The number of distinct internal configurations available to a finite machine, often converted to bits by a logarithm. A state count of \(2^s\) represents \(s\) bits, not \(2^s\) bits. Equal capacity does not establish compatible dynamics or exact tracking.</dd>
 <dt>Task-relevant information</dt>
 <dd>Information that reduces uncertainty under the loss or decision actually being studied. A transcript can contain many bits about irrelevant coordinates while omitting one decision-critical distinction.</dd>
+<dt>Twist</dt>
+<dd>Comparison data of an indexed structure that no re-choice of components can flatten, measured by a cocycle that is not a coboundary. At the order level no twist exists, because poset-valued pseudofunctors are strict on the nose; over fibres with genuine automorphisms a nontrivial twist exists and is checked. Neither fact yields a twisted K-theory of difficulty, whose coefficients would also have to survive the collapse of group completion.</dd>
 </dl>
 </section>
 <section class="chapter" id="references" aria-labelledby="references-h">
@@ -3310,6 +3539,8 @@ theorem saturating_costs_grothendieckAddGroup_subsingleton :
 <ul class="bib">
 <li>Andrieu, V., and Praly, L. "On the Existence of a Kazantzis-Kravaris/Luenberger Observer." <em>SIAM Journal on Control and Optimization</em> 45(2), 2006. <a href="https://doi.org/10.1137/040617066">DOI</a>.</li>
 <li>Blackwell, D. "Equivalent Comparisons of Experiments." <em>Annals of Mathematical Statistics</em> 24(2), 1953.</li>
+<li>Atiyah, M., and Segal, G. "Twisted K-theory." <em>Ukrainian Mathematical Bulletin</em> 1(3), 2004. <a href="https://arxiv.org/abs/math/0407054">arXiv</a>.</li>
+<li>Donovan, P., and Karoubi, M. "Graded Brauer Groups and K-theory with Local Coefficients." <em>Publications Mathematiques de l'IHES</em> 38, 1970.</li>
 <li>Grothendieck, A. "Categories fibrees et descente." In <em>SGA 1: Revetements etales et groupe fondamental</em>, Expose VI. Springer Lecture Notes in Mathematics 224, 1971.</li>
 <li>Hyland, J. M. E., Johnstone, P. T., and Pitts, A. M. "Tripos Theory." <em>Mathematical Proceedings of the Cambridge Philosophical Society</em> 88(2), 1980. <a href="https://doi.org/10.1017/S0305004100057534">DOI</a>.</li>
 <li>Jacobs, B. <em>Categorical Logic and Type Theory.</em> Studies in Logic and the Foundations of Mathematics 141, North-Holland, 1999.</li>

@@ -23,7 +23,7 @@ This snippet is about:
   robustActions_agrees
   interconnect_agrees
 
-found at line 2367 of 2375, near the end of this file.
+found at line 2365 of 2373, near the end of this file.
 
 Everything above it is the companion's own dependencies, inlined so that
 this file needs nothing but mathlib. -/
@@ -1718,7 +1718,6 @@ v4.33.0-rc1 toolchain.
 namespace HardProblems
 namespace Behavioral
 
-universe u v w
 
 /-- A complete signal trajectory on time domain `T`. -/
 abbrev Trajectory (T : Type u) (W : Type v) := T → W
@@ -2019,7 +2018,6 @@ self-contained; the agreement lemmas at the end
 of this file pin each used copy to its original, so the copies cannot drift.
 -/
 
-universe u v w
 
 namespace HardProblems
 namespace ClosureUnification
