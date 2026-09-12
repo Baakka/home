@@ -186,7 +186,7 @@ details.lean>summary::-webkit-details-marker{display:none}
 details.lean pre{margin:0;padding:.7rem 1rem 1rem;overflow-x:auto;line-height:1.5}
 details.lean code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
 @media print{details.lean{display:none}}
-#v13-proof-catalog{margin-top:1.4rem}.lean-declarations{padding:0 1rem;margin:.1rem 0 .5rem;overflow-wrap:anywhere}.editions{margin:.9rem 0 0;font-size:.78rem;letter-spacing:.02em;color:var(--ink-faint)}
+#v14-proof-catalog{margin-top:1.4rem}.lean-declarations{padding:0 1rem;margin:.1rem 0 .5rem;overflow-wrap:anywhere}.editions{margin:.9rem 0 0;font-size:.78rem;letter-spacing:.02em;color:var(--ink-faint)}
 .editions a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
 .editions a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 details.lean>summary .runlean{float:right;margin-left:1rem;font-family:inherit;text-decoration:none;border-bottom:1px solid currentColor;opacity:.85}
@@ -202,7 +202,7 @@ details.lean>summary .runlean:hover{opacity:1}
 <header class="titlepage">
 <h1 class="booktitle">Why Problems Are Hard</h1>
 <p class="booksub">The Fibred Order of Difficulty</p>
-<p class="edition">Thirteenth edition</p>
+<p class="edition">Fourteenth edition</p>
 <p class="editions">Also in <a href="/hard-problems/fa/" hreflang="fa"><span lang="fa" dir="rtl">فارسی</span></a> &middot; Short version: <a href="/hard-problems/short/">English</a> &middot; <a href="/hard-problems/short/fa/" hreflang="fa"><span lang="fa" dir="rtl">فارسی</span></a></p>
 </header>
 
@@ -253,15 +253,19 @@ details.lean>summary .runlean:hover{opacity:1}
 <li><a href="#ch5-finite-envelopes-and-missing-algorithms" data-target="ch5-finite-envelopes-and-missing-algorithms"><span class="toc-text">Finite envelopes and missing algorithms</span></a></li>
 <li><a href="#ch5-state-counts-are-information-retention-bounds" data-target="ch5-state-counts-are-information-retention-bounds"><span class="toc-text">State counts are information-retention bounds</span></a></li>
 <li><a href="#ch5-where-cost-is-paid" data-target="ch5-where-cost-is-paid"><span class="toc-text">Where cost is paid</span></a></li>
+<li><a href="#ch5-worked-example-finding-a-certificate-costs-more-than-checking-it" data-target="ch5-worked-example-finding-a-certificate-costs-more-than-checking-it"><span class="toc-text">Worked example: finding a certificate costs more than checking it</span></a></li>
 </ol>
 </li>
 <li>
 <a href="#ch6" data-target="ch6"><span class="toc-num">6</span><span class="toc-text">Modal resistance and conditional objectivity</span></a>
 <ol class="toc-sub">
-<li><a href="#ch6-a-grounded-relational-metaphysics" data-target="ch6-a-grounded-relational-metaphysics"><span class="toc-text">A grounded relational metaphysics</span></a></li>
-<li><a href="#ch6-structural-grounds-across-encounters" data-target="ch6-structural-grounds-across-encounters"><span class="toc-text">Structural grounds across encounters</span></a></li>
+<li><a href="#ch6-what-the-encounter-represents" data-target="ch6-what-the-encounter-represents"><span class="toc-text">What the encounter represents</span></a></li>
+<li><a href="#ch6-admissibility-success-and-counterfactual-scope" data-target="ch6-admissibility-success-and-counterfactual-scope"><span class="toc-text">Admissibility, success, and counterfactual scope</span></a></li>
+<li><a href="#ch6-what-a-dispositional-interpretation-would-add" data-target="ch6-what-a-dispositional-interpretation-would-add"><span class="toc-text">What a dispositional interpretation would add</span></a></li>
+<li><a href="#ch6-explanatory-grounds-and-overlapping-obstacles" data-target="ch6-explanatory-grounds-and-overlapping-obstacles"><span class="toc-text">Explanatory grounds and overlapping obstacles</span></a></li>
 <li><a href="#ch6-identity-equivalence-and-directed-transport" data-target="ch6-identity-equivalence-and-directed-transport"><span class="toc-text">Identity, equivalence, and directed transport</span></a></li>
 <li><a href="#ch6-specification-before-calculation" data-target="ch6-specification-before-calculation"><span class="toc-text">Specification before calculation</span></a></li>
+<li><a href="#ch6-worked-example-two-defensible-specifications-disagree" data-target="ch6-worked-example-two-defensible-specifications-disagree"><span class="toc-text">Worked example: two defensible specifications disagree</span></a></li>
 <li><a href="#ch6-why-the-fibred-order-is-needed" data-target="ch6-why-the-fibred-order-is-needed"><span class="toc-text">Why the fibred order is needed</span></a></li>
 <li><a href="#ch6-no-unqualified-master-scale" data-target="ch6-no-unqualified-master-scale"><span class="toc-text">No unqualified master scale</span></a></li>
 <li><a href="#ch6-what-can-survive-context-change" data-target="ch6-what-can-survive-context-change"><span class="toc-text">What can survive context change</span></a></li>
@@ -310,8 +314,9 @@ details.lean>summary .runlean:hover{opacity:1}
 <main id="main">
 <section class="chapter" id="introduction" aria-label="Introduction">
 <p><strong>The argument in brief.</strong></p>
-<p>Operational difficulty concerns what can be achieved in a specified encounter: with these observations, actions, methods, resources, and success conditions. Its mathematical representation is an attainable region, not a hidden scalar. Information, control, abstraction, and complexity explain different limits on that region. The fibred order records how regions can be compared when their performance coordinates differ.</p>
-<p>The book's practical contribution is an audit: specify the encounter, calculate attainable performance, justify translations, and establish which conclusions survive them. Its worked examples expose a missing energy constraint, a deployment-induced error, and a proof method that fails without increasing optimal cost. Chapter 6 offers a relational-dispositional interpretation of these constraints. The operational argument does not require that metaphysical interpretation.</p>
+<p>Difficulty claims concern constraints on achieving specified ends under specified conditions. An encounter records the task, information, actions, admitted methods, environment, and resources. Its successful attainable region records the performance bounds under which the task can be achieved. A full performance region also records failures and approximations; it supports a difficulty claim only when the relevant success condition is retained.</p>
+<p>The book's contribution is an audit of such claims. It separates finding a method from using one, a failure of knowledge from a missing physical path, and a change in the task from a change in its description. Information theory, control, abstraction, and complexity supply particular constraints. The fibred order organizes comparisons across different performance spaces after their semantic relation has been justified.</p>
+<p>The philosophical commitment is to objective constraints within justified encounters. A constraint can depend on chosen ends without depending on what the solver believes is achievable. Calling such constraints dispositions is a further interpretation. Chapter 6 considers what that interpretation explains, what could bear a disposition, and why neither a proof nor an invariant alone identifies a metaphysical ground. Worked examples address omitted success, discovery cost, overlapping obstacles, and disagreement about which encounter a practical decision requires.</p>
 <p>Difficulty is often spoken of as though it were stored inside a problem. A conjecture is hard, a landscape is rugged, a system is complex. Yet the same calculation is routine with writable memory and impossible for a fixed finite machine that must retain an unbounded input. The same state is recoverable through one sensor and indistinguishable through another. The same target is reachable with one actuator and absent from the closure of another move set.</p>
 <p>A common problem-object can remain while the encounter with it changes. If the success condition changes, even the task may have changed. For that reason this book predicates operational difficulty primarily of an <strong>encounter</strong>, not of a bare object. Schematically, write</p>
 <div class="mathblock">\[
@@ -326,23 +331,23 @@ E=(Q,\mathsf{Succ},\Omega,\mathsf{Info},\mathsf{Act},
 \quad\longrightarrow\quad
 \text{objective consequences within it}.
 \]</div>
-<p>Its central thesis is deliberately limited:</p>
+<p>Its central thesis is:</p>
 <blockquote>
-<p><strong>Operational difficulty is objective and relational. Once an encounter is specified, its attainable-performance structure is a matter of fact, and difficulty comparisons are induced by that structure. Structural facts may explain or certify difficulty; normative and pragmatic considerations help select the encounter; justified transport or invariance licenses broader comparisons.</strong></p>
+<p><strong>Operational difficulty is objective and relational. Once an encounter is specified, the performance bounds under which its success condition can be achieved are a matter of fact. Difficulty comparisons use that successful attainable structure, or a full performance structure that retains the relevant success criterion. Structural facts may explain or certify difficulty; normative and pragmatic considerations help select the encounter; justified transport or invariance licenses broader comparisons.</strong></p>
 </blockquote>
-<p>This operational thesis is not an exhaustive metaphysics of everything called hardness. A graph may have an intrinsic connectivity property, a theorem a proof-theoretic strength, and a space a topological obstruction. Such facts can cause or certify operational difficulty, sometimes uniformly across a large class of encounters. But the further claim that an object is <em>hard</em> remains elliptical until it says hard to accomplish what, with which access and actions, under which limits. The book rejects an unqualified hardness attributed to a bare problem, not intrinsic structure or context-independent truth. Chapter 6 develops a compatible metaphysical proposal: hardness as encounter-borne modal resistance with grounds distributed across the problem-object, environment, interfaces, admitted realizations, resource limits, and their relations. Attainable profiles represent this resistance without defining it into existence.</p>
+<p>This operational thesis is not an exhaustive metaphysics of everything called hardness. A graph may have an intrinsic connectivity property, a theorem a proof-theoretic strength, and a space a topological obstruction. Such facts can cause or certify operational difficulty, sometimes uniformly across a large class of encounters. But the further claim that an object is <em>hard</em> remains elliptical until it says hard to accomplish what, with which access and actions, under which limits. The book rejects an unqualified hardness attributed to a bare problem, not intrinsic structure or context-independent truth. Chapter 6 examines a compatible metaphysical conjecture: hardness as modal resistance of a task situation, grounded in facts about its object, environment, interfaces, and resources. The formal encounter represents that situation. Its tuple notation does not establish that the situation possesses a disposition, and the dispositional interpretation remains open to argument.</p>
 <p>The practical contribution is an eight-step audit for difficulty claims:</p>
 <ol>
 <li><strong>Identify and individuate the encounter.</strong> State the raw specification, structural signature and its reduct, claim language, and transformations being treated as identity, equivalence, directed transport, or extension.</li>
 <li><strong>State success.</strong> Declare the target, loss, tolerance, horizon, and quantifiers.</li>
 <li><strong>Declare the environment.</strong> Fix the instance family, uncertainty, and admissible worlds.</li>
 <li><strong>Expose the boundaries.</strong> State the information, action, program, and resource interfaces.</li>
-<li><strong>Determine attainable performance.</strong> Compute, estimate, or bound the outcomes realizable under those declarations.</li>
+<li><strong>Determine attainable performance.</strong> Compute, estimate, or bound the outcomes realizable under those declarations. For task difficulty, retain success explicitly; for discovery, charge the acquisition procedure.</li>
 <li><strong>Justify cross-context alignment.</strong> Relate tasks, worlds, interfaces, and performance coordinates before transporting a claim.</li>
 <li><strong>Search for stable content.</strong> Ask which equalities, orders, bounds, feasibility claims, or safety properties survive the admitted alignments.</li>
 <li><strong>Separate specification from consequence.</strong> Do not let mathematical correctness stand in for empirical relevance or normative legitimacy.</li>
 </ol>
-<p>The fibred order is the mathematical implementation of steps 5 to 7, not the philosophy by itself. Within one comparison context, encounters determine attainable regions, ordered by inclusion and generally only partially ordered. Across contexts, performance maps reindex ambient specifications by preimage. But such a map is admitted only after an encounter-alignment argument relates the tasks and worlds it is supposed to compare. Reindexing realized classes then requires a further closure or realization theorem.</p>
+<p>The fibred order is the mathematical implementation of steps 5 to 7, not the philosophy by itself. Within one comparison context, encounters determine regions of the same declared kind: successful regions for task difficulty, or full regions for graded performance. Inclusion gives a partial comparison. Across contexts, performance maps reindex ambient specifications by preimage. But such a map is admitted only after an encounter-alignment argument relates the tasks and worlds it is supposed to compare. Reindexing realized classes then requires a further closure or realization theorem.</p>
 <p>This division gives the construction one job. Ordinary Pareto analysis compares alternatives already expressed in one performance space; ordinary model-relative complexity fixes one machine and one family. Neither alone justifies a claim transported from simulator to hardware, from abstraction to execution, or from one success criterion to another. The framework separates semantic comparability, performance transport, and realizability transport.</p>
 <p>The argument proceeds from representation and feedback, through robustness and fault, to reachability, abstraction, complexity, cross-context comparison, environments that react to being modeled, and problem families whose nearby members stop being reliable guides. The mathematics is used locally. No universal scale or datatype is offered, and no machine-checked theorem is allowed to stand in for the philosophical, empirical, or normative argument that gives it a reading.</p>
 </section>
@@ -650,22 +655,37 @@ F(C)\subseteq C.
 <h3 id="ch5-a-bound-needs-a-family-and-a-machine">A bound needs a family and a machine</h3>
 <p>The dependence of a complexity measure on programs, encodings, and machines is classical; <a href="https://doi.org/10.1145/321386.321395">Blum's axiomatic treatment (1967)</a> is an early general framework. An asymptotic resource bound concerns a family \(\{\mathcal I_n\}\), an encoding and size parameter \(n\), a machine or access model, a success or loss criterion, and a resource measure. Separately defined instance-level notions, including Kolmogorov and instance complexity, also exist. Time, workspace, queries, samples, communication, random bits, precision, and physical energy are not interchangeable until a conversion model is supplied.</p>
 <p>The missing specifications matter. A one-pass stream and a rereadable array offer different information access. A random-access word machine and a Turing machine charge different primitive operations. Exact production and verification ask different questions. Worst-case, average-case, and smoothed analysis use different input quantifiers or distributions. A large search space by itself is not a lower bound under any of them.</p>
-<p>Rather than force these resources into one number, fix a model and let each admissible program \(p\) have a resource vector \(\operatorname{Res}(p)\) and a loss vector \(\operatorname{Loss}(p)\), with the desired instance quantifiers already built into those functions. Take each coordinate in the extended nonnegative reals, order vectors componentwise, and treat smaller resource and loss values as better. Define</p>
+<p>Fix a model and let each admissible program \(p\) have a resource vector \(\operatorname{Res}_E(p)\) and a loss vector \(\operatorname{Loss}_E(p)\). The instance and environment quantifiers are built into these functions and into \(\mathsf{Succ}_E(p)\). For a robust task, success means that one program succeeds throughout the admitted environment class. One fortunate execution does not establish that guarantee. Take coordinates in the extended nonnegative reals, ordered componentwise, with smaller values preferred.</p>
+<p>The <strong>full performance region</strong> is</p>
 <div class="mathblock">\[
-\mathsf{Ach}
-=\{(r,\ell):\exists p,
-\operatorname{Res}(p)\preceq r,
-\ \operatorname{Loss}(p)\preceq\ell\}.
+\mathsf{Ach}_{\mathrm{all}}(E)
+=\{(r,\ell):\exists p,\
+\operatorname{Res}_E(p)\preceq r,\
+\operatorname{Loss}_E(p)\preceq\ell\}.
 \]</div>
-<p>This attainable region is upward closed: a program meeting one pair of bounds also meets every looser pair. Its nondominated attainable points, when they exist, are Pareto-minimal. Implementation/resource spaces and Pareto antichains are already central to <a href="https://arxiv.org/abs/1512.08055">Censi's mathematical theory of co-design</a>; the construction of \(\mathsf{Ach}\) is not claimed as new. Limiting tradeoffs need not be attained; they lie on the lower boundary of the closure rather than necessarily in \(\mathsf{Ach}\). More time may buy lower error. More measurements may reduce time. More memory may replace recomputation. Some tradeoffs are impossible because the information or action boundary excludes them before computation begins.</p>
-<p>For one resource called time and one distortion target \(D\), define the extended-valued slice \(\tau(D)\in[0,+\infty]\) by</p>
+<p>The <strong>successful attainable region</strong> is</p>
 <div class="mathblock">\[
-\tau(D)
-=\inf\{t:\exists p,
-\operatorname{Time}(p)\le t,
-\ \operatorname{Loss}(p)\le D\}.
+\mathsf{Ach}_{\mathrm{succ}}(E)
+=\{(r,\ell):\exists p,\ \mathsf{Succ}_E(p)\ \land\
+\operatorname{Res}_E(p)\preceq r\ \land\
+\operatorname{Loss}_E(p)\preceq\ell\}.
 \]</div>
-<p>If the set is empty, \(\tau(D)=+\infty\). The information lower bound from Chapter 1 is a lower bound on such a slice when observations are the limiting resource. The robust recurrence from Chapter 2 certifies an ultimate tube but, without a matching adversarial lower bound, does not make smaller errors unattainable. Reachability can make the goal loss unattainable regardless of computation. These results constrain different slices of an attainable region when they are assembled in one context. They are not competing definitions of a hidden scalar.</p>
+<p>Both are upward closed: meeting one pair of bounds implies meeting every looser pair. The success predicate remains fixed when the bounds are loosened. An unsuccessful program does not become a witness for the successful region merely because a generous loss bound would admit its performance.</p>
+<p>The successful region is the default for <strong>difficulty of achieving the stated task</strong>. The full region supports comparisons of graded performance, including failure and approximation. They answer different questions. If success is completely encoded by downward-closed acceptable performance bounds \(G_E\), then a full region together with \(G_E\) also determines which acceptable bounds are attainable. More precisely,</p>
+<div class="mathblock">\[
+\mathsf{Ach}_{\mathrm{all}}(E)\cap G_E
+=\mathsf{Ach}_{\mathrm{succ}}(E)\cap G_E.
+\]</div>
+<p>If a program meets a bound in \(G_E\), downward closure places its actual performance in \(G_E\) as well, so it succeeds. The reverse inclusion follows because every successful program is admitted. This equality concerns acceptable bounds; the successful region can also contain looser bounds outside \(G_E\). The success criterion must travel with that comparison. If performance omits a semantic requirement, it cannot recover success.</p>
+<p>For example, suppose the task is to deliver a parcel to the authorized recipient. Two systems each have one admitted routine that uses one unit of time and reports zero damage. One delivers to the recipient; the other can deliver only to a different person. Their full time-and-damage regions are identical, \(\uparrow(1,0)\). Their successful regions are respectively \(\uparrow(1,0)\) and \(\varnothing\). Identifying these encounters in task difficulty would confuse omitted information with equivalence. Adding a delivery-correctness coordinate or retaining the success predicate prevents that mistake. This counterexample is a prose construction.</p>
+<p>For either declared region, nondominated attainable points, when they exist, are Pareto-minimal. Implementation/resource spaces and Pareto antichains are already central to <a href="https://arxiv.org/abs/1512.08055">Censi's mathematical theory of co-design</a>; the region construction is not claimed as new. Limiting tradeoffs need not be attained. More time may buy lower error, and more memory may replace recomputation. Information or action limits can prevent success at every finite budget.</p>
+<p>For time and a distortion bound \(D\), the task-success slice is</p>
+<div class="mathblock">\[
+\tau_E(D)=\inf\{t:\exists p,\ \mathsf{Succ}_E(p)\ \land\
+\operatorname{Time}_E(p)\le t\ \land\ \operatorname{Loss}_E(p)\le D\}.
+\]</div>
+<p>Its value is \(+\infty\) when the set is empty. Approximation studies may instead ask for the full time/loss curve and make \(D\) the varying success threshold. Those thresholds define a family of tasks, not a silent alteration of one task. The information bound in Chapter 1 constrains an accuracy slice; the robust recurrence in Chapter 2 certifies an upper error bound without proving a matching lower bound. Reachability may exclude the success set altogether. Each result must be attached to the profile and quantifiers it actually concerns.</p>
+<p>Feasibility and expense should remain distinguishable. An empty successful region means that no admitted program succeeds. A nonempty region may still contain no finite budget, or its cost infimum may be unattained. The region retains distinctions that a single extended-valued optimum can conceal.</p>
 <h3 id="ch5-worked-example-one-robot-several-encounters">Worked example: one robot, several encounters</h3>
 <p>Consider an autonomous warehouse robot that must leave a loading bay, choose one of two corridors, and reach a dock without collision. This is one task, but not yet one well-defined difficulty claim. We must say which layouts are admitted, what the robot senses, which motions it can execute, what uncertainty is allowed, and which costs count.</p>
 <p>Start with two possible layouts, \(L\) and \(R\). In \(L\), the left corridor is blocked; in \(R\), the right corridor is blocked. A forward camera gives the same report at the fork in both layouts. Its observation class is therefore \(\{L,R\}\). If turning right is safe only in \(L\) and turning left is safe only in \(R\), the set of first turns safe for every compatible layout is</p>
@@ -706,7 +726,7 @@ P_{\mathrm{hw}}
 </tbody>
 </table>
 </div>
-<p>The first camera controller spends time repositioning until its view separates the two layouts; this is why it can be safe despite the original ambiguous report. Each point generates every looser bound above it. The lidar controller is faster than that camera controller but uses more energy and memory. The fast camera plan buys speed and energy at the price of a positive worst-case clearance violation. Their ranking depends on a weighting policy. If lidar is a mandatory hardware package, its power and memory costs can make its attainable region cross the camera region. If it is merely an optional observation available to the same program class at no charged interface cost, the camera encounter's region is included in the lidar encounter's region because lidar can be ignored. The modelling choice changes the claim and must be stated.</p>
+<p>The first camera controller spends time repositioning until its view separates the two layouts; this is why it can be safe despite the original ambiguous report. Each point generates a full performance region of looser bounds above it. For the fixed collision-free docking task, the fast camera package is excluded from the successful region because its clearance loss is positive. The two safe packages remain incomparable in time, energy, and memory. The lidar controller is faster than that camera controller but uses more energy and memory. The fast camera plan buys speed and energy at the price of a positive worst-case clearance violation. A weighting policy can compare all three only if graded clearance loss is admitted as a tradeoff. It cannot waive the original collision-free success condition without defining a different task. If lidar is a mandatory hardware package, its power and memory costs can make its attainable region cross the camera region. If it is merely an optional observation available to the same program class at no charged interface cost, the camera encounter's region is included in the lidar encounter's region because lidar can be ignored. The modelling choice changes the claim and must be stated.</p>
 <p>Finally compare simulation with hardware. Let the simulator's nonnegative performance bounds be</p>
 <div class="mathblock">\[
 P_{\mathrm{sim}}=\mathbb R_{\ge0}^{\,3},
@@ -738,7 +758,7 @@ A_{\mathrm{lidar}}=\uparrow(12,10,20,0)
 <p>There are three different achievements here. Alignment relates the tasks and admitted worlds. Calibration makes performance bounds comparable. Realizability would supply an admitted encounter with exactly the translated region. The first two have been assumed for this calculation; the third fails in the declared hardware family.</p>
 <p>Ordinary Pareto order already compares the three hardware packages. The fibred formulation adds a place to record the different simulator coordinates and the precise question whether their inverse-image specification is realizable. It earns its use here by exposing the energy constraint that a coordinate translation silently dropped, not by replacing the underlying control or optimization theories.</p>
 <h3 id="ch5-the-fibred-order-of-difficulty">The fibred order of difficulty</h3>
-<p>A comparison context \(c\) fixes a common encounter schema: task, instance and environment quantifiers, uncertainty class, admissible programs, information and action interfaces, and resource and loss coordinates. Its declared encounters instantiate that schema. Let \(P_c\) be the resulting ordered performance space. The ambient fibre is the powerset</p>
+<p>A comparison context \(c\) fixes a common encounter schema: task, instance and environment quantifiers, uncertainty class, admissible programs, information and action interfaces, and resource and loss coordinates. It also fixes the success predicate and profile convention. Task difficulty uses successful regions; full regions compare graded performance and must carry the relevant success threshold when used to infer task feasibility. Its declared encounters instantiate that schema. Let \(P_c\) be the resulting ordered performance space. The ambient fibre is the powerset</p>
 <div class="mathblock">\[
 \mathcal R_c=\mathcal P(P_c),
 \]</div>
@@ -746,13 +766,13 @@ A_{\mathrm{lidar}}=\uparrow(12,10,20,0)
 <div class="mathblock">\[
 \mathsf{Ach}_c:\operatorname{Enc}(c)\longrightarrow\mathcal R_c
 \]</div>
-<p>whose values are upward-closed regions. Within this one context, define</p>
+<p>whose values are upward-closed regions of the chosen kind. In the task difficulty order below, set \(\mathsf{Ach}_c(E)=\mathsf{Ach}_{\mathrm{succ}}(E)\). Within this one context, define</p>
 <div class="mathblock">\[
 E_1\mathrel{\unrhd_c}E_2
 \quad\Longleftrightarrow\quad
 \mathsf{Ach}_c(E_1)\subseteq\mathsf{Ach}_c(E_2),
 \]</div>
-<p>and read \(E_1\unrhd_c E_2\) as "\(E_1\) is at least as hard as \(E_2\)." The relation is reflexive and transitive, but it need not be antisymmetric on encounters. Two different plants, observation channels, or presentations can have exactly the same attainable region. Quotient by</p>
+<p>and read \(E_1\unrhd_c E_2\) as "\(E_1\) is at least as hard as \(E_2\) for the stated success condition and recorded bounds." If full regions are chosen instead, the same algebra defines a graded-performance order; it does not license claims about unrecorded semantic success. The relation is reflexive and transitive, but it need not be antisymmetric on encounters. Two different plants, observation channels, or presentations can have exactly the same attainable region. Quotient by</p>
 <div class="mathblock">\[
 E_1\sim_c E_2
 \quad\Longleftrightarrow\quad
@@ -768,7 +788,7 @@ E_1\sim_c E_2
 \]</div>
 <p>This quotient is the realized subposet of the ambient fibre. The ambient powerset may contain unrealized regions, while the chosen performance coordinates intentionally forget other distinctions between systems.</p>
 <p>The realized order is typically partial. Crossing Pareto frontiers witness incomparability, and an added scalarization can rank them differently.</p>
-<p>To relate ambient fibres, choose a category \(\mathcal C\) of contexts. Its arrows are not arbitrary coordinate maps. An arrow \(f:c\to d\) is admitted only after an encounter alignment has justified the relevant relation between problem or task, success predicates, environment families, observation and action interfaces, and resource conventions. The strength and direction of these components may differ: an implication of success is weaker than an equivalence, and forward simulation is weaker than executable lifting.</p>
+<p>To relate ambient fibres, choose a category \(\mathcal C\) of contexts. Its arrows are not arbitrary coordinate maps. An arrow \(f:c\to d\) is admitted only after its profile conventions have been matched and an encounter alignment has justified the relevant relation between problem or task, success predicates, environment families, observation and action interfaces, and resource conventions. The strength and direction of these components may differ: an implication of success is weaker than an equivalence, and forward simulation is weaker than executable lifting.</p>
 <p>The formal region layer retains from this certificate a performance-point map \(u_f:P_c\to P_d\), compatible with identities and composition. It assumes the semantic licensing argument; it does not manufacture one. Preimage gives</p>
 <div class="mathblock">\[
 f^*:\mathcal R_d\longrightarrow\mathcal R_c,
@@ -819,6 +839,7 @@ q_!:\mathcal R_c\longrightarrow\mathcal R_d,
 q_!(A)=\{q(x):x\in A\}
 \]</div>
 <p>is monotone but can send distinct subsets to the same image and therefore fail to reflect inclusion. Noninjectivity causes that collapse; reflection by inverse image instead depends on surjectivity.</p>
+<p>An empty successful region is preserved by preimage. A nonempty region can have empty preimage if the performance map never reaches it. A directional comparison therefore cannot silently reflect feasibility; reflecting it needs a suitable intersection or surjectivity argument as well as semantic alignment.</p>
 <p>The formal contexts, performance maps, and reindexing laws are declared data, but their use carries layered proof obligations. Encounter alignment licenses semantic comparison; the performance map transports ambient specifications; preimage closure transports realized classes; and chosen encounter transport is stronger still. Together they yield a partial, context-indexed order rather than a global ranking.</p>
 <h3 id="ch5-relation-to-neighboring-orders">Relation to neighboring orders</h3>
 <p>The ingredients above have substantial precedents. The proposed contribution is the encounter-audit protocol and its use of the fibred order to implement attainability, justified transport, and the search for stable claims. It is not a new theory of orders, fibrations, or Pareto frontiers.</p>
@@ -861,114 +882,73 @@ b^n\le r^k.
 <p>The relocation is measurable only after the acquisition protocol has been declared. Counting the cost of using a supplied lemma while omitting the search that found it measures conditional proof cost, not end-to-end discovery cost. The formal proof-cost infimum below deliberately begins after a proof language, admitted-proof predicate, and cost function have been fixed. It does not manufacture a metric for discovering those choices.</p>
 <p>A comparison may grant the same offline artifact to both agents, charge its construction once, or study nonuniform families with size-specific advice. Each convention defines a different attainable region.</p>
 <p>Complexity theory earns objectivity not by removing models but by declaring them and proving invariance or simulation relations across a comparison class. The model dependence is controlled, not denied.</p>
+<h3 id="ch5-worked-example-finding-a-certificate-costs-more-than-checking-it">Worked example: finding a certificate costs more than checking it</h3>
+<p>Consider \(N\ge1\) labeled candidates, exactly one of which is marked. A deterministic search procedure initially knows only this promise. Its only access to the mark is an equality query on a chosen label, returning yes or no. Each query costs one unit; all other computation is free in this query model. Success requires submitting a label with its affirmative oracle response. Merely inferring the last remaining label is not an accepted certificate until it has been queried.</p>
+<p>The task fixes one procedure before the marked label \(j\) is revealed. Let \(q(p,j)\) count its queries. Its robust discovery cost is</p>
+<div class="mathblock">\[
+Q_N=\inf_{p:\,\forall j,\ \mathsf{Succ}(p,j)}\ \max_{1\le j\le N}q(p,j).
+\]</div>
+<p>Sequentially querying every label succeeds within \(N\) queries. Conversely, an oracle can answer no on the first \(N-1\) distinct labels queried. That history remains consistent with the promise, with the last unqueried label marked. A successful procedure must then query that label to obtain the required affirmative response. Repeated queries cannot improve this bound. Thus \(Q_N=N\).</p>
+<p>Now supply the marked label as correct advice, but still require its oracle response as the certificate. One query suffices and is necessary. With the advice supplied, the certificate-acquisition cost is one for every \(N\). Without it, the worst-case discovery cost is \(N\). The successful regions in the query-budget coordinate are respectively \([1,\infty]\) and \([N,\infty]\).</p>
+<p>The difference is epistemic and operational: the unknown label controls which query succeeds, and the information interface prevents learning it cheaply. Every instance has a short certificate, yet no one uninformed procedure can obtain the required certificate with fewer queries in the worst case. The fixed order of quantifiers prevents giving each instance its own secretly informed procedure. These bounds are proved here in prose, not in the Lean companion.</p>
+<p>The example identifies a precise sense of discovery difficulty without equating it with certificate size. It does not model all mathematical insight. The candidate language, prior knowledge, and query interface were stipulated. Investigating how those are acquired requires an encounter whose procedures include that acquisition. Such a study must state its own starting resources; the present framework supplies no universal measure of creativity or felt effort.</p>
 </section>
 <section class="chapter" id="ch6" aria-labelledby="ch6-h">
 <h2 id="ch6-h"><span class="chaplabel">Chapter 6</span>Modal resistance and conditional objectivity</h2>
-<h3 id="ch6-a-grounded-relational-metaphysics">A grounded relational metaphysics</h3>
-<p>The operational framework asks: under conditions \(C\), what can be achieved? A metaphysics asks a different question: what kind of thing is hardness, and what makes a hardness fact true? The proposal here is <strong>grounded relational dispositionalism</strong>:</p>
-<blockquote>
-<p><strong>Hardness is the modal resistance to realizing a specified success condition within an encounter. It is borne by the encounter and may be grounded in the structure of its problem-object, environment, interfaces, admissible realization class, resource limits, or relations among them.</strong></p>
-</blockquote>
-<p>The language of real dispositions follows the tradition developed, among others, by <a href="https://doi.org/10.1093/acprof:oso/9780199259823.001.0001">Mumford (2003)</a>; <a href="https://doi.org/10.1093/acprof:oso/9780198714316.001.0001">Vetter (2015)</a> develops the broader connection from dispositions and potentialities to modality. Applying that vocabulary to hardness is the proposal of this chapter, not a result quoted from those works.</p>
-<p>Bearer and grounds must be kept apart. Operational hardness is borne by the encounter:</p>
+<h3 id="ch6-what-the-encounter-represents">What the encounter represents</h3>
+<p>The operational framework asks what can be achieved under specified conditions. A metaphysics asks what makes those constraints obtain. The first question does not settle the second. A model can organize correct conditional inferences while leaving its interpretation open.</p>
+<p>Three things should be distinguished. A <strong>task situation</strong> consists of a system or mathematical object considered in relation to an end and conditions of access and action. An <strong>encounter specification</strong> \(E\) represents those conditions, including the success predicate and charged resources. A <strong>performance region</strong> is a further representation that forgets distinctions outside its coordinates. Changing notation alters a specification without necessarily altering the situation. Changing a goal alters the task relation even if the physical system is untouched.</p>
+<p>The end may be chosen while its attainability remains objective. Chess rules are instituted, but whether a position admits a legal mate does not depend on a player's confidence. A docking requirement is selected, but a robot's inability to reach the dock through its available actions is not abolished by disagreement. Objectivity here means independence from verdicts about the specified constraints. It does not require the task, rules, or resource conventions to exist independently of human purposes.</p>
+<p>Accordingly, the minimal commitment is <strong>realism about the relevant constraints</strong>, where their application to an actual system is adequately supported. It is compatible with different views about laws, powers, and mathematical objects. The stronger phrase <em>encounter-borne disposition</em> will refer to a proposed property of the represented task situation, not to a causal power possessed by a tuple of symbols.</p>
+<h3 id="ch6-admissibility-success-and-counterfactual-scope">Admissibility, success, and counterfactual scope</h3>
+<p>Let \(\mathcal M(E)\) be the admitted realizations, let \(\mathcal S(E)\subseteq\mathcal M(E)\) be those satisfying the fixed success condition, and let \(\pi_E:\mathcal M(E)\to P_E\) record performance. Then</p>
 <div class="mathblock">\[
-\operatorname{Bearer}(H)=E.
+\mathsf{Prof}_{\mathrm{all}}(E)=\pi_E[\mathcal M(E)],
+\qquad
+\mathsf{Prof}_{\mathrm{succ}}(E)=\pi_E[\mathcal S(E)].
 \]</div>
-<p>Its grounds can be distributed across the encounter:</p>
+<p>Their upward closures are the full and successful attainable regions of Chapter 5. The successful region is empty exactly when no realization satisfies the task. Full-profile equality cannot establish task equivalence when performance omits part of success, as the parcel example shows.</p>
+<p>If success is completely determined by performance, an acceptable set \(G_E\subseteq P_E\) gives</p>
 <div class="mathblock">\[
-\operatorname{Grounds}(H)
-\subseteq
-\{Q,\Omega,\mathsf{Info},\mathsf{Act},\mathsf{Prog},
-\mathsf{Resource},\text{ relations among them}\}.
-\]</div>
-<p>Structural properties such as graph width, topology, symmetry, dependency structure, spectral geometry, or proof-theoretic strength belong primarily to the problem-object \(Q\). A <strong>structural hardness ground</strong> is the special case in which a fact about \(Q\), together with encounter conditions, supports a modal constraint on success. Such a ground can explain or certify hardness without being identical to the hardness fact. Other encounters may instead be resistant because an environment removes a path, an observation interface hides a necessary distinction, an action interface forbids an operation, or a program class excludes a realization.</p>
-<p>Here <em>ground</em> names constitutive or metaphysical explanation rather than an additional causal mechanism; <a href="https://doi.org/10.1017/CBO9781139149136.002">Fine (2012)</a> provides a standard orientation to that notion. Nothing in the attainable-region algebra proves that a proposed ground is the correct one.</p>
-<p>High treewidth may ground a lower bound under a particular access and machine model; a topological obstruction may ground non-realizability for a specified class of maps; a narrow spectral gap may ground slow convergence for a specified dynamics. The problem-object may supply structural resistance; the environment and interfaces may supply additional resistance; the encounter determines their joint modal consequences for success.</p>
-<p>The primary modality is <strong>encounter-relative admissibility</strong>. Write</p>
-<div class="mathblock">\[
-\mathcal M(E)
-=
-\{\text{realizations admitted by the laws, environments, interfaces,
-program class, and resource conventions of }E\}.
-\]</div>
-<p>A conclusion quantified over this class initially has the force \(\Box_E\varphi\): it holds throughout the realizations admitted by \(E\). That is not automatically logical, physical, technological, or unrestricted metaphysical necessity. Those stronger readings require an independently justified modal base. In particular, one may need to distinguish</p>
-<div class="mathblock">\[
-\mathcal M_{\mathrm{formal}}(E),\qquad
-\mathcal M_{\mathrm{physical}}(E),\qquad
-\mathcal M_{\mathrm{technological}}(E).
-\]</div>
-<p>Formal adequacy supports reasoning inside \(\mathcal M_{\mathrm{formal}}(E)\). Empirical validation is needed before interpreting that class as covering the relevant physical possibilities. Technological admissibility may be narrower again because it includes only available or permitted implementations.</p>
-<p>Let \(\mathcal S(E)\subseteq\mathcal M(E)\) contain the realizations satisfying the encounter's success condition, and let</p>
-<div class="mathblock">\[
-\pi_E:\mathcal M(E)\longrightarrow P_E
-\]</div>
-<p>record performance. Two profiles must be distinguished:</p>
-<div class="mathblock">\[
-\mathsf{Prof}_{\mathrm{all}}(E)
-=
-\pi_E[\mathcal M(E)],
+\mathcal S(E)=\pi_E^{-1}(G_E),
 \qquad
 \mathsf{Prof}_{\mathrm{succ}}(E)
-=
-\pi_E[\mathcal S(E)].
+=\mathsf{Prof}_{\mathrm{all}}(E)\cap G_E.
 \]</div>
-<p>With the book's resource-and-loss convention, their upward closures are</p>
-<div class="mathblock">\[
-\mathsf{Ach}_{\mathrm{all}}(E)
-=
-\uparrow\mathsf{Prof}_{\mathrm{all}}(E),
-\qquad
-\mathsf{Ach}_{\mathrm{succ}}(E)
-=
-\uparrow\mathsf{Prof}_{\mathrm{succ}}(E).
-\]</div>
-<p>The full profile records failure, accuracy, resource, and loss tradeoffs. The successful profile records the costs and tradeoffs under which success remains possible. Feasibility concerns whether \(\mathcal S(E)\) is empty; resource hardness concerns the geometry of the successful profile; analyses allowing graded failure or approximation may require the full profile.</p>
-<p>If success is completely determined by performance, choose an acceptable set \(G_E\subseteq P_E\) and define</p>
-<div class="mathblock">\[
-\mathcal S(E)=\pi_E^{-1}(G_E).
-\]</div>
-<p>Then</p>
-<div class="mathblock">\[
-\mathsf{Prof}_{\mathrm{succ}}(E)
-=
-\mathsf{Prof}_{\mathrm{all}}(E)\cap G_E.
-\]</div>
-<p>This identity must not be assumed when the performance vector omits a semantic part of success. The unqualified attainable region used in Chapters 1 to 5 is the full resource and loss region unless success has explicitly been built into the admitted program or realization class.</p>
-<p>This is modal rather than merely historical. A lower-bound claim says, for example,</p>
-<div class="mathblock">\[
-\forall m\in\mathcal S(E),\qquad \mathsf{Resource}(m)\ge r,
-\]</div>
-<p>whether or not anybody has attempted the task. Feasibility says \(\mathcal S(E)\ne\varnothing\); impossibility says \(\mathcal S(E)=\varnothing\). Actual runtime is one manifestation of the disposition, not the disposition itself. One successful fast run can refute a universal lower bound; one person's struggle does not establish one.</p>
-<p>The ontology consequently has three levels:</p>
-<div class="mathblock">\[
-\boxed{
-\text{structure}
-\ \longrightarrow\
-\text{disposition}
-\ \longrightarrow\
-\text{manifestation}.}
-\]</div>
-<p>The distributed structure of the encounter grounds counterfactual constraints; the disposition concerns how \(E\)-admitted interactions could or must proceed; manifestations are particular executions, proofs, failures, or observed costs. Neither attainable region creates hardness by definition. The full and successful regions represent different aspects of the modal profile in virtue of which the encounter has its operational hardness features. That claim is realist only to the extent that the declared modal base adequately captures the object, environment, interfaces, and laws rather than merely an analyst's preferred description.</p>
-<p>Impossibility remains categorically distinct from extreme feasible difficulty. If \(\mathcal S(E)=\varnothing\), the successful profile is empty even though the full profile may contain many failed or inaccurate realizations. If \(\mathcal S(E)\ne\varnothing\) but every successful point lies beyond practical budgets, the encounter is severely resistant but feasible. Encoding both cases as one informal value, such as infinity, can be convenient for optimization while concealing the ontological distinction.</p>
-<p>Dispositionalism is an optional interpretation of the grounded counterfactual constraints. The operational theory neither requires an additional entity called resistance nor distinguishes a dispositional realist from someone who accepts the same constraints without that ontology. A stronger metaphysical claim would need a further explanatory argument. Three projects remain distinct:</p>
-<ul>
-<li><strong>metaphysics:</strong> encounter-borne modal resistance with distributed grounds;</li>
-<li><strong>epistemology:</strong> knowledge of hardness through proofs, lower bounds, experiments, modal-base validation, and invariance arguments;</li>
-<li><strong>mathematics:</strong> representation and comparison through full and successful attainable regions, partial orders, translations, and stable claims.</li>
-</ul>
-<h3 id="ch6-structural-grounds-across-encounters">Structural grounds across encounters</h3>
-<p>Attribution requires more than observing that many methods failed. A lower bound can identify a structural contribution when its proof derives a restriction from a property \(S(P)\) together with specified encounter conditions. Across an aligned comparison class \(\mathcal E\), its form is</p>
-<div class="mathblock">\[
-S(P)\ \land\ \text{the stated conditions on }\mathcal E
-\quad\Longrightarrow\quad
-\forall E\in\mathcal E,\ \forall m\in\mathcal S(E),
-\quad C_E(m)\ge r_E.
-\]</div>
-<p>The inference establishes the bound. Calling \(S(P)\) its metaphysical ground adds an explanatory interpretation; invariance alone does not establish that interpretation. Every encounter in a poorly chosen comparison class might share the same restrictive interface, even if their surface descriptions differ.</p>
-<p>Conversely, resistance disappearing after a representation change does not show that the object made no contribution. An oracle, cached lemma, or new primitive may overcome a genuine structural obstruction for the former access model. If the change is truly a cost-preserving presentation equivalence, the corresponding attainable-performance claim should survive. An apparent gain then calls for checking the cost accounting, interface, or claimed equivalence.</p>
-<p>Controlled perturbation is useful when competing explanations predict different outcomes. Specify the alternatives before choosing the transformations. Vary one restriction, account for the translation's cost, and check the predicted change in success or performance. This can discriminate an information limit from an action limit, or a defective proof recipe from an infeasible task. Chapter 8 supplies both kinds of algebraic example. Stability broadens the scope of a proved constraint; locating its structural source requires the argument connecting that structure to the constraint.</p>
+<p>This is an identity of exact profiles. Their upward closures consist of bounds, not necessarily actual performance points. The success predicate and its order properties must be retained when passing between the two.</p>
+<p>The primary modality is <strong>encounter-relative admissibility</strong>: \(\Box_E\varphi\) means that \(\varphi\) holds throughout the realizations admitted by \(E\). It does not automatically express physical, technological, logical, or unrestricted metaphysical necessity. Formal admissibility follows the model's rules; physical possibility concerns the target system and its laws; technological availability concerns implementations that can presently be obtained. Their correspondence requires argument, and their domains need not even have the same objects before a representation map is supplied.</p>
+<p>The level of realization matters too. For a robust task, a realization may be a policy whose cost summarizes all admitted environments. For an execution-level claim it may be a single run. A bound on every successful run is refuted by one faster successful run. A lower bound on every policy's worst-case cost is not: the faster run may be an easy instance of that policy. The quantifiers belong to the hardness claim, not to the word <em>modal</em>.</p>
+<h3 id="ch6-what-a-dispositional-interpretation-would-add">What a dispositional interpretation would add</h3>
+<p>The metaphysical conjecture is that a task situation has a disposition to constrain success, grounded in facts about its object, environment, interfaces, and resources. <em>Modal resistance</em> names that proposed disposition. A person's struggle is evidence to investigate; it is not what constitutes the constraint.</p>
+<p>There is a reason to entertain the conjecture. An organized system can support the same constraint across many unperformed interactions. The robot's observation channel, for example, would still merge the two layouts if the experiment were repeated in either layout. Describing this as a capacity or incapacity locates the explanation in the organization of the situation and connects actual failures with unactualized alternatives. That makes the dispositional vocabulary potentially useful for explanation.</p>
+<p>However, usefulness of that description does not establish an irreducible power. A rival account can accept the same physical organization, laws, and counterfactual constraints while treating the disposition as a derivative description. Another account can accept the conditional model without a realist interpretation of its unobserved possibilities. The attainable-region algebra does not decide between them. A defense of dispositional realism must explain why its account of those counterfactuals is preferable, rather than using their existence as a premise that already assumes powers.</p>
+<p>This is the point of comparison with <a href="https://doi.org/10.1093/acprof:oso/9780199259823.001.0001">Mumford's account of dispositions</a> and <a href="https://doi.org/10.1093/acprof:oso/9780198714316.001.0001">Vetter's account of potentiality</a>. Vetter argues for explaining metaphysical modality through dispositions and potentialities. Here an admissibility class is specified first. Giving its constraints a dispositional interpretation does not reproduce that argument or establish the same direction of metaphysical explanation.</p>
+<p>The application to mathematical tasks needs particular care. A restriction on formal proofs is an abstract consequence of a calculus and a task, even when no physical solver exists. The impossibility of satisfying \(0x=1\) over the reals does not by itself exhibit a causal power. One may extend dispositional language to abstract task relations, but must explain what this extension contributes beyond their mathematical constraints. The book leaves that metaphysical choice open.</p>
+<p>Thus the proposed order of explanation is facts about the situation, its counterfactual constraints, and particular manifestations. Treating the middle level as a disposition is a conjecture about what sustains those constraints. The book defends the need to distinguish those levels, without claiming that the distinction establishes a separate entity at each level.</p>
+<h3 id="ch6-explanatory-grounds-and-overlapping-obstacles">Explanatory grounds and overlapping obstacles</h3>
+<p>Grounding concerns what a fact obtains in virtue of. It is different from merely listing propositions from which the fact follows; <a href="https://doi.org/10.1017/CBO9781139149136.002">Fine's discussion of ground</a> motivates that distinction. A true but irrelevant premise can be added to a proof. A useful bound can also be derived through a mathematical surrogate that is not the best explanation of the target system's behavior.</p>
+<p>The explanatory question must therefore name its target and contrast. Why is there no physically executable path? Why can no admitted policy guarantee safety despite paths existing? Why must finding a certificate consume many queries even though using it is cheap? These are different facts, and a feature explaining one need not explain the others.</p>
+<p>Consider the two-layout robot again, with two independent restrictions. Its camera cannot distinguish the layouts. In addition, a common fire door is closed across both routes and cannot be opened. No probing, waiting for a change, or alternative route is admitted in this one-decision task. Define success as a single policy safely reaching the dock in either layout. Allow two interventions: replace the camera with a sensor that identifies the layout, or open the common door while leaving the corridor obstruction.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>common door</th><th>observation</th><th>a path exists in each layout</th><th>one policy guarantees safe docking</th></tr>
+</thead>
+<tbody>
+<tr><td>closed</td><td>ambiguous</td><td>no</td><td>no</td></tr>
+<tr><td>closed</td><td>identifies layout</td><td>no</td><td>no</td></tr>
+<tr><td>open</td><td>ambiguous</td><td>yes</td><td>no</td></tr>
+<tr><td>open</td><td>identifies layout</td><td>yes</td><td>yes</td></tr>
+</tbody>
+</table>
+</div>
+<p>The closed door explains physical unreachability in the first two rows. In the third, each layout has a path, but the identical observation forces a deterministic policy to choose the same turn in both. That turn is blocked in one layout. This proves the separate information obstruction to a uniform safe policy. Both restrictions must be removed to restore the stipulated guarantee.</p>
+<p>Improving the sensor while the door is closed changes no success verdict. That null result does not show the information restriction was irrelevant to the task's organization. The door masks the improvement at the chosen outcome level. Opening the door exposes the conditional contribution of the sensor. Conversely, the lack of a physical path in the baseline already suffices to explain failure; it would be misleading to insist that the sensor is also a necessary premise of that particular explanation.</p>
+<p>An informative explanation therefore identifies the exact obstruction, derives it from the relevant organization, and checks the contrast for which the feature matters. Interventions can separate overlapping obstructions; they are not a universal definition of metaphysical grounding. Redundant obstacles need not each be a simple difference-maker at the baseline. The table is a prose analysis of the stipulated model, not an additional Lean theorem or a claim about measured robot behavior.</p>
+<p>Across encounters, a structural property can support a uniform bound together with access and machine assumptions. Invariance establishes the scope of that result. Whether the property explains the bound still depends on the derivation and the competing explanatory accounts. A comparison class whose members all share the same restrictive interface cannot, by stability alone, locate the source in the bare object.</p>
+<p>An oracle, cached lemma, or new primitive can overcome a constraint of an earlier encounter. This does not retrospectively make the earlier constraint unreal. If a transformation instead preserves the full task and its charged costs, the corresponding difficulty claim should survive. A reported gain then gives a reason to examine the claimed preservation or the accounting.</p>
 <h3 id="ch6-identity-equivalence-and-directed-transport">Identity, equivalence, and directed transport</h3>
-<p>Because the encounter bears operational hardness, its individuation conditions cannot be left to syntax. Yet there is no single context-free relation corresponding to the phrase “the same problem.” Relations between encounters must instead be classified by the structures and inferences they preserve.</p>
+<p>Because difficulty is attributed to a specified task situation, relations between its encounter representations cannot be left to syntax. Yet there is no single context-free relation corresponding to the phrase “the same problem.” Relations between encounters must instead be classified by the structures and inferences they preserve.</p>
 <p><strong>Strict identity</strong> is literal equality \(E=E'\) of the specified encounter data. It supports formal substitution and machine bookkeeping, but is too fine-grained for every scientific use. Renaming an action symbol or changing coordinates can produce a different encoded tuple without producing a relevantly different encounter.</p>
 <p><strong>Structural signatures and reducts.</strong> A structural signature \(\Sigma\) names the encounter components, operations, relations, and laws relevant to a comparison. Its selection is part of the encounter-alignment certificate, not a conclusion extracted from the comparison. Write</p>
 <div class="mathblock">\[
@@ -1133,7 +1113,7 @@ T_\beta\circ T_\alpha,
 =
 \pi_E[\Gamma_{\mathrm{succ}}(E)].
 \]</div>
-<p>The ontological order is</p>
+<p>The order of construction is</p>
 <div class="mathblock">\[
 \text{realizations}
 \longrightarrow
@@ -1177,7 +1157,7 @@ E\equiv_\Phi E'
 \to \Phi
 \to \text{claim equivalence or directed transport}
 \to \text{stability class}
-\to \text{scope of authority}.}
+\to \text{demonstrated scope}.}
 \]</div>
 <h3 id="ch6-specification-before-calculation">Specification before calculation</h3>
 <p>The framework separates the justification of an encounter from calculation inside it. Selecting a task, environment family, uncertainty model, success tolerance, program class, and charged resources can depend on scientific purposes, engineering priorities, conventions, institutions, and values. A declaration does not validate itself merely by being explicit.</p>
@@ -1187,11 +1167,21 @@ E\equiv_\Phi E'
 <li><strong>empirical adequacy:</strong> do the admitted worlds, interfaces, and calibrations represent the system of concern?</li>
 <li><strong>normative relevance:</strong> do the success criteria and charged consequences answer the question that ought to be asked?</li>
 </ul>
-<p>Mathematics addresses the first directly and can support the second through validated models and measurements. It cannot infer the third from a type signature. Conditional objectivity begins after the specification has been made; responsible application also defends why that specification is relevant.</p>
+<p>Mathematics addresses the first directly and can support the second through validated models and measurements. It cannot infer the third from a type signature. Conditional objectivity concerns consequences within a specification. Warrant for applying them to a target requires evidence of adequacy; choosing which consequences matter requires reasons about the task. These are three separate achievements, rather than successive degrees of mathematical truth.</p>
 <p>Within a fixed encounter, the resulting facts are not matters of opinion. The camera report at the fork merges \(L\) and \(R\); the closed fire door removes the dock from the reachable set; a controller either satisfies its certified time, energy, memory, and clearance bounds or it does not. Changing a sensor, actuator, uncertainty set, or charged resource creates a different encounter whose attainable region may change.</p>
+<h3 id="ch6-worked-example-two-defensible-specifications-disagree">Worked example: two defensible specifications disagree</h3>
+<p>Suppose two controller packages have the following stipulated operating record. A fast package takes one minute in ordinary conditions and five minutes in a rare mode. A steady package takes two minutes in either mode. Both are collision-free and reach the dock. The rare mode has probability one in a hundred in the declared distribution. Energy and memory are equal for this comparison. These are illustrative assumptions, not measurements.</p>
+<p>An encounter for routine throughput declares success to mean expected docking time at most 1.5 minutes. The fast package has expected time</p>
+<div class="mathblock">\[
+0.99\cdot1+0.01\cdot5=1.04,
+\]</div>
+<p>so it succeeds; the steady package's expected time is two, so it fails that task. An encounter for an emergency service instead requires docking within three minutes in every admitted mode. The steady package succeeds; the fast one fails because the rare mode takes five minutes. Both specifications can be mathematically coherent and empirically adequate descriptions of the same packages. They ask for different achievements.</p>
+<p>The disagreement has several possible sources. Whether the rare mode occurs and how long each package takes are empirical questions. Whether one in a hundred is an appropriate probability for deployment is another empirical question, including uncertainty about that estimate. Whether an emergency service may trade a delayed individual delivery against faster average service is a question about the end and acceptable consequences. Averaging conventions are relevant only after those choices have been justified.</p>
+<p>Suppose the actual commission requires a delivery within three minutes in every admitted mode. The average-time certificate does not answer that commission. This rejection follows from the success condition before either package's favorable result is inspected. If the commission instead concerns routine expected throughput, the average comparison is relevant, provided its distribution is supported. If the commission itself is disputed, more arithmetic cannot choose the end. Evidence about consequences and reasons offered by affected parties can inform that choice, but the present algebra does not supply an ethical ranking.</p>
+<p>The audit has a limited but substantive role: it reveals whether apparently opposed difficulty verdicts concern one question or different questions, and locates the evidence or practical reasons needed to proceed. It can reject a mismatched certificate without pretending to settle every dispute about the proper task. This example is calculated and argued in prose.</p>
 <h3 id="ch6-why-the-fibred-order-is-needed">Why the fibred order is needed</h3>
 <p>Inside the hardware context, ordinary Pareto order already performs the local comparison. It records the camera/lidar tradeoffs and leaves crossing frontiers incomparable. The fibred layer becomes useful when claims move between different performance spaces or encounter interfaces.</p>
-<p>Its authority is deliberately staged:</p>
+<p>The obligations are staged:</p>
 <div class="mathblock">\[
 \text{encounter alignment}
 \Longrightarrow
@@ -1204,7 +1194,7 @@ E\equiv_\Phi E'
 <p>An alignment relates the tasks and admissible worlds. A performance map then translates specifications. Inverse image supports comparison of a given pair of aligned encounters, but does not produce a hardware encounter realizing every translated simulator region. Preimage closure proves transport of realized regions; an encounter map additionally supplies representatives.</p>
 <p>Information theory, control, abstraction, and complexity determine particular constraints and attainable regions. The fibred order organizes how those results may be compared after semantic alignment has been justified. It does not decide whether the simulator represents the plant, whether a safety threshold is legitimate, or whether two tasks deserve comparison.</p>
 <h3 id="ch6-no-unqualified-master-scale">No unqualified master scale</h3>
-<p>The result is a partial order indexed by declared contexts, not an automatically privileged scalar. Crossing Pareto frontiers may remain incomparable, and scalarizations can rank them differently. This does not imply that context-independent facts are impossible. It says that global authority must be earned by stability across an appropriate comparison class rather than asserted by omitting the index.</p>
+<p>The result is a partial order indexed by declared contexts, not an automatically privileged scalar. Crossing Pareto frontiers may remain incomparable, and scalarizations can rank them differently. This does not imply that context-independent facts are impossible. A claim of wider scope requires an argument covering that scope, such as transport across a justified comparison class. A local claim can already be objective; it need not become invariant under changes that alter its truth conditions.</p>
 <p>The comparison class is itself declared. Requiring stability across coordinate changes is weaker than requiring stability across machine simulations, sensor substitutions, task translations, and environment enlargement. A claim is only as broad as the arrows along which it has been shown to survive.</p>
 <h3 id="ch6-what-can-survive-context-change">What can survive context change</h3>
 <p>The individuation hierarchy supplies the transformation theory beneath stability. Reduct isomorphisms specify which changes count as presentation; coherent bidirectional translations specify which preserve and reflect a claim language; composable directed witnesses specify one-way inference. Their identity and composition laws allow stability to be tested along chains rather than only for isolated pairs. Exact equality is therefore only one form of invariant content. What survives an encounter alignment may instead be:</p>
@@ -1216,7 +1206,7 @@ E\equiv_\Phi E'
 <li>a robust interval or error margin.</li>
 </ul>
 <p>Let \(\mathcal A\) be a declared class of licensed encounter transformations. A claim is <strong>stable over \(\mathcal A\)</strong> when every relevant transformation transports it in the stated direction. Exact invariance may follow from presentation or claim-relative equivalence; directional stability may preserve only implications or bounds. Neither follows from a performance-coordinate map alone. The transformation class and claim language must be independently motivated: a trivial \(\Phi\) or a post hoc \(\mathcal A\) can manufacture uninformative invariance.</p>
-<p>This yields a hierarchy of authority:</p>
+<p>This yields increasing demonstrated scope, conditional on the premises:</p>
 <div class="mathblock">\[
 \boxed{
 \text{local}
@@ -1225,7 +1215,7 @@ E\equiv_\Phi E'
 \ \longrightarrow\
 \text{stable over a declared comparison class}.}
 \]</div>
-<p>The endpoint of the framework is therefore not that everything is contextual. It is a disciplined account of what individuates an encounter, what licenses transport, and what remains true when the encounter changes. Operational difficulty is the comparison induced by attainable performance. A relational hardness claim acquires broader objective authority insofar as it remains invariant, or directionally stable, under an independently justified and relevant class of encounter transformations, not by having its assumptions erased.</p>
+<p>The endpoint of the framework is therefore not that everything is contextual. It is a disciplined account of what individuates an encounter, what licenses transport, and what remains true when the encounter changes. Operational task difficulty compares successful attainable regions under the stated conditions; a full performance comparison must retain its success criterion. A relational hardness claim has broader demonstrated scope when it remains invariant, or directionally stable, under a justified class of transformations. This does not itself increase the evidence that the models describe reality: several models can preserve the same error. Scope, empirical warrant, and relevance to a decision must each be assessed. A correct local impossibility claim is not less objective because adding an actuator makes its conclusion false in a different encounter.</p>
 </section>
 <section class="chapter" id="ch7" aria-labelledby="ch7-h">
 <h2 id="ch7-h"><span class="chaplabel">Chapter 7</span>When the system reacts to the model</h2>
@@ -1241,14 +1231,14 @@ x_{t+1}=\alpha(h_t,a_t).
 <p>This timing lets the environment respond to the current action but not to an unobserved future action. Other timing and information conventions define different encounters. Randomized policies also require a declaration of which random choices the response observes.</p>
 <p>If actions can change the transition rule itself, include the rule \(R_t\) in the state and write an augmented transition for \((x_t,R_t)\). Such an endogenous law still evolves under a specified higher-level rule. It does not license arbitrary changes to the encounter during an argument.</p>
 <h3 id="ch7-the-uniform-guarantee">The uniform guarantee</h3>
-<p>Let \(\mathcal A\) be the admitted response class, and let \(L(p,\alpha)\) and \(C(p,\alpha)\) be the loss and resource cost of their joint execution. The robust attainable region is</p>
+<p>Let \(\mathcal A\) be the admitted response class, and let \(L(p,\alpha)\) and \(C(p,\alpha)\) be the loss and resource cost of their joint execution. The robust full performance region in this chapter is</p>
 <div class="mathblock">\[
 \mathsf{Ach}_{\mathcal A}
 =\{(r,\ell):\exists p\in\mathsf{Prog},\
 \forall\alpha\in\mathcal A,\
 C(p,\alpha)\le r\ \land\ L(p,\alpha)\le\ell\}.
 \]</div>
-<p>One policy must meet both bounds against every admitted response. The weaker statement \(\forall\alpha\,\exists p\) permits a different policy after the response is known. Changing those quantifiers can turn a failed robust task into a collection of easy tasks without improving the original solver.</p>
+<p>Here \(\mathsf{Ach}_{\mathcal A}\) records the full cost/loss curve. A fixed task additionally declares its acceptable loss and any semantic success requirements; use its successful region when comparing attainment of that task. One policy must meet both bounds against every admitted response. The weaker statement \(\forall\alpha\,\exists p\) permits a different policy after the response is known. Changing those quantifiers can turn a failed robust task into a collection of easy tasks without improving the original solver.</p>
 <p>Holding programs, cost, and loss fixed, enlarging \(\mathcal A\) can only shrink this region. Merely replacing one known response law by another need not do so: it may change the best policy while leaving optimal performance unchanged. The following calculation separates these effects.</p>
 <h3 id="ch7-worked-example-a-forecast-changes-its-target">Worked example: a forecast changes its target</h3>
 <p>A deployed system announces a number \(\theta\in[0,1]\) and incurs absolute prediction loss \(\lvert\theta-y\rvert\). Each announcement costs one unit. There are two possible deterministic environments:</p>
@@ -1394,6 +1384,7 @@ Q_t:\quad\text{find }x\text{ such that }tx=1.
 </section>
 <section class="chapter" id="ch9" aria-labelledby="ch9-h">
 <h2 id="ch9-h"><span class="chaplabel">Chapter 9</span>What is machine checked</h2>
+<p>The fourteenth edition revises the interpretation and application of the existing formal core. Its parcel counterexample, marked-candidate discovery bound, overlapping-obstacle table, and average-versus-deadline example are prose arguments. No new Lean verification is claimed for them. The success profile convention specializes the existing region-order construction; the adequacy of an application's success representation remains an obligation.</p>
 <p>The primary Lean companion checks the algebraic core with the repository-pinned Lean 4.33.0-rc1 toolchain and the Mathlib revision recorded in <code>lake-manifest.json</code>. Independent Aristotle jobs use an isolated Lean and Mathlib 4.28.0 project. The results used by the argument are summarized here.</p>
 <div class="table-wrap">
 <table>
@@ -1435,7 +1426,8 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <p>The information chapter draws on Shannon's mutual information and rate-distortion theory, Blackwell's comparison of experiments, and Massey's directed information. The displayed feedback inequality is a chain-rule and data-processing consequence under the manuscript's explicit random-tape and policy assumptions; it is not quoted as a separate theorem from those papers.</p>
 <p>The control chapter uses Kalman's linear rank test and the Hermann-Krener local weak-observability condition. The robust scalar recurrence and the \(2\rho\) residual-separation bounds are proved directly in the text. Their interpretation is situated against switched-system and model-based fault-diagnosis literature.</p>
 <p>The behavioral and abstraction chapters use Willems's trajectory-based system view, simulation proof methods, viability theory, abstract interpretation in the sense of <a href="https://doi.org/10.1145/512950.512973">Cousot and Cousot (1977)</a>, state abstraction in the sense of <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/camera-ready-9.pdf">Li, Walsh, and Littman (2006)</a>, and a minimal sheaf-gluing observation. Exact finite-path lifting in the manuscript is an elementary theorem under stronger hypotheses than most approximate, probabilistic, or temporal-logic abstraction results.</p>
-<p>Chapter 6 proposes a relational-dispositional metaphysics: the encounter bears hardness, its grounds may be distributed across the object, environment, interfaces, program class, resources, and their relations, and particular runtimes or failures are manifestations. The primary modality is encounter-relative admissibility; stronger physical or metaphysical readings require validation of the modal base. Full and successful attainable profiles represent different aspects of that modal structure rather than defining hardness into existence. Dispositionalism remains optional: the operational results establish counterfactual constraints without settling their metaphysical interpretation. The perturbation methodology of Chapter 8 discriminates specified explanations; invariance alone does not locate a structural ground. Encounter individuation is stratified into strict identity, reduct isomorphism, coherent claim-relative equivalence, composable directed transport, and extension. This interpretation is philosophical rather than machine-checked.</p>
+<p>Chapter 6 distinguishes the task situation, its encounter specification, and its performance representation. It defends objective constraints relative to specified ends while presenting their interpretation as dispositions as a metaphysical conjecture. Mumford and Vetter motivate that interpretation; their theories are not consequences of the attainable-region construction. Fine motivates the distinction between grounding and entailment. The overlapping-obstacle example explains why a null intervention can conceal a restriction's conditional contribution without identifying intervention with metaphysical ground. The disputed service specification separates empirical questions from choices about ends and acceptable consequences.</p>
+<p>The fourteenth edition also distinguishes certificate cost from discovery through a deterministic marked-candidate query model. The lower bound follows from an adversary answering no until the final candidate, together with the requirement of an affirmative response as the certificate. No claim about unrestricted mathematical creativity follows. These new examples and the philosophical argument are given in prose. The signature and claim-translation framework is likewise prose; the earlier Lean results remain separately identified in Chapter 9.</p>
 <p>Chapter 7 connects deployment feedback to performative prediction and adaptive comparison to policy regret. Its two-law calculation is an original elementary illustration, not an empirical model or a claim of priority for those frameworks. Chapter 8's algebraic families similarly test distinctions in the certificate model; they do not establish a new complexity lower bound.</p>
 <p>Throughout, the book separates established ingredients from the proposal. Pareto regions, co-design, resource preorders, reducibility degrees, indexed posets, and fibrations are established theories. The manuscript proposes an encounter audit in which the fibred order implements attainable-region comparison, licensed transport, and the search for stable claims. It does not claim mathematical priority for the component constructions. Nor does it infer semantic encounter alignment from a performance map.</p>
 </section>
@@ -1450,7 +1442,7 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dt>Anti-model construction</dt>
 <dd>A problem generated from a declared solver or model class so as to defeat it. The quantifier order, every model admitting some defeating problem, distinguishes it from a fixed exceptional target.</dd>
 <dt>Attainable region</dt>
-<dd>An upward-closed set of resource and loss bounds achieved under a specified encounter. The full region includes every admitted realization; the successful region includes only realizations satisfying the success condition. Neither is a hidden scalar hardness.</dd>
+<dd>An upward-closed set of resource and loss bounds achieved under a specified encounter. The full region includes every admitted realization; the successful region includes only realizations satisfying the fixed success condition. Task difficulty uses successful regions; a full-region comparison must retain the relevant success criterion before supporting a task-feasibility judgment.</dd>
 <dt>Available mechanisms</dt>
 <dd>The kinds of admitted certificates that fit a specified budget. Unlike a selected proof label, this set records every available method in the declared certificate class.</dd>
 <dt>Barrier depth</dt>
@@ -1460,7 +1452,7 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dt>Claim-relative equivalence</dt>
 <dd>Coherent translations in both directions preserve and reflect all propositions in the declared encounter-indexed claim languages, with round trips semantically equivalent to identity. Opposing directed transports alone do not establish it.</dd>
 <dt>Comparison class</dt>
-<dd>A declared collection of licensed encounter transformations across which a claim is intended to remain stable. Its independently justified relevance and breadth determine the authority of any resulting invariant.</dd>
+<dd>A declared collection of licensed encounter transformations across which a claim is intended to remain stable. Its independently justified relevance and breadth determine the demonstrated scope of an invariant. Empirical warrant requires separate evidence.</dd>
 <dt>Contraction margin</dt>
 <dd>For \(e_{t+1}\le(q_0+\mu)e_t+d\), the gap \(1-q_0-\mu\) that supports the geometric error certificate.</dd>
 <dt>Coordinate change</dt>
@@ -1476,7 +1468,7 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dt>Distortion</dt>
 <dd>A declared reconstruction loss \(d(x,\widehat x)\), often averaged under a source distribution.</dd>
 <dt>Encounter</dt>
-<dd>A problem-object or instance family together with success, environment, information, action, program, and performance declarations. The raw tuple supplies strict formal identity; philosophically relevant sameness depends on a declared preservation relation.</dd>
+<dd>A specification of a task situation through its object, success, environment, information, actions, programs, and performance. The specification represents the situation; it is not itself a physical bearer of powers. Relevant equivalence depends on declared preservation.</dd>
 <dt>Encounter alignment</dt>
 <dd>A justification relating the tasks, success conditions, admissible worlds, interfaces, and resource conventions of two contexts. A performance-coordinate map is only one component and cannot establish semantic comparability by itself.</dd>
 <dt>Endogenous law</dt>
@@ -1514,7 +1506,7 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dt>Modal base</dt>
 <dd>The realization class over which possibility, necessity, feasibility, or a lower bound is quantified. This book primarily uses encounter-relative admissibility; physical or metaphysical readings require additional justification.</dd>
 <dt>Modal resistance</dt>
-<dd>On the dispositional interpretation, the encounter-borne disposition constraining successful realization through impossibility, lower bounds, information deficiency, forced tradeoffs, sensitivity, or narrow robustness margins. Its force is relative to a declared modal base.</dd>
+<dd>A proposed disposition of the represented task situation constraining success. The operational theory records its candidate counterfactual profile without establishing an irreducible disposition or treating every abstract impossibility as a causal power.</dd>
 <dt>Model mismatch</dt>
 <dd>Difference between the actual transition or observation law and the law used by an estimator.</dd>
 <dt>Observability codistribution</dt>
@@ -1522,7 +1514,7 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dt>Observational equivalence</dt>
 <dd>Equality of all admitted finite observation laws from two states or models.</dd>
 <dt>Operational difficulty</dt>
-<dd>The comparison induced by attainable-performance structures under specified encounters. It is objective conditional on the declarations, generally partial rather than scalar, and distinct from the structural facts that may explain or certify it.</dd>
+<dd>Comparison of successful attainable regions under a fixed task and resource convention. Full performance regions may support graded comparisons but cannot determine unrecorded semantic success. The relation is generally partial and its application requires justified encounter representations.</dd>
 <dt>Operative representation</dt>
 <dd>A causal state carrying selected consequences of past interaction into later inference or action.</dd>
 <dt>Presentation equivalence</dt>
@@ -1551,6 +1543,12 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <dd>The performance image of the successful admissible realizations. Its emptiness records impossibility under the modal base; its frontier records the costs and tradeoffs conditional on success.</dd>
 <dt>Task-relevant information</dt>
 <dd>Information that reduces uncertainty under the loss or decision being studied.</dd>
+<dt>Discovery cost</dt>
+<dd>The cost of a specified search or learning procedure obtaining a usable method or certificate from its declared initial information. It includes acquisition rather than merely use of a supplied artifact, with instance and environment quantifiers fixed in advance.</dd>
+<dt>Task situation</dt>
+<dd>A system or mathematical object considered in relation to an end and conditions of access and action. An encounter specification represents this situation, and a performance region represents selected aspects of the specification.</dd>
+<dt>Overlapping obstacles</dt>
+<dd>Restrictions that separately obstruct success in appropriate contrasts and can conceal one another&#x27;s effects. Removing one without changing the outcome does not establish its irrelevance.</dd>
 </dl>
 </section>
 <section class="chapter" id="references" aria-labelledby="references-h">
@@ -1596,9 +1594,9 @@ D=\{i\in B:\exists a,b\in A,\ Y_i(a)\ne Y_i(b)\},
 <h2 id="formal-companion-h"><span class="chaplabel">Companion</span>Formal companion</h2>
 <p>The self-contained Lean source is under <code>LeanTest/HardProblems/</code>, with <code>LeanTest/HardProblems.lean</code> as the import root. The repository pins Lean 4.33.0-rc1 and records the exact Mathlib revision in <code>lake-manifest.json</code>. Fetch that cache with <code>lake exe cache get</code>, then check the complete development with <code>lake build</code>.</p>
 <p>The independent prover workspace under <code>aristotle/</code> pins Lean and Mathlib 4.28.0. Install the optional CLI with <code>uv tool install aristotlelib</code>; a job can then be submitted with <code>aristotle submit</code> and <code>--project-dir aristotle</code>. No API credential is stored in this book or its generated HTML.</p>
-<p>The HTML edition presents the eight established proof groups used by the earlier argument first and labels six additional explorations as peripheral. All fourteen historical groups are included in full as collapsible Lean source. The V13 HTML additionally embeds the complete <code>LeanTest/HardProblems/ModelStability.lean</code> and <code>LeanTest/HardProblems/WorkedExamples.lean</code> modules, both imported by the root. The book, glossary, and these sixteen source disclosures travel in one HTML file. Equation typesetting loads MathJax from a CDN; compiling the Lean development requires the pinned dependencies.</p>
+<p>The HTML edition presents the eight established proof groups used by the earlier argument first and labels six additional explorations as peripheral. All fourteen historical groups are included in full as collapsible Lean source. The V14 HTML retains the complete <code>LeanTest/HardProblems/ModelStability.lean</code> and <code>LeanTest/HardProblems/WorkedExamples.lean</code> modules, both imported by the root. The book, glossary, and these sixteen source disclosures travel in one HTML file. Equation typesetting loads MathJax from a CDN; compiling the Lean development requires the pinned dependencies.</p>
 
-<div id="v13-proof-catalog">
+<div id="v14-proof-catalog">
 <h3>Collapsed Lean source</h3>
 <p>The proof groups used by the machine-checked chapter appear first. Groups marked peripheral are retained as formal experiments outside the narrative. Every declaration below is included in full.</p>
 <details class="lean"><summary>deterministic information preorder, budgets, and scalar reconstruction (FeedbackBounds.lean, InformationBudget.lean, InformationOrder.lean, SystemsTheory.lean)<a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-informationorder.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-systemstheory.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-informationbudget.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a> <a class="runlean" href="https://live.lean-lang.org/#project=MathlibDemo&url=https%3A%2F%2F4st.space%2Fhard-problems%2Fproofs%2F01-deterministic-information-preorder-budgets-and-scalar-reconstruc-feedbackbounds.lean" target="_blank" rel="noopener" title="Open this proof in the Lean 4 web editor, which elaborates it against the latest mathlib. The companion is pinned to an older toolchain, so a failure there can be version drift rather than a broken proof.">run</a></summary><p class="lean-declarations">HardProblems.InformationOrder.Indist, HardProblems.InformationOrder.indist_equivalence, HardProblems.InformationOrder.ExperimentRefines, HardProblems.InformationOrder.experimentRefines_refl, HardProblems.InformationOrder.experimentRefines_trans, HardProblems.InformationOrder.ExperimentRefines.indist, HardProblems.InformationOrder.RobustActions, HardProblems.InformationOrder.ExperimentRefines.robustActions_mono, HardProblems.InformationOrder.indist_iff_of_mutual_refinement, HardProblems.InformationOrder.robustActions_eq_of_mutual_refinement, HardProblems.InformationOrder.quotient_strict_decision_loss, HardProblems.statistic_based_rule_fails&#x27;, HardProblems.InformationBudget.accumulated_le_initial_add_rounds_mul, HardProblems.InformationBudget.required_excess_le_rounds_mul, HardProblems.InformationBudget.required_excess_div_capacity_le_rounds, HardProblems.InformationBudget.required_rounds_ceiling_le, HardProblems.ScalarGaussian.posteriorVariance, HardProblems.ScalarGaussian.posteriorVariance_pos, HardProblems.ScalarGaussian.target_accuracy_requires_observations, HardProblems.ScalarGaussian.target_accuracy_nontrivial_bound</p><pre><code>-- LeanTest/HardProblems/InformationOrder.lean
