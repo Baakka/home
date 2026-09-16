@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; script-src 'sha256-+L9cTfWq/L0idFJwicYMK/MkuzLGjkrS7HCNna/jzB8=' https://cdnjs.cloudflare.com; connect-src https://0.peerjs.com wss://0.peerjs.com; base-uri 'none'; form-action 'none'">
+  <title>Direct link</title>
+  <style>
+    :root { --deep:#0f2e44; --mid:#17405c; --line:#2f6284; --pale:#cfe3ef; --paper:#e8e2d4; --signal:#f5c147; --good:#6fd39a; --bad:#e2705f; --dim:#7ea6c0; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --serif:"Hoefler Text","Iowan Old Style",Palatino,Georgia,serif; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace }
+    * { box-sizing:border-box }
+    html,body { margin:0; height:100%; background:var(--deep); color:var(--pale); font-family:var(--sans); font-size:16px; -webkit-text-size-adjust:100% }
+    body { display:flex; justify-content:center; background-image:linear-gradient(rgba(47,98,132,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(47,98,132,.16) 1px,transparent 1px); background-size:28px 28px }
+    .shell { width:100%; max-width:620px; height:100dvh; display:flex; flex-direction:column; background:rgba(15,46,68,.92); border-left:1px solid rgba(47,98,132,.5); border-right:1px solid rgba(47,98,132,.5) }
+    header { display:flex; align-items:baseline; gap:.75rem; padding:1.1rem 1.15rem .9rem; border-bottom:1px solid var(--line) }
+    h1 { font-family:var(--serif); font-size:1.45rem; font-weight:400; margin:0; color:#fff }
+    .state { margin-left:auto; display:flex; align-items:center; gap:.45rem; font-size:.82rem; color:var(--dim) }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--dim); flex:none }
+    .state[data-live=waiting] .dot { background:var(--signal); animation:pulse 1.8s ease-in-out infinite }
+    .state[data-live=live] .dot { background:var(--good) }
+    .state[data-live=live] { color:var(--good) }
+    .state[data-live=lost] .dot,.state[data-live=bad] .dot { background:var(--bad) }
+    .state[data-live=bad] { color:var(--bad) }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+    @media (prefers-reduced-motion:reduce) { * { animation:none!important; transition:none!important } }
+    .pair { border-bottom:1px solid var(--line) }
+    .pair-body { padding:1.15rem }
+    .pair.collapsed .pair-body { display:none }
+    .pair-bar { display:none; width:100%; text-align:left; background:none; border:0; color:var(--dim); font:inherit; font-size:.82rem; padding:.7rem 1.15rem; cursor:pointer }
+    .pair-bar:hover { color:var(--pale) }
+    .pair.collapsed .pair-bar { display:block }
+    .step { display:none }
+    .step.on { display:block }
+    .paired { display:flex; gap:1.15rem; align-items:flex-start }
+    .qr-card { background:var(--paper); padding:10px; border-radius:3px; flex:none; line-height:0 }
+    .qr-card img,.qr-card canvas { display:block; width:148px; height:148px }
+    .paired-text { flex:1; min-width:0 }
+    p.lede { margin:0 0 .75rem; font-size:.92rem; line-height:1.5 }
+    p.fine { margin:.55rem 0 0; font-size:.8rem; line-height:1.5; color:var(--dim) }
+    .code { font-family:var(--mono); font-size:1.1rem; letter-spacing:.12em; color:var(--signal); margin:0 0 .7rem; word-break:break-all }
+    label.small { display:block; font-size:.78rem; color:var(--dim); margin-bottom:.3rem }
+    input[type=text],textarea { width:100%; background:var(--mid); border:1px solid var(--line); color:var(--pale); border-radius:4px; padding:.55rem .6rem; font:inherit; font-size:.88rem }
+    input:focus,textarea:focus,button:focus-visible { outline:2px solid var(--signal); outline-offset:1px }
+    .row { display:flex; gap:.6rem; align-items:stretch }
+    .row input { flex:1; min-width:0 }
+    button.action { flex:none; background:var(--signal); color:#24170a; border:0; border-radius:4px; padding:.55rem 1rem; font:inherit; font-weight:600; cursor:pointer }
+    button.action:disabled { background:var(--line); color:var(--dim); cursor:not-allowed }
+    .log { flex:1; overflow-y:auto; padding:1.1rem 1.15rem; display:flex; flex-direction:column; gap:.55rem; scrollbar-width:thin }
+    .empty { margin:auto; max-width:30ch; text-align:center; color:var(--dim); font-size:.9rem; line-height:1.5 }
+    .msg { max-width:78%; padding:.5rem .72rem; font-size:.95rem; line-height:1.45; white-space:pre-wrap; overflow-wrap:anywhere }
+    .msg.them { align-self:flex-start; background:var(--mid); border-radius:3px 11px 11px 11px }
+    .msg.me { align-self:flex-end; background:var(--signal); color:#24170a; border-radius:11px 3px 11px 11px }
+    .msg.note { align-self:center; background:none; color:var(--dim); font-size:.8rem; max-width:100%; text-align:center; padding:.2rem 0 }
+    .msg.note.bad { color:var(--bad) }
+    .composer { display:flex; gap:.6rem; align-items:flex-end; padding:.8rem 1.15rem calc(.8rem + env(safe-area-inset-bottom)); border-top:1px solid var(--line) }
+    .composer textarea { resize:none; max-height:7rem; font-size:1rem }
+    .warn { background:#4a2a22; color:#f2c4b8; font-size:.84rem; line-height:1.45; padding:.7rem 1.15rem; border-bottom:1px solid #6b3d31 }
+    .warn:empty { display:none }
+    @media (max-width:460px) { .paired { flex-direction:column; align-items:center } .paired-text { width:100% } }
+    [hidden] { display:none!important }
+    .shell { height:100vh; height:100dvh; overflow:hidden }
+    header,.composer { flex-shrink:0 }
+    header { align-items:center; padding-top:calc(1rem + env(safe-area-inset-top)) }
+    .pair { flex-shrink:1; min-height:0; max-height:62dvh; overflow:auto }
+    .pair.has-details .pair-bar { display:block; min-height:44px }
+    .log { min-height:0; overscroll-behavior:contain }
+    button.action,.secondary { min-height:44px }
+    .secondary { background:none; border:1px solid var(--line); border-radius:4px; color:var(--pale); padding:.55rem .85rem; font:inherit; cursor:pointer }
+    .secondary:hover { background:var(--mid) }
+    .secondary:disabled { opacity:.6; cursor:wait }
+    .row { flex-wrap:wrap }
+    .row input { min-width:0; width:0 }
+    input[type=text] { font-size:16px }
+    .qr-card { padding:16px }
+    .qr-card img,.qr-card canvas { width:176px; height:176px }
+    .fine details,details.fine { margin-top:.8rem; color:var(--dim); font-size:.8rem; line-height:1.5 }
+    summary { cursor:pointer; padding:.3rem 0 }
+    .welcome { padding:.5rem 0 }
+    .welcome h2 { margin:0 0 .65rem; font:400 1.8rem var(--serif); color:white }
+    .recovery { padding:.75rem 1.15rem; border-bottom:1px solid var(--line); flex-shrink:0; font-size:.88rem; line-height:1.5 }
+    .recovery p { margin:0 0 .6rem }
+    .composer textarea { min-width:0; min-height:44px }
+    .state { text-align:right; font-size:.78rem }
+    @media(max-width:460px) { .paired { gap:.75rem } .pair-body { padding:.85rem 1.15rem } .qr-card img,.qr-card canvas { width:160px; height:160px } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><h1>Direct link</h1><div class="state" id="state" data-live="boot" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="stateText">starting</span></div></header>
+    <div class="warn" id="warn" role="alert"></div>
+    <section class="pair" id="pair" aria-label="Pairing">
+      <button class="pair-bar" id="pairBar" type="button" aria-expanded="true" aria-controls="pairBody">Hide pairing details</button>
+      <div class="pair-body" id="pairBody">
+        <div class="step welcome" id="stepSet">
+          <h2>From one screen to another.</h2>
+          <p class="lede">Send a message between two devices. Create a link here, then scan the QR on the other device.</p>
+          <div class="row"><button class="action" id="btnSet" type="button">Create QR link</button></div>
+          <p class="fine">No account. No password. Keep both tabs open.</p>
+        </div>
+        <div class="step" id="stepAsk">
+          <p class="lede" id="guestHelp">Connecting to the other device…</p>
+          <p class="fine">Keep the original tab open. Messages stay in these tabs and disappear when you reload.</p>
+        </div>
+        <div class="step" id="stepQR">
+          <div class="paired">
+            <div class="qr-card"><div id="qr" aria-label="Pairing QR code"></div></div>
+            <div class="paired-text">
+              <p class="lede">Scan with your phone’s camera.</p>
+              <p class="fine">Open the link it shows. You’ll connect automatically.</p>
+              <label class="small" for="url" style="margin-top:.85rem">Or copy the private link</label>
+              <div class="row"><input type="text" id="url" spellcheck="false" autocomplete="off" readonly aria-describedby="urlHelp"><button class="secondary" id="copy" type="button">Copy link</button></div>
+              <p class="fine" id="urlHelp">Keep it private. This link lets someone join.</p>
+              <p class="fine" id="copyStatus" role="status"></p>
+            </div>
+          </div>
+          <details class="fine"><summary>Connection details</summary><p>Pairing ID: <span id="code"></span></p><p>Safety code: <span id="fpHost"></span></p><p>Compare the safety code on both screens if needed. Messages disappear when you reload.</p></details>
+        </div>
+        <button class="secondary" id="endLink" type="button" style="margin-top:.85rem" hidden>End this link</button>
+      </div>
+    </section>
+    <div class="recovery" id="recovery" hidden><p id="recoveryText" role="status"></p><button class="secondary" id="retry" type="button">Try again</button> <button class="secondary" id="newLink" type="button">Create a new link</button></div>
+    <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions"><p class="empty" id="empty">Your messages will appear here once the other device connects.</p></div>
+    <div class="composer"><label class="sr-only" for="input">Message</label><textarea id="input" rows="1" placeholder="Type a message" maxlength="4000" disabled></textarea><button class="action" id="send" type="button" disabled>Send</button></div>
+  </main>
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" integrity="sha384-nlUQ8ZqCbvStErob+biJNzSgltf6urV3VGqhfIfzhmg9RXmpeRm76ELw0pYnKlTR" crossorigin="anonymous"></script>
+  <script>
+/* Direct link v2. Serve the finished HTML over HTTPS. */
+(function () {
+  "use strict";
+
+  var PREFIX = "dlnk-";
+  var ALPHA = "abcdefghjkmnpqrstuvwxyz23456789"; // 31 symbols; unbiased sampling below.
+  var CODE_LENGTH = 10;
+  var MAX_PACKET_BYTES = 64 * 1024;
+  var MAX_MESSAGE_LENGTH = 4000;
+  var PROTOCOL = "direct-link/v2";
+  var HELLO = PROTOCOL + "/hello";
+  var el = {};
+  ["state","stateText","warn","pair","pairBar","stepSet","stepAsk","stepQR","btnSet","qr","code","url","fpHost","log","empty","input","send","guestHelp","copy","copyStatus","recovery","recoveryText","retry","newLink","endLink"].forEach(function (id) { el[id] = document.getElementById(id); });
+  var peer = null, conns = [], qr = null, isHost = true, myCode = "", key = null, fingerprint = "", retries = 0, sending = false, retryTimer = null, ended = false;
+
+  function randomBytes(n) { var b = new Uint8Array(n); crypto.getRandomValues(b); return b; }
+  function randomCode(n) {
+    var out = "", limit = 256 - (256 % ALPHA.length), b;
+    while (out.length < n) { b = randomBytes(1)[0]; if (b < limit) out += ALPHA[b % ALPHA.length]; }
+    return out;
+  }
+  function randomId() { return toB64(randomBytes(16)); }
+  function toB64(bytes) { var b = new Uint8Array(bytes), s = ""; for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return btoa(s); }
+  function validB64(s) { return typeof s === "string" && s.length <= MAX_PACKET_BYTES && /^[A-Za-z0-9+/]*={0,2}$/.test(s) && s.length % 4 === 0; }
+  function fromB64(s) { if (!validB64(s)) throw new Error("invalid base64"); var raw = atob(s), b = new Uint8Array(raw.length); for (var i = 0; i < raw.length; i++) b[i] = raw.charCodeAt(i); return b; }
+  function hex(bytes) { return Array.prototype.map.call(bytes, function (b) { return ("0" + b.toString(16)).slice(-2); }).join("").toUpperCase(); }
+  function setState(kind, text) { el.state.dataset.live = kind; el.stateText.textContent = text; }
+  function showStep(which) { ["stepSet","stepAsk","stepQR"].forEach(function (s) { el[s].classList.toggle("on", s === which); }); }
+  function addMsg(who, text) { var follow=el.log.scrollHeight-el.log.scrollTop-el.log.clientHeight<80; if (el.empty) { el.empty.remove(); el.empty = null; } var d = document.createElement("div"); d.className = "msg " + who; d.textContent = text; el.log.appendChild(d); if (follow || who === "me") el.log.scrollTop = el.log.scrollHeight; }
+  function note(text, bad) { addMsg("note" + (bad ? " bad" : ""), text); }
+  function warn(text) { el.warn.textContent = text || ""; }
+  function openConns() { return conns.filter(function (s) { return s && s.conn && s.conn.open && s.verified; }); }
+  function collapsePair(collapsed) {
+    el.pair.classList.add("has-details"); el.pair.classList.toggle("collapsed", collapsed);
+    el.pairBar.setAttribute("aria-expanded", String(!collapsed));
+    el.pairBar.textContent = collapsed ? "Show connection details" : "Hide connection details";
+  }
+  function recovery(message) { el.recovery.hidden=false; el.recoveryText.textContent=message; el.retry.hidden=false; }
+  function refreshComposer() {
+    var ready = openConns().length > 0;
+    el.input.disabled = !ready; el.send.disabled = !ready || sending || !el.input.value.trim();
+    el.input.placeholder=ready ? "Type a message" : "Connect another device to chat";
+    el.send.textContent=sending ? "Sending…" : "Send";
+    if (ready) setState("live", "Connected · encrypted");
+  }
+
+  function toB64Url(bytes) { return toB64(bytes).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+  function fromB64Url(s) { if (typeof s !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(s)) throw new Error("invalid token"); var padded=s.replace(/-/g,"+").replace(/_/g,"/") + "=".repeat((4 - s.length % 4) % 4); return fromB64(padded); }
+  async function importTokenKey(token) {
+    var raw = fromB64Url(token);
+    return crypto.subtle.digest("SHA-256", raw).then(function (digest) {
+      fingerprint = hex(new Uint8Array(digest).slice(0, 8)).replace(/(.{4})(.{4})(.{4})(.{4})/, "$1-$2-$3-$4");
+      return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["encrypt","decrypt"]);
+    });
+  }
+  function aad(kind, sid, seq) { return new TextEncoder().encode(PROTOCOL + "|" + kind + "|" + sid + "|" + seq); }
+  function seal(plaintext, kind, sid, seq) {
+    var iv = randomBytes(12);
+    return crypto.subtle.encrypt({ name:"AES-GCM", iv:iv, additionalData:aad(kind, sid, seq) }, key, new TextEncoder().encode(plaintext)).then(function (ct) {
+      return { v:2, t:kind, sid:sid, n:seq, iv:toB64(iv), ct:toB64(ct) };
+    });
+  }
+  function unseal(packet) {
+    return Promise.resolve().then(function () {
+      if (!packet || packet.v !== 2 || !["hello","ack","msg"].includes(packet.t) || typeof packet.sid !== "string" || packet.sid.length < 8 || packet.sid.length > 64 || !Number.isSafeInteger(packet.n) || packet.n < 0 || !validB64(packet.iv) || fromB64(packet.iv).length !== 12 || !validB64(packet.ct) || fromB64(packet.ct).length > MAX_PACKET_BYTES) throw new Error("invalid packet");
+      return crypto.subtle.decrypt({ name:"AES-GCM", iv:fromB64(packet.iv), additionalData:aad(packet.t, packet.sid, packet.n) }, key, fromB64(packet.ct)).then(function (buf) {
+        if (buf.byteLength > MAX_PACKET_BYTES) throw new Error("packet too large");
+        return new TextDecoder("utf-8", { fatal:true }).decode(buf);
+      });
+    });
+  }
+  function closeState(state, message, quiet) {
+    if (state.closed) return;
+    var wasVerified=state.verified; state.closed=true; state.verified=false;
+    clearTimeout(state.timeout); conns=conns.filter(function (s) { return s!==state; });
+    try { state.conn.close(); } catch (_) {}
+    refreshComposer();
+    if (quiet || ended || openConns().length) return;
+    if (isHost) {
+      setState("waiting", "Waiting for device");
+      if (wasVerified) { collapsePair(false); note("Other device disconnected. Keep this tab open to reconnect."); }
+    } else {
+      setState("lost", "Not connected");
+      el.guestHelp.textContent="The connection is closed. Your messages stay here until you reload.";
+      recovery(message || "Keep the original tab open and try again. The link may already be in use on another device.");
+      if (wasVerified) { note("Connection lost. Trying to reconnect…"); retryJoin(); }
+    }
+  }
+  function markVerified(state) {
+    if (state.closed || !state.conn.open) return false;
+    if (state.verified) return true;
+    if (openConns().some(function (s) { return s !== state; })) { note("A second device tried to join; it was rejected.", true); closeState(state); return false; }
+    state.verified = true; clearTimeout(state.timeout); clearTimeout(retryTimer); retryTimer=null; retries=0;
+    el.recovery.hidden=true; el.guestHelp.textContent="Connected. Safety code: " + fingerprint + ".";
+    note("Connected. Messages are encrypted between these devices."); collapsePair(true); refreshComposer(); return true;
+  }
+  function attach(conn) {
+    var state = { conn:conn, verified:false, reserved:false, sid:null, localSid:randomId(), sendSeq:1, recvSeq:-1, closed:false, receiveQueue:Promise.resolve() }; conns.push(state);
+    state.timeout=setTimeout(function () { closeState(state, "Couldn’t connect. Check that the original tab is open and the link isn’t already in use."); }, 12000);
+    conn.on("open", function () {
+      if (state.closed) { conn.close(); return; }
+      if (!openConns().length) setState("waiting", "Securing connection…");
+      if (!isHost) seal(JSON.stringify({ hello:HELLO, sid:state.localSid }), "hello", state.localSid, 0).then(function (p) { if (conn.open) conn.send(p); }).catch(function () { closeState(state); });
+      refreshComposer();
+    });
+    conn.on("data", function (packet) {
+      if (state.closed) return;
+      state.receiveQueue = state.receiveQueue.then(function () { if (state.closed) return; return unseal(packet); }).then(function (text) {
+        if (state.closed) return;
+        if (packet.n <= state.recvSeq) throw new Error("replay");
+        if (packet.t === "hello") {
+          if (!isHost || packet.n !== 0 || state.recvSeq !== -1) throw new Error("bad hello");
+          var hello = JSON.parse(text);
+          if (hello.hello !== HELLO || hello.sid !== packet.sid || state.verified) throw new Error("bad hello");
+          if (conns.some(function (s) { return s!==state && (s.verified || s.reserved); })) { closeState(state); return; }
+          state.reserved=true;
+          state.recvSeq = packet.n;
+          state.sid = packet.sid;
+          return seal(JSON.stringify({ ack:HELLO, sid:state.sid }), "ack", state.sid, 0).then(function (p) { if (conn.open) conn.send(p); }).then(function () { markVerified(state); });
+        }
+        if (packet.t === "ack") {
+          if (isHost || packet.n !== 0 || state.recvSeq !== -1) throw new Error("bad ack");
+          var ack = JSON.parse(text);
+          if (ack.ack !== HELLO || ack.sid !== packet.sid || packet.sid !== state.localSid || state.verified) throw new Error("bad ack");
+          state.recvSeq = packet.n;
+          state.sid = packet.sid; markVerified(state); return;
+        }
+        if (!state.verified || packet.sid !== state.sid) throw new Error("unauthenticated message");
+        if (text.length > MAX_MESSAGE_LENGTH) throw new Error("message too large");
+        state.recvSeq = packet.n;
+        addMsg("them", text);
+      }).catch(function (err) {
+        if (err && err.message === "replay") return;
+        if (!state.closed) closeState(state, "This link could not be verified. Scan the original QR again.");
+      });
+    });
+    conn.on("close", function () { closeState(state); });
+    conn.on("error", function () { closeState(state, "The connection failed. Check your network, then try again."); });
+  }
+  function connectGuest() {
+    if (ended || openConns().length) return;
+    conns.slice().forEach(function (s) { closeState(s, "", true); });
+    el.recovery.hidden=true; el.guestHelp.textContent="Connecting to the other device…"; setState("waiting", "Connecting…");
+    if (peer && !peer.destroyed && !peer.disconnected) attach(peer.connect(PREFIX + myCode, { reliable:true, serialization:"json" }));
+    else { if (peer && !peer.destroyed) peer.destroy(); openGuestPeer(); }
+  }
+  function retryJoin() {
+    if (ended || isHost || retryTimer || openConns().length) return;
+    if (retries >= 3) { setState("lost", "Device unavailable"); el.guestHelp.textContent="We couldn’t reach the original device."; recovery("We couldn’t reach the other device. Keep its original tab open, then try again—or scan a fresh QR."); return; }
+    retries++; el.recovery.hidden=true; setState("waiting", "Reconnecting…");
+    retryTimer=setTimeout(function () { retryTimer=null; connectGuest(); }, 2000);
+  }
+  function onPeerError(err) {
+    if (ended) return;
+    var t = err && err.type;
+    if (openConns().length) return;
+    conns.slice().forEach(function (s) { closeState(s, "", true); });
+    if (t === "peer-unavailable") { retryJoin(); return; }
+    setState("lost", "Connection unavailable"); refreshComposer();
+    recovery(t === "browser-incompatible" ? "This browser cannot create a direct connection. Try a current version of Safari, Chrome, or Firefox." : "Couldn’t reach the connection service. Check your network and try again.");
+  }
+  function drawQR(text) {
+    try { if (!window.QRCode) throw new Error("no QR"); if (!qr) qr=new QRCode(el.qr, {text:text,width:352,height:352,colorDark:"#0f2e44",colorLight:"#e8e2d4",correctLevel:QRCode.CorrectLevel.M}); else { qr.clear(); qr.makeCode(text); } }
+    catch (_) { el.qr.parentElement.hidden=true; warn("The QR is unavailable. Use Copy link to open the private link on your other device."); }
+  }
+  function watchPeer(p) {
+    el.endLink.hidden=false; el.endLink.textContent=isHost ? "End this link" : "Leave this link";
+    var timer=setTimeout(function () { if (!p.open && !ended && peer===p) { p.destroy(); onPeerError({type:"timeout"}); } }, 12000);
+    p.on("open", function () { clearTimeout(timer); });
+    p.on("error", function () { clearTimeout(timer); });
+    p.on("close", function () { clearTimeout(timer); });
+  }
+  function shareURL(code, token) { return location.origin + location.pathname + "#" + encodeURIComponent(code + "." + token); }
+  function validCode(code) { return typeof code === "string" && code.length === CODE_LENGTH && new RegExp("^[" + ALPHA + "]{" + CODE_LENGTH + "}$").test(code); }
+  function startHost() {
+    isHost = true; myCode = randomCode(CODE_LENGTH); var token = toB64Url(randomBytes(32)); setState("waiting", "creating private link");
+    importTokenKey(token).then(function (k) { key=k; el.code.textContent=myCode; el.fpHost.textContent=fingerprint; el.url.value=shareURL(myCode, token); drawQR(el.url.value); showStep("stepQR"); if (["localhost","127.0.0.1","[::1]"].includes(location.hostname)) warn("A phone cannot open a localhost link from your laptop. Host this HTML file on HTTPS for cross-device pairing."); peer=new Peer(PREFIX + myCode, { debug:0 }); watchPeer(peer); peer.on("open", function () { if (openConns().length) refreshComposer(); else { el.recovery.hidden=true; setState("waiting", "Waiting for device"); } }); peer.on("connection", attach); peer.on("error", onPeerError); peer.on("disconnected", function () { if (!ended && !peer.destroyed) peer.reconnect(); }); }).catch(function () { el.btnSet.disabled=false; setState("bad", "Link setup failed"); recovery("Couldn’t create a private link. Try again."); });
+  }
+  function openGuestPeer() {
+    peer=new Peer(PREFIX + "g" + randomCode(9), { debug:0 });
+    watchPeer(peer);
+    peer.on("open", connectGuest);
+    peer.on("connection", function (conn) { conn.close(); });
+    peer.on("error", onPeerError);
+    peer.on("disconnected", function () { if (!ended && !peer.destroyed) peer.reconnect(); });
+  }
+  function startGuest(code, token) {
+    isHost=false; myCode=code; setState("waiting", "Opening private link…");
+    importTokenKey(token).then(function (k) { key=k; openGuestPeer(); }).catch(function () { el.pair.hidden=true; setState("bad", "Invalid link"); recovery("This private link is incomplete or invalid. Scan the original QR again."); el.retry.hidden=true; });
+  }
+  function send() {
+    var draft=el.input.value, text=draft, live=openConns(); if (!text.trim() || sending) return; if (text.length > MAX_MESSAGE_LENGTH) { note("Message is too long.", true); return; } if (live.length !== 1) { note("Nothing connected yet.", true); return; }
+    var state=live[0]; sending=true; refreshComposer();
+    seal(text, "msg", state.sid, state.sendSeq).then(function (packet) {
+      if (!state.conn.open || !state.verified) throw new Error("link closed");
+      state.conn.send(packet); state.sendSeq++; addMsg("me", text); if (el.input.value===draft) el.input.value=""; el.input.style.height="auto"; el.input.focus();
+    }).catch(function () { note("Message was not sent. Your draft is still here.", true); }).finally(function () { sending=false; refreshComposer(); });
+  }
+  el.send.addEventListener("click", send);
+  el.input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
+  el.input.addEventListener("input", function () { el.input.style.height="auto"; el.input.style.height=Math.min(el.input.scrollHeight,112) + "px"; refreshComposer(); });
+  el.pairBar.addEventListener("click", function () { collapsePair(!el.pair.classList.contains("collapsed")); });
+  el.copy.addEventListener("click", async function () {
+    try { await navigator.clipboard.writeText(el.url.value); el.copyStatus.textContent="Link copied."; }
+    catch (_) { el.url.focus(); el.url.select(); el.copyStatus.textContent="Select and copy this link."; }
+  });
+  el.retry.addEventListener("click", function () { clearTimeout(retryTimer); retryTimer=null; retries=0; if (isHost) location.reload(); else if (key) connectGuest(); });
+  el.newLink.addEventListener("click", function () { history.replaceState(null, "", location.pathname+location.search); location.reload(); });
+  el.endLink.addEventListener("click", function () {
+    ended=true; clearTimeout(retryTimer); retryTimer=null;
+    conns.slice().forEach(function (s) { closeState(s, "", true); });
+    if (peer && !peer.destroyed) peer.destroy(); key=null;
+    if (qr) qr.clear(); el.qr.removeAttribute("title"); el.url.value="";
+    showStep(null); el.pair.hidden=true; warn("");
+    setState("lost", isHost ? "Link ended" : "You left the link"); recovery(isHost ? "This link has ended. Your messages stay here until you reload or create a new link." : "You left the link. The original device can still accept another connection. Your messages stay here until you reload."); el.retry.hidden=true; refreshComposer();
+  });
+  el.btnSet.addEventListener("click", function () { el.btnSet.disabled=true; startHost(); });
+  window.addEventListener("hashchange", function () { if (location.hash) location.reload(); });
+  function boot() {
+    if (!window.isSecureContext || !window.crypto || !crypto.subtle || !["https:","http:"].includes(location.protocol)) { warn("Open this page over HTTPS. Localhost works only for development."); setState("bad", "no secure context"); return; }
+    var hash=location.hash.replace(/^#/, "");
+    try { hash=decodeURIComponent(hash); } catch (_) { setState("bad", "Invalid link"); recovery("This link is damaged. Scan the original QR again, or create a new link."); el.retry.hidden=true; return; }
+    if (!hash) { showStep("stepSet"); setState("boot", "Ready to connect"); refreshComposer(); return; }
+    var parts=hash.split(".");
+    if (parts.length !== 2 || !validCode(parts[0])) { setState("bad", "Invalid link"); recovery("This link is incomplete. Scan the original QR again, or create a new link."); el.retry.hidden=true; return; }
+    history.replaceState(null, "", location.pathname + location.search);
+    showStep("stepAsk"); startGuest(parts[0], parts[1]);
+  }
+  if (!window.Peer) { setState("lost", "Offline"); recovery("The connection library couldn’t load. Check your network, then try again."); return; }
+  boot();
+})();
+  </script>
+</body>
+</html>
