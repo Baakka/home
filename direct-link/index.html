@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; script-src 'sha256-+L9cTfWq/L0idFJwicYMK/MkuzLGjkrS7HCNna/jzB8=' https://cdnjs.cloudflare.com; connect-src https://0.peerjs.com wss://0.peerjs.com; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data: blob:; script-src 'sha256-kQD+/TNXlA/SwhndY2aw5NEyVJu9ihmQ7PqM8KoFgtY=' https://cdnjs.cloudflare.com; connect-src https://0.peerjs.com wss://0.peerjs.com; base-uri 'none'; form-action 'none'">
   <title>Direct link</title>
   <style>
     :root { --deep:#0f2e44; --mid:#17405c; --line:#2f6284; --pale:#cfe3ef; --paper:#e8e2d4; --signal:#f5c147; --good:#6fd39a; --bad:#e2705f; --dim:#7ea6c0; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --serif:"Hoefler Text","Iowan Old Style",Palatino,Georgia,serif; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace }
@@ -57,7 +57,18 @@
     .warn:empty { display:none }
     @media (max-width:460px) { .paired { flex-direction:column; align-items:center } .paired-text { width:100% } }
     [hidden] { display:none!important }
-    .shell { height:100vh; height:100dvh; overflow:hidden }
+    .shell { height:100vh; height:100dvh; overflow:hidden; position:fixed; top:0; left:0; right:0; margin:0 auto }
+    html,body { overflow:hidden }
+    .attach { flex:none; width:44px; padding:0; display:flex; align-items:center; justify-content:center }
+    .attach svg { width:20px; height:20px }
+    .msg.file { min-width:12rem }
+    .msg.file .fname { font-weight:600; overflow-wrap:anywhere }
+    .msg.file .fmeta { font-size:.8rem; opacity:.85; margin-top:.2rem }
+    .msg.file .bar { height:4px; background:rgba(255,255,255,.22); border-radius:2px; margin-top:.5rem; overflow:hidden }
+    .msg.file .bar i { display:block; height:100%; width:0; background:currentColor; transition:width .15s linear }
+    .msg.file .thumb { display:block; max-width:100%; max-height:240px; border-radius:6px; margin-bottom:.4rem }
+    .msg.file .save { color:inherit; font-weight:600 }
+    .msg.file.bad { outline:1px solid var(--bad) }
     header,.composer { flex-shrink:0 }
     header { align-items:center; padding-top:calc(1rem + env(safe-area-inset-top)) }
     .pair { flex-shrink:1; min-height:0; max-height:62dvh; overflow:auto }
@@ -84,7 +95,7 @@
   </style>
 </head>
 <body>
-  <main class="shell">
+  <main class="shell" id="shell">
     <header><h1>Direct link</h1><div class="state" id="state" data-live="boot" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="stateText">starting</span></div></header>
     <div class="warn" id="warn" role="alert"></div>
     <section class="pair" id="pair" aria-label="Pairing">
@@ -119,13 +130,13 @@
     </section>
     <div class="recovery" id="recovery" hidden><p id="recoveryText" role="status"></p><button class="secondary" id="retry" type="button">Try again</button> <button class="secondary" id="newLink" type="button">Create a new link</button></div>
     <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions"><p class="empty" id="empty">Your messages will appear here once the other device connects.</p></div>
-    <div class="composer"><label class="sr-only" for="input">Message</label><textarea id="input" rows="1" placeholder="Type a message" maxlength="4000" disabled></textarea><button class="action" id="send" type="button" disabled>Send</button></div>
+    <div class="composer"><button class="secondary attach" id="attach" type="button" disabled aria-label="Send a file" title="Send a file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.05l-8.5 8.5a5.5 5.5 0 01-7.78-7.78l8.85-8.85a3.5 3.5 0 014.95 4.95l-8.86 8.85a1.5 1.5 0 01-2.12-2.12l8.5-8.5"/></svg></button><input type="file" id="file" multiple hidden><label class="sr-only" for="input">Message</label><textarea id="input" rows="1" placeholder="Type a message" maxlength="4000" disabled></textarea><button class="action" id="send" type="button" disabled>Send</button></div>
   </main>
   <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" integrity="sha384-nlUQ8ZqCbvStErob+biJNzSgltf6urV3VGqhfIfzhmg9RXmpeRm76ELw0pYnKlTR" crossorigin="anonymous"></script>
   <script>
-/* Direct link v2. Serve the finished HTML over HTTPS. */
+/* Direct link v3. Serve the finished HTML over HTTPS. */
 (function () {
   "use strict";
 
@@ -134,11 +145,15 @@
   var CODE_LENGTH = 10;
   var MAX_PACKET_BYTES = 64 * 1024;
   var MAX_MESSAGE_LENGTH = 4000;
-  var PROTOCOL = "direct-link/v2";
+  var PROTOCOL = "direct-link/v3";
+  var FILE_CHUNK = 8 * 1024;               // raw bytes per packet; stays under the 16 KiB DataChannel interop limit after base64 and JSON framing
+  var MAX_FILE_BYTES = 50 * 1024 * 1024;
+  var MAX_FILE_NAME = 120;
+  var BUFFER_HIGH = 1024 * 1024;           // pause chunking while this much is queued in the channel
   var HELLO = PROTOCOL + "/hello";
   var el = {};
-  ["state","stateText","warn","pair","pairBar","stepSet","stepAsk","stepQR","btnSet","qr","code","url","fpHost","log","empty","input","send","guestHelp","copy","copyStatus","recovery","recoveryText","retry","newLink","endLink"].forEach(function (id) { el[id] = document.getElementById(id); });
-  var peer = null, conns = [], qr = null, isHost = true, myCode = "", key = null, fingerprint = "", retries = 0, sending = false, retryTimer = null, ended = false;
+  ["state","stateText","warn","pair","pairBar","stepSet","stepAsk","stepQR","btnSet","qr","code","url","fpHost","log","empty","input","send","guestHelp","copy","copyStatus","recovery","recoveryText","retry","newLink","endLink","attach","file","shell"].forEach(function (id) { el[id] = document.getElementById(id); });
+  var peer = null, conns = [], qr = null, isHost = true, myCode = "", key = null, fingerprint = "", retries = 0, sending = false, retryTimer = null, ended = false, fileQueue = [], fileBusy = false;
 
   function randomBytes(n) { var b = new Uint8Array(n); crypto.getRandomValues(b); return b; }
   function randomCode(n) {
@@ -165,7 +180,7 @@
   function recovery(message) { el.recovery.hidden=false; el.recoveryText.textContent=message; el.retry.hidden=false; }
   function refreshComposer() {
     var ready = openConns().length > 0;
-    el.input.disabled = !ready; el.send.disabled = !ready || sending || !el.input.value.trim();
+    el.input.disabled = !ready; el.attach.disabled = !ready; el.send.disabled = !ready || sending || !el.input.value.trim();
     el.input.placeholder=ready ? "Type a message" : "Connect another device to chat";
     el.send.textContent=sending ? "Sending…" : "Send";
     if (ready) setState("live", "Connected · encrypted");
@@ -181,18 +196,19 @@
     });
   }
   function aad(kind, sid, seq) { return new TextEncoder().encode(PROTOCOL + "|" + kind + "|" + sid + "|" + seq); }
-  function seal(plaintext, kind, sid, seq) {
-    var iv = randomBytes(12);
-    return crypto.subtle.encrypt({ name:"AES-GCM", iv:iv, additionalData:aad(kind, sid, seq) }, key, new TextEncoder().encode(plaintext)).then(function (ct) {
-      return { v:2, t:kind, sid:sid, n:seq, iv:toB64(iv), ct:toB64(ct) };
+  function seal(plain, kind, sid, seq) {
+    var iv = randomBytes(12), bytes = typeof plain === "string" ? new TextEncoder().encode(plain) : plain;
+    return crypto.subtle.encrypt({ name:"AES-GCM", iv:iv, additionalData:aad(kind, sid, seq) }, key, bytes).then(function (ct) {
+      return { v:3, t:kind, sid:sid, n:seq, iv:toB64(iv), ct:toB64(ct) };
     });
   }
+  function asText(bytes) { return new TextDecoder("utf-8", { fatal:true }).decode(bytes); }
   function unseal(packet) {
     return Promise.resolve().then(function () {
-      if (!packet || packet.v !== 2 || !["hello","ack","msg"].includes(packet.t) || typeof packet.sid !== "string" || packet.sid.length < 8 || packet.sid.length > 64 || !Number.isSafeInteger(packet.n) || packet.n < 0 || !validB64(packet.iv) || fromB64(packet.iv).length !== 12 || !validB64(packet.ct) || fromB64(packet.ct).length > MAX_PACKET_BYTES) throw new Error("invalid packet");
+      if (!packet || packet.v !== 3 || !["hello","ack","msg","fmeta","fchunk"].includes(packet.t) || typeof packet.sid !== "string" || packet.sid.length < 8 || packet.sid.length > 64 || !Number.isSafeInteger(packet.n) || packet.n < 0 || !validB64(packet.iv) || fromB64(packet.iv).length !== 12 || !validB64(packet.ct) || fromB64(packet.ct).length > MAX_PACKET_BYTES) throw new Error("invalid packet");
       return crypto.subtle.decrypt({ name:"AES-GCM", iv:fromB64(packet.iv), additionalData:aad(packet.t, packet.sid, packet.n) }, key, fromB64(packet.ct)).then(function (buf) {
         if (buf.byteLength > MAX_PACKET_BYTES) throw new Error("packet too large");
-        return new TextDecoder("utf-8", { fatal:true }).decode(buf);
+        return new Uint8Array(buf);
       });
     });
   }
@@ -201,6 +217,8 @@
     var wasVerified=state.verified; state.closed=true; state.verified=false;
     clearTimeout(state.timeout); conns=conns.filter(function (s) { return s!==state; });
     try { state.conn.close(); } catch (_) {}
+    if (state.incoming) { state.incoming.card.fail("Interrupted"); state.incoming = null; }
+    if (fileQueue.length) { note(fileQueue.length + (fileQueue.length === 1 ? " file was" : " files were") + " not sent.", true); fileQueue.length = 0; }
     refreshComposer();
     if (quiet || ended || openConns().length) return;
     if (isHost) {
@@ -222,7 +240,7 @@
     note("Connected. Messages are encrypted between these devices."); collapsePair(true); refreshComposer(); return true;
   }
   function attach(conn) {
-    var state = { conn:conn, verified:false, reserved:false, sid:null, localSid:randomId(), sendSeq:1, recvSeq:-1, closed:false, receiveQueue:Promise.resolve() }; conns.push(state);
+    var state = { conn:conn, verified:false, reserved:false, sid:null, localSid:randomId(), sendSeq:1, recvSeq:-1, closed:false, receiveQueue:Promise.resolve(), sendQueue:Promise.resolve(), incoming:null }; conns.push(state);
     state.timeout=setTimeout(function () { closeState(state, "Couldn’t connect. Check that the original tab is open and the link isn’t already in use."); }, 12000);
     conn.on("open", function () {
       if (state.closed) { conn.close(); return; }
@@ -232,12 +250,12 @@
     });
     conn.on("data", function (packet) {
       if (state.closed) return;
-      state.receiveQueue = state.receiveQueue.then(function () { if (state.closed) return; return unseal(packet); }).then(function (text) {
+      state.receiveQueue = state.receiveQueue.then(function () { if (state.closed) return; return unseal(packet); }).then(function (bytes) {
         if (state.closed) return;
         if (packet.n <= state.recvSeq) throw new Error("replay");
         if (packet.t === "hello") {
           if (!isHost || packet.n !== 0 || state.recvSeq !== -1) throw new Error("bad hello");
-          var hello = JSON.parse(text);
+          var hello = JSON.parse(asText(bytes));
           if (hello.hello !== HELLO || hello.sid !== packet.sid || state.verified) throw new Error("bad hello");
           if (conns.some(function (s) { return s!==state && (s.verified || s.reserved); })) { closeState(state); return; }
           state.reserved=true;
@@ -247,14 +265,32 @@
         }
         if (packet.t === "ack") {
           if (isHost || packet.n !== 0 || state.recvSeq !== -1) throw new Error("bad ack");
-          var ack = JSON.parse(text);
+          var ack = JSON.parse(asText(bytes));
           if (ack.ack !== HELLO || ack.sid !== packet.sid || packet.sid !== state.localSid || state.verified) throw new Error("bad ack");
           state.recvSeq = packet.n;
           state.sid = packet.sid; markVerified(state); return;
         }
         if (!state.verified || packet.sid !== state.sid) throw new Error("unauthenticated message");
-        if (text.length > MAX_MESSAGE_LENGTH) throw new Error("message too large");
         state.recvSeq = packet.n;
+        if (packet.t === "fmeta") {
+          if (state.incoming) throw new Error("bad file");
+          var meta = JSON.parse(asText(bytes));
+          if (!meta || typeof meta.name !== "string" || typeof meta.type !== "string" || !Number.isSafeInteger(meta.size) || meta.size <= 0 || meta.size > MAX_FILE_BYTES || meta.chunks !== Math.ceil(meta.size / FILE_CHUNK)) throw new Error("bad file");
+          var fname = safeName(meta.name);
+          state.incoming = { name:fname, size:meta.size, type:meta.type, chunks:meta.chunks, parts:[], got:0, card:fileCard("them", fname, meta.size) };
+          state.incoming.card.status("receiving");
+          return;
+        }
+        if (packet.t === "fchunk") {
+          var inc = state.incoming; if (!inc) throw new Error("bad file");
+          var expect = inc.parts.length === inc.chunks - 1 ? inc.size - (inc.chunks - 1) * FILE_CHUNK : FILE_CHUNK;
+          if (bytes.length !== expect) throw new Error("bad file");
+          inc.parts.push(bytes); inc.got += bytes.length; inc.card.progress(inc.got / inc.size);
+          if (inc.parts.length === inc.chunks) { state.incoming = null; inc.card.done(new Blob(inc.parts, { type:safeType(inc.type) })); }
+          return;
+        }
+        var text = asText(bytes);
+        if (text.length > MAX_MESSAGE_LENGTH) throw new Error("message too large");
         addMsg("them", text);
       }).catch(function (err) {
         if (err && err.message === "replay") return;
@@ -315,14 +351,100 @@
     isHost=false; myCode=code; setState("waiting", "Opening private link…");
     importTokenKey(token).then(function (k) { key=k; openGuestPeer(); }).catch(function () { el.pair.hidden=true; setState("bad", "Invalid link"); recovery("This private link is incomplete or invalid. Scan the original QR again."); el.retry.hidden=true; });
   }
+  // Every post-handshake packet goes through one queue per connection, so sequence
+  // numbers leave in order even when text and file chunks are sealed concurrently.
+  function transmit(state, kind, plain) {
+    var job = state.sendQueue.then(function () {
+      if (state.closed || !state.conn.open || !state.verified) throw new Error("link closed");
+      return seal(plain, kind, state.sid, state.sendSeq).then(function (packet) {
+        if (state.closed || !state.conn.open) throw new Error("link closed");
+        state.conn.send(packet); state.sendSeq++;
+      });
+    });
+    state.sendQueue = job.catch(function () {});
+    return job;
+  }
   function send() {
     var draft=el.input.value, text=draft, live=openConns(); if (!text.trim() || sending) return; if (text.length > MAX_MESSAGE_LENGTH) { note("Message is too long.", true); return; } if (live.length !== 1) { note("Nothing connected yet.", true); return; }
     var state=live[0]; sending=true; refreshComposer();
-    seal(text, "msg", state.sid, state.sendSeq).then(function (packet) {
-      if (!state.conn.open || !state.verified) throw new Error("link closed");
-      state.conn.send(packet); state.sendSeq++; addMsg("me", text); if (el.input.value===draft) el.input.value=""; el.input.style.height="auto"; el.input.focus();
+    transmit(state, "msg", text).then(function () {
+      addMsg("me", text); if (el.input.value===draft) el.input.value=""; el.input.style.height="auto"; el.input.focus();
     }).catch(function () { note("Message was not sent. Your draft is still here.", true); }).finally(function () { sending=false; refreshComposer(); });
   }
+  function fmtSize(n) { if (n < 1024) return n + " B"; if (n < 1048576) return (n / 1024).toFixed(n < 10240 ? 1 : 0) + " KB"; return (n / 1048576).toFixed(n < 10485760 ? 1 : 0) + " MB"; }
+  // Path separators, control characters and bidi overrides are stripped so a name cannot escape a folder or disguise its extension.
+  function safeName(n) { n = String(n || "").replace(/[\/\\\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/g, "_").replace(/^\.+/, "").trim(); if (!n) n = "file"; return n.length > MAX_FILE_NAME ? n.slice(0, MAX_FILE_NAME) : n; }
+  // Only image types are kept for inline preview; everything else is saved as an opaque download so a received HTML or SVG file is never rendered under this origin.
+  function safeType(t) { return /^image\/(png|jpeg|gif|webp|avif|bmp)$/.test(t) ? t : "application/octet-stream"; }
+  function fileCard(who, name, size) {
+    var follow=el.log.scrollHeight-el.log.scrollTop-el.log.clientHeight<80; if (el.empty) { el.empty.remove(); el.empty = null; }
+    var d=document.createElement("div"); d.className="msg " + who + " file";
+    var n=document.createElement("div"); n.className="fname"; n.textContent=name;
+    var m=document.createElement("div"); m.className="fmeta";
+    var bar=document.createElement("div"); bar.className="bar"; var fill=document.createElement("i"); bar.appendChild(fill);
+    d.appendChild(n); d.appendChild(m); d.appendChild(bar); el.log.appendChild(d);
+    if (follow || who === "me") el.log.scrollTop=el.log.scrollHeight;
+    var sizeText=fmtSize(size);
+    return {
+      status:function (s) { m.textContent=sizeText + " · " + s; },
+      progress:function (p) { var pct=Math.min(100, Math.round(p * 100)); fill.style.width=pct + "%"; m.textContent=sizeText + " · " + pct + "%"; },
+      done:function (blob) {
+        bar.remove();
+        if (!blob) { m.textContent=sizeText + " · sent"; return; }
+        var url=URL.createObjectURL(blob);
+        if (blob.type.indexOf("image/") === 0) { var img=document.createElement("img"); img.src=url; img.alt=name; img.className="thumb"; d.insertBefore(img, n); img.addEventListener("load", function () { if (follow) el.log.scrollTop=el.log.scrollHeight; }); }
+        var a=document.createElement("a"); a.href=url; a.download=name; a.textContent="Save"; a.className="save";
+        m.textContent=sizeText + " · "; m.appendChild(a);
+        if (follow) el.log.scrollTop=el.log.scrollHeight;
+      },
+      fail:function (why) { bar.remove(); d.classList.add("bad"); m.textContent=sizeText + " · " + why; }
+    };
+  }
+  function drain(state) {
+    var dc=state.conn.dataChannel;
+    if (state.closed || !dc || dc.bufferedAmount < BUFFER_HIGH) return Promise.resolve();
+    return new Promise(function (r) { setTimeout(r, 40); }).then(function () { return drain(state); });
+  }
+  function sendFile(state, file) {
+    var name=safeName(file.name), chunks=Math.ceil(file.size / FILE_CHUNK), card=fileCard("me", name, file.size); card.status("sending");
+    return transmit(state, "fmeta", JSON.stringify({ name:name, size:file.size, type:file.type || "", chunks:chunks })).then(function () {
+      var i=0;
+      function next() {
+        if (i >= chunks) return;
+        return file.slice(i * FILE_CHUNK, Math.min(file.size, (i + 1) * FILE_CHUNK)).arrayBuffer()
+          .then(function (buf) { return drain(state).then(function () { return transmit(state, "fchunk", new Uint8Array(buf)); }); })
+          .then(function () { i++; card.progress(i / chunks); return next(); });
+      }
+      return next();
+    }).then(function () { card.done(null); }).catch(function () { card.fail("Not sent"); });
+  }
+  function pumpFiles() {
+    if (fileBusy || !fileQueue.length) return;
+    var live=openConns(); if (live.length !== 1) { fileQueue.length=0; return; }
+    fileBusy=true; var f=fileQueue.shift();
+    sendFile(live[0], f).finally(function () { fileBusy=false; pumpFiles(); });
+  }
+  function queueFiles(list) {
+    if (openConns().length !== 1) { note("Nothing connected yet.", true); return; }
+    Array.prototype.forEach.call(list, function (f) {
+      if (f.size > MAX_FILE_BYTES) { note("“" + safeName(f.name) + "” is larger than " + fmtSize(MAX_FILE_BYTES) + ".", true); return; }
+      if (f.size === 0) { note("“" + safeName(f.name) + "” is empty.", true); return; }
+      fileQueue.push(f);
+    });
+    pumpFiles();
+  }
+  el.attach.addEventListener("click", function () { el.file.click(); });
+  el.file.addEventListener("change", function () { queueFiles(el.file.files); el.file.value=""; });
+  // On phones the on-screen keyboard shrinks the visual viewport, not the layout viewport, and the browser
+  // scrolls the page to reveal the focused field. Sizing the shell to the visual viewport keeps header,
+  // log and composer all on screen; offsetTop cancels the scroll the browser applied.
+  function fitViewport() {
+    var vv=window.visualViewport; if (!vv) return;
+    var follow=el.log.scrollHeight-el.log.scrollTop-el.log.clientHeight<80;
+    el.shell.style.height=vv.height + "px"; el.shell.style.top=vv.offsetTop + "px";
+    if (follow) el.log.scrollTop=el.log.scrollHeight;
+  }
+  if (window.visualViewport) { window.visualViewport.addEventListener("resize", fitViewport); window.visualViewport.addEventListener("scroll", fitViewport); fitViewport(); }
   el.send.addEventListener("click", send);
   el.input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
   el.input.addEventListener("input", function () { el.input.style.height="auto"; el.input.style.height=Math.min(el.input.scrollHeight,112) + "px"; refreshComposer(); });
